@@ -35,13 +35,13 @@ struct graph {
 		outer_face = make_shared<Face>();
 	}
 
-	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face);
+	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
 	void delete_edge_at_it(list<Edge>::iterator it);
 
 	/*finger print part*/
 
-	vector<int> segments; //number of edges indexer
+	vector<Edge*> segments; //number of edges indexer
 
 	array_4D blocked; //iniciatize somewhere where we aready know the size
 
@@ -50,7 +50,8 @@ struct graph {
 	//TODO maybe add arguments and implement it, test the normal part
 	void create_special_vertex(pair<double, double> center_of_real_vertex, int index);
 	void recolor_fingerprint(const string& rotation);
-	void create_base_start();
+	void create_base_star();
+	void create_all_special_vertices();
 	void find_the_way_to_intersect();
 	void intersect();
 	void create_all_possible_drawings();
@@ -108,7 +109,7 @@ struct Edge {
 
 
 
-inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face) {
+inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -132,15 +133,17 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		cur_edge = cur_edge->next_;
 	}
 
-	auto new_face = make_shared<Face>(); //new face
+	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
 	Edge ab_edge(fromb, toa, nullptr, a, b, face, number_of_edges); //edge from a to b
 	edges.push_back(ab_edge); number_of_edges++;
 	Edge* ab_edge_ptr = &edges.back();
+	segments.push_back(ab_edge_ptr);
 
 	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, move(new_face), number_of_edges); //edge from b to a
 	edges.push_back(ba_edge); number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
+	segments.push_back(ba_edge_ptr);
 
 	ab_edge_ptr->opposite_ = ba_edge_ptr; //setting opposite edge that has been already made and face edge
 	new_face->edge_ = ba_edge_ptr;
@@ -175,8 +178,11 @@ inline void graph::add_vertex(Edge* edge) {
 
 	edges.push_back(Edge(opposite->next_, opposite, edge, new_vertex, a, opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
 	auto toa = &edges.back();
+	segments.push_back(toa);
+
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
+	segments.push_back(tob);
 
 	edge->to_ = new_vertex; //changing properties of edge
 	edge->next_ = tob;
@@ -289,7 +295,9 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
 	face->edge_ = froma;
 
-	/*delete the edge from list*/
+
+
+	/* delete the edge from list, pop from segments should be out of this function */
 	if (second_is_bigger)
 		edges.erase(it, second_it);
 	else
@@ -330,6 +338,7 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 		auto second_vertex = special_vertices[(i + 1) % (number_of_vertices - 1)];
 		edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, edges.size()));
 		second_vertex->to_ = &edges.back();
+		segments.push_back(&edges.back()); 
 	}
 
 	/* dependencies set */
@@ -337,14 +346,6 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 		special_vertices[i]->to_->prev_ = special_vertices[((i - 1) + (number_of_vertices - 1)) % number_of_vertices - 1]->to_;
 		special_vertices[i]->to_->next_ = special_vertices[(i + 1) % (number_of_vertices - 1)]->to_;
 	}
-
-	/*
-	for (int i = 1; i < rotation.size;i++) {
-		first_vertex = rotation[i] - '0';
-		second_vertex = rotation[(i + 1) % rotation.size()] - '0';
-	}
-	*/
-	
 }
 
 
@@ -359,5 +360,22 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 			starts[i][fingerprint[i * (number_of_vertices) + j] - '0'] = edges_it->index_;
 			edges_it++;
 		}
+	}
+}
+
+inline void graph::create_base_star() {
+	for (int i = 1; i < number_of_vertices;i++) {
+		add_edge(segments[starts[0][i]]->to_, segments[starts[i][0]]->to_, outer_face, true); //to vertex is that in rotation
+	}
+}
+
+
+inline void graph::create_all_special_vertices() {
+	auto circle = create_circle(10, 0, 0, number_of_vertices - 1);
+
+	create_special_vertex(make_pair(0, 0), 0); //the center
+
+	for (int i = 0; i < number_of_vertices - 1;i++) { //the rest of a star
+		create_special_vertex(circle[i], i + 1);
 	}
 }
