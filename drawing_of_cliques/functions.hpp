@@ -49,7 +49,7 @@ struct graph {
 
 	//TODO maybe add arguments and implement it, test the normal part
 	void create_special_vertex(pair<double, double> center_of_real_vertex, int index);
-	void create_special_vertex(const string& rotation);
+	void recolor_fingerprint(const string& rotation);
 	void create_base_start();
 	void find_the_way_to_intersect();
 	void intersect();
@@ -239,18 +239,22 @@ inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_
 
 inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
+	bool second_is_bigger;
+
 	auto edge = *it;
 	auto second_it = it;
 	Edge opposite;
 	list<Edge>::iterator next_it = next(it, 1);
-	list<Edge>::iterator prev_it = next(it, -1);
+	list<Edge>::iterator prev_it = next(it, -1); //hopeffuly doesnt fall down when beggining
 	if ((next_it != edges.end() && *(edge.opposite_) == *(next_it))) {
 		opposite = *next_it;
 		second_it = next_it;
+		second_is_bigger = true;
 	}
 	else if (it != edges.begin() && *(edge.opposite_) == *(prev_it)) {
 		opposite = *prev_it;
 		second_it = prev_it;
+		second_is_bigger = false;
 	}
 
 
@@ -285,8 +289,11 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
 	face->edge_ = froma;
 
-	/*delete the edge from list*/ //it has to stay where it is otherwise delete 2 two times the same but check which one
-	edges.erase(it); edges.erase(second_it); //it is not working remember the bigger and smaller one and give the correct range
+	/*delete the edge from list*/
+	if (second_is_bigger)
+		edges.erase(it, second_it);
+	else
+		edges.erase(second_it, it);
 }
 
 inline void print_graph(graph* g) {
@@ -305,13 +312,13 @@ inline void print_graph(graph* g) {
 inline void graph::create_special_vertex(pair<double, double> center_of_real_vertex, int index) {
 
 	//maybe change the radius the the accuracy shouldnot be a problem
-	auto special_vertex_coordinates = create_circle(1, center_of_real_vertex.first, center_of_real_vertex.second, number_of_vertices - 1); // -1 because you dont wan to be connected to yourself
+	auto special_vertex_coordinates = create_circle(1, center_of_real_vertex.x, center_of_real_vertex.y, number_of_vertices - 1); // -1 because you dont wan to be connected to yourself
 
 	vector<shared_ptr<Vertex> > special_vertices;
 
 	/*create vertices with coordinates*/
 	for (int i = 0; i < number_of_vertices - 1;i++) {
-		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].first, special_vertex_coordinates[i].second);
+		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].x, special_vertex_coordinates[i].y);
 		new_vertex->index_ = index;
 		special_vertices.push_back(new_vertex);
 	}
@@ -338,4 +345,19 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 	}
 	*/
 	
+}
+
+
+
+
+inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
+
+	auto edges_it = edges.begin();
+
+	for(int i = 0; i < number_of_vertices;i++){
+		for (int j = 0; j < number_of_vertices - 1;j++) { //every vertex has -1 around itself
+			starts[i][fingerprint[i * (number_of_vertices) + j] - '0'] = edges_it->index_;
+			edges_it++;
+		}
+	}
 }
