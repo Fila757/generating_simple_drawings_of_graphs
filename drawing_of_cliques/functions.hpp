@@ -52,7 +52,7 @@ struct graph {
 	void recolor_fingerprint(const string& rotation);
 	void create_base_star();
 	void create_all_special_vertices();
-	void find_the_way_to_intersect();
+	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
 	void intersect();
 	void create_all_possible_drawings();
 };
@@ -377,5 +377,33 @@ inline void graph::create_all_special_vertices() {
 
 	for (int i = 0; i < number_of_vertices - 1;i++) { //the rest of a star
 		create_special_vertex(circle[i], i + 1);
+	}
+}
+
+inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, int b) {
+	
+	auto seg = segments[s_index]->next_;
+	
+	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either 
+		if (seg = segments[t_index]) {
+			draw_line(s_index, t_index, a, b);
+			if (b < number_of_vertices - 1) {
+				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
+			}
+			else if (a < number_of_vertices - 2) {
+				find_the_way_to_intersect(starts[a + 1][a + 2], starts[a + 2][a + 1], a + 1, a + 2);
+			}
+			else {
+				// done ?!
+			}
+		}
+		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always true
+			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
+			intersect(seg);
+			find_the_way_to_intersect( // , t_index, a, b); //first divide this seg and "//" replace with new created vertex I think
+			undo_intersect(seg);
+			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
+		}
+		seg = seg->next_;
 	}
 }
