@@ -1,7 +1,8 @@
 ﻿#include "pch.h"
 #include "../drawing_of_cliques/functions.hpp"
+#include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.3/build/native/include/gtest/gtest.h"
 
-TEST(graphs, śize_og_block1) {
+TEST(graphs, size_of_block1) {
     graph g = graph(8);
     EXPECT_EQ(1, g.size_of_block);
 }

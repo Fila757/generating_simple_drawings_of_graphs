@@ -1,0 +1,21 @@
+﻿  pch.cpp
+  test.cpp
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(301,103): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(304,2): error C2039: 'a': is not a member of 'Vertex'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(66): message : see declaration of 'Vertex'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(304,2): error C2143: syntax error: missing ';' before 'for'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(304,35): error C3867: 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>::size': non-standard syntax; use '&' to create a pointer to member
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(304,35): error C2446: '<': no conversion from 'unsigned __int64 (__cdecl std::basic_string<char,std::char_traits<char>,std::allocator<char>>::* )(void) noexcept const' to 'int'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(304,31): message : There is no context in which this conversion is possible
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(305,35): error C2679: binary '=': no operator found which takes a right-hand operand of type 'int' (or there is no acceptable conversion)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\memory(1143,17): message : could be 'std::shared_ptr<Vertex> &std::shared_ptr<Vertex>::operator =(std::shared_ptr<Vertex> &&) noexcept'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\memory(1132,17): message : or       'std::shared_ptr<Vertex> &std::shared_ptr<Vertex>::operator =(const std::shared_ptr<Vertex> &) noexcept'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(305,35): message : while trying to match the argument list '(std::shared_ptr<Vertex>, int)'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(306,60): error C2679: binary '=': no operator found which takes a right-hand operand of type 'int' (or there is no acceptable conversion)
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\memory(1143,17): message : could be 'std::shared_ptr<Vertex> &std::shared_ptr<Vertex>::operator =(std::shared_ptr<Vertex> &&) noexcept'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\memory(1132,17): message : or       'std::shared_ptr<Vertex> &std::shared_ptr<Vertex>::operator =(const std::shared_ptr<Vertex> &) noexcept'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(306,60): message : while trying to match the argument list '(std::shared_ptr<Vertex>, int)'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(309,6): error C2143: syntax error: missing ';' before ')'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(310,1): error C2143: syntax error: missing ';' before '}'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(310,1): error C2143: syntax error: missing ')' before '}'
+C:\Users\filip\Source\Repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(310,1): error C2059: syntax error: '}'

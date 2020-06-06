@@ -1,9 +1,12 @@
 #pragma once
+
+#define _USE_MATH_DEFINES
 #include <memory>
 #include <iterator>
 #include <iostream>
 #include <vector>
 #include <list>
+#include <cmath>
 //Edge(Edge* next, Edge* prev, Edge* opposite, Vertex* from, Vertex* to, Face* face, int index)
 using namespace std;
 
@@ -20,32 +23,21 @@ struct Face;
 
 struct graph {
 	/*normal part*/
-	int number_of_vertices = 0; //all vertices
+	int number_of_vertices = 0; //just real vertices
 	int number_of_edges = 0; //real edges, indexer in segments
 	list<Edge> edges;
-	vector<pair<int, int > > vertices;
-	int size_of_block = 0;
-	int already_created_vertices = -1;
+	vector<pair<int, int > > vertices; 
+	int already_created_vertices = 0;
 	shared_ptr<Face> outer_face;
 
 	graph(int n) {
-		size_of_block = (n - 1) % 8 == 0 ? (n - 1) / 8 : (n - 1) / 8 + 1;
-		/*
-		4*(2k+1) - 4 + 1 = 8k + 1
-		* * * * *
-		* . . . *
-		* . * . *
-		* . . . *
-		* * * * *
-		*/
-
+		number_of_vertices = n;
 		outer_face = make_shared<Face>();
 	}
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face);
 	void add_vertex(Edge* edge);
 	void delete_edge_at_it(list<Edge>::iterator it);
-	void create_next_vertex(double scale = 1, int cx = 0, int cy = 0);
 
 	/*finger print part*/
 
@@ -56,6 +48,7 @@ struct graph {
 	vector<vector<int> > starts; // edge from i to j, starting indeces on the the special vertex, when j to i get the opposite edge index so on point ont the opposite special vertex 
 
 	//TODO maybe add arguments and implement it, test the normal part
+	void create_special_vertex(pair<double, double> center_of_real_vertex, int index);
 	void create_special_vertex(const string& rotation);
 	void create_base_start();
 	void find_the_way_to_intersect();
@@ -67,6 +60,8 @@ struct Vertex {
 	double x_ = 0, y_ = 0;
 
 	Edge* to_;
+
+	int index_;
 
 	Vertex() {}
 
@@ -193,6 +188,21 @@ inline void graph::add_vertex(Edge* edge) {
 
 }
 
+
+vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
+	vector<pair<double, double> > circle;
+
+	double unit_angle = 360 / n;
+
+	for (int i = 0; i < n;i++) {
+		circle.push_back(make_pair(radius * cos(unit_angle / 180 * M_PI), radius * sin(unit_angle / 180 * M_PI)));
+	}
+
+	return circle;
+}
+
+
+/*
 inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_block is synchronized with scale
 	double x = cx, y = cy;
 
@@ -225,7 +235,7 @@ inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_
 
 	already_created_vertices++;
 }
-
+*/
 
 inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
@@ -292,19 +302,40 @@ inline void print_graph(graph* g) {
 	}
 }
 
-inline void graph::create_special_vertex(const string& rotation) {
-	int first = rotation[0] - '0';
-	int second = rotation[1] - '0';
+inline void graph::create_special_vertex(pair<double, double> center_of_real_vertex, int index) {
 
-	auto first_vertex = make_shared<Vertex>();
-	auto second_vertex = make_shared<Vertex>();
-	edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, edges.size()));
-	first_vertex->
+	//maybe change the radius the the accuracy shouldnot be a problem
+	auto special_vertex_coordinates = create_circle(1, center_of_real_vertex.first, center_of_real_vertex.second, number_of_vertices - 1); // -1 because you dont wan to be connected to yourself
 
+	vector<shared_ptr<Vertex> > special_vertices;
+
+	/*create vertices with coordinates*/
+	for (int i = 0; i < number_of_vertices - 1;i++) {
+		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].first, special_vertex_coordinates[i].second);
+		new_vertex->index_ = index;
+		special_vertices.push_back(new_vertex);
+	}
+
+	
+	/* edges created */
+	for (int i = 0; i < number_of_vertices - 1;i++) {
+		auto first_vertex = special_vertices[i];
+		auto second_vertex = special_vertices[(i + 1) % (number_of_vertices - 1)];
+		edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, edges.size()));
+		second_vertex->to_ = &edges.back();
+	}
+
+	/* dependencies set */
+	for (int i = 0; i < number_of_vertices - 1;i++) {
+		special_vertices[i]->to_->prev_ = special_vertices[((i - 1) + (number_of_vertices - 1)) % number_of_vertices - 1]->to_;
+		special_vertices[i]->to_->next_ = special_vertices[(i + 1) % (number_of_vertices - 1)]->to_;
+	}
+
+	/*
 	for (int i = 1; i < rotation.size;i++) {
 		first_vertex = rotation[i] - '0';
 		second_vertex = rotation[(i + 1) % rotation.size()] - '0';
 	}
-
-	for()
+	*/
+	
 }
