@@ -365,7 +365,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
-		add_edge(segments[starts[0][i]]->to_, segments[starts[i][0]]->to_, outer_face, true); //to vertex is that in rotation
+		add_edge(segments[starts[0][i]]->from_, segments[starts[i][0]]->from_, outer_face, true); //from vertex is that in rotation
 	}
 }
 
@@ -386,7 +386,9 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either 
 		if (seg = segments[t_index]) {
-			draw_line(s_index, t_index, a, b);
+
+			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_);
+
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
 			}
@@ -399,7 +401,10 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		}
 		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always true
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
-			intersect(seg);
+
+			add_vertex(seg);
+			find_the_way_to_intersect()
+
 			find_the_way_to_intersect( // , t_index, a, b); //first divide this seg and "//" replace with new created vertex I think
 			undo_intersect(seg);
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
