@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "drawing_of_cliques", "drawing_of_cliques\drawing_of_cliques.vcxproj", "{606098F7-B34E-4A31-B191-A2AD2C702AF4}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxproj", "{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{606098F7-B34E-4A31-B191-A2AD2C702AF4}.Release|x64.Build.0 = Release|x64
 		{606098F7-B34E-4A31-B191-A2AD2C702AF4}.Release|x86.ActiveCfg = Release|Win32
 		{606098F7-B34E-4A31-B191-A2AD2C702AF4}.Release|x86.Build.0 = Release|Win32
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Debug|x64.ActiveCfg = Debug|x64
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Debug|x64.Build.0 = Debug|x64
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Debug|x86.ActiveCfg = Debug|Win32
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Debug|x86.Build.0 = Debug|Win32
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Release|x64.ActiveCfg = Release|x64
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Release|x64.Build.0 = Release|x64
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Release|x86.ActiveCfg = Release|Win32
+		{B2E2C8CF-8626-46E7-8AC7-03EC272D0E9D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

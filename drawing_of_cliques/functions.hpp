@@ -27,7 +27,7 @@ struct graph {
 	int number_of_edges = 0; //real edges, indexer in segments
 	list<Edge> edges;
 	vector<pair<int, int > > vertices; 
-	int already_created_vertices = 0;
+	//int already_created_vertices = 0;
 	shared_ptr<Face> outer_face;
 
 	graph(int n) {
@@ -295,8 +295,6 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
 	face->edge_ = froma;
 
-
-
 	/* delete the edge from list, pop from segments should be out of this function */
 	if (second_is_bigger)
 		edges.erase(it, second_it);
@@ -319,7 +317,7 @@ inline void print_graph(graph* g) {
 
 inline void graph::create_special_vertex(pair<double, double> center_of_real_vertex, int index) {
 
-	//maybe change the radius the the accuracy shouldnot be a problem
+	//maybe change the radius so the accuracy shouldnot be a problem
 	auto special_vertex_coordinates = create_circle(1, center_of_real_vertex.x, center_of_real_vertex.y, number_of_vertices - 1); // -1 because you dont wan to be connected to yourself
 
 	vector<shared_ptr<Vertex> > special_vertices;
@@ -327,7 +325,7 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 	/*create vertices with coordinates*/
 	for (int i = 0; i < number_of_vertices - 1;i++) {
 		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].x, special_vertex_coordinates[i].y);
-		new_vertex->index_ = index;
+		new_vertex->index_ = index; //the real index of vertex
 		special_vertices.push_back(new_vertex);
 	}
 
@@ -356,7 +354,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 	auto edges_it = edges.begin();
 
 	for(int i = 0; i < number_of_vertices;i++){
-		for (int j = 0; j < number_of_vertices - 1;j++) { //every vertex has -1 around itself
+		for (int j = 0; j < number_of_vertices - 1;j++) { //every vertex has n-1 around itself
 			starts[i][fingerprint[i * (number_of_vertices) + j] - '0'] = edges_it->index_;
 			edges_it++;
 		}
@@ -384,10 +382,11 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	auto seg = segments[s_index]->next_;
 	
-	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either 
-		if (seg = segments[t_index]) {
+	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
+		
+		if (seg == segments[t_index]) {
 
-			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_);
+			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_); //from from_ to from_
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -403,7 +402,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
 
 			add_vertex(seg);
-			find_the_way_to_intersect()
+			find_the_way_to_intersect();
 
 			find_the_way_to_intersect( // , t_index, a, b); //first divide this seg and "//" replace with new created vertex I think
 			undo_intersect(seg);
