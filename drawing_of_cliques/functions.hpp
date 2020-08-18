@@ -7,7 +7,7 @@
 #include <vector>
 #include <list>
 #include <cmath>
-//Edge(Edge* next, Edge* prev, Edge* opposite, Vertex* from, Vertex* to, Face* face, int index)
+
 using namespace std;
 
 #define x first
@@ -38,6 +38,7 @@ struct graph {
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
 	void delete_edge_at_it(list<Edge>::iterator it);
+	void delete_vertex(Vertex* a);
 
 	/*finger print part*/
 
@@ -53,7 +54,7 @@ struct graph {
 	void create_base_star();
 	void create_all_special_vertices();
 	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
-	void intersect();
+	//void intersect();
 	void create_all_possible_drawings();
 };
 
@@ -302,6 +303,33 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 		edges.erase(second_it, it);
 }
 
+inline void graph::delete_vertex(Vertex* vertex) {
+
+
+	// getting the right variables
+	auto edge = vertex->to_;
+
+	auto toa = edge->opposite_;
+	auto tob = edge->next_;
+	auto edge_opposite = tob->opposite_;
+
+	auto a = toa->to_;
+	auto b = tob->to_;
+
+	// reconnecting edges and therefore removing the vertex
+
+	edge->to_ = b;
+	edge_opposite->to_ = a;
+	edge->next_ = tob->next_;
+	edge_opposite->next_ = toa->next_;
+
+	//removig the edges from the back of segments and edges
+	//because of the order and recursive algorithm we know they are the last one
+	segments.pop_back(); segments.pop_back();
+	edges.pop_back(); edges.pop_back();
+
+}
+
 inline void print_graph(graph* g) {
 	cout << "number of edges: " << g->number_of_edges << endl;
 
@@ -345,8 +373,6 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 		special_vertices[i]->to_->next_ = special_vertices[(i + 1) % (number_of_vertices - 1)]->to_;
 	}
 }
-
-
 
 
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
@@ -401,11 +427,14 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always true
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
 
+			//intersecting
 			add_vertex(seg);
-			find_the_way_to_intersect();
 
-			find_the_way_to_intersect( // , t_index, a, b); //first divide this seg and "//" replace with new created vertex I think
+			//try to go further
+			find_the_way_to_intersect(seg->opposite_->index_, t_index, a, b);
+
 			undo_intersect(seg);
+
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
 		}
 		seg = seg->next_;
