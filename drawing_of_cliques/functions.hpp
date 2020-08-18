@@ -22,6 +22,7 @@ struct Face;
 //pair<int, int> create_next_vertex(double size_of_block, int already_created_vertices, double scale = 1, int cx = 0, int cy = 0);
 
 struct graph {
+
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
 	int number_of_edges = 0; //real edges, indexer in segments
@@ -58,7 +59,7 @@ struct graph {
 	void create_all_special_vertices();
 	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
 	//void intersect();
-	void create_all_possible_drawings();
+	void create_all_possible_drawings(int n);
 };
 
 struct Vertex {
@@ -109,9 +110,6 @@ struct Edge {
 	}
 
 };
-
-
-
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool) {
 
@@ -165,10 +163,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	}
 }
 
-
-
-
-
 inline void graph::add_vertex(Edge* edge) {
 
 	auto opposite = edge->opposite_;
@@ -198,7 +192,6 @@ inline void graph::add_vertex(Edge* edge) {
 
 }
 
-
 vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
 	vector<pair<double, double> > circle;
 
@@ -210,7 +203,6 @@ vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
 
 	return circle;
 }
-
 
 /*
 inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_block is synchronized with scale
@@ -376,7 +368,6 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 	}
 }
 
-
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
 
 	auto edges_it = edges.begin();
@@ -442,4 +433,40 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		}
 		seg = seg->next_;
 	}
+}
+
+long long factorial(int n) {
+	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
+}
+
+struct fingerprints {
+	long long states = 0;
+	long long treshold;
+
+	vector<string> fingerprint;
+
+	fingerprints(int n) {
+		treshold = n-1;
+		for (int i = 1; i < n;i++) {
+			string rotation_system = "";
+			for (int j = 0; j < n;j++) {
+				if (i != j) rotation_system += (j + '0');
+			}
+			fingerprint.push_back(rotation_system);
+		}
+	}
+
+	const string& get_next() {
+			
+	}
+};
+
+inline void graph::create_all_possible_drawings(int n) {
+	
+	create_all_special_vertices();
+	create_base_star();
+
+	auto generator_of_fingerprints = fingerprints(n);
+	while(fingerprint = next)
+     
 }
