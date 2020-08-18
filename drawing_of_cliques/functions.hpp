@@ -25,9 +25,12 @@ struct graph {
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
 	int number_of_edges = 0; //real edges, indexer in segments
+	int realized = 0;
+
 	list<Edge> edges;
 	vector<pair<int, int > > vertices; 
 	//int already_created_vertices = 0;
+
 	shared_ptr<Face> outer_face;
 
 	graph(int n) {
@@ -305,7 +308,6 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
 inline void graph::delete_vertex(Vertex* vertex) {
 
-
 	// getting the right variables
 	auto edge = vertex->to_;
 
@@ -421,7 +423,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				find_the_way_to_intersect(starts[a + 1][a + 2], starts[a + 2][a + 1], a + 1, a + 2);
 			}
 			else {
-				// done ?!
+				realized++;
 			}
 		}
 		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always true
@@ -433,7 +435,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			//try to go further
 			find_the_way_to_intersect(seg->opposite_->index_, t_index, a, b);
 
-			undo_intersect(seg);
+			//undo-intersect
+			delete_vertex((seg->to_).get());
 
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
 		}
