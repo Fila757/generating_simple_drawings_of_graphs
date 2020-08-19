@@ -20,8 +20,6 @@ struct Vertex;
 struct Edge;
 struct Face;
 
-//pair<int, int> create_next_vertex(double size_of_block, int already_created_vertices, double scale = 1, int cx = 0, int cy = 0);
-
 struct graph {
 
 	/*normal part*/
@@ -388,7 +386,6 @@ inline void graph::create_base_star() {
 	}
 }
 
-
 inline void graph::create_all_special_vertices() {
 	auto circle = create_circle(10, 0, 0, number_of_vertices - 1);
 
@@ -492,12 +489,11 @@ struct fingerprints {
 		}
 
 		return res;
-
 	}
 };
 
 inline void graph::create_all_possible_drawings(int n) {
-	
+
 	create_all_special_vertices();
 	create_base_star();
 
@@ -509,11 +505,11 @@ inline void graph::create_all_possible_drawings(int n) {
 		if (!is_correct_fingerprint(cur)) continue;
 
 		recolor_fingerprint(cur);
-		
+
 		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
 	}
-     
 }
+     
 
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
@@ -521,24 +517,26 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 	for (int i = number_of_vertices - 1; i > 0;i--) prefix += (i + '0');
 	auto whole_fingerprint = prefix + fingerprint;
 
-	for (int i = 0; i < number_of_vertices;i++) {
-		for (int j = i + 1; j < number_of_vertices;j++) {
-			for (int k = j + 1; k < number_of_vertices;k++) {
-				for (int l = k + 1; l < number_of_vertices;l++) {
+	int i[4];
 
-					//TODO make it cyclic and rename the indexers
+	for (i[0] = 0; i[0] < number_of_vertices;i[0]++) {
+		for (i[1] = i[0] + 1; i[1] < number_of_vertices;i[1]++) {
+			for (i[2] = i[1] + 1; i[2] < number_of_vertices;i[2]++) {
+				for (i[3] = i[2] + 1; i[3] < number_of_vertices;i[3]++) {
 
 					vector<int> order[4];
-					for (int u = 0; u < number_of_vertices - 1;u++) {
-						if (u + i * (number_of_vertices - 1) == j || u + i * (number_of_vertices - 1) == k || u + i * (number_of_vertices - 1) == l) {
-							order[0].push_back(u);
+					for (int v = 0; v < 4;v++) {
+						for (int u = 0; u < number_of_vertices - 1;u++) {
+							if (u + i[0 + v] * (number_of_vertices - 1) == i[(1 + v) % 4] || u + i[0 + v] * (number_of_vertices - 1) == i[(2 + v) % 4] || u + i[0 + v] * (number_of_vertices - 1) == i[(3 + v) % 4]) {
+								order[0 + v].push_back(u);
+							}
 						}
 					}
-
-
+					if (!is_correct_K4(order)) return false;
 				}
 			}
 		}
 	}
 
+	return true;
 }
