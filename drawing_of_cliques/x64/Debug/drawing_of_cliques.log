@@ -1,42 +1,22 @@
 ﻿  drawing_of_cliques.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(204,62): error C2065: 'M_PI': undeclared identifier
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(204,101): error C2065: 'M_PI': undeclared identifier
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(204,20): error C2672: 'std::make_pair': no matching overloaded function found
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(204,106): error C2780: 'std::pair<_Unrefwrap_helper<decay<_Ty>::type>::type,_Unrefwrap_helper<decay<_Ty2>::type>::type> std::make_pair(_Ty1 &&,_Ty2 &&) noexcept(<expr>)': expects 2 arguments - 1 provided
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(202,62): error C2065: 'M_PI': undeclared identifier
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(202,101): error C2065: 'M_PI': undeclared identifier
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(202,20): error C2672: 'std::make_pair': no matching overloaded function found
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(202,106): error C2780: 'std::pair<_Unrefwrap_helper<decay<_Ty>::type>::type,_Unrefwrap_helper<decay<_Ty2>::type>::type> std::make_pair(_Ty1 &&,_Ty2 &&) noexcept(<expr>)': expects 2 arguments - 1 provided
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\utility(350): message : see declaration of 'std::make_pair'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(323,99): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(344,99): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(323,74): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(344,74): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(339,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(406,30): error C2660: 'graph::find_the_way_to_intersect': function does not take 0 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(383,20): message : see declaration of 'graph::find_the_way_to_intersect'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(408,4): error C2146: syntax error: missing ';' before identifier 'find_the_way_to_intersect'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(409,4): error C3861: 'undo_intersect': identifier not found
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(409,23): error C2143: syntax error: missing ')' before ';'
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(360,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(455,23): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(497,8): error C2065: 'fingerprint': undeclared identifier
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,1): error C2059: syntax error: '}'
 C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\drawing_of_cliques.cpp(12,29): error C2039: 'create_next_vertex': is not a member of 'graph'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(24): message : see declaration of 'graph'
-  functions.hpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(323,99): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
-          with
-          [
-              _Ty2=double
-          ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(323,74): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
-          with
-          [
-              _Ty1=double
-          ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(339,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(406,30): error C2660: 'graph::find_the_way_to_intersect': function does not take 0 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(383,20): message : see declaration of 'graph::find_the_way_to_intersect'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(408,4): error C2146: syntax error: missing ';' before identifier 'find_the_way_to_intersect'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(409,4): error C3861: 'undo_intersect': identifier not found
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(409,23): error C2143: syntax error: missing ')' before ';'
-  Generating Code...
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(25): message : see declaration of 'graph'

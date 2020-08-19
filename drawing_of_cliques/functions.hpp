@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <cmath>
+#include <algorithm>
 
 using namespace std;
 
@@ -439,25 +440,58 @@ long long factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
 }
 
-struct fingerprints {
-	long long states = 0;
-	long long treshold;
+/// <summary>
+// This struct is my own generator and iterator for all fingerprints
+/// </summary>
 
+
+struct fingerprints {
+	vector<int> states;
+	int treshold;
+	bool done = false;
 	vector<string> fingerprint;
 
+	/// <summary> 
+	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
+	/// </summary>
 	fingerprints(int n) {
-		treshold = n-1;
-		for (int i = 1; i < n;i++) {
+		treshold = factorial(n-1); //its length is n-1
+
+		for (int i = 1; i < n;i++) { 
 			string rotation_system = "";
 			for (int j = 0; j < n;j++) {
 				if (i != j) rotation_system += (j + '0');
 			}
 			fingerprint.push_back(rotation_system);
 		}
+
+		for (int i = 0; i < n;i++) {
+			states.push_back(0);
+		}
 	}
 
+	///<summary>
+	// Return state and then move to the next one until it is posible
+	///</summary>
 	const string& get_next() {
-			
+		string res;
+		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
+
+		for (int i = treshold - 1; i >= 0;i--) {
+			if (states[i] == treshold - 1) {
+				if (i == 0) done = true; //There is no other fingerprint
+				states[i] = 0;
+				next_permutation(fingerprint[i].begin(), fingerprint[i].end());
+			}
+			else {
+				states[i]++;
+				next_permutation(fingerprint[i].begin(), fingerprint[i].end());
+				break;
+			}
+		}
+
+		return res;
+
 	}
 };
 
@@ -467,6 +501,15 @@ inline void graph::create_all_possible_drawings(int n) {
 	create_base_star();
 
 	auto generator_of_fingerprints = fingerprints(n);
-	while(fingerprint = next)
+	while (!generator_of_fingerprints.done) {
+		auto cur = generator_of_fingerprints.get_next();
+
+		//check the fingerprint 
+		//TODO
+
+		recolor_fingerprint(cur);
+		
+		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
+	}
      
 }
