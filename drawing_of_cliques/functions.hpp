@@ -60,6 +60,7 @@ struct graph {
 	void create_all_special_vertices();
 	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
 	//void intersect();
+	bool is_correct_fingerprint(const string& fingerprint);
 	void create_all_possible_drawings(int n);
 };
 
@@ -505,11 +506,39 @@ inline void graph::create_all_possible_drawings(int n) {
 		auto cur = generator_of_fingerprints.get_next();
 
 		//check the fingerprint 
-		//TODO
+		if (!is_correct_fingerprint(cur)) continue;
 
 		recolor_fingerprint(cur);
 		
 		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
 	}
      
+}
+
+inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
+
+	string prefix = "";
+	for (int i = number_of_vertices - 1; i > 0;i--) prefix += (i + '0');
+	auto whole_fingerprint = prefix + fingerprint;
+
+	for (int i = 0; i < number_of_vertices;i++) {
+		for (int j = i + 1; j < number_of_vertices;j++) {
+			for (int k = j + 1; k < number_of_vertices;k++) {
+				for (int l = k + 1; l < number_of_vertices;l++) {
+
+					//TODO make it cyclic and rename the indexers
+
+					vector<int> order[4];
+					for (int u = 0; u < number_of_vertices - 1;u++) {
+						if (u + i * (number_of_vertices - 1) == j || u + i * (number_of_vertices - 1) == k || u + i * (number_of_vertices - 1) == l) {
+							order[0].push_back(u);
+						}
+					}
+
+
+				}
+			}
+		}
+	}
+
 }
