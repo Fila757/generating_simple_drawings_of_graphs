@@ -511,6 +511,34 @@ inline void graph::create_all_possible_drawings(int n) {
 }
      
 
+bool is_correct_fingerprint(vector<int> orders[4], int a[4]) {
+	
+	//The realizable rotation systems of K4 with respect to (strong) isomorhism
+	int order_of_K4[3][3][3] = { 
+		{{2, 3, 0},{3, 0, 1},{0, 1, 2}},
+		{{2, 3, 0},{0, 3, 1},{0, 2, 1}},
+		{{3,2,0}, {1, 3, 0}, {0, 2, 1}}
+	};
+
+	for (int u = 0; u < 3;u++) {
+		int number_of_right_ones = 1;
+		for (int i = 1;i < 4;i++) {
+			auto copied = orders[i];
+			copied.insert(copied.end(), orders[i].begin(), orders[i].end()); //copy it twice so we can easily find the pattern even if it has different rotation than mention in order_of_K4
+
+			for (int j = 0; j < copied.size();j++) {
+				int temp = 0;
+				for (int k = 0; k < 3 && j + k < copied.size();k++) {
+					if (copied[j + k] == a[order_of_K4[u][i - 1][k]]) temp++;
+				}
+				if (temp == 3) { number_of_right_ones++; break; }
+			}
+		}
+		if (number_of_right_ones == 4) return true;
+	}
+	return false;
+}
+
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
 	string prefix = "";
@@ -527,12 +555,18 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 					vector<int> order[4];
 					for (int v = 0; v < 4;v++) {
 						for (int u = 0; u < number_of_vertices - 1;u++) {
-							if (u + i[0 + v] * (number_of_vertices - 1) == i[(1 + v) % 4] || u + i[0 + v] * (number_of_vertices - 1) == i[(2 + v) % 4] || u + i[0 + v] * (number_of_vertices - 1) == i[(3 + v) % 4]) {
+							if (u + i[0 + v] * (number_of_vertices - 1) == i[(1 + v) % 4]
+								|| u + i[0 + v] * (number_of_vertices - 1) == i[(2 + v) % 4]
+								|| u + i[0 + v] * (number_of_vertices - 1) == i[(3 + v) % 4])
+							{
 								order[0 + v].push_back(u);
 							}
 						}
 					}
-					if (!is_correct_K4(order)) return false;
+
+					int temp[4];
+					temp[0] = i[0]; temp[1] = order[0][0]; temp[2] = order[0][1]; temp[3] = order[0][2];
+					if (!is_correct_K4(order, temp)) return false;
 				}
 			}
 		}
