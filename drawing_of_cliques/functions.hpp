@@ -1,15 +1,18 @@
 #pragma once
 
-#define _USE_MATH_DEFINES
+#include <cmath>
 #include <memory>
 #include <iterator>
 #include <iostream>
 #include <vector>
 #include <list>
-#include <cmath>
 #include <algorithm>
 
 using namespace std;
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 #define x first
 #define y second
