@@ -511,7 +511,7 @@ inline void graph::create_all_possible_drawings(int n) {
 }
      
 
-bool is_correct_fingerprint(vector<int> orders[4], int a[4]) {
+bool is_correct_K4(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
 	int order_of_K4[3][3][3] = { 
