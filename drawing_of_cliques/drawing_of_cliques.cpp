@@ -4,12 +4,14 @@
 #include <iostream>
 #include "functions.hpp"
 
+using namespace std;
+
 int main()
 {
     auto g = graph(10);
     print_graph(&g);
     for (int i = 0; i < 10;i++) {
-        g.create_next_vertex();
+        g.create_special_vertex(make_pair(0, 0), 0);
         //print_graph(&g);
     }
     print_graph(&g);

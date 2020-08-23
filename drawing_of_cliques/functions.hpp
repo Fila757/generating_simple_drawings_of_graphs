@@ -77,6 +77,8 @@ struct Vertex {
 	Vertex(Edge* to) : to_(to) {}
 
 	Vertex(Edge* to, int x, int y) : to_(to), x_(x), y_(y) {}
+
+	Vertex(int x, int y) : x_(x), y_(y) {} //check if all uses are really connected to edge
 };
 
 struct Face {
@@ -195,7 +197,7 @@ inline void graph::add_vertex(Edge* edge) {
 
 }
 
-vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
+inline vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
 	vector<pair<double, double> > circle;
 
 	double unit_angle = 360 / n;
@@ -366,7 +368,7 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 
 	/* dependencies set */
 	for (int i = 0; i < number_of_vertices - 1;i++) {
-		special_vertices[i]->to_->prev_ = special_vertices[((i - 1) + (number_of_vertices - 1)) % number_of_vertices - 1]->to_;
+		special_vertices[i]->to_->prev_ = special_vertices[((i - 1) + (number_of_vertices - 1)) % (number_of_vertices - 1)]->to_;
 		special_vertices[i]->to_->next_ = special_vertices[(i + 1) % (number_of_vertices - 1)]->to_;
 	}
 }
@@ -437,7 +439,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	}
 }
 
-long long factorial(int n) {
+inline long long factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
 }
 
@@ -448,7 +450,7 @@ long long factorial(int n) {
 
 struct fingerprints {
 	vector<int> states;
-	int treshold;
+	long long treshold;
 	bool done = false;
 	vector<string> fingerprint;
 
@@ -478,7 +480,7 @@ struct fingerprints {
 		string res;
 		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
 
-		for (int i = treshold - 1; i >= 0;i--) {
+		for (long long i = treshold - 1; i >= 0;i--) {
 			if (states[i] == treshold - 1) {
 				if (i == 0) done = true; //There is no other fingerprint
 				states[i] = 0;
@@ -514,7 +516,7 @@ inline void graph::create_all_possible_drawings(int n) {
 }
      
 
-bool is_correct_K4(vector<int> orders[4], int a[4]) {
+inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
 	int order_of_K4[3][3][3] = { 
