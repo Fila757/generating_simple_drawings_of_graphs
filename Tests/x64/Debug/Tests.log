@@ -1,17 +1,17 @@
-﻿  pch.cpp
-  test.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(346,99): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+﻿  test.cpp
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(145,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(150,75): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(350,99): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(346,74): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(350,74): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(362,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(459,23): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(366,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\utility(207,16): warning C4244: 'initializing': conversion from '_Ty' to '_Ty1', possible loss of data
           with
           [
@@ -21,8 +21,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty1=int
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(177): message : see reference to function template instantiation 'std::pair<int,int>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(177): message : see reference to function template instantiation 'std::pair<int,int>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(179): message : see reference to function template instantiation 'std::pair<int,int>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(179): message : see reference to function template instantiation 'std::pair<int,int>::pair<double,double,0>(std::pair<double,double> &&) noexcept' being compiled
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\utility(207,1): warning C4244: 'initializing': conversion from '_Ty' to '_Ty2', possible loss of data
           with
           [
@@ -52,8 +52,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Vertex
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(176): message : see reference to function template instantiation 'std::shared_ptr<Vertex> std::make_shared<Vertex,Edge*&,double,double>(Edge *&,double &&,double &&)' being compiled
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xmemory(204,1): error C2661: 'Vertex::Vertex': no overloaded function takes 2 arguments
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(178): message : see reference to function template instantiation 'std::shared_ptr<Vertex> std::make_shared<Vertex,Edge*&,double,double>(Edge *&,double &&,double &&)' being compiled
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xmemory(204,33): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\memory(1486): message : see reference to function template instantiation 'void std::_Construct_in_place<_Ty,double&,double&>(_Ty &,double &,double &) noexcept(false)' being compiled
           with
           [
@@ -69,9 +69,10 @@ C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.2
           [
               _Ty=Vertex
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(352): message : see reference to function template instantiation 'std::shared_ptr<Vertex> std::make_shared<Vertex,_Ty1&,_Ty2&>(_Ty1 &,_Ty2 &)' being compiled
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(356): message : see reference to function template instantiation 'std::shared_ptr<Vertex> std::make_shared<Vertex,_Ty1&,_Ty2&>(_Ty1 &,_Ty2 &)' being compiled
           with
           [
               _Ty1=double,
               _Ty2=double
           ]
+  Tests.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\x64\Debug\Tests.exe
