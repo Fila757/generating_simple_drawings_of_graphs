@@ -8,18 +8,16 @@ using namespace std;
 
 int main()
 {
-    auto g = graph(10);
+    auto g = graph(4);
     print_graph(&g);
-    for (int i = 0; i < 10;i++) {
-        g.create_special_vertex(make_pair(0, 0), 0);
+    g.create_special_vertex(make_pair(0, 0), 0);
         //print_graph(&g);
-    }
     print_graph(&g);
 
 
     //g.add_vertex()
 
-    print_graph(&g);
+    //print_graph(&g);
 
     /*
     auto outer_face = make_shared<Face>(nullptr);

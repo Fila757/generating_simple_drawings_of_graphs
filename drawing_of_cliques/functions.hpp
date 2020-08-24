@@ -27,7 +27,7 @@ struct graph {
 
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
-	int number_of_edges = 0; //real edges, indexer in segments
+	//int number_of_edges = 0; //real edges, indexer in segments
 	int realized = 0;
 
 	list<Edge> edges;
@@ -142,13 +142,13 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
-	Edge ab_edge(fromb, toa, nullptr, a, b, face, number_of_edges); //edge from a to b
-	edges.push_back(ab_edge); number_of_edges++;
+	Edge ab_edge(fromb, toa, nullptr, a, b, face, edges.size()); //edge from a to b
+	edges.push_back(ab_edge); //number_of_edges++;
 	Edge* ab_edge_ptr = &edges.back();
 	segments.push_back(ab_edge_ptr);
 
-	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, move(new_face), number_of_edges); //edge from b to a
-	edges.push_back(ba_edge); number_of_edges++;
+	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, move(new_face), edges.size()); //edge from b to a
+	edges.push_back(ba_edge); //number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
 
@@ -301,6 +301,8 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 		edges.erase(it, second_it);
 	else
 		edges.erase(second_it, it);
+
+	//number_of_edges -= 2;
 }
 
 inline void graph::delete_vertex(Vertex* vertex) {
@@ -330,11 +332,11 @@ inline void graph::delete_vertex(Vertex* vertex) {
 }
 
 inline void print_graph(graph* g) {
-	cout << "number of edges: " << g->number_of_edges << endl;
+	cout << "number of edges: " << g->edges.size() << endl;
 
 	for (auto it : g->edges) {
-		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_
-			<< " to:" << it.to_ << " opp:" << it.opposite_ << " index:" << it.index_ << endl;
+		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
+			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ << endl;
 	}
 
 	for (auto it : g->vertices) {
