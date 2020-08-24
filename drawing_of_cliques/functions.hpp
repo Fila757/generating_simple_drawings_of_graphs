@@ -31,7 +31,7 @@ struct graph {
 	int realized = 0;
 
 	list<Edge> edges;
-	vector<pair<int, int > > vertices; 
+	vector<pair<double, double> > vertices; 
 	//int already_created_vertices = 0;
 
 	shared_ptr<Face> outer_face;
@@ -76,9 +76,9 @@ struct Vertex {
 
 	Vertex(Edge* to) : to_(to) {}
 
-	Vertex(Edge* to, int x, int y) : to_(to), x_(x), y_(y) {}
+	Vertex(Edge* to, double x, double y) : to_(to), x_(x), y_(y) {}
 
-	Vertex(int x, int y) : x_(x), y_(y) {} //check if all uses are really connected to edge
+	Vertex(double x, double y) : x_(x), y_(y) {} //check if all uses are really connected to edge
 };
 
 struct Face {
@@ -197,13 +197,14 @@ inline void graph::add_vertex(Edge* edge) {
 
 }
 
-inline vector<pair<double, double> > create_circle(int radius, int cx, int cy, int n) {
+inline vector<pair<double, double> > create_circle(double radius, double cx, double cy, int n) {
 	vector<pair<double, double> > circle;
 
-	double unit_angle = 360 / n;
+	double unit_angle = (double) 360 / n;
 
 	for (int i = 0; i < n;i++) {
-		circle.push_back(make_pair(radius * cos(unit_angle / 180 * M_PI), radius * sin(unit_angle / 180 * M_PI)));
+		circle.push_back(make_pair(cx + radius * cos((i + 1) * (unit_angle / 180) * M_PI), cy + radius * sin((i + 1) * (unit_angle / 180) * M_PI)));
+		//cout << circle[i].x << ":x y:" << circle[i].y << endl;
 	}
 
 	return circle;
@@ -358,6 +359,7 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].x, special_vertex_coordinates[i].y);
 		new_vertex->index_ = index; //the real index of vertex
 		special_vertices.push_back(new_vertex);
+		vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 	}
 
 	
@@ -401,6 +403,7 @@ inline void graph::create_all_special_vertices() {
 	create_special_vertex(make_pair(0, 0), 0); //the center
 
 	for (int i = 0; i < number_of_vertices - 1;i++) { //the rest of a star
+		cout << circle[i].x << ":x 2 y:" << circle[i].y << endl;
 		create_special_vertex(circle[i], i + 1);
 	}
 }

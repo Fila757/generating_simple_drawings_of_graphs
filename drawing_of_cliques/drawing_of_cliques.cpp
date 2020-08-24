@@ -9,6 +9,9 @@ using namespace std;
 int main()
 {
     auto g = graph(4);
+
+    g.create_special_vertex(make_pair(0, 0), 0);
+
     print_graph(&g);
     g.create_all_special_vertices();
         //print_graph(&g);
