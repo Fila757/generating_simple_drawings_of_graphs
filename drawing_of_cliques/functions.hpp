@@ -329,6 +329,8 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
+	vertices.pop_back();
+
 }
 
 inline void print_graph(graph* g) {
