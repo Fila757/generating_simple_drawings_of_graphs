@@ -499,11 +499,11 @@ struct fingerprints {
 			if (states[i] == treshold - 1) {
 				if (i == 0) done = true; //There is no other fingerprint
 				states[i] = 0;
-				next_permutation(fingerprint[i].begin(), fingerprint[i].end());
+				next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end()); // + 1 because rotation system is n-1 times counted so 0 can be fixed as the first position number
 			}
 			else {
 				states[i]++;
-				next_permutation(fingerprint[i].begin(), fingerprint[i].end());
+				next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
 				break;
 			}
 		}
