@@ -10,22 +10,16 @@ int main()
 {
     auto g = graph(4);
 
-    g.create_special_vertex(make_pair(0, 0), 0);
+    //g.create_special_vertex(make_pair(0, 0), 0);
 
     print_graph(&g);
     g.create_all_special_vertices();
         //print_graph(&g);
     print_graph(&g);
 
+    g.recolor_fingerprint("123023013012");
 
-    //g.add_vertex()
-
-    //print_graph(&g);
-
-    /*
-    auto outer_face = make_shared<Face>(nullptr);
-    g.add_edge(make_shared<Vertex>(nullptr, g.vertices[0].x, g.vertices[0].y), make_shared<Vertex>(nullptr, g.vertices[1].x, g.vertices[1].y), outer_face);
+    g.create_base_star();
     print_graph(&g);
-    */
 }
 

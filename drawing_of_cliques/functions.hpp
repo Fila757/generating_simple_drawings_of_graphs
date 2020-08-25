@@ -39,6 +39,11 @@ struct graph {
 	graph(int n) {
 		number_of_vertices = n;
 		outer_face = make_shared<Face>();
+
+		starts.resize(number_of_vertices);
+		for (int i = 0; i < number_of_vertices;i++) {
+			starts[i].resize(number_of_vertices);
+		}
 	}
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
@@ -122,8 +127,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	int counter = 0;
 	auto start_edge = face->edge_;
-	auto cur_edge = start_edge->next_;
-	while (start_edge != cur_edge) { //go around the face and find right edges, it can be done also by going around the vertex
+	auto cur_edge = start_edge;
+	do { //go around the face and find right edges, it can be done also by going around the vertices
 		if (cur_edge->from_ == a) {
 			froma = cur_edge; counter++;
 		}
@@ -138,7 +143,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		}
 		if (counter == 4) break;
 		cur_edge = cur_edge->next_;
-	}
+	} while (start_edge != cur_edge);
 
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
@@ -204,7 +209,6 @@ inline vector<pair<double, double> > create_circle(double radius, double cx, dou
 
 	for (int i = 0; i < n;i++) {
 		circle.push_back(make_pair(cx + radius * cos((i + 1) * (unit_angle / 180) * M_PI), cy + radius * sin((i + 1) * (unit_angle / 180) * M_PI)));
-		//cout << circle[i].x << ":x y:" << circle[i].y << endl;
 	}
 
 	return circle;
@@ -247,7 +251,7 @@ inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_
 
 inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
-	bool second_is_bigger;
+	bool second_is_bigger = false;
 
 	auto edge = *it;
 	auto second_it = it;
@@ -377,6 +381,10 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 		special_vertices[i]->to_->prev_ = special_vertices[((i - 1) + (number_of_vertices - 1)) % (number_of_vertices - 1)]->to_;
 		special_vertices[i]->to_->next_ = special_vertices[(i + 1) % (number_of_vertices - 1)]->to_;
 	}
+
+	/* outer face needs face*/
+	outer_face->edge_ = &edges.back();
+
 }
 
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
@@ -385,7 +393,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 
 	for(int i = 0; i < number_of_vertices;i++){
 		for (int j = 0; j < number_of_vertices - 1;j++) { //every vertex has n-1 around itself
-			starts[i][fingerprint[i * (number_of_vertices) + j] - '0'] = edges_it->index_;
+			starts[i][fingerprint[i * (number_of_vertices - 1) + j] - '0'] = edges_it->index_;
 			edges_it++;
 		}
 	}
