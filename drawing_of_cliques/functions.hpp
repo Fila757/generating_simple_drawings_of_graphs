@@ -126,25 +126,44 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
 	int counter = 0;
-	auto start_edge = face->edge_;
-	auto cur_edge = start_edge;
-	do { //go around the face and find right edges, it can be done also by going around the vertices
-		if (cur_edge->from_ == a) {
-			froma = cur_edge; counter++;
+	if (!outer_face_bool) {
+		auto start_edge = face->edge_;
+		auto cur_edge = start_edge;
+		do { //go around the face and find right edges, it can be done also by going around the vertices
+			if (cur_edge->from_ == a) {
+				froma = cur_edge; counter++;
+			}
+			if (cur_edge->to_ == a) {
+				toa = cur_edge; counter++;
+			}
+			if (cur_edge->from_ == b) {
+				fromb = cur_edge; counter++;
+			}
+			if (cur_edge->to_ == b) {
+				tob = cur_edge; counter++;
+			}
+			if (counter == 4) break;
+			cur_edge = cur_edge->next_;
+		} while (start_edge != cur_edge);
+	}
+	else {
+		for (int i = 0; i < edges.size();i++){
+			auto cur_edge = segments[i];
+			if (cur_edge->from_ == a) {
+				froma = cur_edge; counter++;
+			}
+			if (cur_edge->to_ == a) {
+				toa = cur_edge; counter++;
+			}
+			if (cur_edge->from_ == b) {
+				fromb = cur_edge; counter++;
+			}
+			if (cur_edge->to_ == b) {
+				tob = cur_edge; counter++;
+			}
+			if (counter == 4) break;
 		}
-		if (cur_edge->to_ == a) {
-			toa = cur_edge; counter++;
-		}
-		if (cur_edge->from_ == b) {
-			fromb = cur_edge; counter++;
-		}
-		if (cur_edge->to_ == b) {
-			tob = cur_edge; counter++;
-		}
-		if (counter == 4) break;
-		cur_edge = cur_edge->next_;
-	} while (start_edge != cur_edge);
-
+	}
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
 	Edge ab_edge(fromb, toa, nullptr, a, b, face, edges.size()); //edge from a to b
@@ -152,7 +171,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	Edge* ab_edge_ptr = &edges.back();
 	segments.push_back(ab_edge_ptr);
 
-	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, move(new_face), edges.size()); //edge from b to a
+	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, new_face, edges.size()); //edge from b to a
 	edges.push_back(ba_edge); //number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
@@ -165,11 +184,13 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	fromb->prev_ = ab_edge_ptr;
 	tob->next_ = ba_edge_ptr;
 
-	start_edge = ba_edge_ptr; //setting the face property to all edges around this face
-	cur_edge = start_edge->next_;
-	while (start_edge != cur_edge) {
-		cur_edge->face_ = new_face;
-		cur_edge = cur_edge->next_;
+	if (!outer_face_bool) { //because if it is outer face it is not needed so it can be quicker
+		auto start_edge = ba_edge_ptr; //setting the face property to all edges around this face
+		auto cur_edge = start_edge->next_;
+		while (start_edge != cur_edge) {
+			cur_edge->face_ = new_face;
+			cur_edge = cur_edge->next_;
+		}
 	}
 }
 
