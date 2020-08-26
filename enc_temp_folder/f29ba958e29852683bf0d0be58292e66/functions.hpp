@@ -48,7 +48,7 @@ struct graph {
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
-	void delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool = false);
+	void delete_edge_at_it(list<Edge>::iterator it);
 	void delete_vertex(Vertex* a);
 
 	/*finger print part*/
@@ -290,7 +290,7 @@ inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_
 }
 */
 
-inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool) {
+inline void graph::delete_edge_at_it(list<Edge>::iterator it) {
 
 	bool second_is_bigger = false;
 
@@ -334,12 +334,10 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bo
 	/*update faces*/
 
 	auto cur_edge = opposite.next_;
-	
-	if (!outer_face_bool) {
-		while (opposite != *cur_edge) {
-			cur_edge->face_ = face;
-			cur_edge = cur_edge->next_;
-		}
+
+	while (opposite != *cur_edge) {
+		cur_edge->face_ = face;
+		cur_edge = cur_edge->next_;
 	}
 
 	face->edge_ = froma;

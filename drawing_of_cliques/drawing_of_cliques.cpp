@@ -22,5 +22,8 @@ int main()
 
     g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face, true);
     print_graph(&g);
+
+    g.delete_edge_at_it(--g.edges.end());
+    print_graph(&g);
 }
 
