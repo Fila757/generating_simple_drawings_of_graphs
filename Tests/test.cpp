@@ -44,7 +44,6 @@ TEST(graphs_create_special_vertex, graph_4) {
 
     g.create_special_vertex(make_pair(0, 0), 0);
 
-
     EXPECT_EQ(g.edges.size(), 3);
 
     //faces
@@ -62,7 +61,7 @@ TEST(graphs_create_special_vertex, graph_4) {
     for (int i = 0; i < 3;i++) {
         EXPECT_EQ(g.segments[i]->prev_->index_, g.segments[(i - 1 + 3) % 3]->index_);
         EXPECT_EQ(g.segments[i]->next_->index_, g.segments[(i + 1) % 3]->index_);
-        EXPECT_EQ(nullptr, g.segments[i]->opposite_);
+        EXPECT_EQ(g.segments[i]->opposite_, nullptr);
     }
 }
 
@@ -89,6 +88,161 @@ TEST(graphs_create_special_vertex, graph_5) {
     for (int i = 0; i < 4;i++) {
         EXPECT_EQ(g.segments[i]->prev_->index_, g.segments[(i - 1 + 4) % 4]->index_);
         EXPECT_EQ(g.segments[i]->next_->index_, g.segments[(i + 1) % 4]->index_);
+        EXPECT_EQ(g.segments[i]->opposite_, nullptr);
+    }
+}
+
+TEST(graphs_all_special_vertices, graph_3) {
+    auto g = graph(3);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    //g.recolor_fingerprint("120201"); //recolor to the first coloring
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
+}
+
+
+TEST(graphs_all_special_vertices, graph_4) {
+    auto g = graph(4);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    //g.recolor_fingerprint("123023013012"); //recolor to the first coloring
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n*(n-1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n-1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n-1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
+}
+
+
+TEST(graphs_all_special_vertices, graph_5) {
+    auto g = graph(5);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    //g.recolor_fingerprint("12340234013401240123"); //recolor to the first coloring
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
+}
+
+TEST(graphs_all_special_vertices, graph_100) {
+    auto g = graph(100);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    //g.recolor_fingerprint("12340234013401240123"); //recolor to the first coloring
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
+}
+
+
+
+
+TEST(graphs_add_edge, graph_4) {
+    auto g = graph(4);
+
+    g.create_special_vertex(make_pair(0, 0), 0);
+
+    EXPECT_EQ(g.edges.size(), 3);
+
+    //faces
+    for (int i = 0; i < 3;i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < 3;i++) {
+        EXPECT_EQ(g.segments[i]->to_, g.segments[(i + 1) % 3]->from_);
+        EXPECT_EQ(g.segments[i]->to_->index_, 0);
+    }
+
+    //edges 
+    for (int i = 0; i < 3;i++) {
+        EXPECT_EQ(g.segments[i]->prev_->index_, g.segments[(i - 1 + 3) % 3]->index_);
+        EXPECT_EQ(g.segments[i]->next_->index_, g.segments[(i + 1) % 3]->index_);
         EXPECT_EQ(g.segments[i]->opposite_, nullptr);
     }
 }

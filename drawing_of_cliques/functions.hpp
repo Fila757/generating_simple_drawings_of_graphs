@@ -121,6 +121,19 @@ struct Edge {
 
 };
 
+inline void print_graph(graph* g) {
+	cout << "number of edges: " << g->edges.size() << endl;
+
+	for (auto it : g->edges) {
+		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
+			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ << endl;
+	}
+
+	for (auto it : g->vertices) {
+		cout << it.x << ":x y:" << it.y << endl;
+	}
+}
+
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
@@ -171,18 +184,25 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	Edge* ab_edge_ptr = &edges.back();
 	segments.push_back(ab_edge_ptr);
 
+	print_graph(this);
+
 	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, new_face, edges.size()); //edge from b to a
 	edges.push_back(ba_edge); //number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
 
+	print_graph(this);
+
 	ab_edge_ptr->opposite_ = ba_edge_ptr; //setting opposite edge that has been already made and face edge
 	new_face->edge_ = ba_edge_ptr;
 
+	/*if it throws an exception it is allright because we are tryint to connect unconnectable vertices*/
 	froma->prev_ = ba_edge_ptr; //changing neighborhood edges
 	toa->next_ = ab_edge_ptr;
 	fromb->prev_ = ab_edge_ptr;
 	tob->next_ = ba_edge_ptr;
+
+	print_graph(this);
 
 	if (!outer_face_bool) { //because if it is outer face it is not needed so it can be quicker
 		auto start_edge = ba_edge_ptr; //setting the face property to all edges around this face
@@ -357,19 +377,6 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 	vertices.pop_back();
 
-}
-
-inline void print_graph(graph* g) {
-	cout << "number of edges: " << g->edges.size() << endl;
-
-	for (auto it : g->edges) {
-		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
-			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ << endl;
-	}
-
-	for (auto it : g->vertices) {
-		cout << it.x << ":x y:" << it.y << endl;
-	}
 }
 
 inline void graph::create_special_vertex(pair<double, double> center_of_real_vertex, int index) {
