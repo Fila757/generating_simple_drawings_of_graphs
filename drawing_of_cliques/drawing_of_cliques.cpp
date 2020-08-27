@@ -24,6 +24,6 @@ int main()
 
     print_graph(&g);
 
-
+    cout << g.outer_face << endl;
 }
 

@@ -372,6 +372,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	auto tob = opposite.prev_;
 
 	/*update faces first!*/
+
 	auto cur_edge = opposite.next_;
 	if (!outer_face_bool) {
 		while (opposite != *cur_edge) {
@@ -391,6 +392,8 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	b->to_ = tob;
 
 	face->edge_ = froma;
+
+	outer_face = face; //just to end up with outer face
 
 	/* delete the edge from list, pop from segments should be out of this function */
 	
