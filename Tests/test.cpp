@@ -219,7 +219,7 @@ TEST(graphs_all_special_vertices, graph_100) {
 }
 
 
-TEST(graphs_add_edge, graph_4) {
+TEST(graphs_add_edge_outer_face, graph_4) {
     auto g = graph(4);
     int n = g.number_of_vertices;
 
@@ -305,6 +305,76 @@ TEST(graphs_create_base_star, graph_4) {
     EXPECT_EQ(g.segments[15]->prev_->index_, 8); EXPECT_EQ(g.segments[15]->next_->index_, 1);
     EXPECT_EQ(g.segments[16]->prev_->index_, 1); EXPECT_EQ(g.segments[16]->next_->index_, 9);
     EXPECT_EQ(g.segments[17]->prev_->index_, 11); EXPECT_EQ(g.segments[17]->next_->index_, 2);
+}
+
+TEST(graphs_delete_edge_outer_face, graph_4) {
+    auto g = graph(4);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    g.recolor_fingerprint("123023013012"); //recolor to the first coloring
+
+    g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face, true);
+    g.delete_edge_back(true);
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
+}
+
+TEST(graphs_delete_base_star_outer_face, graph_4) {
+    auto g = graph(4);
+    int n = g.number_of_vertices;
+    g.create_all_special_vertices();
+    g.recolor_fingerprint("123023013012"); //recolor to the first coloring
+
+    g.create_base_star();
+    g.delete_edge_back(true);
+    g.delete_edge_back(true);
+    g.delete_edge_back(true);
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->prev_->index_, g.segments[(n - 1) * i + (j - 1 + (n - 1)) % (n - 1)]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->next_->index_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->index_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
+        }
+    }
 }
 
 int main(int argc, char** argv) {
