@@ -371,6 +371,15 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	auto fromb = edge.next_;
 	auto tob = opposite.prev_;
 
+	/*update faces first!*/
+	auto cur_edge = opposite.next_;
+	if (!outer_face_bool) {
+		while (opposite != *cur_edge) {
+			cur_edge->face_ = face;
+			cur_edge = cur_edge->next_;
+		}
+	}
+
 	/*recconect edges*/
 	froma->prev_ = toa;
 	toa->next_ = froma;
@@ -380,17 +389,6 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	/*update edges if there the bad ones*/
 	a->to_ = toa;
 	b->to_ = tob;
-
-	/*update faces*/
-
-	auto cur_edge = opposite.next_;
-
-	if (!outer_face_bool) {
-		while (opposite != *cur_edge) {
-			cur_edge->face_ = face;
-			cur_edge = cur_edge->next_;
-		}
-	}
 
 	face->edge_ = froma;
 

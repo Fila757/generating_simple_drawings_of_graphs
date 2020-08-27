@@ -1,5 +1,1 @@
-﻿  test.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(183,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(190,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(452,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Tests.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\x64\Debug\Tests.exe
+﻿LINK : fatal error LNK1168: cannot open C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\x64\Debug\Tests.exe for writing

@@ -10,25 +10,20 @@ int main()
 {
     auto g = graph(4);
 
-    //g.create_special_vertex(make_pair(0, 0), 0);
-
-    print_graph(&g);
     g.create_all_special_vertices();
-        //print_graph(&g);
-    print_graph(&g);
-
-    g.recolor_fingerprint("123023013012");
-    print_graph(&g);
-
-    //g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face, true);
-    //print_graph(&g);
-
-    //g.delete_edge_back(true);
-    //print_graph(&g);
-
+    g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
+
     print_graph(&g);
-    g.delete_edge_back(true);g.delete_edge_back(true);
+
+    g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
+
     print_graph(&g);
+
+    g.delete_edge_back();
+
+    print_graph(&g);
+
+
 }
 
