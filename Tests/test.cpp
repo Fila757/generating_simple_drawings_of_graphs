@@ -219,9 +219,6 @@ TEST(graphs_all_special_vertices, graph_100) {
 }
 
 
-
-
-
 TEST(graphs_add_edge, graph_4) {
     auto g = graph(4);
     int n = g.number_of_vertices;
@@ -263,6 +260,51 @@ TEST(graphs_add_edge, graph_4) {
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
     }
+}
+
+TEST(graphs_create_base_star, graph_4) {
+    auto g = graph(4);
+    int n = g.number_of_vertices;
+
+    g.create_all_special_vertices();
+    g.recolor_fingerprint("123023013012"); //recolor to the first coloring
+    g.create_base_star();
+
+    EXPECT_EQ(g.edges.size(), n * (n - 1) + 2*(n - 1));
+
+    //faces
+    for (int i = 0; i < n * (n - 1);i++) {
+        EXPECT_EQ(g.segments[i]->face_, g.outer_face);
+    }
+
+    //vertices 
+    for (int i = 0; i < n;i++) {
+        for (int j = 0; j < n - 1;j++) {
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+        }
+    }
+
+    //edges 
+
+    EXPECT_EQ(g.segments[0]->prev_->index_, 13); EXPECT_EQ(g.segments[0]->next_->index_, 14);
+    EXPECT_EQ(g.segments[1]->prev_->index_, 15); EXPECT_EQ(g.segments[1]->next_->index_, 16);
+    EXPECT_EQ(g.segments[2]->prev_->index_, 17); EXPECT_EQ(g.segments[2]->next_->index_, 12);
+    EXPECT_EQ(g.segments[3]->prev_->index_, 12); EXPECT_EQ(g.segments[3]->next_->index_, 4);
+    EXPECT_EQ(g.segments[4]->prev_->index_, 3); EXPECT_EQ(g.segments[4]->next_->index_, 5);
+    EXPECT_EQ(g.segments[5]->prev_->index_, 4); EXPECT_EQ(g.segments[5]->next_->index_, 13);
+    EXPECT_EQ(g.segments[6]->prev_->index_, 14); EXPECT_EQ(g.segments[6]->next_->index_, 7);
+    EXPECT_EQ(g.segments[7]->prev_->index_, 6); EXPECT_EQ(g.segments[7]->next_->index_, 8);
+    EXPECT_EQ(g.segments[8]->prev_->index_, 7); EXPECT_EQ(g.segments[8]->next_->index_, 15);
+    EXPECT_EQ(g.segments[9]->prev_->index_, 16); EXPECT_EQ(g.segments[9]->next_->index_, 10);
+    EXPECT_EQ(g.segments[10]->prev_->index_, 9); EXPECT_EQ(g.segments[10]->next_->index_, 11);
+    EXPECT_EQ(g.segments[11]->prev_->index_, 10); EXPECT_EQ(g.segments[11]->next_->index_, 17);
+    EXPECT_EQ(g.segments[12]->prev_->index_, 2); EXPECT_EQ(g.segments[12]->next_->index_, 3);
+    EXPECT_EQ(g.segments[13]->prev_->index_, 5); EXPECT_EQ(g.segments[13]->next_->index_, 0);
+    EXPECT_EQ(g.segments[14]->prev_->index_, 0); EXPECT_EQ(g.segments[14]->next_->index_, 6);
+    EXPECT_EQ(g.segments[15]->prev_->index_, 8); EXPECT_EQ(g.segments[15]->next_->index_, 1);
+    EXPECT_EQ(g.segments[16]->prev_->index_, 1); EXPECT_EQ(g.segments[16]->next_->index_, 9);
+    EXPECT_EQ(g.segments[17]->prev_->index_, 11); EXPECT_EQ(g.segments[17]->next_->index_, 2);
 }
 
 int main(int argc, char** argv) {

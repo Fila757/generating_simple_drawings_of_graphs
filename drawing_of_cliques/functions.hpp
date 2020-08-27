@@ -48,7 +48,8 @@ struct graph {
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
-	void delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool = false);
+	//void delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool = false);
+	void delete_edge_back(bool outer_face_bool = false);
 	void delete_vertex(Vertex* a);
 
 	/*finger print part*/
@@ -290,6 +291,7 @@ inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_
 }
 */
 
+/*
 inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool) {
 
 	bool second_is_bigger = false;
@@ -321,6 +323,54 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bo
 	auto fromb = edge.next_;
 	auto tob = opposite.prev_;
 
+	// recconect edges
+	froma->prev_ = toa;
+	toa->next_ = froma;
+	fromb->prev_ = tob;
+	tob->next_ = fromb;
+
+	// update edges if there the bad ones
+	a->to_ = toa;
+	b->to_ = tob;
+
+	// update faces
+
+	auto cur_edge = opposite.next_;
+	
+	if (!outer_face_bool) {
+		while (opposite != *cur_edge) {
+			cur_edge->face_ = face;
+			cur_edge = cur_edge->next_;
+		}
+	}
+
+	face->edge_ = froma;
+
+	// delete the edge from list, pop from segments should be out of this function 
+	if (second_is_bigger)
+		edges.erase(it, second_it);
+	else
+		edges.erase(second_it, it);
+
+	//number_of_edges -= 2;
+}
+*/
+
+inline void graph::delete_edge_back(bool outer_face_bool) {
+
+	auto edge = edges.back();
+	auto opposite = *edge.opposite_;
+
+	auto a = edge.from_;
+	auto b = edge.to_;
+
+	auto face = edge.face_;
+
+	auto froma = opposite.next_;
+	auto toa = edge.prev_;
+	auto fromb = edge.next_;
+	auto tob = opposite.prev_;
+
 	/*recconect edges*/
 	froma->prev_ = toa;
 	toa->next_ = froma;
@@ -334,7 +384,7 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bo
 	/*update faces*/
 
 	auto cur_edge = opposite.next_;
-	
+
 	if (!outer_face_bool) {
 		while (opposite != *cur_edge) {
 			cur_edge->face_ = face;
@@ -345,14 +395,12 @@ inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bo
 	face->edge_ = froma;
 
 	/* delete the edge from list, pop from segments should be out of this function */
-	if (second_is_bigger)
-		edges.erase(it, second_it);
-	else
-		edges.erase(second_it, it);
+	
+	edges.pop_back();edges.pop_back();
+	segments.pop_back();segments.pop_back();
 
 	//number_of_edges -= 2;
 }
-
 inline void graph::delete_vertex(Vertex* vertex) {
 
 	// getting the right variables

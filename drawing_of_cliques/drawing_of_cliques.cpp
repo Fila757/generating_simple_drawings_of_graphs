@@ -20,10 +20,15 @@ int main()
     g.recolor_fingerprint("123023013012");
     print_graph(&g);
 
-    g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face, true);
-    print_graph(&g);
+    //g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face, true);
+    //print_graph(&g);
 
-    g.delete_edge_at_it(--g.edges.end());
+    //g.delete_edge_back(true);
+    //print_graph(&g);
+
+    g.create_base_star();
+    print_graph(&g);
+    g.delete_edge_back(true);g.delete_edge_back(true);
     print_graph(&g);
 }
 
