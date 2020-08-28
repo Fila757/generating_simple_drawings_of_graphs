@@ -52,6 +52,9 @@ struct graph {
 				blocked[i][j].resize(number_of_vertices);
 				for (int k = 0; k < number_of_vertices;k++) {
 					blocked[i][j][k].resize(number_of_vertices);
+					for (int l = 0; l < number_of_vertices;l++) {
+						blocked[i][j][k][l] = false;
+					}
 				}
 			}
 		}
@@ -621,16 +624,18 @@ inline void graph::create_all_possible_drawings(int n) {
 
 		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
 	}
+
+	cout << "realized" << realized << endl;
 }
      
 
 inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
-	int order_of_K4[3][3][3] = { 
+	int order_of_K4[3][3][3] = {
 		{{2, 3, 0},{3, 0, 1},{0, 1, 2}},
 		{{2, 3, 0},{0, 3, 1},{0, 2, 1}},
-		{{3,2,0}, {1, 3, 0}, {0, 2, 1}}
+		{{3, 2, 0}, {1, 3, 0}, {0, 2, 1}}
 	};
 
 	for (int u = 0; u < 3;u++) {
