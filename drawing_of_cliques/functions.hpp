@@ -226,13 +226,13 @@ inline void graph::add_vertex(Edge* edge) {
 	vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
 
-	edges.push_back(Edge(opposite->next_, opposite, edge, new_vertex, a, opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
-	auto toa = &edges.back();
-	segments.push_back(toa);
-
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
 	segments.push_back(tob);
+
+	edges.push_back(Edge(opposite->next_, opposite, edge, new_vertex, a, opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
+	auto toa = &edges.back();
+	segments.push_back(toa);
 
 	edge->to_ = new_vertex; //changing properties of edge
 	edge->next_ = tob;
@@ -420,6 +420,10 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	edge_opposite->to_ = a;
 	edge->next_ = tob->next_;
 	edge_opposite->next_ = toa->next_;
+
+	//setting opposites
+	edge->opposite_ = edge_opposite;
+	edge_opposite->opposite_ = edge;
 
 	//removig the edges from the back of segments and edges
 	//because of the order and recursive algorithm we know they are the last one
