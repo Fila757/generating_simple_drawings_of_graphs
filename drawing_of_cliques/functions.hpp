@@ -7,6 +7,7 @@
 #include <vector>
 #include <list>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -613,16 +614,34 @@ inline void graph::create_all_possible_drawings() {
 	create_all_special_vertices();
 	create_base_star();
 
+	for (int i = 0; i < number_of_vertices;i++) {
+		for (int j = 0; j < number_of_vertices;j++) {
+			for (int k = 0; k < number_of_vertices;k++) {
+				for (int l = 0; l < number_of_vertices;l++) {
+					set<int> tmp = { i, j, k, l };
+					if (tmp.size() < 4) {
+						blocked[i][j][k][l] = true;
+					}
+
+				}
+			}
+		}
+	}
+
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto cur = generator_of_fingerprints.get_next();
 
+		string prefix = "";
+		for (int i = 1; i < number_of_vertices;i++) prefix += (i + '0');
+		auto fingerprint = prefix + cur;
+
 		//check the fingerprint 
-		if (!is_correct_fingerprint(cur)) continue;
+		if (!is_correct_fingerprint(fingerprint)) continue;
 
-		recolor_fingerprint(cur);
+		recolor_fingerprint(fingerprint);
 
-		cout << cur << endl;
+		cout << fingerprint << endl;
 
 		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
 	}
@@ -637,7 +656,7 @@ inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
 	int order_of_K4[3][3][3] = {
 		{{2, 3, 0},{3, 0, 1},{0, 1, 2}},
 		{{2, 3, 0},{0, 3, 1},{0, 2, 1}},
-		{{3, 2, 0}, {1, 3, 0}, {0, 2, 1}}
+		{{3, 2, 0},{1, 3, 0},{0, 2, 1}}
 	};
 
 	for (int u = 0; u < 3;u++) {
@@ -661,10 +680,6 @@ inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
 
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
-	string prefix = "";
-	for (int i = number_of_vertices - 1; i > 0;i--) prefix += (i + '0');
-	auto whole_fingerprint = prefix + fingerprint;
-
 	int i[4];
 
 	for (i[0] = 0; i[0] < number_of_vertices;i[0]++) {
@@ -673,19 +688,21 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 				for (i[3] = i[2] + 1; i[3] < number_of_vertices;i[3]++) {
 
 					vector<int> order[4];
+
 					for (int v = 0; v < 4;v++) {
 						for (int u = 0; u < number_of_vertices - 1;u++) {
-							if (u + i[0 + v] * (number_of_vertices - 1) == i[(1 + v) % 4]
-								|| u + i[0 + v] * (number_of_vertices - 1) == i[(2 + v) % 4]
-								|| u + i[0 + v] * (number_of_vertices - 1) == i[(3 + v) % 4])
+							if (fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(1 + v) % 4]
+								|| fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(2 + v) % 4]
+
+								|| fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(3 + v) % 4])
 							{
-								order[0 + v].push_back(u);
+								order[v].push_back(fingerprint[u + i[v] * (number_of_vertices - 1)] - '0');
 							}
 						}
 					}
 
 					int temp[4];
-					temp[0] = i[0]; temp[1] = order[0][0]; temp[2] = order[0][1]; temp[3] = order[0][2];
+					temp[0] = i[0]; temp[1] = order[0][0];temp[2] = order[0][1];temp[3] = order[0][2];
 					if (!is_correct_K4(order, temp)) return false;
 				}
 			}

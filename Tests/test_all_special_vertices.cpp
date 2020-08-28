@@ -103,8 +103,8 @@ TEST(graphs_all_special_vertices, graph_5) {
     }
 }
 
-TEST(graphs_all_special_vertices, graph_100) {
-    auto g = graph(100);
+TEST(graphs_all_special_vertices, graph_8) {
+    auto g = graph(8);
     int n = g.number_of_vertices;
     g.create_all_special_vertices();
     //g.recolor_fingerprint("12340234013401240123"); //recolor to the first coloring
