@@ -8,13 +8,9 @@ using namespace std;
 
 int main()
 {
-   
-    auto generator_of_fingerprints = fingerprints(4);
-
-    while (!generator_of_fingerprints.done) {
-        cout << generator_of_fingerprints.get_next() << endl;
-    }
-    
+ 
+    auto g = graph(4);
+    g.create_all_possible_drawings(4);
     //print_graph(&g);
 }
 

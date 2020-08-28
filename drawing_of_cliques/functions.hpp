@@ -83,7 +83,7 @@ struct graph {
 	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
 	//void intersect();
 	bool is_correct_fingerprint(const string& fingerprint);
-	void create_all_possible_drawings(int n);
+	void create_all_possible_drawings();
 };
 
 struct Vertex {
@@ -608,12 +608,12 @@ struct fingerprints {
 	}
 };
 
-inline void graph::create_all_possible_drawings(int n) {
+inline void graph::create_all_possible_drawings() {
 
 	create_all_special_vertices();
 	create_base_star();
 
-	auto generator_of_fingerprints = fingerprints(n);
+	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto cur = generator_of_fingerprints.get_next();
 
@@ -621,6 +621,8 @@ inline void graph::create_all_possible_drawings(int n) {
 		if (!is_correct_fingerprint(cur)) continue;
 
 		recolor_fingerprint(cur);
+
+		cout << cur << endl;
 
 		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
 	}
