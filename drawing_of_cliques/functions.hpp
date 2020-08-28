@@ -494,7 +494,6 @@ inline void graph::create_all_special_vertices() {
 	create_special_vertex(make_pair(0, 0), 0); //the center
 
 	for (int i = 0; i < number_of_vertices - 1;i++) { //the rest of a star
-		cout << circle[i].x << ":x 2 y:" << circle[i].y << endl;
 		create_special_vertex(circle[i], i + 1);
 	}
 }

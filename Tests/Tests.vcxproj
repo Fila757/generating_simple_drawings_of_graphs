@@ -36,13 +36,16 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_first_part.cpp" />
+    <ClCompile Include="test_all_special_vertices.cpp" />
+    <ClCompile Include="test_adding_and_deleting_edges.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="test_graph_properties.cpp" />
+    <ClCompile Include="test_special_vertex.cpp" />
     <ClCompile Include="test_vertices_changes.cpp" />
   </ItemGroup>
   <ItemGroup>
