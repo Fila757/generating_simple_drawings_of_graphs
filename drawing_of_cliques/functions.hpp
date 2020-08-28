@@ -44,10 +44,22 @@ struct graph {
 		for (int i = 0; i < number_of_vertices;i++) {
 			starts[i].resize(number_of_vertices);
 		}
+
+		blocked.resize(number_of_vertices);
+		for (int i = 0; i < number_of_vertices;i++) {
+			blocked[i].resize(number_of_vertices);
+			for (int j = 0; j < number_of_vertices;j++) {
+				blocked[i][j].resize(number_of_vertices);
+				for (int k = 0; k < number_of_vertices;k++) {
+					blocked[i][j][k].resize(number_of_vertices);
+				}
+			}
+		}
 	}
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
+
 	//void delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool = false);
 	void delete_edge_back(bool outer_face_bool = false);
 	void delete_vertex(Vertex* a);
@@ -214,7 +226,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		}
 	}
 }
-
 inline void graph::add_vertex(Edge* edge) {
 
 	auto opposite = edge->opposite_;
@@ -555,7 +566,7 @@ struct fingerprints {
 	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
 	/// </summary>
 	fingerprints(int n) {
-		treshold = factorial(n-1); //its length is n-1
+		treshold = factorial(n-2); //its length is n-1 and -1 because 0 is on fixed position
 
 		for (int i = 1; i < n;i++) { 
 			string rotation_system = "";
@@ -565,7 +576,7 @@ struct fingerprints {
 			fingerprint.push_back(rotation_system);
 		}
 
-		for (int i = 0; i < n;i++) {
+		for (int i = 0; i < n - 1;i++) {
 			states.push_back(0);
 		}
 	}
@@ -573,11 +584,11 @@ struct fingerprints {
 	///<summary>
 	// Return state and then move to the next one until it is posible
 	///</summary>
-	const string& get_next() {
+	string get_next() {
 		string res;
 		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
 
-		for (long long i = treshold - 1; i >= 0;i--) {
+		for (long long i = states.size() - 1; i >= 0;i--) {
 			if (states[i] == treshold - 1) {
 				if (i == 0) done = true; //There is no other fingerprint
 				states[i] = 0;
