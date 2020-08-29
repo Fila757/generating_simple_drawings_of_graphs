@@ -155,10 +155,18 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
-	int counter = 0;
-	if (!outer_face_bool) {
+	//int counter = 0;
+
+	toa = a->to_;
+	froma = toa->next_;
+
+    tob = b->to_;
+    fromb = tob->next_;
+
+		/*
 		auto start_edge = face->edge_;
 		auto cur_edge = start_edge;
+
 		do { //go around the face and find right edges, it can be done also by going around the vertices
 			if (cur_edge->from_ == a) {
 				froma = cur_edge; counter++;
@@ -175,7 +183,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			if (counter == 4) break;
 			cur_edge = cur_edge->next_;
 		} while (start_edge != cur_edge);
-	}
+		*/
+	/*
 	else {
 		for (int i = 0; i < edges.size();i++){
 			auto cur_edge = segments[i];
@@ -194,6 +203,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			if (counter == 4) break;
 		}
 	}
+	*/
+
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
 	Edge ab_edge(fromb, toa, nullptr, a, b, face, edges.size()); //edge from a to b
@@ -208,7 +219,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
 
-	print_graph(this);
+	//print_graph(this);
 
 	ab_edge_ptr->opposite_ = ba_edge_ptr; //setting opposite edge that has been already made and face edge
 	new_face->edge_ = ba_edge_ptr;
@@ -237,7 +248,7 @@ inline void graph::add_vertex(Edge* edge) {
 	auto a = edge->from_;
 	auto b = edge->to_;
 
-	auto new_vertex = make_shared<Vertex>(edge, (a->x_ + b->x_) / 2, (a->y_ + b->y_) / 2); //edge is goings to this vertex
+	auto new_vertex = make_shared<Vertex>(opposite, (a->x_ + b->x_) / 2, (a->y_ + b->y_) / 2); //edge is goings to this vertex //"opposite" to choose the same way, it is important! 
 	new_vertex->index_ = -1;
 	vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 

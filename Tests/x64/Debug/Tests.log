@@ -1,26 +1,6 @@
 ﻿  test_adding_and_deleting_edges.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  test_all_special_vertices.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  test_generate_fingerprint.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  test_graph_properties.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  test_special_vertex.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  test_vertices_changes.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(206,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(472,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(210,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(217,69): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(483,104): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(564,61): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Tests.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\x64\Debug\Tests.exe

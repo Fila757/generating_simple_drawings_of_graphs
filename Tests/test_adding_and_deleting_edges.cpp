@@ -396,14 +396,14 @@ TEST(graphs_create_delete_edge, graph_4) {
     EXPECT_EQ(g.segments[16]->opposite_->index_, 17); EXPECT_EQ(g.segments[17]->opposite_->index_, 16);
 }
 
-TEST(graphs_create_base_star_and_add_edge_starts01_starts10, graph_4) {
+TEST(graphs_create_base_star_and_add_edge_starts12_starts21, graph_4) {
     auto g = graph(4);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
-    g.add_edge(g.segments[g.starts[0][1]]->from_, g.segments[g.starts[1][0]]->from_, g.outer_face);
+    g.add_edge(g.segments[g.starts[1][2]]->from_, g.segments[g.starts[2][1]]->from_, g.outer_face);
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1) + 2);
 
