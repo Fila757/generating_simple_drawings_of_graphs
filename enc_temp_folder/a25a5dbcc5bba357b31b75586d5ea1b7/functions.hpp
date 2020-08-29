@@ -549,7 +549,6 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			delete_edge_back();
 		}
 
-		//this doesnt work, because it works when vertices are added on one segment but doesnt work when line is crossing and both its vertices are -1 indexed then we need to find the way somehow differently
 		auto index_first_end = segments[seg->index_]->from_->index_ != -1 ? segments[seg->index_]->from_->index_ : segments[seg->index_]->opposite_->from_->index_;
 		auto index_second_end = segments[seg->index_]->to_->index_ != -1 ? segments[seg->index_]->to_->index_ : segments[seg->index_]->opposite_->to_->index_;
 		if (!blocked[a][b][index_first_end][index_second_end]) { //if there is same index, always true // it can be divided edge so we need to look at the ends of it to get the indices of vertices

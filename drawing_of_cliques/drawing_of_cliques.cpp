@@ -9,9 +9,9 @@ using namespace std;
 int main()
 {
  
-    auto g = graph(4);
+    auto g = graph(5);
 
     g.create_all_possible_drawings();
-    print_graph(&g);
+    //print_graph(&g);
 }
 
