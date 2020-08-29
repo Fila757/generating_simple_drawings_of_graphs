@@ -208,7 +208,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
 
-	//print_graph(this);
+	print_graph(this);
 
 	ab_edge_ptr->opposite_ = ba_edge_ptr; //setting opposite edge that has been already made and face edge
 	new_face->edge_ = ba_edge_ptr;
@@ -237,9 +237,9 @@ inline void graph::add_vertex(Edge* edge) {
 	auto a = edge->from_;
 	auto b = edge->to_;
 
-	auto new_vertex = make_shared<Vertex>(edge, (a->x_ + b->x_) / 2, (a->y_ + b->y_) / 2); //edge is goint to this vertex
+	auto new_vertex = make_shared<Vertex>(edge, (a->x_ + b->x_) / 2, (a->y_ + b->y_) / 2); //edge is goings to this vertex
+	new_vertex->index_ = -1;
 	vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
-
 
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -534,22 +534,28 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			else {
 				realized++;
 			}
+
+			delete_edge_back();
 		}
-		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always tru
+
+		auto index_first_end = segments[seg->index_]->from_->index_ != -1 ? segments[seg->index_]->from_->index_ : segments[seg->index_]->opposite_->from_->index_;
+		auto index_second_end = segments[seg->index_]->to_->index_ != -1 ? segments[seg->index_]->to_->index_ : segments[seg->index_]->opposite_->to_->index_;
+		if (!blocked[a][b][index_first_end][index_second_end]) { //if there is same index, always true // it can be divided edge so we need to look at the ends of it to get the indices of vertices
+
+			print_graph(this);
 
 			//intersecting
-			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
+			blocked[a][b][index_first_end][index_second_end] = true;
 			add_vertex(seg);
 			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_);
 
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
 
-			//undo-intersect //not commutitave
+			//undo-intersect //not commutative!
 			delete_edge_back();
 			delete_vertex((seg->to_).get());
-
-			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
+			blocked[a][b][index_first_end][index_second_end] = false;
 		}
 		seg = seg->next_;
 	}
