@@ -517,6 +517,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	auto seg = segments[s_index]->next_;
 	
+	print_graph(this);
+
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
 		
 		if (seg == segments[t_index]) {
@@ -533,16 +535,18 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				realized++;
 			}
 		}
-		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always true
-			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
+		if (!blocked[a][b][seg->from_->index_][seg->to_->index_]) { //if there is same index, always tru
 
 			//intersecting
+			blocked[a][b][seg->from_->index_][seg->to_->index_] = true;
 			add_vertex(seg);
+			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_);
 
 			//try to go further
-			find_the_way_to_intersect(seg->opposite_->index_, t_index, a, b);
+			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
 
-			//undo-intersect
+			//undo-intersect //not commutitave
+			delete_edge_back();
 			delete_vertex((seg->to_).get());
 
 			blocked[a][b][seg->from_->index_][seg->to_->index_] = false;
@@ -570,7 +574,7 @@ struct fingerprints {
 	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
 	/// </summary>
 	fingerprints(int n) {
-		treshold = factorial(n-2); //its length is n-1 and -1 because 0 is on fixed position
+		treshold = factorial(n - 2); //its length is n-1 and -1 because 0 is on fixed position
 
 		for (int i = 1; i < n;i++) { 
 			string rotation_system = "";
@@ -611,7 +615,15 @@ struct fingerprints {
 
 inline void graph::create_all_possible_drawings() {
 
+	string first_fingerprint = "";
+	for (int i = 0; i < number_of_vertices;i++) {
+		for (int j = 0; j < number_of_vertices ;j++) {
+			if (i != j) first_fingerprint += (j + '0');
+		}
+	}
+
 	create_all_special_vertices();
+	recolor_fingerprint(first_fingerprint);
 	create_base_star();
 
 	for (int i = 0; i < number_of_vertices;i++) {
@@ -643,7 +655,7 @@ inline void graph::create_all_possible_drawings() {
 
 		cout << fingerprint << endl;
 
-		find_the_way_to_intersect(starts[0][1], starts[1][0], 0, 1);
+		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 	}
 
 	cout << "realized" << realized << endl;

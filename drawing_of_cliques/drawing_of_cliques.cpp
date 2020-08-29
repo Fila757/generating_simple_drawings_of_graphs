@@ -10,7 +10,8 @@ int main()
 {
  
     auto g = graph(4);
+
     g.create_all_possible_drawings();
-    //print_graph(&g);
+    print_graph(&g);
 }
 
