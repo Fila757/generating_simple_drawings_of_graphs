@@ -28,7 +28,9 @@ struct graph {
 
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
+
 	int realized = 0;
+	bool done = false;
 
 	list<Edge> edges;
 
@@ -359,12 +361,20 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
+
+				if (done) return;
+
 			}
 			else if (a < number_of_vertices - 2) {
 				find_the_way_to_intersect(starts[a + 1][a + 2], starts[a + 2][a + 1], a + 1, a + 2);
+
+				if (done) return;
 			}
 			else {
 				realized++;
+				done = true;
+				return;
+
 			}
 
 			delete_edge_back();
@@ -384,6 +394,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
+			if (done) return;
 
 			//undo-intersect //not commutative!
 			delete_edge_back();
@@ -454,17 +465,6 @@ struct fingerprints {
 
 inline void graph::create_all_possible_drawings() {
 
-	string first_fingerprint = "";
-	for (int i = 0; i < number_of_vertices;i++) {
-		for (int j = 0; j < number_of_vertices ;j++) {
-			if (i != j) first_fingerprint += (j + '0');
-		}
-	}
-
-	create_all_special_vertices();
-	recolor_fingerprint(first_fingerprint);
-	create_base_star();
-
 	for (int i = 0; i < number_of_vertices;i++) {
 		for (int j = 0; j < number_of_vertices;j++) {
 			for (int k = 0; k < number_of_vertices;k++) {
@@ -490,11 +490,15 @@ inline void graph::create_all_possible_drawings() {
 		//check the fingerprint 
 		if (!is_correct_fingerprint(fingerprint)) continue;
 
+		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
+		create_base_star();
 
 		cout << fingerprint << endl;
 
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+
+		edges.resize(0); segments.resize(0);
 	}
 
 	cout << "realized " << realized << endl;
