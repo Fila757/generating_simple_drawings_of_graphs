@@ -349,7 +349,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	auto seg = segments[s_index]->next_;
 	
-	print_graph(this);
+	//print_graph(this);
 
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
 		
