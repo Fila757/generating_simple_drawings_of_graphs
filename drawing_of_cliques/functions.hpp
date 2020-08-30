@@ -28,12 +28,9 @@ struct graph {
 
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
-	//int number_of_edges = 0; //real edges, indexer in segments
 	int realized = 0;
 
 	list<Edge> edges;
-	vector<pair<double, double> > vertices; 
-	//int already_created_vertices = 0;
 
 	shared_ptr<Face> outer_face;
 
@@ -61,23 +58,23 @@ struct graph {
 		}
 	}
 
-	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool = false);
+	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
 
-	//void delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool = false);
 	void delete_edge_back(bool outer_face_bool = false);
 	void delete_vertex(Vertex* a);
 
 	/*finger print part*/
 
-	vector<Edge*> segments; //number of edges indexer
+	//number of edges indexer
+	vector<Edge*> segments; 
+	array_4D blocked; 
 
-	array_4D blocked; //iniciatize somewhere where we aready know the size
+	// edge from i to j, starting indeces on the the special vertex 
+	// when j to i get the opposite edge index so on point ont the opposite special vertex 
+	vector<vector<int> > starts;
 
-	vector<vector<int> > starts; // edge from i to j, starting indeces on the the special vertex, when j to i get the opposite edge index so on point ont the opposite special vertex 
-
-	//TODO maybe add arguments and implement it, test the normal part
-	void create_special_vertex(pair<double, double> center_of_real_vertex, int index);
+	void create_special_vertex(int index);
 	void recolor_fingerprint(const string& rotation);
 	void create_base_star();
 	void create_all_special_vertices();
@@ -88,19 +85,15 @@ struct graph {
 };
 
 struct Vertex {
-	double x_ = 0, y_ = 0;
-
 	Edge* to_;
 
 	int index_;
 
 	Vertex() {}
 
+	//it is really good to be the opposite one because when you create new vertex 
+	//from the edge side then it is good to go from the intersection opposite side
 	Vertex(Edge* to) : to_(to) {}
-
-	Vertex(Edge* to, double x, double y) : to_(to), x_(x), y_(y) {}
-
-	Vertex(double x, double y) : x_(x), y_(y) {} //check if all uses are really connected to edge
 };
 
 struct Face {
@@ -146,16 +139,11 @@ inline void print_graph(graph* g) {
 			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ << endl;
 	}
 
-	for (auto it : g->vertices) {
-		cout << it.x << ":x y:" << it.y << endl;
-	}
 }
 
-inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, bool outer_face_bool) {
+inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
-
-	//int counter = 0;
 
 	toa = a->to_;
 	froma = toa->next_;
@@ -163,58 +151,16 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
     tob = b->to_;
     fromb = tob->next_;
 
-		/*
-		auto start_edge = face->edge_;
-		auto cur_edge = start_edge;
-
-		do { //go around the face and find right edges, it can be done also by going around the vertices
-			if (cur_edge->from_ == a) {
-				froma = cur_edge; counter++;
-			}
-			if (cur_edge->to_ == a) {
-				toa = cur_edge; counter++;
-			}
-			if (cur_edge->from_ == b) {
-				fromb = cur_edge; counter++;
-			}
-			if (cur_edge->to_ == b) {
-				tob = cur_edge; counter++;
-			}
-			if (counter == 4) break;
-			cur_edge = cur_edge->next_;
-		} while (start_edge != cur_edge);
-		*/
-	/*
-	else {
-		for (int i = 0; i < edges.size();i++){
-			auto cur_edge = segments[i];
-			if (cur_edge->from_ == a) {
-				froma = cur_edge; counter++;
-			}
-			if (cur_edge->to_ == a) {
-				toa = cur_edge; counter++;
-			}
-			if (cur_edge->from_ == b) {
-				fromb = cur_edge; counter++;
-			}
-			if (cur_edge->to_ == b) {
-				tob = cur_edge; counter++;
-			}
-			if (counter == 4) break;
-		}
-	}
-	*/
-
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
-	Edge ab_edge(fromb, toa, nullptr, a, b, face, edges.size()); //edge from a to b
+	Edge ab_edge(fromb, toa, nullptr, a, b, face, a_index*100 + b_index); //edge from a to b
 	edges.push_back(ab_edge); //number_of_edges++;
 	Edge* ab_edge_ptr = &edges.back();
 	segments.push_back(ab_edge_ptr);
 
 	//print_graph(this);
 
-	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, new_face, edges.size()); //edge from b to a
+	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, new_face, b_index*100 + a_index); //edge from b to a
 	edges.push_back(ba_edge); //number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
@@ -248,9 +194,8 @@ inline void graph::add_vertex(Edge* edge) {
 	auto a = edge->from_;
 	auto b = edge->to_;
 
-	auto new_vertex = make_shared<Vertex>(opposite, (a->x_ + b->x_) / 2, (a->y_ + b->y_) / 2); //edge is goings to this vertex //"opposite" to choose the same way, it is important! 
+	auto new_vertex = make_shared<Vertex>(opposite); //edge is going to this vertex //"opposite" to choose the same way, it is important! 
 	new_vertex->index_ = -1;
-	vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -269,118 +214,6 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->opposite_ = tob;
 
 }
-
-inline vector<pair<double, double> > create_circle(double radius, double cx, double cy, int n) {
-	vector<pair<double, double> > circle;
-
-	double unit_angle = (double) 360 / n;
-
-	for (int i = 0; i < n;i++) {
-		circle.push_back(make_pair(cx + radius * cos((i + 1) * (unit_angle / 180) * M_PI), cy + radius * sin((i + 1) * (unit_angle / 180) * M_PI)));
-	}
-
-	return circle;
-}
-
-/*
-inline void graph::create_next_vertex(double scale, int cx, int cy) { //size_of_block is synchronized with scale
-	double x = cx, y = cy;
-
-	//divide into four parts
-
-	if (already_created_vertices == -1) {
-		vertices.push_back(make_pair(x, y));
-		already_created_vertices++;
-		return;
-	}
-
-	int mod = already_created_vertices % 4;
-	int div = already_created_vertices / 4;
-
-	int sign;
-	if (mod % 2 == 0) {
-		sign = (mod == 1 || mod == 2) ? -1 : 1; // first and second sector even if it cannot drop in thi sector
-		x += sign * size_of_block;
-		//sign already done // second or first going opposite
-		y += sign * (-(size_of_block - scale) + scale * div);
-	}
-	if (mod % 2 == 1) {
-		sign = (mod == 0 || mod == 1) ? 1 : -1; // zero and first sector
-		y += sign * size_of_block;
-		sign = (mod == 1) ? -1 : 1; // second or first
-		x += sign * (-(size_of_block - scale) + scale * div);
-	}
-
-	vertices.push_back(make_pair(x, y));
-
-	already_created_vertices++;
-}
-*/
-
-/*
-inline void graph::delete_edge_at_it(list<Edge>::iterator it, bool outer_face_bool) {
-
-	bool second_is_bigger = false;
-
-	auto edge = *it;
-	auto second_it = it;
-	Edge opposite;
-	list<Edge>::iterator next_it = next(it, 1);
-	list<Edge>::iterator prev_it = next(it, -1); //hopeffuly doesnt fall down when beggining
-	if ((next_it != edges.end() && *(edge.opposite_) == *(next_it))) {
-		opposite = *next_it;
-		second_it = next_it;
-		second_is_bigger = true;
-	}
-	else if (it != edges.begin() && *(edge.opposite_) == *(prev_it)) {
-		opposite = *prev_it;
-		second_it = prev_it;
-		second_is_bigger = false;
-	}
-
-
-	auto a = edge.from_;
-	auto b = edge.to_;
-
-	auto face = edge.face_;
-
-	auto froma = opposite.next_;
-	auto toa = edge.prev_;
-	auto fromb = edge.next_;
-	auto tob = opposite.prev_;
-
-	// recconect edges
-	froma->prev_ = toa;
-	toa->next_ = froma;
-	fromb->prev_ = tob;
-	tob->next_ = fromb;
-
-	// update edges if there the bad ones
-	a->to_ = toa;
-	b->to_ = tob;
-
-	// update faces
-
-	auto cur_edge = opposite.next_;
-	
-	if (!outer_face_bool) {
-		while (opposite != *cur_edge) {
-			cur_edge->face_ = face;
-			cur_edge = cur_edge->next_;
-		}
-	}
-
-	face->edge_ = froma;
-
-	// delete the edge from list, pop from segments should be out of this function 
-	if (second_is_bigger)
-		edges.erase(it, second_it);
-	else
-		edges.erase(second_it, it);
-
-	//number_of_edges -= 2;
-}
-*/
 
 inline void graph::delete_edge_back(bool outer_face_bool) {
 
@@ -456,23 +289,17 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
-	vertices.pop_back();
-
 }
 
-inline void graph::create_special_vertex(pair<double, double> center_of_real_vertex, int index) {
-
-	//maybe change the radius so the accuracy shouldnot be a problem
-	auto special_vertex_coordinates = create_circle(1, center_of_real_vertex.x, center_of_real_vertex.y, number_of_vertices - 1); // -1 because you dont wan to be connected to yourself
+inline void graph::create_special_vertex(int index) {
 
 	vector<shared_ptr<Vertex> > special_vertices;
 
 	/*create vertices with coordinates*/
 	for (int i = 0; i < number_of_vertices - 1;i++) {
-		auto new_vertex = make_shared<Vertex>(special_vertex_coordinates[i].x, special_vertex_coordinates[i].y);
+		auto new_vertex = make_shared<Vertex>();
 		new_vertex->index_ = index; //the real index of vertex
 		special_vertices.push_back(new_vertex);
-		vertices.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 	}
 
 	
@@ -480,7 +307,7 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 	for (int i = 0; i < number_of_vertices - 1;i++) {
 		auto first_vertex = special_vertices[i];
 		auto second_vertex = special_vertices[(i + 1) % (number_of_vertices - 1)];
-		edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, edges.size()));
+		edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, 100*index + index));
 		second_vertex->to_ = &edges.back();
 		segments.push_back(&edges.back()); 
 	}
@@ -498,29 +325,23 @@ inline void graph::create_special_vertex(pair<double, double> center_of_real_ver
 
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
 
-	auto edges_it = edges.begin();
-
 	for(int i = 0; i < number_of_vertices;i++){
 		for (int j = 0; j < number_of_vertices - 1;j++) { //every vertex has n-1 around itself
-			starts[i][fingerprint[i * (number_of_vertices - 1) + j] - '0'] = edges_it->index_;
-			edges_it++;
+			starts[i][fingerprint[i * (number_of_vertices - 1) + j] - '0'] = i * (number_of_vertices - 1) + j;
 		}
 	}
 }
 
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
-		add_edge(segments[starts[0][i]]->from_, segments[starts[i][0]]->from_, outer_face, true); //from vertex is that in rotation
+		add_edge(segments[starts[0][i]]->from_, segments[starts[i][0]]->from_, outer_face, 0, i, true); //from vertex is that in rotation
 	}
 }
 
 inline void graph::create_all_special_vertices() {
-	auto circle = create_circle(10, 0, 0, number_of_vertices - 1);
 
-	create_special_vertex(make_pair(0, 0), 0); //the center
-
-	for (int i = 0; i < number_of_vertices - 1;i++) { //the rest of a star
-		create_special_vertex(circle[i], i + 1);
+	for (int i = 0; i < number_of_vertices;i++) { //the rest of a star
+		create_special_vertex(i);
 	}
 }
 
@@ -534,7 +355,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		
 		if (seg == segments[t_index]) {
 
-			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_);
+			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_, a, b);
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -549,9 +370,9 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			delete_edge_back();
 		}
 
-		//this doesnt work, because it works when vertices are added on one segment but doesnt work when line is crossing and both its vertices are -1 indexed then we need to find the way somehow differently
-		auto index_first_end = segments[seg->index_]->from_->index_ != -1 ? segments[seg->index_]->from_->index_ : segments[seg->index_]->opposite_->from_->index_;
-		auto index_second_end = segments[seg->index_]->to_->index_ != -1 ? segments[seg->index_]->to_->index_ : segments[seg->index_]->opposite_->to_->index_;
+		auto index_first_end = seg->index_ / 100;
+		auto index_second_end = seg->index_ % 100;
+
 		if (!blocked[a][b][index_first_end][index_second_end]) { //if there is same index, always true // it can be divided edge so we need to look at the ends of it to get the indices of vertices
 
 			//print_graph(this);
@@ -559,7 +380,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			//intersecting
 			blocked[a][b][index_first_end][index_second_end] = true;
 			add_vertex(seg);
-			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_);
+			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_, a, b);
 
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
@@ -676,7 +497,7 @@ inline void graph::create_all_possible_drawings() {
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 	}
 
-	cout << "realized" << realized << endl;
+	cout << "realized " << realized << endl;
 }
      
 

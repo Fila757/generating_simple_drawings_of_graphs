@@ -5,7 +5,7 @@
 TEST(graphs_create_special_vertex, graph_3) {
     auto g = graph(3);
 
-    g.create_special_vertex(make_pair(0, 0), 1);
+    g.create_special_vertex(1);
 
     EXPECT_EQ(g.edges.size(), 2);
 
@@ -31,7 +31,7 @@ TEST(graphs_create_special_vertex, graph_3) {
 TEST(graphs_create_special_vertex, graph_4) {
     auto g = graph(4);
 
-    g.create_special_vertex(make_pair(0, 0), 0);
+    g.create_special_vertex(0);
 
     EXPECT_EQ(g.edges.size(), 3);
 
@@ -57,7 +57,7 @@ TEST(graphs_create_special_vertex, graph_4) {
 TEST(graphs_create_special_vertex, graph_5) {
     auto g = graph(5);
 
-    g.create_special_vertex(make_pair(0, 0), 3);
+    g.create_special_vertex(3);
 
 
     EXPECT_EQ(g.edges.size(), 4);
