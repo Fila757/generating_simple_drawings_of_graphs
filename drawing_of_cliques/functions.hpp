@@ -136,9 +136,11 @@ struct Edge {
 inline void print_graph(graph* g) {
 	cout << "number of edges: " << g->edges.size() << endl;
 
+	int i = 0;
 	for (auto it : g->edges) {
 		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
-			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ << endl;
+			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ <<  " s: " << i << endl;
+		i++;
 	}
 
 }
@@ -351,10 +353,10 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	auto seg = segments[s_index]->next_;
 	
-	//print_graph(this);
+	print_graph(this);
 
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
-		
+
 		if (seg == segments[t_index]) {
 
 			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_, a, b);
@@ -371,6 +373,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				if (done) return;
 			}
 			else {
+
+				//print_graph(this);
 				realized++;
 				done = true;
 				return;
@@ -394,7 +398,10 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
-			if (done) return;
+			if (done) {
+				blocked[a][b][index_first_end][index_second_end] = false; 
+				return;
+			}
 
 			//undo-intersect //not commutative!
 			delete_edge_back();
@@ -488,7 +495,7 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = prefix + cur;
 
 		//check the fingerprint 
-		if (!is_correct_fingerprint(fingerprint)) continue;
+		//if (!is_correct_fingerprint(fingerprint)) continue;
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
@@ -499,6 +506,7 @@ inline void graph::create_all_possible_drawings() {
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
 		edges.resize(0); segments.resize(0);
+		done = false;
 	}
 
 	cout << "realized " << realized << endl;
