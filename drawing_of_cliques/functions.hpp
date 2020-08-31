@@ -198,7 +198,7 @@ inline void graph::add_vertex(Edge* edge) {
 	auto a = edge->from_;
 	auto b = edge->to_;
 
-	auto new_vertex = make_shared<Vertex>(opposite); //edge is going to this vertex //"opposite" to choose the same way, it is important! 
+	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = -1;
 
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
@@ -396,12 +396,17 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			add_vertex(seg);
 			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_, a, b);
 
+			/*important! changing to_ to the opposite direction */
+			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]; 
+
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
 			if (done) {
 				blocked[a][b][index_first_end][index_second_end] = false; 
 				return;
 			}
+
+			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3];
 
 			//undo-intersect //not commutative!
 			delete_edge_back();
