@@ -357,6 +357,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	
 	//print_graph(this);
 
+	//cout << "" << endl;
+
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
 
 		if (seg == segments[t_index]) {
@@ -511,6 +513,10 @@ inline void graph::create_all_possible_drawings() {
 		cout << fingerprint << endl;
 
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+
+		if (done) {
+			cout << "yes" << endl;
+		}
 
 		edges.resize(0); segments.resize(0);
 		done = false;
