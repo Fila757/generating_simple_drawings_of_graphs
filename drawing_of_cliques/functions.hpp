@@ -538,9 +538,10 @@ inline void graph::create_all_possible_drawings() {
 inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 
 	string permutation_holder;
-	for (int i = 0; i < number_of_vertices;i++) permutation_holder += i;
+	for (int i = 0; i < number_of_vertices;i++) 
+		permutation_holder += (i + '0');
 
-	auto min = fingerprint;
+	auto min_fingerprint = fingerprint;
 	auto cur_fingerprint = fingerprint;
 	auto new_fingerprint = fingerprint;
 
@@ -555,8 +556,11 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 		cout << new_fingerprint << endl;
 
+		new_fingerprint = min(min_fingerprint, new_fingerprint);
+
 	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
 
+	return min_fingerprint;
 }
      
 

@@ -9,8 +9,10 @@ using namespace std;
 int main()
 {
     auto g = graph(4);
+
+    cout << "minimal: " << g.find_canonic_fingerprint("123023031012") << endl;
  
-    g.create_all_possible_drawings();
+    //g.create_all_possible_drawings();
     //print_graph(&g);
 }
 
