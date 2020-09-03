@@ -545,18 +545,29 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	auto cur_fingerprint = fingerprint;
 	auto new_fingerprint = fingerprint;
 
-	do {
+	do { //can be changes just to while because first doesnt any change
 		cur_fingerprint = fingerprint;
 		new_fingerprint = fingerprint;
-		for (int i = 0; i < fingerprint.size();i++) {
-			cur_fingerprint[i] = permutation_holder[cur_fingerprint[i] - '0'];
+		for (int i = 0; i < number_of_vertices;i++) {
+			int rotation_index = -1;
+			for (int j = 0; j < number_of_vertices - 1;j++) {
+				int index = (number_of_vertices - 1) * i + j;
+
+				if (permutation_holder[cur_fingerprint[index] - '0'] == '0'
+					|| (rotation_index == -1 && permutation_holder[cur_fingerprint[index] - '0'] == '1')) rotation_index = j;
+
+				cur_fingerprint[index] = permutation_holder[cur_fingerprint[index] - '0'];
+			}
+
+			rotate(cur_fingerprint.begin() + (number_of_vertices - 1) * i,
+				cur_fingerprint.begin() + (number_of_vertices - 1) * i + rotation_index,
+				cur_fingerprint.begin() + (number_of_vertices - 1) * (i + 1));
 		}
 		for (int i = 0; i < number_of_vertices;i++) {
 			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1, cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
 		}
-		cout << new_fingerprint << endl;
 
-		new_fingerprint = min(min_fingerprint, new_fingerprint);
+		min_fingerprint = min(min_fingerprint, new_fingerprint);
 
 	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
 
