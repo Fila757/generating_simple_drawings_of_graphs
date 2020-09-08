@@ -28,7 +28,7 @@ int main()
 {
     auto g = graph(5);
 
-    /*
+    
     cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
     cout << "minimal: " << g.find_canonic_fingerprint("12340234013401420132") << endl;
     cout << "minimal: " << g.find_canonic_fingerprint("12340234013404120312") << endl;
@@ -37,7 +37,7 @@ int main()
     cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
  
     g.create_all_possible_drawings();
-    */
+    
     // testing relabeling because we have found 6 realizable RS written 
 
     string basic_string = "01234";
@@ -46,7 +46,7 @@ int main()
 
     // with 5 intersection 1 and 3 no, 1 and 2 no, 2 and 3 no
 
-
+    /*
     do {
         set<string> first_set = { "0213", "0214", "0314"};
         set<string> second_set = { "0213", "0214", "0423" };
@@ -115,7 +115,7 @@ int main()
 
     } while (next_permutation(basic_string.begin(), basic_string.end()));
 
-
+    */
     //print_graph(&g);
 }
 
