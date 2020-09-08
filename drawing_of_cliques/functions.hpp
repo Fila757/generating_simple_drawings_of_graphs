@@ -515,6 +515,8 @@ inline void graph::create_all_possible_drawings() {
 
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
+		if (canonic_fingerprints[fingerprint]) continue;
+		canonic_fingerprints[fingerprint] = true;
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
@@ -526,6 +528,7 @@ inline void graph::create_all_possible_drawings() {
 
 		if (done) {
 			cout << "yes" << endl;
+			print_graph(this);
 		}
 
 		edges.resize(0); segments.resize(0);
@@ -566,6 +569,8 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		for (int i = 0; i < number_of_vertices;i++) {
 			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1, cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
 		}
+
+		//cout << new_fingerprint << endl;
 
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
 
