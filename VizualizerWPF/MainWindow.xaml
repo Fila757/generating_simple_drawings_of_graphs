@@ -1,0 +1,48 @@
+﻿<Window x:Class="VizualizerWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VizualizerWPF"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="531" Width="765">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width= "217*"/>
+            <ColumnDefinition Width= "38*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height= "15*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "60*"/>
+            <RowDefinition Height= "38*"/>
+            <RowDefinition Height= "62*"/>
+            <RowDefinition Height= "33*"/>
+            <RowDefinition Height= "49*"/>
+            <RowDefinition Height= "15*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="Adding" Content="Přídávání" Grid.Column= "1" Grid.Row= "1" Margin="3,3,3,3" Click="Adding_Click"/>
+        <Button x:Name="Removing" Content="Mazaní" Grid.Column= "1" Grid.Row= "2" Margin="3,3,3,3" Click="Removing_Click"/>
+        <Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "1" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>
+        <Button x:Name="Kedges" Content="K-hrany" Grid.Column= "1" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>
+        <ListBox x:Name="KedgesListBox" Grid.Column="1" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
+            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
+            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
+            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
+        </ListBox>
+        <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="1" Grid.Row="7" Margin="3,3,3,3"/>
+        <Button x:Name="NextDrawing" Content="Dalsi jednoduché &#xa; nakreslení velikosti:" Margin="3,3,3,3" Grid.Column="1" Grid.Row="8" Click="NextDrawing_Click"/>
+        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="1" Grid.Row="9" Margin="3,3,3,3"/>
+        
+        <Image Name="legend" Grid.Column="0" Grid.Row="10" Source="/re_numbered_legend.png" Stretch="Uniform"/>
+
+        <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9"/>
+
+
+    </Grid>
+</Window>
