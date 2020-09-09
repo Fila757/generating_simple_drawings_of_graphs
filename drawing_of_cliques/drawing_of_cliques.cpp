@@ -36,7 +36,7 @@ int main()
     cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
     cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
  
-    g.create_all_possible_drawings();
+    //g.create_all_possible_drawings();
     
     // testing relabeling because we have found 6 realizable RS written 
 
@@ -48,8 +48,12 @@ int main()
 
     /*
     do {
-        set<string> first_set = { "0213", "0214", "0314"};
-        set<string> second_set = { "0213", "0214", "0423" };
+        set<string> first_set = { "0213", "0214", "0314", "1423", "0423"};
+        set<string> second_set = { "0213", "0214", "1324", "0413", "0423" };
+
+        if (basic_string == "21043") {
+            cout << basic_string << endl;
+        }
 
         //cout << first_set.size() << endl;
         //cout << basic_string << endl;
@@ -69,25 +73,8 @@ int main()
             if (f > s) swap(f, s);
             tmp.insert(f + s);
         }
+
         first_set = tmp;
-        tmp.clear();
-
-        for (auto it = second_set.begin(); it != second_set.end();it++) {
-            string elem = *it;
-            for (int i = 0; i < elem.size();i++) {
-                elem[i] = basic_string[elem[i] - '0'];
-            }
-
-            string f = elem.substr(0, 2);
-            string s = elem.substr(2, 2);
-
-            f = find_lexical_min_rotation(f);
-            s = find_lexical_min_rotation(s);
-
-            if (f > s) swap(f, s);
-            tmp.insert(f + s);
-        }
-        second_set = tmp;
         tmp.clear();
 
         bool bad = false;
@@ -114,7 +101,6 @@ int main()
         }
 
     } while (next_permutation(basic_string.begin(), basic_string.end()));
-
     */
     //print_graph(&g);
 }

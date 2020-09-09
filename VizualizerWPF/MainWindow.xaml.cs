@@ -225,7 +225,7 @@ namespace VizualizerWPF
             HashSet<Coordinates> vertices = new HashSet<Coordinates>();
 
             string line;
-            while(!String.Equals((line = streamReader.ReadLine()), "#"))
+            while(!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
                 string[] temp = line.Split();
 
