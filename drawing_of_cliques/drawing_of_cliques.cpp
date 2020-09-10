@@ -26,21 +26,21 @@ string find_lexical_min_rotation(string str)
 
 int main()
 {
-    auto g = graph(5);
+    auto g = graph(3);
 
     
-    cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
-    cout << "minimal: " << g.find_canonic_fingerprint("12340234013401420132") << endl;
-    cout << "minimal: " << g.find_canonic_fingerprint("12340234013404120312") << endl;
-    cout << "minimal: " << g.find_canonic_fingerprint("12340234014301240132") << endl;
-    cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
-    cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401420132") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013404120312") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340234014301240132") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
+    //cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
  
-    //g.create_all_possible_drawings();
+    g.create_all_possible_drawings();
     
     // testing relabeling because we have found 6 realizable RS written 
 
-    string basic_string = "01234";
+    //string basic_string = "01234";
 
     // with three intersectiona are not izomorfic
 

@@ -528,7 +528,7 @@ inline void graph::create_all_possible_drawings() {
 
 		if (done) {
 			cout << "yes" << endl;
-			print_graph(this);
+			//print_graph(this);
 		}
 
 		edges.resize(0); segments.resize(0);
