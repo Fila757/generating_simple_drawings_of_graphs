@@ -8,6 +8,7 @@
 #include <list>
 #include <algorithm>
 #include <set>
+#include <unordered_map>
 
 using namespace std;
 
@@ -76,6 +77,9 @@ struct graph {
 	// when j to i get the opposite edge index so on point ont the opposite special vertex 
 	vector<vector<int> > starts;
 
+	// to store canonic fingerprints
+	unordered_map<string, bool> canonic_fingerprints;
+
 	void create_special_vertex(int index);
 	void recolor_fingerprint(const string& rotation);
 	void create_base_star();
@@ -84,6 +88,9 @@ struct graph {
 	//void intersect();
 	bool is_correct_fingerprint(const string& fingerprint);
 	void create_all_possible_drawings();
+
+	string find_canonic_fingerprint(const string& fingerprint);
+
 };
 
 struct Vertex {
@@ -506,6 +513,11 @@ inline void graph::create_all_possible_drawings() {
 		//check the fingerprint 
 		//if (!is_correct_fingerprint(fingerprint)) continue;
 
+		//checking labeling
+		fingerprint = find_canonic_fingerprint(fingerprint);
+		if (canonic_fingerprints[fingerprint]) continue;
+		canonic_fingerprints[fingerprint] = true;
+
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
 		create_base_star();
@@ -516,6 +528,7 @@ inline void graph::create_all_possible_drawings() {
 
 		if (done) {
 			cout << "yes" << endl;
+			//print_graph(this);
 		}
 
 		edges.resize(0); segments.resize(0);
@@ -523,6 +536,54 @@ inline void graph::create_all_possible_drawings() {
 	}
 
 	cout << "realized " << realized << endl;
+}
+
+inline string graph::find_canonic_fingerprint(const string& fingerprint) {
+
+	string permutation_holder;
+	for (int i = 0; i < number_of_vertices;i++) 
+		permutation_holder += (i + '0');
+
+	auto min_fingerprint = fingerprint;
+	auto cur_fingerprint = fingerprint;
+	auto new_fingerprint = fingerprint;
+
+	do { //can be changes just to while because first doesnt any change
+		cur_fingerprint = fingerprint;
+		new_fingerprint = fingerprint;
+		for (int i = 0; i < number_of_vertices;i++) {
+			int rotation_index = -1;
+			for (int j = 0; j < number_of_vertices - 1;j++) {
+				int index = (number_of_vertices - 1) * i + j;
+
+				if (permutation_holder[cur_fingerprint[index] - '0'] == '0'
+					|| (rotation_index == -1 && permutation_holder[cur_fingerprint[index] - '0'] == '1')) rotation_index = j;
+
+				cur_fingerprint[index] = permutation_holder[cur_fingerprint[index] - '0'];
+			}
+
+			rotate(cur_fingerprint.begin() + (number_of_vertices - 1) * i,
+				cur_fingerprint.begin() + (number_of_vertices - 1) * i + rotation_index,
+				cur_fingerprint.begin() + (number_of_vertices - 1) * (i + 1));
+		}
+		for (int i = 0; i < number_of_vertices;i++) {
+			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1,
+				cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
+		}
+		
+		min_fingerprint = min(min_fingerprint, new_fingerprint);
+
+		for (int i = 0; i < number_of_vertices;i++) {
+			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
+			reverse(inv_part.begin(), inv_part.end());
+			new_fingerprint.replace(i * (number_of_vertices - 1) + 1, number_of_vertices - 2, inv_part);
+		}
+
+		min_fingerprint = min(min_fingerprint, new_fingerprint);
+
+	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
+
+	return min_fingerprint;
 }
      
 
