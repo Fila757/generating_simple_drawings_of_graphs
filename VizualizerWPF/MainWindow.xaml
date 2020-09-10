@@ -41,7 +41,7 @@
         
         <Image Name="legend" Grid.Column="0" Grid.Row="10" Source="/re_numbered_legend.png" Stretch="Uniform"/>
 
-        <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9"/>
+        <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
 
 
     </Grid>

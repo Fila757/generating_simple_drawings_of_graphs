@@ -155,6 +155,31 @@ namespace VizualizerWPF
             }
         }
 
+        private void canvas_MouseDown(object sender, RoutedEventArgs e)
+        {
+
+            if(e.OriginalSource is Ellipse || e.OriginalSource is Line)
+                return;
+
+            Point pos = Mouse.GetPosition(mainCanvas);
+            if(stateChanging == StateChanging.Adding)
+            {
+                Ellipse ellipse = new Ellipse
+                {
+                    Width = sizeOfVertex,
+                    Height = sizeOfVertex,
+                    Fill = Brushes.Blue,
+                    Margin = new Thickness(pos.X - sizeOfVertex / 2, pos.Y - sizeOfVertex / 2, 0, 0)
+                };
+                Panel.SetZIndex(ellipse, 1);
+                ellipse.MouseDown += ellipse_MouseDown;
+                mainCanvas.Children.Add(ellipse);
+                    
+            }
+
+           
+        }
+
         void DrawGraph(GraphCoordinates graphCoordinates)
         {
             foreach (var vertex in graphCoordinates.vertices)
