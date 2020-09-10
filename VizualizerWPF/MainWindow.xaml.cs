@@ -25,6 +25,31 @@ namespace VizualizerWPF
     enum StateChanging { Adding, Removing, None };
     enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges}; //AM = AtMost
 
+    class CollisionDetection
+    {
+
+        static int sizeOfVertex = 15;
+        static double epsilon = 0.5;
+
+        public static bool TwoLines(Line line1, Line line2)
+        {
+            return false;
+        }
+
+        public static bool LineAndEllipseAtEnd(Line line, Ellipse ellipse)
+        {
+            var intersection1 = (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
+                (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2));
+
+            var intersection2 = (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
+                (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2));
+
+            if (intersection1 <= sizeOfVertex * sizeOfVertex + epsilon || intersection2 <= sizeOfVertex * sizeOfVertex + epsilon)
+                return true;
+
+            return false;
+        }
+    }
 
     public partial class MainWindow : Window
     {
@@ -124,6 +149,9 @@ namespace VizualizerWPF
         private void ellipse_MouseDown(object sender, RoutedEventArgs e)
         {
             Ellipse ellipse = sender as Ellipse;
+            //MessageBox.Show(new { x = ellipse.Margin.Left, y= ellipse.Margin.Top }.ToString());
+
+
             if (stateChanging == StateChanging.Adding)
             {
                 selectedVertices.Add(new Coordinates { x = ellipse.Margin.Left, y = ellipse.Margin.Top });
@@ -143,6 +171,26 @@ namespace VizualizerWPF
 
                     selectedVertices.Clear();
                 }
+            }
+
+            if(stateChanging == StateChanging.Removing)
+            {
+                
+                /* finding edges which intersected */
+                List<Line> intersectedLines = new List<Line>();
+                foreach(var line in mainCanvas.Children.OfType<Line>())
+                {
+                    if (CollisionDetection.LineAndEllipseAtEnd(line, ellipse))
+                        intersectedLines.Add(line);
+                }
+
+                /* removing edges */
+                foreach(var line in intersectedLines)
+                    mainCanvas.Children.Remove(line);
+
+                /* removing vertex */
+                mainCanvas.Children.Remove(ellipse);
+
             }
         }
 
