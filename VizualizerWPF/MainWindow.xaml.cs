@@ -31,9 +31,22 @@ namespace VizualizerWPF
         static int sizeOfVertex = 15;
         static double epsilon = 0.5;
 
-        public static bool TwoLines(Line line1, Line line2)
+        public static Coordinates TwoLines(Line line1, Line line2)
         {
-            return false;
+            var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
+
+            var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
+                 line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
+            var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
+                line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
+            
+
+            var s = numS / denominator;
+            var t = numT / denominator;
+            //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
+            if(denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
+                return new Coordinates { x = line1.X1 + (line1.X2 - line1.X1) * t, y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
+            return new Coordinates { x = -1, y = -1 };
         }
 
         public static bool LineAndEllipseAtEnd(Line line, Ellipse ellipse)
@@ -72,6 +85,9 @@ namespace VizualizerWPF
 
             cx = 200; cy = 200;
             sizeOfVertex = 15;
+
+            //var inter = CollisionDetection.TwoLines(new Line { X1 = 0, X2 = 2, Y1 = 0, Y2 = 2 }, new Line { X1 = 0, X2 = 1, Y1 = 2, Y2 = 0 });
+            //MessageBox.Show(new { inter.x, inter.y }.ToString());
 
             graphGenerator = new GraphGenerator(4);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
@@ -170,7 +186,38 @@ namespace VizualizerWPF
                     mainCanvas.Children.Add(line);
 
                     selectedVertices.Clear();
+
+
+                    List<Ellipse> intersections = new List<Ellipse>();
+                    foreach (var l in mainCanvas.Children.OfType<Line>())
+                    {
+                        if (l == line) continue;
+
+                        var intersection = CollisionDetection.TwoLines(line, l);
+                        if(!(intersection.x == -1 && intersection.y == -1))
+                        {
+                            var ellipse2 = new Ellipse
+                            {
+                                Width = sizeOfVertex,
+                                Height = sizeOfVertex,
+                                Fill = Brushes.Green,
+                                Margin = new Thickness(intersection.x - sizeOfVertex / 2, intersection.y - sizeOfVertex / 2, 0, 0)
+                            };
+                            ellipse2.MouseDown += ellipse_MouseDown;
+                            Panel.SetZIndex(ellipse2, 1);
+                            intersections.Add(ellipse2);
+
+                           //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
+                        }
+                    }
+
+                    foreach (var el in intersections)
+                        mainCanvas.Children.Add(el);
                 }
+
+             
+
+
             }
 
             if(stateChanging == StateChanging.Removing)
@@ -289,7 +336,8 @@ namespace VizualizerWPF
         public GraphGenerator(int n)
         {
             SizeOfGraph = n;
-            streamReader = new StreamReader("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph" + SizeOfGraph + ".txt");
+            streamReader = new StreamReader(
+                "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph" + SizeOfGraph + ".txt");
         }
 
         GraphCoordinates ReadUntillNextRS()
