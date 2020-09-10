@@ -567,10 +567,17 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 				cur_fingerprint.begin() + (number_of_vertices - 1) * (i + 1));
 		}
 		for (int i = 0; i < number_of_vertices;i++) {
-			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1, cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
+			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1,
+				cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
 		}
+		
+		min_fingerprint = min(min_fingerprint, new_fingerprint);
 
-		//cout << new_fingerprint << endl;
+		for (int i = 0; i < number_of_vertices;i++) {
+			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
+			reverse(inv_part.begin(), inv_part.end());
+			new_fingerprint.replace(i * (number_of_vertices - 1) + 1, number_of_vertices - 2, inv_part);
+		}
 
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
 

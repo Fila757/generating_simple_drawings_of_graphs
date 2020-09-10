@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "../drawing_of_cliques/functions.hpp"
 #include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.3/build/native/include/gtest/gtest.h"
 
@@ -23,8 +23,8 @@ TEST(right_chosing_canonics, graph_5) {
 	auto g = graph(5);
 
 	EXPECT_EQ(g.find_canonic_fingerprint("12340234013401240123"), "12340234013401240123");
-	EXPECT_EQ(g.find_canonic_fingerprint("12340234013401420132"), "12340234013401420132");
-	EXPECT_EQ(g.find_canonic_fingerprint("12340234013404120312"), "12340234013404120312");
+	EXPECT_EQ(g.find_canonic_fingerprint("12340234013401420132"), "12340234013401420132"); //second ańd third is the same 
+	EXPECT_EQ(g.find_canonic_fingerprint("12340234013404120312"), "12340234013401420132"); // because of invers labeling needs to be countet as well
 	EXPECT_EQ(g.find_canonic_fingerprint("12340234014301240132"), "12340234014301240132");
 	EXPECT_EQ(g.find_canonic_fingerprint("12340243013401420312"), "12340243013401420312");
 	EXPECT_EQ(g.find_canonic_fingerprint("12340342014302410321"), "12340342014302410321");
