@@ -6,6 +6,7 @@
 
 using namespace std;
 
+/*
 string find_lexical_min_rotation(string str)
 {
     // To store lexicographic minimum string
@@ -23,10 +24,10 @@ string find_lexical_min_rotation(string str)
 
     return min;
 }
-
+*/
 int main()
 {
-    auto g = graph(5);
+    auto g = graph(6);
 
     
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;

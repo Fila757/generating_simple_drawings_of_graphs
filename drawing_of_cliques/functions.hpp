@@ -69,7 +69,7 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
+		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -463,7 +463,7 @@ struct fingerprints {
 	fingerprints(int n) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
-		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
+		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
 			+ to_string(n - 1) + ".txt";
 		input_file.open(input_path);
 
@@ -472,7 +472,7 @@ struct fingerprints {
 			done = true;
 		}
 		
-		for (int i = 0; i < n - 1;i++) {
+		for (int i = 1; i < n - 1;i++) {
 			fingerprint.push_back(rotation_system.substr(i * (n - 2), (n - 2)) + to_string(n - 1));
 		}
 
@@ -497,7 +497,7 @@ struct fingerprints {
 		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
 
 		for (long long i = states.size() - 1; i >= 0;i--) {
-			if(i == states.size() - 1){
+			if (i == states.size() - 1) {
 				if (states[i] == factorial(treshold - 2) - 1) { // -2 because first position is fixed for "0"
 					states[i] = 0;
 					next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
@@ -508,41 +508,42 @@ struct fingerprints {
 					break;
 				}
 			}
-		else{
-			if (states[i] == treshold - 3) {
-				if (i == 0) {
-					string rotation_system;
-					if (!getline(input_file, rotation_system)) {
-						done = true;
-						return nullptr;
+			else {
+				if (states[i] == (treshold - 2) - 1) {
+					if (i == 0) {
+						string rotation_system;
+						if (!getline(input_file, rotation_system)) {
+							done = true;
+							return res;
+						}
+
+						fingerprint.clear();
+						for (int i = 1; i < treshold - 1;i++) {
+							fingerprint.push_back(rotation_system.substr(i * (treshold - 2), (treshold - 2)) + to_string(treshold - 1));
+						}
+
+						string last_rotation;
+						for (int i = 0; i < treshold - 1;i++)
+							last_rotation += (i + '0');
+
+						fingerprint.push_back(last_rotation);
+
+						states.clear();
+						for (int i = 0; i < treshold - 1;i++) {
+							states.push_back(0);
+						}
 					}
-
-					for (int i = 0; i < treshold - 1;i++) {
-						fingerprint.push_back(rotation_system.substr(i * (treshold - 2), (treshold - 2)) + to_string(treshold - 1));
-					}
-
-					string last_rotation;
-					for (int i = 0; i < treshold - 1;i++)
-						last_rotation += (i + '0');
-
-					fingerprint.push_back(last_rotation);
-
-					states.clear();
-					for (int i = 0; i < treshold - 1;i++) {
-						states.push_back(0);
+					else {
+						states[i] = 0;
+						fingerprint[i] = fingerprint[i][0] + fingerprint[i].substr(2) + fingerprint[i][1];
 					}
 				}
 				else {
-					states[i] = 0;
-					fingerprint[i] = fingerprint[i][0] + fingerprint[i].substr(2) + fingerprint[i][1];
+					swap(fingerprint[i][fingerprint.size() - 1 - states[i]], fingerprint[i][fingerprint.size() - 1 - (states[i] + 1)]);
+					states[i]++;
+					break;
 				}
 			}
-			else {
-				swap(fingerprint[i][fingerprint.size() - 1 - states[i]], fingerprint[i][fingerprint.size() - 1 - (states[i] + 1)]);
-				states[i]++;
-				break;
-			}
-			{
 		}
 
 		return res;
@@ -568,7 +569,7 @@ inline void graph::create_all_possible_drawings() {
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto cur = generator_of_fingerprints.get_next();
-
+		//cout << cur << endl;
 		string prefix = "";
 		for (int i = 1; i < number_of_vertices;i++) prefix += (i + '0');
 		auto fingerprint = prefix + cur;
@@ -585,13 +586,13 @@ inline void graph::create_all_possible_drawings() {
 		recolor_fingerprint(fingerprint);
 		create_base_star();
 
-		cout << fingerprint << endl;
+		//cout << fingerprint << endl;
 
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
 		if (done) {
 			cout << "yes" << endl;
-			//print_graph(this);
+			output_file << fingerprint << "\n";
 		}
 
 		edges.resize(0); segments.resize(0);
