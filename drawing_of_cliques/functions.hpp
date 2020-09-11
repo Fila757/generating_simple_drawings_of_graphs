@@ -614,6 +614,8 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	auto cur_fingerprint = fingerprint;
 	auto new_fingerprint = fingerprint;
 
+	//string minimal_permutation;
+
 	do { //can be changes just to while because first doesnt any change
 		cur_fingerprint = fingerprint;
 		new_fingerprint = fingerprint;
@@ -638,6 +640,7 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 		
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
+		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 		for (int i = 0; i < number_of_vertices;i++) {
 			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
@@ -646,10 +649,13 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
+		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
 
+	//cout << minimal_permutation << endl;
 	return min_fingerprint;
+
 }
      
 
