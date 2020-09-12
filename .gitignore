@@ -6,6 +6,8 @@
 /packages
 /x64
 /drawing_of_cliques/x64
+/drawing_of_cliques/Debug
+/drawing_of_cliques/Release
 /Tests/x64
 /VizualizerWPF/bin
 /VizualizerWPF/obj
