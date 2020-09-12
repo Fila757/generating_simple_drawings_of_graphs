@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <set>
 #include <unordered_map>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -37,6 +39,12 @@ struct graph {
 
 	shared_ptr<Face> outer_face;
 
+	ofstream output_file;
+
+	void close_files() {
+		output_file.close();
+	}
+
 	graph(int n) {
 		number_of_vertices = n;
 		outer_face = make_shared<Face>();
@@ -59,6 +67,11 @@ struct graph {
 				}
 			}
 		}
+
+
+		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+			+ to_string(n) + ".txt";
+		output_file.open(output_path);
 	}
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool = false);
@@ -443,23 +456,37 @@ struct fingerprints {
 	bool done = false;
 	vector<string> fingerprint;
 
+	ifstream input_file;
 	/// <summary> 
 	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
 	/// </summary>
 	fingerprints(int n) {
-		treshold = factorial(n - 2); //its length is n-1 and -1 because 0 is on fixed position
+		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
-		for (int i = 1; i < n;i++) { 
-			string rotation_system = "";
-			for (int j = 0; j < n;j++) {
-				if (i != j) rotation_system += (j + '0');
-			}
-			fingerprint.push_back(rotation_system);
+		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+			+ to_string(n - 1) + ".txt";
+		input_file.open(input_path);
+
+		string rotation_system;
+		if (!getline(input_file, rotation_system)) {
+			done = true;
+		}
+		
+		for (int i = 0; i < n - 1;i++) {
+			fingerprint.push_back(rotation_system.substr(i * (n - 2), (n - 2)) + to_string(n - 1));
 		}
 
-		for (int i = 0; i < n - 1;i++) {
+		string last_rotation;
+		for (int i = 0; i < n - 1;i++)
+			last_rotation += (i + '0');
+
+		fingerprint.push_back(last_rotation);
+
+		for (int i = 0; i < n;i++) {
 			states.push_back(0);
 		}
+
+		
 	}
 
 	///<summary>
@@ -470,15 +497,52 @@ struct fingerprints {
 		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
 
 		for (long long i = states.size() - 1; i >= 0;i--) {
-			if (states[i] == treshold - 1) {
-				if (i == 0) done = true; //There is no other fingerprint
-				states[i] = 0;
-				next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end()); // + 1 because rotation system is n-1 times counted so 0 can be fixed as the first position number
+			if (i == states.size() - 1) {
+				if (states[i] == factorial(treshold - 2) - 1) { // -2 because first position is fixed for "0"
+					states[i] = 0;
+					next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
+				}
+				else {
+					states[i]++;
+					next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
+					break;
+				}
 			}
 			else {
-				states[i]++;
-				next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
-				break;
+				if (states[i] == (treshold - 2) - 1) {
+					if (i == 0) {
+						string rotation_system;
+						if (!getline(input_file, rotation_system)) {
+							done = true;
+							return res;
+						}
+
+						fingerprint.clear();
+						for (int i = 0; i < treshold - 1;i++) {
+							fingerprint.push_back(rotation_system.substr(i * (treshold - 2), (treshold - 2)) + to_string(treshold - 1));
+						}
+
+						string last_rotation;
+						for (int i = 0; i < treshold - 1;i++)
+							last_rotation += (i + '0');
+
+						fingerprint.push_back(last_rotation);
+
+						states.clear();
+						for (int i = 0; i < treshold;i++) {
+							states.push_back(0);
+						}
+					}
+					else {
+						states[i] = 0;
+						fingerprint[i] = fingerprint[i][0] + fingerprint[i].substr(2) + fingerprint[i][1];
+					}
+				}
+				else {
+					swap(fingerprint[i][(treshold - 2) - states[i]], fingerprint[i][(treshold - 2) - (states[i] + 1)]);
+					states[i]++;
+					break;
+				}
 			}
 		}
 
@@ -504,11 +568,8 @@ inline void graph::create_all_possible_drawings() {
 
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
-		auto cur = generator_of_fingerprints.get_next();
-
-		string prefix = "";
-		for (int i = 1; i < number_of_vertices;i++) prefix += (i + '0');
-		auto fingerprint = prefix + cur;
+		auto fingerprint = generator_of_fingerprints.get_next();
+		//cout << cur << endl;
 
 		//check the fingerprint 
 		//if (!is_correct_fingerprint(fingerprint)) continue;
@@ -522,18 +583,20 @@ inline void graph::create_all_possible_drawings() {
 		recolor_fingerprint(fingerprint);
 		create_base_star();
 
-		cout << fingerprint << endl;
+		//cout << fingerprint << endl;
 
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
 		if (done) {
 			cout << "yes" << endl;
-			//print_graph(this);
+			output_file << fingerprint << "\n";
 		}
 
 		edges.resize(0); segments.resize(0);
 		done = false;
 	}
+
+	close_files();
 
 	cout << "realized " << realized << endl;
 }
@@ -547,6 +610,8 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	auto min_fingerprint = fingerprint;
 	auto cur_fingerprint = fingerprint;
 	auto new_fingerprint = fingerprint;
+
+	//string minimal_permutation;
 
 	do { //can be changes just to while because first doesnt any change
 		cur_fingerprint = fingerprint;
@@ -572,6 +637,7 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 		
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
+		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 		for (int i = 0; i < number_of_vertices;i++) {
 			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
@@ -580,10 +646,13 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
+		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
 
+	//cout << minimal_permutation << endl;
 	return min_fingerprint;
+
 }
      
 
