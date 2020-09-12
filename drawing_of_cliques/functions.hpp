@@ -472,7 +472,7 @@ struct fingerprints {
 			done = true;
 		}
 		
-		for (int i = 1; i < n - 1;i++) {
+		for (int i = 0; i < n - 1;i++) {
 			fingerprint.push_back(rotation_system.substr(i * (n - 2), (n - 2)) + to_string(n - 1));
 		}
 
@@ -482,7 +482,7 @@ struct fingerprints {
 
 		fingerprint.push_back(last_rotation);
 
-		for (int i = 0; i < n - 1;i++) {
+		for (int i = 0; i < n;i++) {
 			states.push_back(0);
 		}
 
@@ -518,7 +518,7 @@ struct fingerprints {
 						}
 
 						fingerprint.clear();
-						for (int i = 1; i < treshold - 1;i++) {
+						for (int i = 0; i < treshold - 1;i++) {
 							fingerprint.push_back(rotation_system.substr(i * (treshold - 2), (treshold - 2)) + to_string(treshold - 1));
 						}
 
@@ -529,7 +529,7 @@ struct fingerprints {
 						fingerprint.push_back(last_rotation);
 
 						states.clear();
-						for (int i = 0; i < treshold - 1;i++) {
+						for (int i = 0; i < treshold;i++) {
 							states.push_back(0);
 						}
 					}
@@ -539,7 +539,7 @@ struct fingerprints {
 					}
 				}
 				else {
-					swap(fingerprint[i][fingerprint.size() - 1 - states[i]], fingerprint[i][fingerprint.size() - 1 - (states[i] + 1)]);
+					swap(fingerprint[i][(treshold - 2) - states[i]], fingerprint[i][(treshold - 2) - (states[i] + 1)]);
 					states[i]++;
 					break;
 				}
@@ -568,11 +568,8 @@ inline void graph::create_all_possible_drawings() {
 
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
-		auto cur = generator_of_fingerprints.get_next();
+		auto fingerprint = generator_of_fingerprints.get_next();
 		//cout << cur << endl;
-		string prefix = "";
-		for (int i = 1; i < number_of_vertices;i++) prefix += (i + '0');
-		auto fingerprint = prefix + cur;
 
 		//check the fingerprint 
 		//if (!is_correct_fingerprint(fingerprint)) continue;
