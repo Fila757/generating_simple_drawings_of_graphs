@@ -11,3 +11,6 @@
 /Tests/x64
 /VizualizerWPF/bin
 /VizualizerWPF/obj
+
+/Debug
+/Release
