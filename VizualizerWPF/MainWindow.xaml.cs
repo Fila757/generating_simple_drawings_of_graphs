@@ -133,6 +133,23 @@ namespace VizualizerWPF
 
             statesCalculation[StateCalculation.Intersections] = !statesCalculation[StateCalculation.Intersections];
 
+            if (!statesCalculation[StateCalculation.Intersections])
+            {
+                foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
+                {
+                    if (vertex.Fill == Brushes.Green)
+                        vertex.Visibility = Visibility.Hidden;
+                }
+            }
+            else
+            {
+                foreach(var vertex in mainCanvas.Children.OfType<Ellipse>())
+                {
+                    if (vertex.Fill == Brushes.Green)
+                        vertex.Visibility = Visibility.Visible;
+                }
+            }
+
         }
 
         private void Kedges_Click(object sender, RoutedEventArgs e)
@@ -201,7 +218,8 @@ namespace VizualizerWPF
                                 Width = sizeOfVertex,
                                 Height = sizeOfVertex,
                                 Fill = Brushes.Green,
-                                Margin = new Thickness(intersection.x - sizeOfVertex / 2, intersection.y - sizeOfVertex / 2, 0, 0)
+                                Margin = new Thickness(intersection.x - sizeOfVertex / 2, intersection.y - sizeOfVertex / 2, 0, 0),
+                                Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
                             };
                             ellipse2.MouseDown += ellipse_MouseDown;
                             Panel.SetZIndex(ellipse2, 1);
