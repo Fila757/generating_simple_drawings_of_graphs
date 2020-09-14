@@ -93,6 +93,7 @@ namespace VizualizerWPF
             graphGenerator = new GraphGenerator(4);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
             DrawGraph(graphCoordinates);
+
             //Measure();
             //Arrange();
 
@@ -273,7 +274,10 @@ namespace VizualizerWPF
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
-            if(e.OriginalSource is Ellipse || e.OriginalSource is Line)
+            //MessageBox.Show(mainCanvas.ActualWidth.ToString());
+            //MessageBox.Show(MainWindow.MaxHeightProperty.);
+
+            if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
 
             Point pos = Mouse.GetPosition(mainCanvas);
