@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,7 +189,7 @@ namespace VizualizerWPF
             if (stateChanging == StateChanging.Adding)
             {
                 selectedVertices.Add(new Coordinates { x = ellipse.Margin.Left, y = ellipse.Margin.Top });
-                if(selectedVertices.Count == 2)
+                if (selectedVertices.Count == 2)
                 {
                     var line = new Line
                     {
@@ -200,6 +201,7 @@ namespace VizualizerWPF
                         StrokeThickness = sizeOfVertex / 3
                     };
                     line.MouseDown += line_MouseDown;
+                    Panel.SetZIndex(line, 1);
                     mainCanvas.Children.Add(line);
 
                     selectedVertices.Clear();
@@ -222,7 +224,7 @@ namespace VizualizerWPF
                                 Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
                             };
                             ellipse2.MouseDown += ellipse_MouseDown;
-                            Panel.SetZIndex(ellipse2, 1);
+                            Panel.SetZIndex(ellipse2, 10);
                             intersections.Add(ellipse2);
 
                            //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
@@ -284,7 +286,7 @@ namespace VizualizerWPF
                     Fill = Brushes.Blue,
                     Margin = new Thickness(pos.X - sizeOfVertex / 2, pos.Y - sizeOfVertex / 2, 0, 0)
                 };
-                Panel.SetZIndex(ellipse, 1);
+                Panel.SetZIndex(ellipse, 100);
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
                     
@@ -307,7 +309,7 @@ namespace VizualizerWPF
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                Panel.SetZIndex(ellipse, 1);
+                Panel.SetZIndex(ellipse, 100);
             }
             foreach (var edge in graphCoordinates.edges)
             {
@@ -320,6 +322,7 @@ namespace VizualizerWPF
                     Stroke = Brushes.Red,
                     StrokeThickness = sizeOfVertex / 3
                 };
+                Panel.SetZIndex(line, 1);
                 line.MouseDown += line_MouseDown;
                 mainCanvas.Children.Add(line);
             }
