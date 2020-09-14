@@ -572,7 +572,7 @@ inline void graph::create_all_possible_drawings() {
 		//cout << cur << endl;
 
 		//check the fingerprint 
-		//if (!is_correct_fingerprint(fingerprint)) continue;
+		if (!is_correct_fingerprint(fingerprint)) continue;
 
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
@@ -654,9 +654,9 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	return min_fingerprint;
 
 }
-     
 
-inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
+
+inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
 	int order_of_K4[3][3][3] = {
@@ -684,6 +684,43 @@ inline bool is_correct_K4(vector<int> orders[4], int a[4]) {
 	return false;
 }
 
+inline string find_lexical_min_rotation(string str)
+{
+	// To store lexicographic minimum string
+	string min = str;
+
+	for (int i = 0; i < str.length(); i++)
+	{
+		// left rotate string by 1 unit
+		rotate(str.begin(), str.begin() + 1, str.end());
+
+		// check if the rotation is minimum so far
+		if (str.compare(min) < 0)
+			min = str;
+	}
+
+	return min;
+}
+
+inline bool is_correct_K4(vector<int> orders[4]) {
+	int number_of_positive_rotation = 0;
+
+	for (int i = 0; i < 4;i++) {
+
+		string rotation;
+		for_each(orders[i].begin(), orders[i].end(), [&](int part) {rotation += to_string(part);});
+
+		auto minimal_rotation = find_lexical_min_rotation(rotation);
+		if (minimal_rotation[1] < minimal_rotation[2])
+			number_of_positive_rotation++;
+	}
+
+	if (number_of_positive_rotation % 2 == 0)
+		return true;
+	return false;
+
+}
+
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
 	int i[4];
@@ -706,10 +743,11 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 							}
 						}
 					}
+					// for slower version
+					//int temp[4];
+					//temp[0] = i[0]; temp[1] = order[0][0];temp[2] = order[0][1];temp[3] = order[0][2];
 
-					int temp[4];
-					temp[0] = i[0]; temp[1] = order[0][0];temp[2] = order[0][1];temp[3] = order[0][2];
-					if (!is_correct_K4(order, temp)) return false;
+					if (!is_correct_K4(order)) return false;
 				}
 			}
 		}
