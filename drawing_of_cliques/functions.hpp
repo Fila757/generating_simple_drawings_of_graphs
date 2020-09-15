@@ -386,7 +386,7 @@ inline void graph::create_all_special_vertices() {
 
 	create_special_vertex(0, 0, 0); // zero ones
 
-	auto coordinates_of_special_vertices = create_circle(50, 0, 0, number_of_vertices);
+	auto coordinates_of_special_vertices = create_circle(150, 0, 0, number_of_vertices);
 
 	for (int i = 1; i < number_of_vertices;i++) { //the rest of a star
 		create_special_vertex(i, coordinates_of_special_vertices[i - 1].x, coordinates_of_special_vertices[i - 1].y);

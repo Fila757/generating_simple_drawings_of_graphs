@@ -103,7 +103,7 @@ namespace VizualizerWPF
             //var inter = CollisionDetection.TwoLines(new Line { X1 = 0, X2 = 2, Y1 = 0, Y2 = 2 }, new Line { X1 = 0, X2 = 1, Y1 = 2, Y2 = 0 });
             //MessageBox.Show(new { inter.x, inter.y }.ToString());
 
-            graphGenerator = new GraphGenerator(4);
+            graphGenerator = new GraphGenerator(5);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
             DrawGraph(graphCoordinates);
 
@@ -191,6 +191,8 @@ namespace VizualizerWPF
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
+
+            mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates);
         }
 
@@ -249,9 +251,7 @@ namespace VizualizerWPF
                         mainCanvas.Children.Add(el);
                 }
 
-             
-
-
+            
             }
 
             if(stateChanging == StateChanging.Removing)
