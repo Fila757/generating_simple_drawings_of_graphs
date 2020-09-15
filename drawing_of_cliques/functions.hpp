@@ -101,6 +101,8 @@ struct graph {
 	//bool is_correct_fingerprint(const string& fingerprint);
 	void create_all_possible_drawings();
 
+	void write_coordinates();
+
 	//string find_canonic_fingerprint(const string& fingerprint);
 
 };
@@ -503,6 +505,36 @@ struct fingerprints {
 	}
 };
 
+inline void graph::write_coordinates() {
+
+	vector<vector<vector<Edge> > > drawing_edges;
+	drawing_edges.resize(number_of_vertices);
+	for (int i = 0; i < number_of_vertices;i++)
+		drawing_edges[i].resize(number_of_vertices);
+
+	for (auto cur = edges.begin(); cur != edges.end();cur++) {
+		int a = cur->index_ / 100;
+		int b = cur->index_ % 100;
+
+		drawing_edges[a][b].push_back(*cur);
+	}
+
+	for (int i = 0; i < number_of_vertices;i++) {
+		for (int j = i + 1;j < number_of_vertices;j++) {
+			for (int k = 0; k < drawing_edges[i][j].size();k++) {
+				output_file
+					<< drawing_edges[i][j][k].from_->x_ << " "
+					<< drawing_edges[i][j][k].from_->y_ << " "
+					<< drawing_edges[i][j][k].to_->x_ << " "
+					<< drawing_edges[i][j][k].to_->y_ << " ";
+			}
+			output_file << endl;
+		}
+	}
+
+	output_file << "#" << endl;
+}
+
 inline void graph::create_all_possible_drawings() {
 
 	for (int i = 0; i < number_of_vertices;i++) {
@@ -533,7 +565,9 @@ inline void graph::create_all_possible_drawings() {
 
 		if (done) {
 			cout << "yes" << endl;
-			output_file << fingerprint << "\n";
+			
+			write_coordinates();
+
 		}
 
 		edges.resize(0); segments.resize(0);
