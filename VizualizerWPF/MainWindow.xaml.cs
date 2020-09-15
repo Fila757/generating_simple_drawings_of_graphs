@@ -414,15 +414,17 @@ namespace VizualizerWPF
             {
                 string[] temp = line.Split();
 
-                graphCoordinates.edges.Add(
-                    new Edge
-                    {
-                        from = new Coordinates { x = Double.Parse(temp[0]), y = Double.Parse(temp[1]) },
-                        to = new Coordinates { x = Double.Parse(temp[2]), y = Double.Parse(temp[3]) }
-                    });
-
-                vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].from);
-                vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].to);
+                for (int i = 0; i < temp.Length / 4; i++)
+                {
+                    graphCoordinates.edges.Add(
+                        new Edge
+                        {
+                            from = new Coordinates { x = Double.Parse(temp[4*i + 0]), y = Double.Parse(temp[4*i + 1]) },
+                            to = new Coordinates { x = Double.Parse(temp[4*i + 2]), y = Double.Parse(temp[4*i + 3]) }
+                        });
+                    vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].from);
+                    vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].to);
+                }
             }
 
             graphCoordinates.vertices = vertices.ToList();

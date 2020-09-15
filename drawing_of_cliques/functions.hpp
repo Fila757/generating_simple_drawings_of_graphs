@@ -118,7 +118,7 @@ struct Vertex {
 
 	//it is really good to be the opposite one because when you create new vertex 
 	//from the edge side then it is good to go from the intersection opposite side
-	Vertex(Edge* to, double x, double y) : to_(to), x_(x), y_(y) {}
+	Vertex(Edge* to) : to_(to) {}
 };
 
 struct Face {

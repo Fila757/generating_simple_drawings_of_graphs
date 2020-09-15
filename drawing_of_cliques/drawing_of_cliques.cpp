@@ -6,25 +6,6 @@
 
 using namespace std;
 
-/*
-string find_lexical_min_rotation(string str)
-{
-    // To store lexicographic minimum string
-    string min = str;
-
-    for (int i = 0; i < str.length(); i++)
-    {
-        // left rotate string by 1 unit
-        rotate(str.begin(), str.begin() + 1, str.end());
-
-        // check if the rotation is minimum so far
-        if (str.compare(min) < 0)
-            min = str;
-    }
-
-    return min;
-}
-*/
 int main()
 {
     auto g = graph(7);
