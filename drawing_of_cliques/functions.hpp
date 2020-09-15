@@ -475,6 +475,7 @@ struct fingerprints {
 
 		if (!getline(input_file, rotation_system)) {
 			done = true;
+			input_file.close();
 		}
 
 		return previous_one;
@@ -500,16 +501,7 @@ inline void graph::create_all_possible_drawings() {
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
-		//cout << cur << endl;
-
-		//check the fingerprint 
-		//if (!is_correct_fingerprint(fingerprint)) continue;
-
-		//checking labeling
-		//fingerprint = find_canonic_fingerprint(fingerprint);
-		//if (canonic_fingerprints[fingerprint]) continue;
-		//canonic_fingerprints[fingerprint] = true;
-
+		
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
 		create_base_star();
