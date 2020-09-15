@@ -92,16 +92,16 @@ struct graph {
 
 	// to store canonic fingerprints
 
-	void create_special_vertex(int index);
+	void create_special_vertex(int index, int x, int y);
 	void recolor_fingerprint(const string& rotation);
 	void create_base_star();
 	void create_all_special_vertices();
 	void find_the_way_to_intersect(int s_index, int t_index, int a, int b);
 	//void intersect();
-	bool is_correct_fingerprint(const string& fingerprint);
+	//bool is_correct_fingerprint(const string& fingerprint);
 	void create_all_possible_drawings();
 
-	string find_canonic_fingerprint(const string& fingerprint);
+	//string find_canonic_fingerprint(const string& fingerprint);
 
 };
 
@@ -110,11 +110,13 @@ struct Vertex {
 
 	int index_;
 
+	double x_, y_;
+
 	Vertex() {}
 
 	//it is really good to be the opposite one because when you create new vertex 
 	//from the edge side then it is good to go from the intersection opposite side
-	Vertex(Edge* to) : to_(to) {}
+	Vertex(Edge* to, double x, double y) : to_(to), x_(x), y_(y) {}
 };
 
 struct Face {
@@ -232,6 +234,7 @@ inline void graph::add_vertex(Edge* edge) {
 
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = -1;
+	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
 
 	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -329,7 +332,7 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 }
 
-inline void graph::create_special_vertex(int index) {
+inline void graph::create_special_vertex(int index, int x, int y) {
 
 	vector<shared_ptr<Vertex> > special_vertices;
 
@@ -337,6 +340,7 @@ inline void graph::create_special_vertex(int index) {
 	for (int i = 0; i < number_of_vertices - 1;i++) {
 		auto new_vertex = make_shared<Vertex>();
 		new_vertex->index_ = index; //the real index of vertex
+		new_vertex->x_ = x; new_vertex->y_ = y;
 		special_vertices.push_back(new_vertex);
 	}
 
@@ -378,8 +382,12 @@ inline void graph::create_base_star() {
 
 inline void graph::create_all_special_vertices() {
 
-	for (int i = 0; i < number_of_vertices;i++) { //the rest of a star
-		create_special_vertex(i);
+	create_special_vertex(0, 0, 0); // zero ones
+
+	auto coordinates_of_special_vertices = create_circle(50, 0, 0, number_of_vertices);
+
+	for (int i = 1; i < number_of_vertices;i++) { //the rest of a star
+		create_special_vertex(i, coordinates_of_special_vertices[i - 1].x, coordinates_of_special_vertices[i - 1].y);
 	}
 }
 
