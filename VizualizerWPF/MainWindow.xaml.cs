@@ -63,6 +63,18 @@ namespace VizualizerWPF
 
             return false;
         }
+
+        public static bool LineAndEllipse(Line line, Ellipse ellipse)
+        {
+            return new Coordinates { x = -1, y = -1 } == TwoLines(line,
+                new Line
+                {
+                    X1 = ellipse.Margin.Left,
+                    Y1 = ellipse.Margin.Top,
+                    X2 = ellipse.Margin.Left + sizeOfVertex,
+                    Y2 = ellipse.Margin.Top + sizeOfVertex
+                }) ? false : true;
+        }
     }
 
     public partial class MainWindow : Window
@@ -267,6 +279,19 @@ namespace VizualizerWPF
             Line line = sender as Line;
             if (stateChanging == StateChanging.Removing)
             {
+
+                var removedIntersections = new List<Ellipse>();
+                foreach(var ellipse in mainCanvas.Children.OfType<Ellipse>())
+                {
+                    if (CollisionDetection.LineAndEllipse(line, ellipse)
+                        && ellipse.Fill == Brushes.Green)
+                        removedIntersections.Add(ellipse);
+
+                }
+
+                foreach (var ellipse in removedIntersections)
+                    mainCanvas.Children.Remove(ellipse);
+
                 mainCanvas.Children.Remove(line);
             }
         }
@@ -339,12 +364,25 @@ namespace VizualizerWPF
     {
         public double x;
         public double y;
+
+        public static bool operator ==(Coordinates a, Coordinates b)
+        {
+            return a.x == b.x && a.y == b.y;
+        }
+
+        public static bool operator !=(Coordinates a, Coordinates b)
+        {
+            return !(a == b);
+        }
+
     }
 
     struct Edge
     {
         public Coordinates from;
         public Coordinates to;
+
+      
     }
 
     class GraphCoordinates
