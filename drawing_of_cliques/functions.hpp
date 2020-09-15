@@ -69,7 +69,7 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -91,7 +91,6 @@ struct graph {
 	vector<vector<int> > starts;
 
 	// to store canonic fingerprints
-	unordered_map<string, bool> canonic_fingerprints;
 
 	void create_special_vertex(int index);
 	void recolor_fingerprint(const string& rotation);
@@ -451,41 +450,19 @@ inline long long factorial(int n) {
 
 
 struct fingerprints {
-	vector<int> states;
-	long long treshold;
 	bool done = false;
-	vector<string> fingerprint;
+	string rotation_system;
 
 	ifstream input_file;
-	/// <summary> 
-	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
-	/// </summary>
+
 	fingerprints(int n) {
-		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
-
+	
 		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
-			+ to_string(n - 1) + ".txt";
+			+ to_string(n) + ".txt";
 		input_file.open(input_path);
-
-		string rotation_system;
-		if (!getline(input_file, rotation_system)) {
-			done = true;
-		}
 		
-		for (int i = 0; i < n - 1;i++) {
-			fingerprint.push_back(rotation_system.substr(i * (n - 2), (n - 2)) + to_string(n - 1));
-		}
-
-		string last_rotation;
-		for (int i = 0; i < n - 1;i++)
-			last_rotation += (i + '0');
-
-		fingerprint.push_back(last_rotation);
-
-		for (int i = 0; i < n;i++) {
-			states.push_back(0);
-		}
-
+		if (!getline(input_file, rotation_system))
+			done = true;
 		
 	}
 
@@ -493,60 +470,14 @@ struct fingerprints {
 	// Return state and then move to the next one until it is posible
 	///</summary>
 	string get_next() {
-		string res;
-		for_each(fingerprint.begin(), fingerprint.end(), [&](const string& part) {res += part;});
 
-		for (long long i = states.size() - 1; i >= 0;i--) {
-			if (i == states.size() - 1) {
-				if (states[i] == factorial(treshold - 2) - 1) { // -2 because first position is fixed for "0"
-					states[i] = 0;
-					next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
-				}
-				else {
-					states[i]++;
-					next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());
-					break;
-				}
-			}
-			else {
-				if (states[i] == (treshold - 2) - 1) {
-					if (i == 0) {
-						string rotation_system;
-						if (!getline(input_file, rotation_system)) {
-							done = true;
-							return res;
-						}
+		string previous_one = rotation_system;
 
-						fingerprint.clear();
-						for (int i = 0; i < treshold - 1;i++) {
-							fingerprint.push_back(rotation_system.substr(i * (treshold - 2), (treshold - 2)) + to_string(treshold - 1));
-						}
-
-						string last_rotation;
-						for (int i = 0; i < treshold - 1;i++)
-							last_rotation += (i + '0');
-
-						fingerprint.push_back(last_rotation);
-
-						states.clear();
-						for (int i = 0; i < treshold;i++) {
-							states.push_back(0);
-						}
-					}
-					else {
-						states[i] = 0;
-						fingerprint[i] = fingerprint[i][0] + fingerprint[i].substr(2) + fingerprint[i][1];
-					}
-				}
-				else {
-					swap(fingerprint[i][(treshold - 2) - states[i]], fingerprint[i][(treshold - 2) - (states[i] + 1)]);
-					states[i]++;
-					break;
-				}
-			}
+		if (!getline(input_file, rotation_system)) {
+			done = true;
 		}
 
-		return res;
+		return previous_one;
 	}
 };
 
@@ -572,12 +503,12 @@ inline void graph::create_all_possible_drawings() {
 		//cout << cur << endl;
 
 		//check the fingerprint 
-		if (!is_correct_fingerprint(fingerprint)) continue;
+		//if (!is_correct_fingerprint(fingerprint)) continue;
 
 		//checking labeling
-		fingerprint = find_canonic_fingerprint(fingerprint);
-		if (canonic_fingerprints[fingerprint]) continue;
-		canonic_fingerprints[fingerprint] = true;
+		//fingerprint = find_canonic_fingerprint(fingerprint);
+		//if (canonic_fingerprints[fingerprint]) continue;
+		//canonic_fingerprints[fingerprint] = true;
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
@@ -601,6 +532,7 @@ inline void graph::create_all_possible_drawings() {
 	cout << "realized " << realized << endl;
 }
 
+/*
 inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 
 	string permutation_holder;
@@ -654,8 +586,8 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	return min_fingerprint;
 
 }
-
-
+*/
+/*
 inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
@@ -683,7 +615,8 @@ inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
 	}
 	return false;
 }
-
+*/
+/*
 inline string find_lexical_min_rotation(string str)
 {
 	// To store lexicographic minimum string
@@ -701,7 +634,8 @@ inline string find_lexical_min_rotation(string str)
 
 	return min;
 }
-
+*/
+/*
 inline bool is_correct_K4(vector<int> orders[4]) {
 	int number_of_positive_rotation = 0;
 
@@ -721,6 +655,8 @@ inline bool is_correct_K4(vector<int> orders[4]) {
 
 }
 
+*/
+/*
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
 	int i[4];
@@ -755,3 +691,4 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 
 	return true;
 }
+*/
