@@ -66,7 +66,8 @@ namespace VizualizerWPF
 
         public static bool LineAndEllipse(Line line, Ellipse ellipse)
         {
-            return new Coordinates { x = -1, y = -1 } == TwoLines(line,
+            return new Coordinates { x = -1, y = -1 } ==
+                TwoLines(line,
                 new Line
                 {
                     X1 = ellipse.Margin.Left,
