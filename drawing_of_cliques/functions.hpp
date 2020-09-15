@@ -164,6 +164,19 @@ inline void print_graph(graph* g) {
 
 }
 
+inline vector<pair<double, double> > create_circle(double radius, double cx, double cy, int n) {
+	vector<pair<double, double> > circle;
+
+	double unit_angle = (double)360 / n;
+
+	for (int i = 0; i < n;i++) {
+		circle.push_back(make_pair(cx + radius * cos((i + 1) * (unit_angle / 180) * M_PI), cy + radius * sin((i + 1) * (unit_angle / 180) * M_PI)));
+	}
+
+	return circle;
+}
+
+
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
