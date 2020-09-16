@@ -29,7 +29,13 @@ namespace VizualizerWPF
     class CollisionDetection
     {
 
-        static int sizeOfVertex = 15;
+        static MainWindow window;
+
+        public static void Init(MainWindow window)
+        {
+            CollisionDetection.window = window;
+        } 
+
         static double epsilon = 0.5;
 
         public static Coordinates TwoLines(Line line1, Line line2)
@@ -52,13 +58,13 @@ namespace VizualizerWPF
 
         public static bool LineAndEllipseAtEnd(Line line, Ellipse ellipse)
         {
-            var intersection1 = (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
-                (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2));
+            var intersection1 = (line.X1 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (line.X1 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
+                (line.Y1 - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (line.Y1 - (ellipse.Margin.Top + window.sizeOfVertex / 2));
 
-            var intersection2 = (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
-                (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2));
+            var intersection2 = (line.X2 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (line.X2 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
+                (line.Y2 - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (line.Y2 - (ellipse.Margin.Top + window.sizeOfVertex / 2));
 
-            if (intersection1 <= sizeOfVertex * sizeOfVertex + epsilon || intersection2 <= sizeOfVertex * sizeOfVertex + epsilon)
+            if (intersection1 <= window.sizeOfVertex * window.sizeOfVertex + epsilon || intersection2 <= window.sizeOfVertex * window.sizeOfVertex + epsilon)
                 return true;
 
             return false;
@@ -72,8 +78,8 @@ namespace VizualizerWPF
                 {
                     X1 = ellipse.Margin.Left,
                     Y1 = ellipse.Margin.Top,
-                    X2 = ellipse.Margin.Left + sizeOfVertex,
-                    Y2 = ellipse.Margin.Top + sizeOfVertex
+                    X2 = ellipse.Margin.Left + window.sizeOfVertex,
+                    Y2 = ellipse.Margin.Top + window.sizeOfVertex
                 }) ? false : true;
         }
     }
@@ -85,8 +91,9 @@ namespace VizualizerWPF
 
         GraphGenerator graphGenerator;
 
-        int cx, cy;
-        int sizeOfVertex;
+        double cx, cy;
+        public double sizeOfVertex;
+        double scale;
 
         List<Coordinates> selectedVertices = new List<Coordinates>();
 
@@ -97,18 +104,35 @@ namespace VizualizerWPF
 
             InitializeComponent();
 
+            StateChanged += new EventHandler(ResizeWindowEvent);
+
             cx = 200; cy = 200;
             sizeOfVertex = 15;
+            scale = 1.5;
 
-            //var inter = CollisionDetection.TwoLines(new Line { X1 = 0, X2 = 2, Y1 = 0, Y2 = 2 }, new Line { X1 = 0, X2 = 1, Y1 = 2, Y2 = 0 });
-            //MessageBox.Show(new { inter.x, inter.y }.ToString());
+            CollisionDetection.Init(this);
 
-            graphGenerator = new GraphGenerator(4);
+            graphGenerator = new GraphGenerator(5);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
             DrawGraph(graphCoordinates);
 
-            //Measure();
-            //Arrange();
+        }
+
+        private void ResizeWindowEvent(object sender, EventArgs e)
+        {
+            if(WindowState == WindowState.Normal)
+            {
+                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
+                mainCanvas.Children.Clear();
+                DrawGraph(graphGenerator.GetTopicalDrawing());
+            }
+
+            if(WindowState == WindowState.Maximized)
+            {
+                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
+                mainCanvas.Children.Clear();
+                DrawGraph(graphGenerator.GetTopicalDrawing());
+            }
 
         }
 
@@ -400,6 +424,8 @@ namespace VizualizerWPF
         StreamReader streamReader;
         int SizeOfGraph { get; set; }
 
+        GraphCoordinates graphCoordinates = new GraphCoordinates();
+
         public GraphGenerator(int n)
         {
             SizeOfGraph = n;
@@ -409,7 +435,7 @@ namespace VizualizerWPF
 
         GraphCoordinates ReadUntillNextRS()
         {
-            var graphCoordinates = new GraphCoordinates();
+            graphCoordinates = new GraphCoordinates();
             HashSet<Tuple<Coordinates, VertexState> > vertices = new HashSet<Tuple<Coordinates, VertexState> >();
 
             string line;
@@ -433,6 +459,12 @@ namespace VizualizerWPF
             }
 
             graphCoordinates.vertices = vertices.ToList();
+
+            return graphCoordinates;
+        }
+
+        public GraphCoordinates GetTopicalDrawing()
+        {
             return graphCoordinates;
         }
 
