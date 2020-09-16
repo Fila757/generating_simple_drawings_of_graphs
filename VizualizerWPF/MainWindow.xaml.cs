@@ -114,7 +114,7 @@ namespace VizualizerWPF
 
             graphGenerator = new GraphGenerator(5);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
-            DrawGraph(graphCoordinates);
+            DrawGraph(graphCoordinates, 1);
 
         }
 
@@ -124,14 +124,14 @@ namespace VizualizerWPF
             {
                 cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphGenerator.GetTopicalDrawing());
+                DrawGraph(graphGenerator.GetTopicalDrawing(), 1);
             }
 
             if(WindowState == WindowState.Maximized)
             {
                 cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphGenerator.GetTopicalDrawing());
+                DrawGraph(graphGenerator.GetTopicalDrawing(), scale);
             }
 
         }
@@ -217,7 +217,7 @@ namespace VizualizerWPF
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
 
             mainCanvas.Children.Clear();
-            DrawGraph(graphCoordinates);
+            DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);
         }
 
         private void ellipse_MouseDown(object sender, RoutedEventArgs e)
@@ -349,7 +349,7 @@ namespace VizualizerWPF
            
         }
 
-        void DrawGraph(GraphCoordinates graphCoordinates)
+        void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
             foreach (var vertex in graphCoordinates.vertices)
             {
@@ -358,7 +358,7 @@ namespace VizualizerWPF
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertex.Item1.x + cx, vertex.Item1.y + cy, 0, 0)
+                    Margin = new Thickness(scale * vertex.Item1.x + cx, scale * vertex.Item1.y + cy, 0, 0)
 
                 };
                 ellipse.MouseDown += ellipse_MouseDown;
@@ -370,10 +370,10 @@ namespace VizualizerWPF
             {
                 var line = new Line
                 {
-                    X1 = edge.from.x + cx + sizeOfVertex / 2,
-                    Y1 = edge.from.y + cy + sizeOfVertex / 2,
-                    X2 = edge.to.x + cx + sizeOfVertex / 2,
-                    Y2 = edge.to.y + cy + sizeOfVertex / 2,
+                    X1 = scale * edge.from.x + cx + sizeOfVertex / 2,
+                    Y1 = scale * edge.from.y + cy + sizeOfVertex / 2,
+                    X2 = scale * edge.to.x + cx + sizeOfVertex / 2,
+                    Y2 = scale * edge.to.y + cy + sizeOfVertex / 2,
                     Stroke = Brushes.Red,
                     StrokeThickness = sizeOfVertex / 3
                 };
