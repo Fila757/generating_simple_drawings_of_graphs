@@ -103,7 +103,7 @@ namespace VizualizerWPF
             //var inter = CollisionDetection.TwoLines(new Line { X1 = 0, X2 = 2, Y1 = 0, Y2 = 2 }, new Line { X1 = 0, X2 = 1, Y1 = 2, Y2 = 0 });
             //MessageBox.Show(new { inter.x, inter.y }.ToString());
 
-            graphGenerator = new GraphGenerator(5);
+            graphGenerator = new GraphGenerator(4);
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
             DrawGraph(graphCoordinates);
 
@@ -333,13 +333,14 @@ namespace VizualizerWPF
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
-                    Fill = Brushes.Blue,
-                    Margin = new Thickness(vertex.x + cx, vertex.y + cy, 0, 0)
+                    Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Margin = new Thickness(vertex.Item1.x + cx, vertex.Item1.y + cy, 0, 0)
+
                 };
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                Panel.SetZIndex(ellipse, 100);
+                Panel.SetZIndex(ellipse, vertex.Item2 == VertexState.Regular ? 100 : 10);
             }
             foreach (var edge in graphCoordinates.edges)
             {
@@ -386,9 +387,11 @@ namespace VizualizerWPF
       
     }
 
+    enum VertexState { Intersection, Regular};
+
     class GraphCoordinates
     {
-        public List<Coordinates> vertices = new List<Coordinates>();
+        public List<Tuple<Coordinates, VertexState> > vertices = new List<Tuple<Coordinates, VertexState> >();
         public List<Edge> edges = new List<Edge>();
     }
 
@@ -407,7 +410,7 @@ namespace VizualizerWPF
         GraphCoordinates ReadUntillNextRS()
         {
             var graphCoordinates = new GraphCoordinates();
-            HashSet<Coordinates> vertices = new HashSet<Coordinates>();
+            HashSet<Tuple<Coordinates, VertexState> > vertices = new HashSet<Tuple<Coordinates, VertexState> >();
 
             string line;
             while(!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
@@ -416,14 +419,16 @@ namespace VizualizerWPF
 
                 for (int i = 0; i < temp.Length / 4; i++)
                 {
+                    var stateFrom = i == 0 ? VertexState.Regular : VertexState.Intersection;
+                    var stateTo = i == temp.Length / 4 - 1 ? VertexState.Regular : VertexState.Intersection;
                     graphCoordinates.edges.Add(
                         new Edge
                         {
                             from = new Coordinates { x = Double.Parse(temp[4*i + 0]), y = Double.Parse(temp[4*i + 1]) },
                             to = new Coordinates { x = Double.Parse(temp[4*i + 2]), y = Double.Parse(temp[4*i + 3]) }
                         });
-                    vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].from);
-                    vertices.Add(graphCoordinates.edges[graphCoordinates.edges.Count - 1].to);
+                    vertices.Add(Tuple.Create(graphCoordinates.edges[graphCoordinates.edges.Count - 1].from, stateFrom));
+                    vertices.Add(Tuple.Create(graphCoordinates.edges[graphCoordinates.edges.Count - 1].to, stateTo));
                 }
             }
 
