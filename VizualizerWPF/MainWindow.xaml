@@ -43,6 +43,8 @@
 
         <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
 
+        <TextBox x:Name="textbox" Grid.Column ="0" Grid.Row= "9" TextAlignment="right"/>
+
 
     </Grid>
 </Window>

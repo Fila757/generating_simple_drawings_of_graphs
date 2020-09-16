@@ -214,6 +214,13 @@ namespace VizualizerWPF
 
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
+
+            if (graphGenerator.SizeOfGraph != NextDrawingUpDown.Value)
+            {
+                graphGenerator.CloseFile();
+                graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+            }
+                
             var graphCoordinates = graphGenerator.GenerateNextDrawing();
 
             mainCanvas.Children.Clear();
@@ -422,7 +429,7 @@ namespace VizualizerWPF
     class GraphGenerator
     {
         StreamReader streamReader;
-        int SizeOfGraph { get; set; }
+        public int SizeOfGraph {get; set; }
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
@@ -431,6 +438,11 @@ namespace VizualizerWPF
             SizeOfGraph = n;
             streamReader = new StreamReader(
                 "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph" + SizeOfGraph + ".txt");
+        }
+
+        public void CloseFile()
+        {
+            streamReader.Dispose(); //delete if we want to remain state of file
         }
 
         GraphCoordinates ReadUntillNextRS()

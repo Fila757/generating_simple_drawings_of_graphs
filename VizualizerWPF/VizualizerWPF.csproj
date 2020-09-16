@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="NumericUpDown" Version="3.0.2" />
     <PackageReference Include="Syncfusion.Shared.WPF" Version="18.2.0.57" />
   </ItemGroup>
 
