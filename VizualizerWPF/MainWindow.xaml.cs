@@ -365,7 +365,8 @@ namespace VizualizerWPF
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(scale * vertex.Item1.x + cx, scale * vertex.Item1.y + cy, 0, 0)
+                    Margin = new Thickness(scale * vertex.Item1.x + cx, scale * vertex.Item1.y + cy, 0, 0),
+                    Visibility = vertex.Item2 == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
                 ellipse.MouseDown += ellipse_MouseDown;
