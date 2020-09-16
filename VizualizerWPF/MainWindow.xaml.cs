@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
@@ -342,6 +343,15 @@ namespace VizualizerWPF
             }
             foreach (var edge in graphCoordinates.edges)
             {
+
+                List<Point> tempPoints = new List<Point>();
+                foreach (var point in edge.points)
+                {
+                    tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2))));
+                }
+
+                edge.points = tempPoints.ToArray();
+
                 var line = new Line
                 {
                     X1 = scale * edge.from.x + cx + sizeOfVertex / 2,
@@ -360,34 +370,40 @@ namespace VizualizerWPF
        
     }
 
-    struct Coordinates
+    public static class PointExtensions
     {
-        public double x;
-        public double y;
-
-        public static bool operator ==(Coordinates a, Coordinates b)
+        public static Point Scale(this Point point, double scale)
         {
-            return a.x == b.x && a.y == b.y;
+            Point tempPoint = new Point();
+            tempPoint.X = point.X * scale;
+            tempPoint.Y =  point.Y* scale;
+            return tempPoint;
         }
 
-        public static bool operator !=(Coordinates a, Coordinates b)
+        public static Point Add(this Point point, Point point1)
         {
-            return !(a == b);
+            Point tempPoint = new Point();
+            tempPoint.X = point.X + point1.X;
+            tempPoint.Y = point.Y + point1.Y;
+            return tempPoint;
         }
-
     }
 
     struct Edge
     {
-        public Coordinates from;
-        public Coordinates to;
+        public Point[] points;
+        
+        public Edge(Point[] points)
+        {
+            this.points = points;
+        }
     }
 
     enum VertexState { Intersection, Regular};
 
     class GraphCoordinates
     {
-        public List<Tuple<Coordinates, VertexState> > vertices = new List<Tuple<Coordinates, VertexState> >();
+        public List<Tuple<Point, VertexState> > vertices = new List<Tuple<Point, VertexState> >();
         public List<Edge> edges = new List<Edge>();
     }
 }

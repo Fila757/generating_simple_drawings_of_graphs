@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 
@@ -27,7 +28,7 @@ namespace VizualizerWPF
         GraphCoordinates ReadUntillNextRS()
         {
             graphCoordinates = new GraphCoordinates();
-            HashSet<Tuple<Coordinates, VertexState> > vertices = new HashSet<Tuple<Coordinates, VertexState> >();
+            HashSet<Tuple<Point, VertexState> > vertices = new HashSet<Tuple<Point, VertexState> >();
 
             string line;
             while(!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
