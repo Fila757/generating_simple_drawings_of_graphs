@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
 using Path = System.Windows.Shapes.Path;
 
@@ -16,7 +17,7 @@ namespace VizualizerWPF
 
         static double epsilon = 0.5;
 
-        public static Coordinates TwoLines(Line line1, Line line2)
+        public static Point TwoLines(Line line1, Line line2)
         {
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
@@ -30,8 +31,8 @@ namespace VizualizerWPF
             var t = numT / denominator;
             //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
             if(denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
-                return new Coordinates { x = line1.X1 + (line1.X2 - line1.X1) * t, y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
-            return new Coordinates { x = -1, y = -1 };
+                return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
+            return new Point { X = -1, Y = -1 };
         }
 
         public static bool LineAndEllipseAtEnd(Line line, Ellipse ellipse)
@@ -50,7 +51,7 @@ namespace VizualizerWPF
 
         public static bool LineAndEllipse(Line line, Ellipse ellipse)
         {
-            return new Coordinates { x = -1, y = -1 } ==
+            return new Point { X = -1, Y = -1 } ==
                 TwoLines(line,
                 new Line
                 {

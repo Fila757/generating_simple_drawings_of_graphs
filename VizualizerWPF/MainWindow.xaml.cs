@@ -41,7 +41,9 @@ namespace VizualizerWPF
         //Dictionary<Line, List<Line>> edges = new Dictionary<Line, List<Line> >();
         //Dictionary<Ellipse, List<Ellipse> > vertices = new Dictionary<Ellipse, List<Ellipse> >();
 
-        List<Coordinates> selectedVertices = new List<Coordinates>();
+        List<Point> selectedVertices = new List<Point>();
+
+        GraphCoordinates graphCoordinates = new GraphCoordinates();
 
         // Make an array containing Bezier curve points and control points.
 
@@ -69,7 +71,7 @@ namespace VizualizerWPF
             path2.StrokeThickness = 5;
             mainCanvas.Children.Add(path2);
 
-            MessageBox.Show(CollisionDetection.TwoPaths(path1, path2).ToString());
+            //MessageBox.Show(CollisionDetection.TwoPaths(path1, path2).ToString());
 
             StateChanged += new EventHandler(ResizeWindowEvent);
 
@@ -80,7 +82,7 @@ namespace VizualizerWPF
             CollisionDetection.Init(this);
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
-            var graphCoordinates = graphGenerator.GenerateNextDrawing();
+            graphCoordinates = graphGenerator.GenerateNextDrawing();
             DrawGraph(graphCoordinates, 1);
 
         }
@@ -202,15 +204,15 @@ namespace VizualizerWPF
 
             if (stateChanging == StateChanging.Adding)
             {
-                selectedVertices.Add(new Coordinates { x = ellipse.Margin.Left, y = ellipse.Margin.Top });
+                selectedVertices.Add(new Point { X = ellipse.Margin.Left, Y = ellipse.Margin.Top });
                 if (selectedVertices.Count == 2)
                 {
                     var line = new Line
                     {
-                        X1 = selectedVertices[0].x + sizeOfVertex / 2,
-                        Y1 = selectedVertices[0].y + sizeOfVertex / 2,
-                        X2 = selectedVertices[1].x + sizeOfVertex / 2,
-                        Y2 = selectedVertices[1].y + sizeOfVertex / 2,
+                        X1 = selectedVertices[0].X + sizeOfVertex / 2,
+                        Y1 = selectedVertices[0].Y + sizeOfVertex / 2,
+                        X2 = selectedVertices[1].X + sizeOfVertex / 2,
+                        Y2 = selectedVertices[1].Y + sizeOfVertex / 2,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
@@ -227,14 +229,14 @@ namespace VizualizerWPF
                         if (l == line) continue;
 
                         var intersection = CollisionDetection.TwoLines(line, l);
-                        if(!(intersection.x == -1 && intersection.y == -1))
+                        if(!(intersection.X == -1 && intersection.Y == -1))
                         {
                             var ellipse2 = new Ellipse
                             {
                                 Width = sizeOfVertex,
                                 Height = sizeOfVertex,
                                 Fill = Brushes.Green,
-                                Margin = new Thickness(intersection.x - sizeOfVertex / 2, intersection.y - sizeOfVertex / 2, 0, 0),
+                                Margin = new Thickness(intersection.X - sizeOfVertex / 2, intersection.Y - sizeOfVertex / 2, 0, 0),
                                 Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
                             };
                             ellipse2.MouseDown += ellipse_MouseDown;
@@ -276,22 +278,41 @@ namespace VizualizerWPF
         private void line_MouseDown(object sender, RoutedEventArgs e)
         {
             Line line = sender as Line;
+
+            MessageBox.Show(line.ToString());
+
+
+            var tempEdge = new Edge();
+            foreach(var edge in graphCoordinates.edges)
+            {
+                foreach(var l in edge.lines)
+                {
+                    if (l == line)
+                    {
+                        tempEdge = edge;
+                        MessageBox.Show(tempEdge.ToString());
+                    }
+                }
+            }
+
             if (stateChanging == StateChanging.Removing)
             {
-
-                var removedIntersections = new List<Ellipse>();
-                foreach(var ellipse in mainCanvas.Children.OfType<Ellipse>())
+                foreach (var l in tempEdge.lines)
                 {
-                    if (CollisionDetection.LineAndEllipse(line, ellipse)
-                        && ellipse.Fill == Brushes.Green)
-                        removedIntersections.Add(ellipse);
+                    var removedIntersections = new List<Ellipse>();
+                    foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
+                    {
+                        if (CollisionDetection.LineAndEllipse(l, ellipse)
+                            && ellipse.Fill == Brushes.Green)
+                            removedIntersections.Add(ellipse);
 
+                    }
+
+                    foreach (var ellipse in removedIntersections)
+                        mainCanvas.Children.Remove(ellipse);
+
+                    mainCanvas.Children.Remove(l);
                 }
-
-                foreach (var ellipse in removedIntersections)
-                    mainCanvas.Children.Remove(ellipse);
-
-                mainCanvas.Children.Remove(line);
             }
         }
 
@@ -325,14 +346,16 @@ namespace VizualizerWPF
 
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
+
             foreach (var vertex in graphCoordinates.vertices)
             {
+                //MessageBox.Show(vertex.ToString());
                 var ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(scale * vertex.Item1.x + cx, scale * vertex.Item1.y + cy, 0, 0),
+                    Margin = new Thickness(scale * vertex.Item1.X + cx, scale * vertex.Item1.Y + cy, 0, 0),
                     Visibility = vertex.Item2 == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
@@ -341,29 +364,38 @@ namespace VizualizerWPF
 
                 Panel.SetZIndex(ellipse, vertex.Item2 == VertexState.Regular ? 100 : 10);
             }
-            foreach (var edge in graphCoordinates.edges)
+            for (int i = 0; i < graphCoordinates.edges.Count;i++)
             {
+                var edge = graphCoordinates.edges[i];
 
-                List<Point> tempPoints = new List<Point>();
+                HashSet<Point> tempPoints = new HashSet<Point>();
                 foreach (var point in edge.points)
                 {
                     tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2))));
                 }
 
-                edge.points = tempPoints.ToArray();
+                edge.points = tempPoints;
 
-                var line = new Line
+                List<Line> tempLines = new List<Line>();
+                foreach (var line in edge.lines)
                 {
-                    X1 = scale * edge.from.x + cx + sizeOfVertex / 2,
-                    Y1 = scale * edge.from.y + cy + sizeOfVertex / 2,
-                    X2 = scale * edge.to.x + cx + sizeOfVertex / 2,
-                    Y2 = scale * edge.to.y + cy + sizeOfVertex / 2,
-                    Stroke = Brushes.Red,
-                    StrokeThickness = sizeOfVertex / 3
-                };
-                Panel.SetZIndex(line, 1);
-                line.MouseDown += line_MouseDown;
-                mainCanvas.Children.Add(line);
+                    var l = new Line
+                    {
+                        X1 = scale * line.X1 + cx + sizeOfVertex / 2,
+                        Y1 = scale * line.Y1 + cy + sizeOfVertex / 2,
+                        X2 = scale * line.X2 + cx + sizeOfVertex / 2,
+                        Y2 = scale * line.Y2 + cy + sizeOfVertex / 2,
+                        Stroke = Brushes.Red,
+                        StrokeThickness = sizeOfVertex / 3
+                    };
+                    Panel.SetZIndex(l, 1);
+                    l.MouseDown += line_MouseDown;
+                    mainCanvas.Children.Add(l);
+
+                    tempLines.Add(l);
+                }
+
+                edge.lines = tempLines;
             }
           
         }
@@ -391,11 +423,13 @@ namespace VizualizerWPF
 
     struct Edge
     {
-        public Point[] points;
-        
-        public Edge(Point[] points)
+        public HashSet<Point> points;
+        public List<Line> lines;
+
+        public Edge(HashSet<Point> points, List<Line> lines)
         {
             this.points = points;
+            this.lines = lines;
         }
     }
 
