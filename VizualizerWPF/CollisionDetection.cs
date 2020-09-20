@@ -49,6 +49,18 @@ namespace VizualizerWPF
             return false;
         }
 
+        public static bool CenterOfEllipseOnLine(Line line, Ellipse ellipse)
+        {
+            var center = new Point { X = ellipse.Margin.Left + window.sizeOfVertex / 2, Y = ellipse.Margin.Top + window.sizeOfVertex / 2 };
+            if ((line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y 
+                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 <= epsilon 
+                    &&
+                    (line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
+                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 >= -epsilon)
+                return true;
+            return false;
+        }
+
         public static bool CenterInsideEllipse(Point point, Ellipse ellipse)
         {
             var intersection = (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +

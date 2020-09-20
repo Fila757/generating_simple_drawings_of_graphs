@@ -75,7 +75,7 @@ namespace VizualizerWPF
 
             StateChanged += new EventHandler(ResizeWindowEvent);
 
-            cx = 200; cy = 200;
+            cx = 300; cy = 200;
             sizeOfVertex = 15;
             scale = 1.5;
 
@@ -89,7 +89,6 @@ namespace VizualizerWPF
 
         private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
-
             var verticesTemp = new List<Vertex>();
             foreach (var vertex in graphCoordinates.vertices)
             {
@@ -297,6 +296,8 @@ namespace VizualizerWPF
                             Panel.SetZIndex(ellipse2, 10);
                             intersections.Add(ellipse2);
 
+                            graphCoordinates.vertices.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
+
                            //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
                         }
                     }
@@ -315,7 +316,7 @@ namespace VizualizerWPF
                 List<Line> intersectedLines = new List<Line>();
                 foreach(var line in mainCanvas.Children.OfType<Line>())
                 {
-                    if (CollisionDetection.LineAndEllipseAtEnd(line, ellipse))
+                    if (CollisionDetection.CenterOfEllipseOnLine(line, ellipse)) // colision at the end can be used if it would not work
                         intersectedLines.Add(line);
                 }
 
