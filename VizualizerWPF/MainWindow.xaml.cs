@@ -220,11 +220,6 @@ namespace VizualizerWPF
             statesCalculation[StateCalculation.KEdges] = !statesCalculation[StateCalculation.KEdges];
         }
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void KedgesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -324,11 +319,9 @@ namespace VizualizerWPF
                 foreach (var line in intersectedLines) {
 
                     var tempEdge = FindEdge(line);
-
                     foreach(var l in tempEdge.lines)
                     {
                         RemoveIntersections(l);
-
                         mainCanvas.Children.Remove(l);
                     }
                 }
@@ -503,85 +496,4 @@ namespace VizualizerWPF
        
     }
 
-    public static class PointExtensions
-    {
-        public static Point Scale(this Point point, double scale)
-        {
-            Point tempPoint = new Point();
-            tempPoint.X = point.X * scale;
-            tempPoint.Y =  point.Y* scale;
-            return tempPoint;
-        }
-
-        public static Point Add(this Point point, Point point1)
-        {
-            Point tempPoint = new Point();
-            tempPoint.X = point.X + point1.X;
-            tempPoint.Y = point.Y + point1.Y;
-            return tempPoint;
-        }
-    }
-
-    struct Edge
-    {
-        public HashSet<Point> points;
-        public List<Line> lines;
-
-        public Edge(HashSet<Point> points, List<Line> lines)
-        {
-            this.points = points;
-            this.lines = lines;
-        }
-    }
-
-    struct Vertex
-    {
-        public Ellipse ellipse;
-        public Point center;
-        public VertexState state;
-
-        public Vertex(Ellipse ellipse, Point point, VertexState state)
-        {
-            this.ellipse = ellipse;
-            center = point;
-            this.state = state;
-        }
-
-        public static bool operator ==(Vertex a, Vertex b)
-        {
-            return a.state == b.state && a.center == b.center;
-        }
-
-        public static bool operator !=(Vertex a, Vertex b)
-        {
-            return !(a == b);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is null || !(obj is Vertex))
-                return false;
-
-            var vertex = (Vertex) obj;
-            return state == vertex.state && center == vertex.center;
-        }
-
-        public override int GetHashCode()
-        {
-            return center.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
-    }
-
-    enum VertexState { Intersection, Regular};
-
-    class GraphCoordinates
-    {
-        public List<Vertex> vertices = new List<Vertex>();
-        public List<Edge> edges = new List<Edge>();
-    }
 }

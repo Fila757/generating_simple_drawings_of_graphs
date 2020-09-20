@@ -7,6 +7,11 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
+    class GraphCoordinates
+    {
+        public List<Vertex> vertices = new List<Vertex>();
+        public List<Edge> edges = new List<Edge>();
+    }
     class GraphGenerator
     {
         StreamReader streamReader;
