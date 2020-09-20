@@ -41,11 +41,10 @@ namespace VizualizerWPF
         //Dictionary<Line, List<Line>> edges = new Dictionary<Line, List<Line> >();
         //Dictionary<Ellipse, List<Ellipse> > vertices = new Dictionary<Ellipse, List<Ellipse> >();
 
-        List<Point> selectedVertices = new List<Point>();
+        List<Vertex> selectedVertices = new List<Vertex>();
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
-        Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
 
         public MainWindow()
         {
@@ -129,8 +128,6 @@ namespace VizualizerWPF
                 }
 
                 edgeTemp.points = pointsTemp; 
-
-
             }
         }
 
@@ -248,15 +245,15 @@ namespace VizualizerWPF
 
             if (stateChanging == StateChanging.Adding)
             {
-                selectedVertices.Add(new Point { X = ellipse.Margin.Left, Y = ellipse.Margin.Top });
+                selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex/2, Y = ellipse.Margin.Top + sizeOfVertex/2}, VertexState.Regular));
                 if (selectedVertices.Count == 2)
                 {
                     var line = new Line
                     {
-                        X1 = selectedVertices[0].X + sizeOfVertex / 2,
-                        Y1 = selectedVertices[0].Y + sizeOfVertex / 2,
-                        X2 = selectedVertices[1].X + sizeOfVertex / 2,
-                        Y2 = selectedVertices[1].Y + sizeOfVertex / 2,
+                        X1 = selectedVertices[0].center.X,
+                        Y1 = selectedVertices[0].center.Y,
+                        X2 = selectedVertices[1].center.X,
+                        Y2 = selectedVertices[1].center.Y,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
@@ -265,9 +262,12 @@ namespace VizualizerWPF
                     mainCanvas.Children.Add(line);
 
                     graphCoordinates.edges.Add(new Edge(
-                        new HashSet<Point> { selectedVertices[0], selectedVertices[1] },
+                        new HashSet<Point> { selectedVertices[0].center, selectedVertices[1].center },
                         new List<Line> { line }
                     ));
+
+                    graphCoordinates.AddToDictionary(selectedVertices[0], graphCoordinates.edges.Last());
+                    graphCoordinates.AddToDictionary(selectedVertices[1], graphCoordinates.edges.Last());
 
                     selectedVertices.Clear();
 
@@ -319,6 +319,9 @@ namespace VizualizerWPF
                 foreach (var line in intersectedLines) {
 
                     var tempEdge = FindEdge(line);
+
+                    graphCoordinates.neighbors.ContainsValue()
+
                     foreach(var l in tempEdge.lines)
                     {
                         RemoveIntersections(l);
@@ -329,6 +332,7 @@ namespace VizualizerWPF
                 /* removing vertex */
                 mainCanvas.Children.Remove(ellipse);
 
+                graphCoordinates.neighbors.Remove()
             }
         }
 

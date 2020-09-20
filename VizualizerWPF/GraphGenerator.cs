@@ -11,6 +11,18 @@ namespace VizualizerWPF
     {
         public List<Vertex> vertices = new List<Vertex>();
         public List<Edge> edges = new List<Edge>();
+        public Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
+
+        public void AddToDictionary(Vertex key, Edge value)
+        {
+            if (neighbors.ContainsKey(key))
+                neighbors[key].Add(value);
+            else
+            {
+                neighbors[key] = new List<Edge>();
+                neighbors[key].Add(value);
+            }
+        }
     }
     class GraphGenerator
     {
@@ -42,6 +54,7 @@ namespace VizualizerWPF
                 string[] temp = line.Split();
 
                 var edge = new Edge(new HashSet<Point>(), new List<Line>());
+
                 for (int i = 0; i < temp.Length / 4; i++)
                 {
                     var stateFrom = i == 0 ? VertexState.Regular : VertexState.Intersection;
@@ -85,6 +98,9 @@ namespace VizualizerWPF
                 }
    
                 graphCoordinates.edges.Add(edge);
+
+                graphCoordinates.AddToDictionary(vertices[0], edge);
+                graphCoordinates.AddToDictionary(vertices[vertices.Count - 1], edge);
                 
             }
 
@@ -92,7 +108,6 @@ namespace VizualizerWPF
 
             return graphCoordinates;
         }
-
         public GraphCoordinates GetTopicalDrawing()
         {
             return graphCoordinates;
