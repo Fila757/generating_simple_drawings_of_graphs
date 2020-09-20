@@ -29,7 +29,7 @@ namespace VizualizerWPF
         GraphCoordinates ReadUntillNextRS()
         {
             graphCoordinates = new GraphCoordinates();
-            HashSet<Tuple<Point, VertexState> > vertices = new HashSet<Tuple<Point, VertexState> >();
+            List<Vertex> vertices = new List<Vertex>();
 
             string line;
             while(!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
@@ -44,9 +44,30 @@ namespace VizualizerWPF
 
                     var from = new Point { X = Double.Parse(temp[4 * i + 0]), Y = Double.Parse(temp[4 * i + 1]) };
                     var to = new Point { X = Double.Parse(temp[4 * i + 2]), Y = Double.Parse(temp[4 * i + 3]) };
-                        
-                    vertices.Add(Tuple.Create(from, stateFrom));
-                    vertices.Add(Tuple.Create(to, stateTo));
+
+
+                    //add just every second . . _ . _ . _ . _ ., . _ is always the same
+                    if (i == 0)
+                    {
+                        vertices.Add(new Vertex(new Ellipse(), from, stateFrom));
+                        vertices.Add(new Vertex(new Ellipse(), to, stateTo));
+                    }
+                    else
+                    {
+                        vertices.Add(new Vertex(new Ellipse(), to, stateFrom));
+                    }
+
+
+                    if (i == 0)
+                    {
+                        edge.points.Add(from);
+                        edge.points.Add(to);
+                    }
+                    else
+                    {
+                        edge.points.Add(to);
+                    }
+
 
                     edge.lines.Add(new Line
                     {
@@ -56,13 +77,13 @@ namespace VizualizerWPF
                         Y2 = to.Y,
                     }); ;
 
-                    edge.points.Add(from); edge.points.Add(to);
                 }
+   
                 graphCoordinates.edges.Add(edge);
                 
             }
 
-            graphCoordinates.vertices = vertices.ToList();
+            graphCoordinates.vertices = vertices;
 
             return graphCoordinates;
         }

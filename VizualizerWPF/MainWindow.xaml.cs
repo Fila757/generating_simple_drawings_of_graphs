@@ -45,7 +45,7 @@ namespace VizualizerWPF
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
-        // Make an array containing Bezier curve points and control points.
+        Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
 
         public MainWindow()
         {
@@ -357,7 +357,7 @@ namespace VizualizerWPF
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                graphCoordinates.vertices.Add(Tuple.Create(new Point { X = pos.X, Y = pos.Y }, VertexState.Regular));
+                graphCoordinates.vertices.Add(new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular));
                     
             }
 
@@ -366,16 +366,22 @@ namespace VizualizerWPF
 
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
+            //uniqueness of vertices
 
-            List<Tuple<Point, VertexState>> graphCoordinatesTemp = new List<Tuple<Point, VertexState>>();
+            graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
+
+
+            List<Vertex> graphCoordinatesTemp = new List<Vertex>();
             foreach(var vertex in graphCoordinates.vertices)
             {
-                var coordinates = vertex.Item1.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
-                graphCoordinatesTemp.Add(Tuple.Create(coordinates, vertex.Item2));
+                var coordinates = vertex.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                graphCoordinatesTemp.Add(new Vertex(vertex.ellipse, coordinates, vertex.state));
             }
 
             graphCoordinates.vertices = graphCoordinatesTemp;
 
+
+            graphCoordinatesTemp = new List<Vertex>();
             foreach (var vertex in graphCoordinates.vertices)
             {
                 //MessageBox.Show(vertex.ToString());
@@ -383,16 +389,20 @@ namespace VizualizerWPF
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
-                    Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertex.Item1.X - sizeOfVertex / 2, vertex.Item1.Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = vertex.Item2 == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
+                    Fill = vertex.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Margin = new Thickness(vertex.center.X - sizeOfVertex / 2, vertex.center.Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = vertex.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                Panel.SetZIndex(ellipse, vertex.Item2 == VertexState.Regular ? 100 : 10);
+                Panel.SetZIndex(ellipse, vertex.state == VertexState.Regular ? 100 : 10);
+
+                graphCoordinatesTemp.Add(new Vertex(ellipse, vertex.center, vertex.state));
             }
+
+            graphCoordinates.vertices = graphCoordinatesTemp;
 
             var graphCoordinatesEdgesTemp = new GraphCoordinates();
             foreach(var edge in graphCoordinates.edges)
@@ -468,11 +478,54 @@ namespace VizualizerWPF
         }
     }
 
+    struct Vertex
+    {
+        public Ellipse ellipse;
+        public Point center;
+        public VertexState state;
+
+        public Vertex(Ellipse ellipse, Point point, VertexState state)
+        {
+            this.ellipse = ellipse;
+            center = point;
+            this.state = state;
+        }
+
+        public static bool operator ==(Vertex a, Vertex b)
+        {
+            return a.state == b.state && a.center == b.center;
+        }
+
+        public static bool operator !=(Vertex a, Vertex b)
+        {
+            return !(a == b);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is null || !(obj is Vertex))
+                return false;
+
+            var vertex = (Vertex) obj;
+            return state == vertex.state && center == vertex.center;
+        }
+
+        public override int GetHashCode()
+        {
+            return center.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return base.ToString();
+        }
+    }
+
     enum VertexState { Intersection, Regular};
 
     class GraphCoordinates
     {
-        public List<Tuple<Point, VertexState> > vertices = new List<Tuple<Point, VertexState> >();
+        public List<Vertex> vertices = new List<Vertex>();
         public List<Edge> edges = new List<Edge>();
     }
 }

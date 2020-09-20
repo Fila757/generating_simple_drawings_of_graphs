@@ -13,7 +13,7 @@ namespace VizualizerWPF
         public static void Init(MainWindow window)
         {
             CollisionDetection.window = window;
-        } 
+        }
 
         static double epsilon = 0.5;
 
@@ -25,12 +25,12 @@ namespace VizualizerWPF
                  line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
             var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
                 line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
-            
+
 
             var s = numS / denominator;
             var t = numT / denominator;
             //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
-            if(denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
+            if (denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return new Point { X = -1, Y = -1 };
         }
@@ -46,6 +46,17 @@ namespace VizualizerWPF
             if (intersection1 <= window.sizeOfVertex * window.sizeOfVertex + epsilon || intersection2 <= window.sizeOfVertex * window.sizeOfVertex + epsilon)
                 return true;
 
+            return false;
+        }
+
+        public static bool CenterInsideEllipse(Point point, Ellipse ellipse)
+        {
+            var intersection = (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
+                (point.Y - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (point.Y - (ellipse.Margin.Top + window.sizeOfVertex / 2));
+
+            if (intersection <= window.sizeOfVertex * window.sizeOfVertex + epsilon)
+                return true;
+            
             return false;
         }
 
