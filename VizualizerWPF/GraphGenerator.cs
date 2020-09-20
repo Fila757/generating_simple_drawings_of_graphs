@@ -54,9 +54,12 @@ namespace VizualizerWPF
                         X2 = to.X,
                         Y1 = from.Y,
                         Y2 = to.Y,
-                    }); ; 
+                    }); ;
+
+                    edge.points.Add(from); edge.points.Add(to);
                 }
                 graphCoordinates.edges.Add(edge);
+                
             }
 
             graphCoordinates.vertices = vertices.ToList();

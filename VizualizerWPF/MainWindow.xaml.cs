@@ -93,14 +93,14 @@ namespace VizualizerWPF
             {
                 cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphGenerator.GetTopicalDrawing(), 1);
+                DrawGraph(graphCoordinates, 1);
             }
 
             if(WindowState == WindowState.Maximized)
             {
                 cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphGenerator.GetTopicalDrawing(), scale);
+                DrawGraph(graphCoordinates, scale);
             }
 
         }
@@ -190,7 +190,7 @@ namespace VizualizerWPF
                 graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             }
                 
-            var graphCoordinates = graphGenerator.GenerateNextDrawing();
+            graphCoordinates = graphGenerator.GenerateNextDrawing();
 
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);
@@ -220,7 +220,14 @@ namespace VizualizerWPF
                     Panel.SetZIndex(line, 1);
                     mainCanvas.Children.Add(line);
 
+                    graphCoordinates.edges.Add(new Edge(
+                        new HashSet<Point> { selectedVertices[0], selectedVertices[1] },
+                        new List<Line> { line }
+                    ));
+
                     selectedVertices.Clear();
+
+                   
 
 
                     List<Ellipse> intersections = new List<Ellipse>();
@@ -275,41 +282,51 @@ namespace VizualizerWPF
             }
         }
 
-        private void line_MouseDown(object sender, RoutedEventArgs e)
+
+        private Edge FindEdge(Line line)
         {
-            Line line = sender as Line;
-
-            MessageBox.Show(line.ToString());
-
-
             var tempEdge = new Edge();
-            foreach(var edge in graphCoordinates.edges)
+            foreach (var edge in graphCoordinates.edges)
             {
-                foreach(var l in edge.lines)
+                foreach (var l in edge.lines)
                 {
                     if (l == line)
                     {
                         tempEdge = edge;
-                        MessageBox.Show(tempEdge.ToString());
                     }
                 }
             }
+            return tempEdge;
+        }
+
+        private void RemoveIntersections(Line line)
+        {
+            var removedIntersections = new List<Ellipse>();
+            foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
+            {
+                if (CollisionDetection.LineAndEllipse(line, ellipse)
+                    && ellipse.Fill == Brushes.Green)
+                    removedIntersections.Add(ellipse);
+
+            }
+
+            foreach (var ellipse in removedIntersections)
+                mainCanvas.Children.Remove(ellipse);
+        }
+
+        private void line_MouseDown(object sender, RoutedEventArgs e)
+        {
+            Line line = sender as Line;
+
+            //MessageBox.Show(line.ToString());
 
             if (stateChanging == StateChanging.Removing)
             {
+                var tempEdge = FindEdge(line);
+
                 foreach (var l in tempEdge.lines)
                 {
-                    var removedIntersections = new List<Ellipse>();
-                    foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
-                    {
-                        if (CollisionDetection.LineAndEllipse(l, ellipse)
-                            && ellipse.Fill == Brushes.Green)
-                            removedIntersections.Add(ellipse);
-
-                    }
-
-                    foreach (var ellipse in removedIntersections)
-                        mainCanvas.Children.Remove(ellipse);
+                    RemoveIntersections(l);
 
                     mainCanvas.Children.Remove(l);
                 }
@@ -328,6 +345,7 @@ namespace VizualizerWPF
             Point pos = Mouse.GetPosition(mainCanvas);
             if(stateChanging == StateChanging.Adding)
             {
+
                 Ellipse ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
@@ -338,6 +356,8 @@ namespace VizualizerWPF
                 Panel.SetZIndex(ellipse, 100);
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
+
+                graphCoordinates.vertices.Add(Tuple.Create(new Point { X = pos.X, Y = pos.Y }, VertexState.Regular));
                     
             }
 
@@ -347,6 +367,15 @@ namespace VizualizerWPF
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
 
+            List<Tuple<Point, VertexState>> graphCoordinatesTemp = new List<Tuple<Point, VertexState>>();
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                var coordinates = vertex.Item1.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                graphCoordinatesTemp.Add(Tuple.Create(coordinates, vertex.Item2));
+            }
+
+            graphCoordinates.vertices = graphCoordinatesTemp;
+
             foreach (var vertex in graphCoordinates.vertices)
             {
                 //MessageBox.Show(vertex.ToString());
@@ -355,7 +384,7 @@ namespace VizualizerWPF
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = vertex.Item2 == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(scale * vertex.Item1.X + cx, scale * vertex.Item1.Y + cy, 0, 0),
+                    Margin = new Thickness(vertex.Item1.X - sizeOfVertex / 2, vertex.Item1.Y - sizeOfVertex / 2, 0, 0),
                     Visibility = vertex.Item2 == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
@@ -364,27 +393,29 @@ namespace VizualizerWPF
 
                 Panel.SetZIndex(ellipse, vertex.Item2 == VertexState.Regular ? 100 : 10);
             }
-            for (int i = 0; i < graphCoordinates.edges.Count;i++)
+
+            var graphCoordinatesEdgesTemp = new GraphCoordinates();
+            foreach(var edge in graphCoordinates.edges)
             {
-                var edge = graphCoordinates.edges[i];
+                var edgeTemp = new Edge();
 
                 HashSet<Point> tempPoints = new HashSet<Point>();
                 foreach (var point in edge.points)
                 {
-                    tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2))));
+                    tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2)))); //first scale, then add
                 }
 
-                edge.points = tempPoints;
+                edgeTemp.points = tempPoints;
 
                 List<Line> tempLines = new List<Line>();
                 foreach (var line in edge.lines)
                 {
                     var l = new Line
                     {
-                        X1 = scale * line.X1 + cx + sizeOfVertex / 2,
-                        Y1 = scale * line.Y1 + cy + sizeOfVertex / 2,
-                        X2 = scale * line.X2 + cx + sizeOfVertex / 2,
-                        Y2 = scale * line.Y2 + cy + sizeOfVertex / 2,
+                        X1 = line.X1 + cx + sizeOfVertex / 2,
+                        Y1 = line.Y1 + cy + sizeOfVertex / 2,
+                        X2 = line.X2 + cx + sizeOfVertex / 2,
+                        Y2 = line.Y2 + cy + sizeOfVertex / 2,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
@@ -395,9 +426,13 @@ namespace VizualizerWPF
                     tempLines.Add(l);
                 }
 
-                edge.lines = tempLines;
+                edgeTemp.lines = tempLines;
+
+                graphCoordinatesEdgesTemp.edges.Add(edgeTemp);
             }
-          
+
+            graphCoordinates.edges = graphCoordinatesEdgesTemp.edges;
+
         }
        
     }
