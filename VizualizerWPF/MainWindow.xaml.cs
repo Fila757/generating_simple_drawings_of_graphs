@@ -87,20 +87,70 @@ namespace VizualizerWPF
 
         }
 
+        private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
+        {
+
+            var verticesTemp = new List<Vertex>();
+            foreach (var vertex in graphCoordinates.vertices)
+            {
+                var vertexTemp = vertex;
+                vertexTemp.center = new Point { X = vertex.center.X * scale,
+                    Y = vertex.center.Y * scale};
+
+                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - scale * sizeOfVertex / 2, vertexTemp.center.Y - scale * sizeOfVertex / 2, 0, 0);
+
+                vertexTemp.ellipse.Height *= scale;
+                vertexTemp.ellipse.Width *= scale;
+
+                verticesTemp.Add(vertexTemp);
+
+                mainCanvas.Children.Add(vertexTemp.ellipse);
+            }
+
+            graphCoordinates.vertices = verticesTemp;
+
+            foreach (var edge in graphCoordinates.edges)
+            {
+                var edgeTemp = edge;
+                foreach (var line in edgeTemp.lines)
+                {
+                    line.X1 *= scale;
+                    line.Y1 *= scale;
+                    line.X2 *= scale;
+                    line.Y2 *= scale;
+                    line.StrokeThickness *= scale;
+
+                    mainCanvas.Children.Add(line);
+                }
+
+                HashSet<Point> pointsTemp = new HashSet<Point>();
+                foreach(var point in edgeTemp.points)
+                {
+                    pointsTemp.Add(point.Scale(scale));
+                }
+
+                edgeTemp.points = pointsTemp; 
+
+
+            }
+        }
+
         private void ResizeWindowEvent(object sender, EventArgs e)
         {
             if(WindowState == WindowState.Normal)
             {
-                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphCoordinates, 1);
+                RedrawGraph(graphCoordinates, 1 / scale);
+                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
+
             }
 
-            if(WindowState == WindowState.Maximized)
+            if (WindowState == WindowState.Maximized)
             {
-                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
                 mainCanvas.Children.Clear();
-                DrawGraph(graphCoordinates, scale);
+                RedrawGraph(graphCoordinates, scale);
+                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
+
             }
 
         }
@@ -227,9 +277,6 @@ namespace VizualizerWPF
 
                     selectedVertices.Clear();
 
-                   
-
-
                     List<Ellipse> intersections = new List<Ellipse>();
                     foreach (var l in mainCanvas.Children.OfType<Line>())
                     {
@@ -273,8 +320,17 @@ namespace VizualizerWPF
                 }
 
                 /* removing edges */
-                foreach(var line in intersectedLines)
-                    mainCanvas.Children.Remove(line);
+                foreach (var line in intersectedLines) {
+
+                    var tempEdge = FindEdge(line);
+
+                    foreach(var l in tempEdge.lines)
+                    {
+                        RemoveIntersections(l);
+
+                        mainCanvas.Children.Remove(l);
+                    }
+                }
 
                 /* removing vertex */
                 mainCanvas.Children.Remove(ellipse);
@@ -367,7 +423,6 @@ namespace VizualizerWPF
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
             //uniqueness of vertices
-
             graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
 
 
@@ -422,10 +477,10 @@ namespace VizualizerWPF
                 {
                     var l = new Line
                     {
-                        X1 = line.X1 + cx + sizeOfVertex / 2,
-                        Y1 = line.Y1 + cy + sizeOfVertex / 2,
-                        X2 = line.X2 + cx + sizeOfVertex / 2,
-                        Y2 = line.Y2 + cy + sizeOfVertex / 2,
+                        X1 = line.X1 * scale + cx + sizeOfVertex / 2,
+                        Y1 = line.Y1 * scale + cy + sizeOfVertex / 2,
+                        X2 = line.X2 * scale + cx + sizeOfVertex / 2,
+                        Y2 = line.Y2 * scale + cy + sizeOfVertex / 2,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
