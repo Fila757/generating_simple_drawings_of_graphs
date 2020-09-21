@@ -11,18 +11,17 @@ namespace VizualizerWPF
     {
         public List<Vertex> vertices = new List<Vertex>();
         public List<Edge> edges = new List<Edge>();
-        public Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
+        public Dictionary<Vertex, List<Vertex>> neighbors = new Dictionary<Vertex, List<Vertex>>();
 
-        public void AddToDictionary(Vertex key, Edge value)
+        public void AddToDictionary(Vertex key, Vertex value)
         {
             if (neighbors.ContainsKey(key))
             {
-                key.state = VertexState.Regular; //little bit force idk why there is no always regulars
                 neighbors[key].Add(value);
             }
             else
             {
-                neighbors[key] = new List<Edge>();
+                neighbors[key] = new List<Vertex>();
                 neighbors[key].Add(value);
             }
         }
@@ -173,8 +172,8 @@ namespace VizualizerWPF
    
                 graphCoordinates.edges.Add(edge);
 
-                graphCoordinates.AddToDictionary(vertices[0], edge);
-                graphCoordinates.AddToDictionary(vertices[vertices.Count - 1], edge);
+                graphCoordinates.AddToDictionary(vertices[0], vertices[vertices.Count - 1]);
+                graphCoordinates.AddToDictionary(vertices[vertices.Count - 1], vertices[0]);
                 
             }
 

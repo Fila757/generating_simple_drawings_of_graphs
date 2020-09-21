@@ -247,13 +247,10 @@ namespace VizualizerWPF
             DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);
         }
 
-        private void DeleteEdgeFromDictionary(Edge edge)
+        private void DeleteEdgeFromDictionary(Vertex from, Vertex to)
         {
-            foreach(var (key, _) in graphCoordinates.neighbors)
-            {
-                if (graphCoordinates.neighbors[key].Contains(edge))
-                    graphCoordinates.neighbors[key].Remove(edge);
-            }
+            if (graphCoordinates.neighbors.ContainsKey(from))
+                graphCoordinates.neighbors[from].Remove(to);
         }
 
         private Vertex FindVertex(Ellipse ellipse)
@@ -265,6 +262,26 @@ namespace VizualizerWPF
             }
 
             throw new ArgumentException("There is no such a vertex, containing ellipse");
+        }
+
+        private (Vertex, Vertex) FindEdgeEnds(Edge edge)
+        {
+
+            var first = new Vertex();
+            var second = new Vertex();
+
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                if(vertex.state == VertexState.Regular && 
+                    CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], vertex.ellipse))
+                    first = vertex;
+
+                if(vertex.state == VertexState.Regular && 
+                    CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), vertex.ellipse))
+                    second = vertex;
+            }
+
+            return (first, second);
         }
 
         private void ellipse_MouseDown(object sender, RoutedEventArgs e)
@@ -296,8 +313,8 @@ namespace VizualizerWPF
                         new List<Line> { line }
                     ));
 
-                    graphCoordinates.AddToDictionary(selectedVertices[0], graphCoordinates.edges.Last());
-                    graphCoordinates.AddToDictionary(selectedVertices[1], graphCoordinates.edges.Last());
+                    graphCoordinates.AddToDictionary(selectedVertices[0], selectedVertices[1]);
+                    graphCoordinates.AddToDictionary(selectedVertices[1], selectedVertices[0]);
 
                     selectedVertices.Clear();
 
@@ -349,7 +366,10 @@ namespace VizualizerWPF
                 foreach (var line in intersectedLines) {
 
                     var tempEdge = FindEdge(line);
-                    DeleteEdgeFromDictionary(tempEdge);
+                    var (start, end) = FindEdgeEnds(tempEdge);
+
+                    DeleteEdgeFromDictionary(start, end);
+                    DeleteEdgeFromDictionary(end, start);
 
                     foreach(var l in tempEdge.lines)
                     {
@@ -406,7 +426,10 @@ namespace VizualizerWPF
             if (stateChanging == StateChanging.Removing)
             {
                 var tempEdge = FindEdge(line);
-                DeleteEdgeFromDictionary(tempEdge);
+                var (start, end) = FindEdgeEnds(tempEdge);
+
+                DeleteEdgeFromDictionary(start, end);
+                DeleteEdgeFromDictionary(end, start);
 
                 foreach (var l in tempEdge.lines)
                 {
