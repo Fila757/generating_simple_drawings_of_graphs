@@ -466,14 +466,13 @@ namespace VizualizerWPF
             int kEdgesWithGivenValue = 0;
             int kEdgesPicked = (int)KhranyUpDown.Value;
 
-            foreach(var (from, _) in graphCoordinates.neighbors)
+            foreach(var (from, value) in graphCoordinates.neighbors)
             {
-                foreach(var (to, _) in graphCoordinates.neighbors)
-                {
+                foreach(var to in value) { 
                     int sum = 0;
                     if (from != to)
                     {
-                        foreach(var (third, _) in graphCoordinates.neighbors)
+                        foreach(var third in graphCoordinates.neighbors[to])
                         {
                             if (third == from || third == to) continue;
                             if(Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)

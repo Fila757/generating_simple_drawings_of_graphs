@@ -5,11 +5,14 @@ namespace VizualizerWPF
 {
     enum VertexState { Intersection, Regular };
 
-    struct Vertex
+    class Vertex
     {
         public Ellipse ellipse;
         public Point center;
         public VertexState state;
+
+
+        public Vertex() {}
 
         public Vertex(Ellipse ellipse, Point point, VertexState state)
         {

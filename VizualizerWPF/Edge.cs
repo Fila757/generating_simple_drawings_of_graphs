@@ -4,10 +4,12 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
-    struct Edge
+    class Edge
     {
         public HashSet<Point> points;
         public List<Line> lines;
+
+        public Edge() { }
 
         public Edge(HashSet<Point> points, List<Line> lines)
         {
