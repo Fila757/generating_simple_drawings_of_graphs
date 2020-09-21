@@ -237,6 +237,26 @@ namespace VizualizerWPF
             DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);
         }
 
+        private void DeleteEdgeFromDictionary(Edge edge)
+        {
+            foreach(var (key, _) in graphCoordinates.neighbors)
+            {
+                if (graphCoordinates.neighbors[key].Contains(edge))
+                    graphCoordinates.neighbors[key].Remove(edge);
+            }
+        }
+
+        private Vertex FindVertex(Ellipse ellipse)
+        {
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                if (vertex.ellipse == ellipse)
+                    return vertex;
+            }
+
+            throw new ArgumentException("There is no such a vertex, containing ellipse");
+        }
+
         private void ellipse_MouseDown(object sender, RoutedEventArgs e)
         {
             Ellipse ellipse = sender as Ellipse;
@@ -319,8 +339,7 @@ namespace VizualizerWPF
                 foreach (var line in intersectedLines) {
 
                     var tempEdge = FindEdge(line);
-
-                    graphCoordinates.neighbors.ContainsValue()
+                    DeleteEdgeFromDictionary(tempEdge);
 
                     foreach(var l in tempEdge.lines)
                     {
@@ -332,7 +351,7 @@ namespace VizualizerWPF
                 /* removing vertex */
                 mainCanvas.Children.Remove(ellipse);
 
-                graphCoordinates.neighbors.Remove()
+                graphCoordinates.neighbors.Remove(FindVertex(ellipse));
             }
         }
 
@@ -377,6 +396,7 @@ namespace VizualizerWPF
             if (stateChanging == StateChanging.Removing)
             {
                 var tempEdge = FindEdge(line);
+                DeleteEdgeFromDictionary(tempEdge);
 
                 foreach (var l in tempEdge.lines)
                 {
@@ -387,11 +407,35 @@ namespace VizualizerWPF
             }
         }
 
+        private double Determinant(Point a, Point b)
+        {
+            return a.X * b.Y - a.Y * b.X;
+        }
+
+        /*
+        private int ReCalculateKEdges()
+        {
+            int sum = 0;
+            foreach(var (from, _) in graphCoordinates.neighbors)
+            {
+                foreach(var (to, _) in graphCoordinates.neighbors)
+                {
+                    if(from != to)
+                    {
+                        foreach(var (third, _) in graphCoordinates.neighbors)
+                        {
+                            if()
+                        }
+                    }
+                }
+            }
+        }
+        */
+
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
-            //MessageBox.Show(mainCanvas.ActualWidth.ToString());
-            //MessageBox.Show(MainWindow.MaxHeightProperty.);
+            //textblock.Text = ReCalculateKEdges().ToString();
 
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
