@@ -45,6 +45,9 @@ namespace VizualizerWPF
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
+        Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
+            Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
+
 
         public MainWindow()
         {
@@ -52,6 +55,13 @@ namespace VizualizerWPF
                 statesCalculation[state] = false;
 
             InitializeComponent();
+
+            //MessageBox.Show((new Point { X = 1, Y = 2 }.GetHashCode() == new Point { X = 1, Y = 2 }.GetHashCode()).ToString());
+            //Dictionary<Vertex, bool> temp = new Dictionary<Vertex, bool>();
+            //temp.Add(new Vertex(new Ellipse {Width = 50, Height = 50, Stroke = Brushes.Yellow}, new Point { X = 1, Y = 2 }, VertexState.Regular), true);
+            //temp.Add(new Vertex(new Ellipse(), new Point { X = 1, Y = 2 }, VertexState.Regular), false);
+
+      
 
             Point[] points1 = {
                 new Point(60, 30),
@@ -407,35 +417,73 @@ namespace VizualizerWPF
             }
         }
 
-        private double Determinant(Point a, Point b)
+        private double Determinant(Vector a, Vector b)
         {
             return a.X * b.Y - a.Y * b.X;
         }
 
-        /*
+        
+        private Edge FindEdgeFromVertices(Vertex a, Vertex b)
+        {
+            foreach(var edge in graphCoordinates.edges)
+            {
+                if ((CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], a.ellipse) || CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), a.ellipse)) 
+                    &&
+                    (CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], b.ellipse) || CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), b.ellipse)))
+                {
+                    return edge;
+                }
+            }
+
+            throw new ArgumentException("No such an edge between vertices");
+        }
+
         private int ReCalculateKEdges()
         {
-            int sum = 0;
+            int kEdgesWithGivenValue = 0;
+            int kEdgesPicked = (int)KhranyUpDown.Value;
+
             foreach(var (from, _) in graphCoordinates.neighbors)
             {
                 foreach(var (to, _) in graphCoordinates.neighbors)
                 {
-                    if(from != to)
+                    int sum = 0;
+                    if (from != to)
                     {
                         foreach(var (third, _) in graphCoordinates.neighbors)
                         {
-                            if()
+                            if (third == from || third == to) continue;
+                            if(Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
+                            {
+                                sum++;
+                            }
                         }
+
+                        if (sum > (graphCoordinates.neighbors.Count - 2) / 2)
+                            sum = (graphCoordinates.neighbors.Count - 2) - sum;
+
+                        if (sum == kEdgesPicked)
+                            kEdgesWithGivenValue++;
+
+                        var edge = FindEdgeFromVertices(from, to);
+
+                        foreach (var line in edge.lines)
+                            line.Stroke = colors[sum];
+
                     }
                 }
             }
+
+            RedrawGraph(graphCoordinates, 1);
+            return kEdgesWithGivenValue;
+            
         }
-        */
+        
 
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
-            //textblock.Text = ReCalculateKEdges().ToString();
+            textblock.Text = ReCalculateKEdges().ToString();
 
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;

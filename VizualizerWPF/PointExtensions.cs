@@ -19,6 +19,21 @@ namespace VizualizerWPF
             tempPoint.Y = point.Y + point1.Y;
             return tempPoint;
         }
+
+        public static Point Mulitply(this Point point, int scale)
+        {
+            return new Point { X = point.X * scale, Y = point.Y * scale };
+        }
+
+        public static Point Substract(this Point point1, Point point2)
+        {
+            return point1.Add(point2.Mulitply(-1));
+        }
+
+        public static Vector ToVector(this Point point)
+        {
+            return (Vector)point;
+        }
     }
 
 }

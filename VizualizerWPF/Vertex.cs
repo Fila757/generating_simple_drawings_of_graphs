@@ -20,7 +20,7 @@ namespace VizualizerWPF
 
         public static bool operator ==(Vertex a, Vertex b)
         {
-            return a.state == b.state && a.center == b.center;
+            return a.center == b.center && a.state == b.state;
         }
 
         public static bool operator !=(Vertex a, Vertex b)
@@ -34,7 +34,7 @@ namespace VizualizerWPF
                 return false;
 
             var vertex = (Vertex)obj;
-            return state == vertex.state && center == vertex.center;
+            return center == vertex.center;
         }
 
         public override int GetHashCode()

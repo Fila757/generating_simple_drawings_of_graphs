@@ -43,7 +43,7 @@
 
         <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
 
-        <TextBlock x:Name="textblock" Grid.Column ="0" Grid.Row= "9" TextAlignment="right"/>
+        <TextBlock x:Name="textblock" Grid.Column ="0" Grid.Row= "9" TextAlignment="right" Visibility="Visible"/>
 
 
     </Grid>
