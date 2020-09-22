@@ -1,11 +1,13 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Windows;
 using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
     enum VertexState { Intersection, Regular };
 
-    class Vertex
+    class Vertex : IEqualityComparer<Vertex>
     {
         public Ellipse ellipse;
         public Point center;
@@ -48,6 +50,16 @@ namespace VizualizerWPF
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public bool Equals(Vertex x, Vertex y)
+        {
+            return x == y;
+        }
+
+        public int GetHashCode(Vertex obj)
+        {
+            return obj.GetHashCode();
         }
     }
 

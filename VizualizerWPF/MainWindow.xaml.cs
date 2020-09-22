@@ -99,6 +99,8 @@ namespace VizualizerWPF
         private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
 
+            mainCanvas.Children.Clear();
+
             foreach (var vertex in graphCoordinates.vertices)
             {
                 vertex.center = new Point { X = vertex.center.X * scale,
@@ -140,7 +142,6 @@ namespace VizualizerWPF
         {
             if(WindowState == WindowState.Normal)
             {
-                mainCanvas.Children.Clear();
                 RedrawGraph(graphCoordinates, 1 / scale);
                 cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
 
@@ -148,7 +149,6 @@ namespace VizualizerWPF
 
             if (WindowState == WindowState.Maximized)
             {
-                mainCanvas.Children.Clear();
                 RedrawGraph(graphCoordinates, scale);
                 cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
 
@@ -265,14 +265,19 @@ namespace VizualizerWPF
             var first = new Vertex();
             var second = new Vertex();
 
+            bool firstBool = true;
+
             foreach(var vertex in graphCoordinates.vertices)
             {
-                if(vertex.state == VertexState.Regular && 
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], vertex.ellipse))
+                if (vertex.state == VertexState.Regular &&
+                    CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], vertex.ellipse) && firstBool)
+                {
                     first = vertex;
+                    firstBool = false;
+                }
 
-                if(vertex.state == VertexState.Regular && 
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), vertex.ellipse))
+                else if (vertex.state == VertexState.Regular &&
+                    CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), vertex.ellipse) && !firstBool)
                     second = vertex;
             }
 
@@ -378,6 +383,8 @@ namespace VizualizerWPF
 
                 graphCoordinates.neighbors.Remove(FindVertex(ellipse));
             }
+
+            textblock.Text = ReCalculateKEdges().ToString();
         }
 
 
@@ -433,6 +440,8 @@ namespace VizualizerWPF
                     mainCanvas.Children.Remove(l);
                 }
             }
+
+            textblock.Text = ReCalculateKEdges().ToString();
         }
 
         private double Determinant(Vector a, Vector b)
@@ -468,10 +477,12 @@ namespace VizualizerWPF
                     int sum = 0;
                     foreach (var third in graphCoordinates.neighbors[to])
                     {
-                        if (third == from || third == to) continue;
-                        if (Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
-                        {
-                            sum++;
+                        if(graphCoordinates.neighbors[from].Contains(third)){
+                            if (third == from || third == to) continue;
+                            if (Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
+                            {
+                                sum++;
+                            }
                         }
                     }
 
@@ -489,6 +500,7 @@ namespace VizualizerWPF
                 }
             }
 
+
             RedrawGraph(graphCoordinates, 1);
             return kEdgesWithGivenValue;
             
@@ -497,8 +509,6 @@ namespace VizualizerWPF
 
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
-
-            textblock.Text = ReCalculateKEdges().ToString();
 
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
@@ -528,7 +538,7 @@ namespace VizualizerWPF
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
             //uniqueness of vertices
-            graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
+            //graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
 
             foreach(var vertex in graphCoordinates.vertices)
             {
@@ -587,6 +597,13 @@ namespace VizualizerWPF
 
             }
 
+            var neighborsTemp = new Dictionary<Vertex, List<Vertex> >();
+            foreach(var (vertex, listOfVertices) in graphCoordinates.neighbors)
+            {
+                neighborsTemp.Add(vertex, listOfVertices);
+            }
+
+            graphCoordinates.neighbors = neighborsTemp;
         }
        
     }

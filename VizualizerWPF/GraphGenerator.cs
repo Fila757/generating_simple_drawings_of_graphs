@@ -9,7 +9,7 @@ namespace VizualizerWPF
 {
     class GraphCoordinates
     {
-        public List<Vertex> vertices = new List<Vertex>();
+        public HashSet<Vertex> vertices = new HashSet<Vertex>();
         public List<Edge> edges = new List<Edge>();
         public Dictionary<Vertex, List<Vertex>> neighbors = new Dictionary<Vertex, List<Vertex>>();
 
@@ -173,14 +173,21 @@ namespace VizualizerWPF
 
                 graphCoordinates.edges.Add(edge);
 
-                graphCoordinates.AddToDictionary(vertices[0], vertices[vertices.Count - 1]);
-                graphCoordinates.AddToDictionary(vertices[vertices.Count - 1], vertices[0]);
+                Vertex actualZero = vertices[0]; Vertex actualLast = vertices[vertices.Count - 1];
+                if (graphCoordinates.vertices.Contains(vertices[0]))
+                    graphCoordinates.vertices.TryGetValue(vertices[0], out actualZero);
+                if (graphCoordinates.vertices.Contains(vertices[vertices.Count - 1]))
+                    graphCoordinates.vertices.TryGetValue(vertices[vertices.Count - 1], out actualLast);
 
-                graphCoordinates.vertices.AddRange(vertices);
+                graphCoordinates.AddToDictionary(actualZero, actualLast);
+                graphCoordinates.AddToDictionary(actualLast, actualZero);
+
+                graphCoordinates.vertices.AddList(vertices);
             }
 
             return graphCoordinates;
         }
+
         public GraphCoordinates GetTopicalDrawing()
         {
             return graphCoordinates;
