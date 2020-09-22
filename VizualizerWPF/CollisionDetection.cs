@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Syncfusion.Windows.Shared;
+using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using Path = System.Windows.Shapes.Path;
@@ -52,11 +54,19 @@ namespace VizualizerWPF
         public static bool CenterOfEllipseOnLine(Line line, Ellipse ellipse)
         {
             var center = new Point { X = ellipse.Margin.Left + window.sizeOfVertex / 2, Y = ellipse.Margin.Top + window.sizeOfVertex / 2 };
-            if ((line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y 
-                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 <= epsilon 
+            if (((line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
+                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 <= epsilon
                     &&
                     (line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
                     + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 >= -epsilon)
+                    &&
+                   Math.Min(line.X1, line.X2) <= center.X
+                   &&
+                   center.X <= Math.Max(line.X1, line.X2)
+                   &&
+                   Math.Min(line.Y1, line.Y2) <= center.Y
+                   &&
+                   center.Y <= Math.Max(line.Y1, line.Y2))
                 return true;
             return false;
         }

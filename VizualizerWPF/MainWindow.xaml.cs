@@ -376,12 +376,14 @@ namespace VizualizerWPF
                         RemoveIntersections(l);
                         mainCanvas.Children.Remove(l);
                     }
+
+                    graphCoordinates.edges.Remove(tempEdge);
                 }
 
                 /* removing vertex */
                 mainCanvas.Children.Remove(ellipse);
-
                 graphCoordinates.neighbors.Remove(FindVertex(ellipse));
+                graphCoordinates.vertices.Remove(FindVertex(ellipse));
             }
 
             textblock.Text = ReCalculateKEdges().ToString();
@@ -416,7 +418,10 @@ namespace VizualizerWPF
             }
 
             foreach (var ellipse in removedIntersections)
+            {
                 mainCanvas.Children.Remove(ellipse);
+                graphCoordinates.vertices.Remove(FindVertex(ellipse));
+            }
         }
 
         private void line_MouseDown(object sender, RoutedEventArgs e)
@@ -439,6 +444,9 @@ namespace VizualizerWPF
 
                     mainCanvas.Children.Remove(l);
                 }
+
+                graphCoordinates.edges.Remove(tempEdge);
+
             }
 
             textblock.Text = ReCalculateKEdges().ToString();
@@ -488,7 +496,7 @@ namespace VizualizerWPF
 
                     int inter;
                     if (sum > (inter = graphCoordinates.neighbors[from].Intersect(graphCoordinates.neighbors[to]).Count()) / 2)
-                        sum = inter - sum;
+                        sum = inter - sum; //pick smaller
 
                     if (sum == kEdgesPicked)
                         kEdgesWithGivenValue++;
@@ -510,6 +518,7 @@ namespace VizualizerWPF
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
+            //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
 
@@ -528,8 +537,9 @@ namespace VizualizerWPF
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                graphCoordinates.vertices.Add(new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular));
-                    
+                var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular);
+                graphCoordinates.vertices.Add(vertex);
+                graphCoordinates.neighbors.Add(vertex, new List<Vertex>());
             }
 
            
