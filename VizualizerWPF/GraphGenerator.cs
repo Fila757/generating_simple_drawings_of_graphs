@@ -118,14 +118,15 @@ namespace VizualizerWPF
         GraphCoordinates ReadUntillNextRS()
         {
             graphCoordinates = new GraphCoordinates();
-            List<Vertex> vertices = new List<Vertex>();
 
             string line;
-            while(!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
+            while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
+                List<Vertex> vertices = new List<Vertex>();
+
                 string[] temp = line.Split();
 
-                var edge = new Edge(new HashSet<Point>(), new List<Line>());
+                var edge = new Edge(new List<Point>(), new List<Line>());
 
                 double[] sortedLine = SortFromStartToEnd(temp);
 
@@ -169,15 +170,14 @@ namespace VizualizerWPF
                     }); ;
 
                 }
-   
+
                 graphCoordinates.edges.Add(edge);
 
                 graphCoordinates.AddToDictionary(vertices[0], vertices[vertices.Count - 1]);
                 graphCoordinates.AddToDictionary(vertices[vertices.Count - 1], vertices[0]);
-                
-            }
 
-            graphCoordinates.vertices = vertices;
+                graphCoordinates.vertices.AddRange(vertices);
+            }
 
             return graphCoordinates;
         }

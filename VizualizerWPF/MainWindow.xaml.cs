@@ -98,29 +98,24 @@ namespace VizualizerWPF
 
         private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
-            var verticesTemp = new List<Vertex>();
+
             foreach (var vertex in graphCoordinates.vertices)
             {
-                var vertexTemp = vertex;
-                vertexTemp.center = new Point { X = vertex.center.X * scale,
+                vertex.center = new Point { X = vertex.center.X * scale,
                     Y = vertex.center.Y * scale};
 
-                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - scale * sizeOfVertex / 2, vertexTemp.center.Y - scale * sizeOfVertex / 2, 0, 0);
+                vertex.ellipse.Margin = new Thickness(vertex.center.X - scale * sizeOfVertex / 2, vertex.center.Y - scale * sizeOfVertex / 2, 0, 0);
 
-                vertexTemp.ellipse.Height *= scale;
-                vertexTemp.ellipse.Width *= scale;
+                vertex.ellipse.Height *= scale;
+                vertex.ellipse.Width *= scale;
 
-                verticesTemp.Add(vertexTemp);
-
-                mainCanvas.Children.Add(vertexTemp.ellipse);
+               mainCanvas.Children.Add(vertex.ellipse);
             }
-
-            graphCoordinates.vertices = verticesTemp;
 
             foreach (var edge in graphCoordinates.edges)
             {
-                var edgeTemp = edge;
-                foreach (var line in edgeTemp.lines)
+
+                foreach (var line in edge.lines)
                 {
                     line.X1 *= scale;
                     line.Y1 *= scale;
@@ -131,13 +126,13 @@ namespace VizualizerWPF
                     mainCanvas.Children.Add(line);
                 }
 
-                HashSet<Point> pointsTemp = new HashSet<Point>();
-                foreach(var point in edgeTemp.points)
+                var pointsTemp = new List<Point>();
+                foreach(var point in edge.points)
                 {
                     pointsTemp.Add(point.Scale(scale));
                 }
 
-                edgeTemp.points = pointsTemp; 
+                edge.points = pointsTemp; 
             }
         }
 
@@ -309,7 +304,7 @@ namespace VizualizerWPF
                     mainCanvas.Children.Add(line);
 
                     graphCoordinates.edges.Add(new Edge(
-                        new HashSet<Point> { selectedVertices[0].center, selectedVertices[1].center },
+                        new List<Point> { selectedVertices[0].center, selectedVertices[1].center },
                         new List<Line> { line }
                     ));
 
@@ -468,31 +463,29 @@ namespace VizualizerWPF
 
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
-                foreach(var to in value) { 
+                foreach (var to in value)
+                {
                     int sum = 0;
-                    if (from != to)
+                    foreach (var third in graphCoordinates.neighbors[to])
                     {
-                        foreach(var third in graphCoordinates.neighbors[to])
+                        if (third == from || third == to) continue;
+                        if (Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
                         {
-                            if (third == from || third == to) continue;
-                            if(Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
-                            {
-                                sum++;
-                            }
+                            sum++;
                         }
-
-                        if (sum > (graphCoordinates.neighbors.Count - 2) / 2)
-                            sum = (graphCoordinates.neighbors.Count - 2) - sum;
-
-                        if (sum == kEdgesPicked)
-                            kEdgesWithGivenValue++;
-
-                        var edge = FindEdgeFromVertices(from, to);
-
-                        foreach (var line in edge.lines)
-                            line.Stroke = colors[sum];
-
                     }
+
+                    int inter;
+                    if (sum > (inter = graphCoordinates.neighbors[from].Intersect(graphCoordinates.neighbors[to]).Count()) / 2)
+                        sum = inter - sum;
+
+                    if (sum == kEdgesPicked)
+                        kEdgesWithGivenValue++;
+
+                    var edge = FindEdgeFromVertices(from, to);
+
+                    foreach (var line in edge.lines)
+                        line.Stroke = colors[sum];
                 }
             }
 
@@ -537,21 +530,11 @@ namespace VizualizerWPF
             //uniqueness of vertices
             graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
 
-
-            List<Vertex> graphCoordinatesTemp = new List<Vertex>();
             foreach(var vertex in graphCoordinates.vertices)
             {
                 var coordinates = vertex.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
-                graphCoordinatesTemp.Add(new Vertex(vertex.ellipse, coordinates, vertex.state));
-            }
+                vertex.center = coordinates;
 
-            graphCoordinates.vertices = graphCoordinatesTemp;
-
-
-            graphCoordinatesTemp = new List<Vertex>();
-            foreach (var vertex in graphCoordinates.vertices)
-            {
-                //MessageBox.Show(vertex.ToString());
                 var ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
@@ -561,28 +544,25 @@ namespace VizualizerWPF
                     Visibility = vertex.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
+
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
                 Panel.SetZIndex(ellipse, vertex.state == VertexState.Regular ? 100 : 10);
 
-                graphCoordinatesTemp.Add(new Vertex(ellipse, vertex.center, vertex.state));
+                vertex.ellipse = ellipse;
             }
 
-            graphCoordinates.vertices = graphCoordinatesTemp;
-
-            var graphCoordinatesEdgesTemp = new GraphCoordinates();
             foreach(var edge in graphCoordinates.edges)
             {
-                var edgeTemp = new Edge();
 
-                HashSet<Point> tempPoints = new HashSet<Point>();
+                var tempPoints = new List<Point>();
                 foreach (var point in edge.points)
                 {
                     tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2)))); //first scale, then add
                 }
 
-                edgeTemp.points = tempPoints;
+                edge.points = tempPoints;
 
                 List<Line> tempLines = new List<Line>();
                 foreach (var line in edge.lines)
@@ -603,12 +583,9 @@ namespace VizualizerWPF
                     tempLines.Add(l);
                 }
 
-                edgeTemp.lines = tempLines;
+                edge.lines = tempLines;
 
-                graphCoordinatesEdgesTemp.edges.Add(edgeTemp);
             }
-
-            graphCoordinates.edges = graphCoordinatesEdgesTemp.edges;
 
         }
        

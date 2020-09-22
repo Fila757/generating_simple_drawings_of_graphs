@@ -23,7 +23,7 @@ namespace VizualizerWPF
 
         public static bool operator ==(Vertex a, Vertex b)
         {
-            return a.center == b.center && a.state == b.state;
+            return a.center == b.center;
         }
 
         public static bool operator !=(Vertex a, Vertex b)
