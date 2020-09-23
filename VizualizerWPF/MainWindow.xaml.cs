@@ -681,7 +681,13 @@ namespace VizualizerWPF
                         throw new ArgumentException("You cannot add edge between already connected vertices");
 
                     foreach (var line in edge.lines)
+                    {
                         line.Stroke = colors[sum];
+                        if (sum <= kEdgesPicked)
+                            line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+                        else
+                            line.StrokeDashArray = DoubleCollection.Parse("");
+                    }
                 }
             }
 
