@@ -29,6 +29,23 @@ namespace VizualizerWPF
     /// </summary>
     /// 
 
+    /// <summary>
+    /// In MainWindow.xaml we have one <c>mainCanvas</c>
+    /// Also 5 buttons
+    /// Přidávání - adding mode 
+    /// Mazání - removing mode
+    /// Průsečíky - vizualizing intersections
+    /// K hrany - vizualizing counting k edges
+    /// Další jednoduché nakreslení - generate next good drawing of clique
+    /// 
+    /// Also consists of ListBox to choose which AM edges we want
+    /// Finally there to UpDowns to select which k edges we want
+    /// and how big clique is chosen
+    /// 
+    /// At the bottom there is a legend to know
+    /// which color describe which number for k edges
+    /// </summary>
+
     enum StateChanging { Adding, Removing, None };
 
     /// <summary>
