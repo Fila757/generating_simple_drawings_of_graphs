@@ -208,7 +208,11 @@ namespace VizualizerWPF
 
         }
 
-        
+        /// <summary>
+        /// Function to hangle minimazing and maximazing window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ResizeWindowEvent(object sender, EventArgs e)
         {
             if(WindowState == WindowState.Normal)

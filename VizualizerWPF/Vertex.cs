@@ -6,8 +6,19 @@ using System;
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// Enum to recongize state of vertex
+    /// </summary>
     enum VertexState { Intersection, Regular };
 
+    /// <summary>
+    /// Struct to store vertices
+    /// <param name="ellipse">Drawing of vertex</param>
+    /// <param name="center">Center of vertex</param>
+    /// <param name="state">State of vertex</param>
+    /// Implementing  IEqualityComparer<Vertex>, IEquatable<Vertex> 
+    /// to index HashSet and Dictionary
+    /// </summary>
     struct Vertex : IEqualityComparer<Vertex>, IEquatable<Vertex>
     {
         public Ellipse ellipse;

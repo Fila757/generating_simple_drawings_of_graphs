@@ -2,6 +2,12 @@
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// Class to extend methods as Scale Point
+    /// Add two Points, Multiply point with int
+    /// Substract two points and
+    /// Method point ToVector
+    /// </summary>
     public static class PointExtensions
     {
         public static Point Scale(this Point point, double scale)
