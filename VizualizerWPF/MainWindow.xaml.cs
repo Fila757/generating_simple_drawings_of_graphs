@@ -351,7 +351,7 @@ namespace VizualizerWPF
                         if (l == line) continue;
 
                         var intersection = CollisionDetection.TwoLines(line, l);
-                        if(!(intersection.X == -1 && intersection.Y == -1))
+                        if (!(intersection.X == -1 && intersection.Y == -1))
                         {
                             var ellipse2 = new Ellipse
                             {
@@ -367,14 +367,13 @@ namespace VizualizerWPF
 
                             graphCoordinates.vertices.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
 
-                           //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
+                            //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
                         }
                     }
 
                     foreach (var el in intersections)
                         mainCanvas.Children.Add(el);
                 }
-
             
             }
 
@@ -510,10 +509,24 @@ namespace VizualizerWPF
             int kEdgesWithGivenValue = 0;
             int kEdgesPicked = (int)KhranyUpDown.Value;
 
+            Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
+
+            foreach(var from in graphCoordinates.neighbors.Keys)
+            {
+                foreach(var to in graphCoordinates.neighbors.Keys)
+                {
+                    visited[(from, to)] = false;
+                }
+            }
+
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
                 foreach (var to in value)
                 {
+                    if (visited[(from, to)]) continue;
+                    visited[(from, to)] = true;
+                    visited[(to, from)] = true;
+
                     int sum = 0;
                     foreach (var third in graphCoordinates.neighbors[to])
                     {
