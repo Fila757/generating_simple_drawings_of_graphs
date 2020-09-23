@@ -4,6 +4,10 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// Class to store edges in graph
+    /// meaming all lines and points
+    /// </summary>
     class Edge
     {
         public List<Point> points;

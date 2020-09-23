@@ -14,7 +14,7 @@ namespace VizualizerWPF
         {
             Point tempPoint = new Point();
             tempPoint.X = point.X * scale;
-            tempPoint.Y =  point.Y* scale;
+            tempPoint.Y =  point.Y * scale;
             return tempPoint;
         }
 
