@@ -7,12 +7,25 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// Class to store graph to know what to draw on canvas
+    /// <param name="vertices">Hashset to store vertices</param>
+    /// <param name="edge">List to store edges</param>
+    /// <param name="neigbors">Dictionary to store neighbors of all vertices</param>
+    /// </summary>
     class GraphCoordinates
     {
+        
         public HashSet<Vertex> vertices = new HashSet<Vertex>();
         public List<Edge> edges = new List<Edge>();
         public Dictionary<Vertex, List<Vertex>> neighbors = new Dictionary<Vertex, List<Vertex>>();
 
+        /// <summary>
+        /// Safe version of adding to dictionary 
+        /// if value is not present, new list is created
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
         public void AddToDictionary(Vertex key, Vertex value)
         {
             if (neighbors.ContainsKey(key))
@@ -26,25 +39,40 @@ namespace VizualizerWPF
             }
         }
     }
+
+    /// <summary>
+    /// Class to read drawing from file, create
+    /// and store graphs
+    /// </summary>
     class GraphGenerator
     {
+
         StreamReader streamReader;
-        public int SizeOfGraph {get; set; }
+        public int SizeOfGraph {get; set;}
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
+        /// <summary>
+        /// it supposed to run from in it Visual Studio from bin/Debug(Release)/netcoreapp3.1/
+        /// </summary>
+        /// <param name="n">Size of wanted clique</param>
         public GraphGenerator(int n)
         {
             SizeOfGraph = n;
             streamReader = new StreamReader(
-                "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph" + SizeOfGraph + ".txt");
+                @"../../../data/graph" + SizeOfGraph + ".txt");
         }
 
         public void CloseFile()
         {
             streamReader.Dispose(); //delete if we want to remain state of file
         }
-
+        /// <summary>
+        /// Function to sort order of points to 
+        /// create continous line
+        /// </summary>
+        /// <param name="line">One line</param>
+        /// <returns>Parsed points to line</returns>
         double [] SortFromStartToEnd(string [] line)
         {
             List<double> doubleLine = new List<double>();
@@ -115,6 +143,11 @@ namespace VizualizerWPF
             return doubleLine.ToArray();
         }
 
+        /// <summary>
+        /// Read whole points and lines of cliques
+        /// and generate graph out of it
+        /// </summary>
+        /// <returns>New graph</returns>
         GraphCoordinates ReadUntillNextRS()
         {
             graphCoordinates = new GraphCoordinates();
@@ -193,6 +226,10 @@ namespace VizualizerWPF
             return graphCoordinates;
         }
 
+        /// <summary>
+        /// Get next drawing
+        /// </summary>
+        /// <returns>New graph</returns>
         public GraphCoordinates GenerateNextDrawing()
         {
             return ReadUntillNextRS();
