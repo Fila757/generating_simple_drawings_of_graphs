@@ -205,7 +205,7 @@ namespace VizualizerWPF
             }
 
             graphCoordinates.neighbors = neighborsTemp;
-            
+
         }
 
         
@@ -864,7 +864,8 @@ namespace VizualizerWPF
             }
 
             graphCoordinates.neighbors = neighborsTemp;
-            
+
+            ReCalculateKEdges();
         }
        
     }
