@@ -7,8 +7,30 @@ using Path = System.Windows.Shapes.Path;
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// <code>
+    ///  Point[] points1 = {
+    ///     new Point(60, 30),
+    ///     new Point(200, 130),
+    ///     new Point(100, 150),
+    ///     new Point(200, 50),
+    /// };
+    ///  Path path1 = PolybezierPathMaker.MakeCurve(points1, 0);
+    ///
+    ///  path1.Stroke = Brushes.LightGreen;
+    ///  path1.StrokeThickness = 5;
+    ///  mainCanvas.Children.Add(path1);
+    ///
+    ///  Path path2 = PolybezierPathMaker.MakeCurve(new Point[2] { new Point(50, 50), new Point(122, 122) }, 0);
+    ///  path2.Stroke = Brushes.LightCoral;
+    ///  path2.StrokeThickness = 5;
+    ///  mainCanvas.Children.Add(path2);
+    /// </code>
+    /// </summary>
     class PolybezierPathMaker
     {
+
+
         private static Point[] MakeCurvePoints(Point[] points, double tension)
         {
             if (points.Length < 2) return null;
