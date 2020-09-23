@@ -393,6 +393,9 @@ namespace VizualizerWPF
                 foreach (var line in intersectedLines) {
 
                     var tempEdge = FindEdge(line);
+                    if (tempEdge is null)
+                        continue;
+
                     var (start, end) = FindEdgeEnds(tempEdge);
 
                     DeleteEdgeFromDictionary(start, end);
@@ -422,18 +425,17 @@ namespace VizualizerWPF
 
         private Edge FindEdge(Line line)
         {
-            var tempEdge = new Edge();
             foreach (var edge in graphCoordinates.edges)
             {
                 foreach (var l in edge.lines)
                 {
                     if (l == line)
                     {
-                        tempEdge = edge;
+                        return edge;
                     }
                 }
             }
-            return tempEdge;
+            return null; //it is possible it could be deleted yet
         }
 
         private void RemoveIntersections(Line line)
@@ -462,7 +464,7 @@ namespace VizualizerWPF
 
             if (stateChanging == StateChanging.Removing)
             {
-                var tempEdge = FindEdge(line);
+                var tempEdge = FindEdge(line); 
                 var (start, end) = FindEdgeEnds(tempEdge);
 
                 DeleteEdgeFromDictionary(start, end);
