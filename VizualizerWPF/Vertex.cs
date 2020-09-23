@@ -2,19 +2,18 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Shapes;
+using System;
 
 namespace VizualizerWPF
 {
     enum VertexState { Intersection, Regular };
 
-    class Vertex : IEqualityComparer<Vertex>
+    struct Vertex : IEqualityComparer<Vertex>, IEquatable<Vertex>
     {
         public Ellipse ellipse;
-        public Point center;
+        public Point center ;
         public VertexState state;
 
-
-        public Vertex() {}
 
         public Vertex(Ellipse ellipse, Point point, VertexState state)
         {
@@ -60,6 +59,11 @@ namespace VizualizerWPF
         public int GetHashCode(Vertex obj)
         {
             return obj.GetHashCode();
+        }
+
+        public bool Equals(Vertex other)
+        {
+            return this == other;
         }
     }
 

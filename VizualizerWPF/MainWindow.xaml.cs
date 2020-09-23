@@ -101,18 +101,22 @@ namespace VizualizerWPF
 
             mainCanvas.Children.Clear();
 
+            var vertices = new HashSet<Vertex>();
             foreach (var vertex in graphCoordinates.vertices)
             {
-                vertex.center = new Point { X = vertex.center.X * scale,
-                    Y = vertex.center.Y * scale};
+                Vertex vertexTemp = vertex;
+                vertexTemp.center = vertexTemp.center.Scale(scale);
 
-                vertex.ellipse.Margin = new Thickness(vertex.center.X - scale * sizeOfVertex / 2, vertex.center.Y - scale * sizeOfVertex / 2, 0, 0);
+                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - scale * sizeOfVertex / 2, vertexTemp.center.Y - scale * sizeOfVertex / 2, 0, 0);
 
-                vertex.ellipse.Height *= scale;
-                vertex.ellipse.Width *= scale;
+                vertexTemp.ellipse.Height *= scale;
+                vertexTemp.ellipse.Width *= scale;
 
-               mainCanvas.Children.Add(vertex.ellipse);
+               mainCanvas.Children.Add(vertexTemp.ellipse);
+               vertices.Add(vertexTemp);
             }
+
+            graphCoordinates.vertices = vertices;
 
             foreach (var edge in graphCoordinates.edges)
             {
@@ -136,6 +140,29 @@ namespace VizualizerWPF
 
                 edge.points = pointsTemp; 
             }
+
+            var neighborsTemp = new Dictionary<Vertex, List<Vertex>>();
+            foreach (var (vertex, listOfVertices) in graphCoordinates.neighbors)
+            {
+                Vertex vertexTemp = vertex;
+                vertexTemp.center = vertexTemp.center.Scale(scale);
+
+                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
+
+                List<Vertex> listTemp = new List<Vertex>();
+                foreach (var el in listOfVertices)
+                {
+                    Vertex vertexTemp2 = el;
+                    vertexTemp2.center = vertexTemp2.center.Scale(scale);
+
+                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
+                    listTemp.Add(vertexTemp2);
+                }
+
+                neighborsTemp.Add(vertexTemp, listTemp);
+            }
+
+            graphCoordinates.neighbors = neighborsTemp;
         }
 
         private void ResizeWindowEvent(object sender, EventArgs e)
@@ -518,7 +545,7 @@ namespace VizualizerWPF
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
-            //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
+           //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
 
@@ -550,29 +577,36 @@ namespace VizualizerWPF
             //uniqueness of vertices
             //graphCoordinates.vertices = graphCoordinates.vertices.Distinct().ToList();
 
+            var vertices = new HashSet<Vertex>();
             foreach(var vertex in graphCoordinates.vertices)
             {
-                var coordinates = vertex.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
-                vertex.center = coordinates;
+
+                var vertexTemp = vertex;
+
+                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                vertexTemp.center = coordinates;
 
                 var ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
-                    Fill = vertex.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertex.center.X - sizeOfVertex / 2, vertex.center.Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = vertex.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
+                    Fill = vertexTemp.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
 
                 };
 
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
-                Panel.SetZIndex(ellipse, vertex.state == VertexState.Regular ? 100 : 10);
+                Panel.SetZIndex(ellipse, vertexTemp.state == VertexState.Regular ? 100 : 10);
 
-                vertex.ellipse = ellipse;
+                vertexTemp.ellipse = ellipse;
+
+                vertices.Add(vertexTemp);
             }
 
+            graphCoordinates.vertices = vertices;
             foreach(var edge in graphCoordinates.edges)
             {
 
@@ -607,13 +641,32 @@ namespace VizualizerWPF
 
             }
 
+            
             var neighborsTemp = new Dictionary<Vertex, List<Vertex> >();
             foreach(var (vertex, listOfVertices) in graphCoordinates.neighbors)
             {
-                neighborsTemp.Add(vertex, listOfVertices);
+                Vertex vertexTemp = vertex;
+                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                vertexTemp.center = coordinates;
+
+                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
+
+                List<Vertex> listTemp = new List<Vertex>();
+                foreach(var el in listOfVertices)
+                {
+                    Vertex vertexTemp2 = el;
+                    var coordinates2 = vertexTemp2.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                    vertexTemp2.center = coordinates2;
+
+                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
+                    listTemp.Add(vertexTemp2);
+                }
+
+                neighborsTemp.Add(vertexTemp, listTemp);
             }
 
             graphCoordinates.neighbors = neighborsTemp;
+            
         }
        
     }
