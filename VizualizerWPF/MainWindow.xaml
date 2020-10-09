@@ -38,7 +38,8 @@
         </ListBox>
         <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="2" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>
         <Button x:Name="NextDrawing" Content="Dalsi jednoduché &#xa; nakreslení velikosti:" Margin="3,3,3,3" Grid.Column="2" Grid.Row="8" Click="NextDrawing_Click"/>
-        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="2" Grid.Row="9" Margin="3,3,3,3" NumberDecimalDigits="0"/>
+        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="2" Grid.Row="9" Margin="3,3,3,3" NumberDecimalDigits="0" 
+                           MaxValue="7" MinValue="3"/>
 
         <Image Name="legend" Grid.ColumnSpan ="2" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/>
 

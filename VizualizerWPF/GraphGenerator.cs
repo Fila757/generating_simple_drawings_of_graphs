@@ -60,7 +60,7 @@ namespace VizualizerWPF
         {
             SizeOfGraph = n;
             streamReader = new StreamReader(
-                @"../../../data/graph" + SizeOfGraph + ".txt");
+                @"data/graph" + SizeOfGraph + ".txt");
         }
 
         public void CloseFile()

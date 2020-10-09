@@ -426,6 +426,13 @@ namespace VizualizerWPF
                 selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex/2, Y = ellipse.Margin.Top + sizeOfVertex/2}, VertexState.Regular));
                 if (selectedVertices.Count == 2)
                 {
+                    if (FindEdgeFromVertices(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1)) != null)
+                    {
+                        MessageBox.Show("You cannot add edge where there is already put one");
+                        selectedVertices.Clear();
+                        return;
+                    }
+
                     var line = new Line
                     {
                         X1 = selectedVertices.ElementAt(0).center.X,
@@ -622,7 +629,7 @@ namespace VizualizerWPF
                 }
             }
 
-            throw new ArgumentException("No such an edge between vertices");
+            return null; // so such edge
         }
 
         /// <summary>
@@ -672,14 +679,16 @@ namespace VizualizerWPF
                     if (sum > (inter = graphCoordinates.neighbors[from].Intersect(graphCoordinates.neighbors[to]).Count()) / 2)
                         sum = inter - sum; //pick smaller
 
-                    if(sum <= kEdgesPicked) // only needed this ones
+                    /*
+                    if (sum < 0)
+                        throw new ArgumentException("You cannot add edge between already connected vertices");
+                    */
+                    if (sum <= kEdgesPicked) // only needed this ones
                         kEdgdesValues[sum]++;
 
                     var edge = FindEdgeFromVertices(from, to);
 
-                    if (sum < 0)
-                        throw new ArgumentException("You cannot add edge between already connected vertices");
-
+                    
                     foreach (var line in edge.lines)
                     {
                         line.Stroke = colors[sum];

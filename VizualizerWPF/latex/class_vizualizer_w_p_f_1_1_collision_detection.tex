@@ -1,0 +1,183 @@
+\hypertarget{class_vizualizer_w_p_f_1_1_collision_detection}{}\doxysection{Vizualizer\+W\+P\+F.\+Collision\+Detection Class Reference}
+\label{class_vizualizer_w_p_f_1_1_collision_detection}\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_ad1c6213f341df532b736da01c2d509da}{Init}} (\mbox{\hyperlink{class_vizualizer_w_p_f_1_1_main_window}{Main\+Window}} \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a37464e48141aa8a2c469a23fefd34ac2}{window}})
+\item 
+static Point \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a7e60dabf80f59ab06799799842bf44b9}{Two\+Lines}} (Line line1, Line line2)
+\begin{DoxyCompactList}\small\item\em Detect intersection of two line segment \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a31a5285512bfb2e022cdb0076f5d070a}{Line\+And\+Ellipse\+At\+End}} (Line line, Ellipse ellipse)
+\begin{DoxyCompactList}\small\item\em Function to detect if end of the {\ttfamily line} is in given {\ttfamily ellipse}(circle) \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a881e18046f4f41fcc24c50f631247f21}{Center\+Of\+Ellipse\+On\+Line}} (Line line, Ellipse ellipse)
+\begin{DoxyCompactList}\small\item\em Detect if center of {\ttfamily ellipse} lies on given {\ttfamily line} \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_adbf5b7da9e13227426c0d0e3b1840a99}{Center\+Inside\+Ellipse}} (Point point, Ellipse ellipse)
+\begin{DoxyCompactList}\small\item\em Detect if {\ttfamily point} is inside {\ttfamily ellipse} (circle) \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a13a4cce23e14581363f3eeee34635167}{Line\+And\+Ellipse}} (Line line, Ellipse ellipse)
+\begin{DoxyCompactList}\small\item\em Detect if {\ttfamily ellipse} and {\ttfamily line} intersects \end{DoxyCompactList}\item 
+static bool \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_af8f664f8f5128cbcae72b379b616303b}{Two\+Paths}} (\mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} path1, \mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} path2)
+\begin{DoxyCompactList}\small\item\em General collision detection for further generalization and bezier lines \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_main_window}{Main\+Window}} \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a37464e48141aa8a2c469a23fefd34ac2}{window}}
+\begin{DoxyCompactList}\small\item\em Class to detect many types of collision in 2D \end{DoxyCompactList}\item 
+static double \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection_a0cf332f1851ff488986ef7a0560b4919}{epsilon}} = 0.\+5
+\begin{DoxyCompactList}\small\item\em Error \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_adbf5b7da9e13227426c0d0e3b1840a99}\label{class_vizualizer_w_p_f_1_1_collision_detection_adbf5b7da9e13227426c0d0e3b1840a99}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!CenterInsideEllipse@{CenterInsideEllipse}}
+\index{CenterInsideEllipse@{CenterInsideEllipse}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{CenterInsideEllipse()}{CenterInsideEllipse()}}
+{\footnotesize\ttfamily static bool Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Center\+Inside\+Ellipse (\begin{DoxyParamCaption}\item[{Point}]{point,  }\item[{Ellipse}]{ellipse }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Detect if {\ttfamily point} is inside {\ttfamily ellipse} (circle) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & \\
+\hline
+{\em ellipse} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a881e18046f4f41fcc24c50f631247f21}\label{class_vizualizer_w_p_f_1_1_collision_detection_a881e18046f4f41fcc24c50f631247f21}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!CenterOfEllipseOnLine@{CenterOfEllipseOnLine}}
+\index{CenterOfEllipseOnLine@{CenterOfEllipseOnLine}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{CenterOfEllipseOnLine()}{CenterOfEllipseOnLine()}}
+{\footnotesize\ttfamily static bool Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Center\+Of\+Ellipse\+On\+Line (\begin{DoxyParamCaption}\item[{Line}]{line,  }\item[{Ellipse}]{ellipse }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Detect if center of {\ttfamily ellipse} lies on given {\ttfamily line} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & \\
+\hline
+{\em ellipse} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_ad1c6213f341df532b736da01c2d509da}\label{class_vizualizer_w_p_f_1_1_collision_detection_ad1c6213f341df532b736da01c2d509da}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!Init@{Init}}
+\index{Init@{Init}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily static void Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_vizualizer_w_p_f_1_1_main_window}{Main\+Window}}}]{window }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a13a4cce23e14581363f3eeee34635167}\label{class_vizualizer_w_p_f_1_1_collision_detection_a13a4cce23e14581363f3eeee34635167}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!LineAndEllipse@{LineAndEllipse}}
+\index{LineAndEllipse@{LineAndEllipse}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{LineAndEllipse()}{LineAndEllipse()}}
+{\footnotesize\ttfamily static bool Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Line\+And\+Ellipse (\begin{DoxyParamCaption}\item[{Line}]{line,  }\item[{Ellipse}]{ellipse }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Detect if {\ttfamily ellipse} and {\ttfamily line} intersects 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & \\
+\hline
+{\em ellipse} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a31a5285512bfb2e022cdb0076f5d070a}\label{class_vizualizer_w_p_f_1_1_collision_detection_a31a5285512bfb2e022cdb0076f5d070a}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!LineAndEllipseAtEnd@{LineAndEllipseAtEnd}}
+\index{LineAndEllipseAtEnd@{LineAndEllipseAtEnd}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{LineAndEllipseAtEnd()}{LineAndEllipseAtEnd()}}
+{\footnotesize\ttfamily static bool Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Line\+And\+Ellipse\+At\+End (\begin{DoxyParamCaption}\item[{Line}]{line,  }\item[{Ellipse}]{ellipse }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Function to detect if end of the {\ttfamily line} is in given {\ttfamily ellipse}(circle) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line} & \\
+\hline
+{\em ellipse} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a7e60dabf80f59ab06799799842bf44b9}\label{class_vizualizer_w_p_f_1_1_collision_detection_a7e60dabf80f59ab06799799842bf44b9}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!TwoLines@{TwoLines}}
+\index{TwoLines@{TwoLines}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{TwoLines()}{TwoLines()}}
+{\footnotesize\ttfamily static Point Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Two\+Lines (\begin{DoxyParamCaption}\item[{Line}]{line1,  }\item[{Line}]{line2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Detect intersection of two line segment 
+
+
+\begin{DoxyParams}{Parameters}
+{\em line1} & \\
+\hline
+{\em line2} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_af8f664f8f5128cbcae72b379b616303b}\label{class_vizualizer_w_p_f_1_1_collision_detection_af8f664f8f5128cbcae72b379b616303b}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!TwoPaths@{TwoPaths}}
+\index{TwoPaths@{TwoPaths}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{TwoPaths()}{TwoPaths()}}
+{\footnotesize\ttfamily static bool Vizualizer\+W\+P\+F.\+Collision\+Detection.\+Two\+Paths (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}}}]{path1,  }\item[{\mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}}}]{path2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+General collision detection for further generalization and bezier lines 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path1} & first object\\
+\hline
+{\em path2} & second object\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a0cf332f1851ff488986ef7a0560b4919}\label{class_vizualizer_w_p_f_1_1_collision_detection_a0cf332f1851ff488986ef7a0560b4919}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!epsilon@{epsilon}}
+\index{epsilon@{epsilon}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{epsilon}{epsilon}}
+{\footnotesize\ttfamily double Vizualizer\+W\+P\+F.\+Collision\+Detection.\+epsilon = 0.\+5\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Error 
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_collision_detection_a37464e48141aa8a2c469a23fefd34ac2}\label{class_vizualizer_w_p_f_1_1_collision_detection_a37464e48141aa8a2c469a23fefd34ac2}} 
+\index{VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}!window@{window}}
+\index{window@{window}!VizualizerWPF.CollisionDetection@{VizualizerWPF.CollisionDetection}}
+\doxysubsubsection{\texorpdfstring{window}{window}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_main_window}{Main\+Window}} Vizualizer\+W\+P\+F.\+Collision\+Detection.\+window\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Class to detect many types of collision in 2D 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_collision_detection_8cs}{Collision\+Detection.\+cs}}\end{DoxyCompactItemize}
