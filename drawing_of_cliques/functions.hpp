@@ -566,8 +566,6 @@ inline void graph::create_all_possible_drawings() {
 		}
 	}
 
-	int yes_counter = 0;
-
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
@@ -592,7 +590,6 @@ inline void graph::create_all_possible_drawings() {
 		if (done) {
 			cout << "yes" << endl;
 			output_file << fingerprint << "\n";
-			yes_counter++;
 		}
 
 		edges.resize(0); segments.resize(0);
