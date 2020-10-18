@@ -29,6 +29,8 @@ int main()
 {
     auto g = graph(6);
 
+    cout << "minimal" << g.find_canonic_fingerprint("123540523401435012450153202314") << endl;
+
     //cout << "minimal: " << g.find_canonic_fingerprint("12340423014301240321") << endl;
     
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
@@ -38,7 +40,7 @@ int main()
     //cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
  
-    g.create_all_possible_drawings();
+    //g.create_all_possible_drawings();
     
     // testing relabeling because we have found 6 realizable RS written 
 

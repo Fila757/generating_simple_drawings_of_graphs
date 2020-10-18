@@ -566,6 +566,8 @@ inline void graph::create_all_possible_drawings() {
 		}
 	}
 
+	int yes_counter = 0;
+
 	auto generator_of_fingerprints = fingerprints(number_of_vertices);
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
@@ -577,6 +579,9 @@ inline void graph::create_all_possible_drawings() {
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
 		if (canonic_fingerprints[fingerprint]) continue;
+		else {
+			cout << "heureka" << endl;
+		}
 		canonic_fingerprints[fingerprint] = true;
 
 		create_all_special_vertices();
@@ -588,8 +593,12 @@ inline void graph::create_all_possible_drawings() {
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
 		if (done) {
+			if (yes_counter == 92) {
+				cout << "stop" << endl;
+			}
 			cout << "yes" << endl;
 			output_file << fingerprint << "\n";
+			yes_counter++;
 		}
 
 		edges.resize(0); segments.resize(0);
@@ -615,8 +624,9 @@ struct smart_permutations {
 
 	string create_permutation(const string& rotation1, const string& roration2) {
 
-		string permutation;
-		permutation.resize(number_of_vertices);
+		string permutation = "";
+		for (int i = 0; i < number_of_vertices;i++)
+			permutation += (i + '0');
 
 		int sum_r1 = ((number_of_vertices - 1) * (number_of_vertices))/ 2;
 		int sum_r2 = sum_r1;
@@ -627,7 +637,7 @@ struct smart_permutations {
 			sum_r2 -= (roration2[i] - '0');
 		}
 		
-		permutation[sum_r1] = (char) sum_r2; //last
+		permutation[sum_r1] = sum_r2 + '0'; //last
 		return permutation;
 	}
 
@@ -643,6 +653,7 @@ struct smart_permutations {
 	string next() {
 
 		result = create_permutation(fingerprint.substr((number_of_vertices - 1) * counter, number_of_vertices - 1), first_rotation);
+		//cout << result << ":result " << endl;
 
 		if (invers && counter == number_of_vertices - 1 && counter_rotation == number_of_vertices - 2) {
 			done = true;
