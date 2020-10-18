@@ -601,11 +601,85 @@ inline void graph::create_all_possible_drawings() {
 	cout << "realized " << realized << endl;
 }
 
+struct smart_permutations {
+
+	string fingerprint;
+	int number_of_vertices;
+	bool done = false;
+	string first_rotation;
+	string result;
+	bool invers = false;
+
+	int counter = 0;
+	int counter_rotation = 0;
+
+	string create_permutation(const string& rotation1, const string& roration2) {
+
+		string permutation;
+		permutation.resize(number_of_vertices);
+
+		int sum_r1 = ((number_of_vertices - 1) * (number_of_vertices))/ 2;
+		int sum_r2 = sum_r1;
+
+		for (int i = 0; i < rotation1.size();i++) {
+			permutation[rotation1[i] - '0'] = roration2[i];
+			sum_r1 -= (rotation1[i] - '0');
+			sum_r2 -= (roration2[i] - '0');
+		}
+		
+		permutation[sum_r1] = (char) sum_r2; //last
+		return permutation;
+	}
+
+	smart_permutations(const string& fingerprint, int number_of_vertices) {
+		this->fingerprint = fingerprint;
+		this->number_of_vertices = number_of_vertices;
+
+		for (int i = 1; i < number_of_vertices;i++)
+			first_rotation += (i + '0');
+
+	}
+
+	string next() {
+
+		result = create_permutation(fingerprint.substr((number_of_vertices - 1) * counter, number_of_vertices - 1), first_rotation);
+
+		if (invers && counter == number_of_vertices - 1 && counter_rotation == number_of_vertices - 2) {
+			done = true;
+			return result;
+		}
+		if (counter == number_of_vertices - 1 && counter_rotation == number_of_vertices - 2) {
+			counter_rotation = 0;
+			counter = 0;
+			invers = true;
+
+			first_rotation = "1";
+			for (int i = 1; i < number_of_vertices - 1;i++)
+				first_rotation += ((number_of_vertices - i) + '0');
+		}
+
+		if (counter_rotation == number_of_vertices - 2) {
+			counter_rotation = 0;
+			counter++;
+
+			rotate(first_rotation.begin(), first_rotation.begin() + 1, first_rotation.end());
+		}
+		else {
+			counter_rotation++;
+			rotate(first_rotation.begin(), first_rotation.begin() + 1, first_rotation.end());
+		}
+
+		return result;
+	}
+};
+
 inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 
-	string permutation_holder;
-	for (int i = 0; i < number_of_vertices;i++) 
-		permutation_holder += (i + '0');
+	//string permutation_holder;
+	//for (int i = 0; i < number_of_vertices;i++) 
+	//	permutation_holder += (i + '0');
+
+	auto permutations = smart_permutations(fingerprint, number_of_vertices);
 
 	auto min_fingerprint = fingerprint;
 	auto cur_fingerprint = fingerprint;
@@ -614,8 +688,11 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	//string minimal_permutation;
 
 	do { //can be changes just to while because first doesnt any change
+		auto permutation_holder = permutations.next();
+
 		cur_fingerprint = fingerprint;
 		new_fingerprint = fingerprint;
+
 		for (int i = 0; i < number_of_vertices;i++) {
 			int rotation_index = -1;
 			for (int j = 0; j < number_of_vertices - 1;j++) {
@@ -648,7 +725,7 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
 		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
-	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
+	} while (!permutations.done);
 
 	//cout << minimal_permutation << endl;
 	return min_fingerprint;
