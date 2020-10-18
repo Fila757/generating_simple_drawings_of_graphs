@@ -579,9 +579,6 @@ inline void graph::create_all_possible_drawings() {
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
 		if (canonic_fingerprints[fingerprint]) continue;
-		else {
-			cout << "heureka" << endl;
-		}
 		canonic_fingerprints[fingerprint] = true;
 
 		create_all_special_vertices();
@@ -593,9 +590,6 @@ inline void graph::create_all_possible_drawings() {
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
 		if (done) {
-			if (yes_counter == 92) {
-				cout << "stop" << endl;
-			}
 			cout << "yes" << endl;
 			output_file << fingerprint << "\n";
 			yes_counter++;
@@ -659,21 +653,25 @@ struct smart_permutations {
 			done = true;
 			return result;
 		}
-		if (counter == number_of_vertices - 1 && counter_rotation == number_of_vertices - 2) {
+
+		if (invers && counter_rotation == number_of_vertices - 2) {
+			invers = false;
+			counter++;
 			counter_rotation = 0;
-			counter = 0;
+
+			first_rotation = "";
+			for (int i = 1; i < number_of_vertices;i++)
+				first_rotation += (i + '0');
+		}
+		else if (counter_rotation == number_of_vertices - 2) {
+			counter_rotation = 0;
 			invers = true;
 
 			first_rotation = "1";
 			for (int i = 1; i < number_of_vertices - 1;i++)
 				first_rotation += ((number_of_vertices - i) + '0');
-		}
 
-		if (counter_rotation == number_of_vertices - 2) {
-			counter_rotation = 0;
-			counter++;
-
-			rotate(first_rotation.begin(), first_rotation.begin() + 1, first_rotation.end());
+			//rotate(first_rotation.begin(), first_rotation.begin() + 1, first_rotation.end());
 		}
 		else {
 			counter_rotation++;
