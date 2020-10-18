@@ -118,7 +118,7 @@ namespace VizualizerWPF
 
             InitializeComponent();
 
-            StateChanged += new EventHandler(ResizeWindowEvent);
+            StateChanged += ResizeWindowEvent;
 
             cx = 300; cy = 200;
             sizeOfVertex = 15;
