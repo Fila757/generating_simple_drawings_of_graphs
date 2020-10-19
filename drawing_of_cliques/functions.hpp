@@ -104,6 +104,9 @@ struct graph {
 
 	string find_canonic_fingerprint(const string& fingerprint);
 
+	bool is_some_of_faces_incorrect(Edge* edge);
+	bool is_face_incorrect(shared_ptr<Face> face);
+
 };
 
 struct Vertex {
@@ -462,11 +465,11 @@ inline bool graph::is_face_incorrect(shared_ptr<Face> face){
 		int first = cur->from_->index_ / 100;
 		int second = cur->from_->index_ % 100;
 
-		if (first == number_of_vertices - 1 || second == number_of_vertices - 1){
+		if (first == number_of_vertices - 1 || second == number_of_vertices - 1)
 			counter++;
 	
 		cur = cur->next_;
-	}while(cur != edge)
+	} while (cur != edge);
 
 
 	if(counter >= 3) //treshold by article
