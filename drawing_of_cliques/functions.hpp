@@ -415,19 +415,22 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//print_graph(this);
 
+
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
 			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_, a, b);
 
 			/*important! changing to_ to the opposite direction */
-			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]->prev_; 
+			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]->prev_;
 
-			//try to go further
-			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
-			if (done) {
-				blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)]  = false;
-				return;
+			if(!(max(a, b) == number_of_vertices - 1 && is_some_of_faces_incorrect(segments[edges.size() - 2]))){
+				//try to go further
+				find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
+				if (done) {
+					blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)]  = false;
+					return;
+				}
 			}
 
 			//segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3];
@@ -440,6 +443,38 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		seg = seg->next_;
 	}
 }
+
+inline bool graph::is_some_of_faces_incorrect(Edge* edge){
+	auto opposite = edge->opposite_;
+
+	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_))
+		return true;
+	return false;
+}
+
+inline bool graph::is_face_incorrect(shared_ptr<Face> face){
+
+	auto edge = face->edge_;
+	int counter = 0;
+
+	auto cur = edge;
+	do{
+		int first = cur->from_->index_ / 100;
+		int second = cur->from_->index_ % 100;
+
+		if (first == number_of_vertices - 1 || second == number_of_vertices - 1){
+			counter++;
+	
+		cur = cur->next_;
+	}while(cur != edge)
+
+
+	if(counter >= 3) //treshold by article
+		return true;
+	return false;
+
+}
+
 
 inline long long factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
