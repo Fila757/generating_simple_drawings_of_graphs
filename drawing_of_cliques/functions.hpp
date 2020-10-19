@@ -69,7 +69,7 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto output_path = "data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -463,7 +463,7 @@ struct fingerprints {
 	fingerprints(int n) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
-		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto input_path = "data/graph"
 			+ to_string(n - 1) + ".txt";
 		input_file.open(input_path);
 
@@ -571,13 +571,13 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		//cout << cur << endl;
 
-		//check the fingerprint 
-		if (!is_correct_fingerprint(fingerprint)) continue;
-
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
 		if (canonic_fingerprints[fingerprint]) continue;
 		canonic_fingerprints[fingerprint] = true;
+
+		//check the fingerprint 
+		if (!is_correct_fingerprint(fingerprint)) continue;
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
