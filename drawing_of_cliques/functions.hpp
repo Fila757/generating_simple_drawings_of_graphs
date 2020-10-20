@@ -69,7 +69,7 @@ struct graph {
 		}
 
 
-		auto output_path = "data/graph"
+		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -315,6 +315,11 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 	//removig the edges from the back of segments and edges
 	//because of the order and recursive algorithm we know they are the last one
+
+	// face changing, importnat!
+	edge->face_->edge_ = edge;
+	edge_opposite->face_->edge_ = edge_opposite;
+
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
@@ -450,6 +455,13 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 	auto opposite = edge->opposite_;
 
+	/*
+	if (edge->face_ == outer_face || opposite->face_ == outer_face) {
+		cout << "outer_face" << endl;
+		print_graph(this);
+	}
+	*/
+
 	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_))
 		return true;
 	return false;
@@ -462,6 +474,7 @@ inline bool graph::is_face_incorrect(shared_ptr<Face> face){
 
 	auto cur = edge;
 	do{
+
 		int first = cur->from_->index_ / 100;
 		int second = cur->from_->index_ % 100;
 
@@ -501,7 +514,7 @@ struct fingerprints {
 	fingerprints(int n) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
-		auto input_path = "data/graph"
+		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
 			+ to_string(n - 1) + ".txt";
 		input_file.open(input_path);
 
@@ -609,13 +622,15 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		//cout << cur << endl;
 
+		//check the fingerprint 
+		if (!is_correct_fingerprint(fingerprint)) continue;
+
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
 		if (canonic_fingerprints[fingerprint]) continue;
 		canonic_fingerprints[fingerprint] = true;
 
-		//check the fingerprint 
-		if (!is_correct_fingerprint(fingerprint)) continue;
+	
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
