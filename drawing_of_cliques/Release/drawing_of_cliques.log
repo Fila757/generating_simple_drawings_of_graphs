@@ -1,34 +1,61 @@
-﻿  functions.hpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(552,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(552,41): warning C4244: 'argument': conversion from '__int64' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(553,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(554,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(554,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(557,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(558,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(558,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(563,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(573,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(573,55): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(588,14): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(589,19): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(589,36): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(589,56): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(589,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,23): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,50): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,41): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,67): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,95): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(593,85): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(594,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(678,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(810,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(812,36): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(828,20): warning C4018: '<': signed/unsigned mismatch
+﻿  drawing_of_cliques.cpp
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,41): warning C4244: 'argument': conversion from '__int64' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(561,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(562,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(562,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(565,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(566,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(566,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(571,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(581,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(581,55): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(596,14): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,19): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,36): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,56): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,23): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,50): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,41): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,67): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,95): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,85): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(602,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(691,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(823,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(825,36): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(841,20): warning C4018: '<': signed/unsigned mismatch
+  functions.hpp
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,41): warning C4244: 'argument': conversion from '__int64' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(561,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(562,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(562,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(565,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(566,35): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(566,63): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(571,16): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(581,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(581,55): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(596,14): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,19): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,36): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,56): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(597,83): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,23): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,50): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,41): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,67): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,95): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(601,85): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(602,13): warning C4244: 'argument': conversion from '__int64' to 'const unsigned int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(691,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(823,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(825,36): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(841,20): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  0 of 1192 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  Previous IPDB not found, fall back to full compilation.
+  All 1194 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   drawing_of_cliques.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\Release\drawing_of_cliques.exe

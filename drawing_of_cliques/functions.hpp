@@ -18,6 +18,11 @@ using namespace std;
 #define M_PI 3.14159265358979323846
 #endif
 
+#ifndef SIZE_OF_ARRAY
+#define SIZE_OF_ARRAY 10
+#endif // !1
+
+
 #define x first
 #define y second
 
@@ -124,9 +129,14 @@ struct Vertex {
 struct Face {
 	Edge* edge_;
 
-	Face() {}
+	Face() {
+		for (int i = 0; i < SIZE_OF_ARRAY;i++)
+			counter_of_edges[i] = 0;
+	}
 
-	Face(Edge* edge) : edge_(edge) {}
+	//Face(Edge* edge) : edge_(edge) {}
+
+	int counter_of_edges[SIZE_OF_ARRAY];
 };
 
 struct Edge {
@@ -165,10 +175,18 @@ inline void print_graph(graph* g) {
 			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ <<  " s: " << i << endl;
 		i++;
 	}
+}
 
+inline void print_counters(Face* f) {
+	for (int i = 0; i < SIZE_OF_ARRAY;i++)
+		cout << f->counter_of_edges[i] << " ";
+	cout << endl;
 }
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
+	
+	cout << "before" << endl;
+	print_counters(face.get());
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -210,13 +228,45 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		auto cur_edge = start_edge->next_;
 		while (start_edge != cur_edge) {
 			cur_edge->face_ = new_face;
+			if (cur_edge->index_ / 100 != cur_edge->index_ % 100) {
+				new_face->counter_of_edges[cur_edge->index_ / 100]++;
+				new_face->counter_of_edges[cur_edge->index_ % 100]++;
+			}
 			cur_edge = cur_edge->next_;
 		}
+
+		for (int i = 0; i < SIZE_OF_ARRAY;i++) {
+			face->counter_of_edges[i] -= new_face->counter_of_edges[i];
+		}
+
+	}
+	
+	if (ab_edge_ptr->index_ / 100 != ab_edge_ptr->index_ % 100) {
+		new_face->counter_of_edges[ab_edge_ptr->index_ / 100]++;
+		new_face->counter_of_edges[ab_edge_ptr->index_ % 100]++;
+
+		face->counter_of_edges[ab_edge_ptr->index_ / 100]++;
+		face->counter_of_edges[ab_edge_ptr->index_ % 100]++;
+	}
+
+	if (outer_face_bool) {
+		cout << "after outer" << endl;
+		print_counters(outer_face.get());
+	}
+	else {
+		cout << "after" << endl;
+		print_counters(face.get());
+		print_counters(new_face.get());
 	}
 }
 inline void graph::add_vertex(Edge* edge) {
 
+
 	auto opposite = edge->opposite_;
+
+	cout << "before adding vertex" << endl;
+	print_counters(edge->face_.get());
+	print_counters(opposite->face_.get());
 
 	auto a = edge->from_;
 	auto b = edge->to_;
@@ -240,6 +290,17 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->next_ = toa;
 	opposite->opposite_ = tob;
 
+	edge->face_->counter_of_edges[edge->index_ / 100]++;
+	edge->face_->counter_of_edges[edge->index_ % 100]++;
+
+	opposite->face_->counter_of_edges[opposite->index_ / 100]++;
+	opposite->face_->counter_of_edges[opposite->index_ % 100]++;
+
+
+	cout << "after adding vertex" << endl;
+	print_counters(edge->face_.get());
+	print_counters(opposite->face_.get());
+	
 }
 
 inline void graph::delete_edge_back(bool outer_face_bool) {
@@ -247,6 +308,15 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	auto edge = edges.back();
 	auto opposite = *edge.opposite_;
 
+	if (outer_face_bool) {
+		cout << "before del edge outer" << endl;
+		print_counters(outer_face.get());
+	}
+	else {
+		cout << "before del edge" << endl;
+		print_counters(edge.face_.get());
+		print_counters(opposite.face_.get());
+	}
 	auto a = edge.from_;
 	auto b = edge.to_;
 
@@ -263,6 +333,10 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	if (!outer_face_bool) {
 		while (opposite != *cur_edge) {
 			cur_edge->face_ = face;
+			if (cur_edge->index_ / 100 != cur_edge->index_ % 100) {
+				face->counter_of_edges[cur_edge->index_  / 100]++;
+				face->counter_of_edges[cur_edge->index_ % 100]++;
+			}
 			cur_edge = cur_edge->next_;
 		}
 	}
@@ -285,8 +359,20 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	/* delete the edge from list, pop from segments should be out of this function */
 	
+	face->counter_of_edges[edge.index_ / 100]--;
+	face->counter_of_edges[edge.index_ % 100]--;
+
 	segments.pop_back();segments.pop_back();
 	edges.pop_back();edges.pop_back();
+
+	if (outer_face_bool) {
+		cout << "after del edge outer" << endl;
+		print_counters(outer_face.get());
+	}
+	else {
+		cout << "after del edge" << endl;
+		print_counters(face.get());
+	}
 
 	//number_of_edges -= 2;
 }
@@ -298,6 +384,10 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	auto toa = edge->opposite_;
 	auto tob = edge->next_;
 	auto edge_opposite = tob->opposite_;
+
+	cout << "before deleting vertex" << endl;
+	print_counters(edge->face_.get());
+	print_counters(edge_opposite->face_.get());
 
 	auto a = toa->to_;
 	auto b = tob->to_;
@@ -320,8 +410,18 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	edge->face_->edge_ = edge;
 	edge_opposite->face_->edge_ = edge_opposite;
 
+	edge->face_->counter_of_edges[edge->index_ / 100]--;
+	edge->face_->counter_of_edges[edge->index_ % 100]--;
+
+	edge_opposite->face_->counter_of_edges[edge_opposite->index_ / 100]--;
+	edge_opposite->face_->counter_of_edges[edge_opposite->index_ % 100]--;
+
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
+
+	cout << "after deleting vertex" << endl;
+	print_counters(edge->face_.get());
+	print_counters(edge_opposite->face_.get());
 
 }
 
@@ -423,7 +523,6 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//print_graph(this);
 
-
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
@@ -434,13 +533,14 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			if(!(max(a, b) == number_of_vertices - 1 && is_some_of_faces_incorrect(segments[edges.size() - 2]))){
 				//try to go further
+				//cout << "#############IN####################" << endl;
 				find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
 				if (done) {
 					blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)]  = false;
 					return;
 				}
 			}
-
+		
 			//segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3];
 
 			//undo-intersect //not commutative!
@@ -462,6 +562,8 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 	}
 	*/
 
+	//cout << "##############SOME_FACES################" << endl;
+
 	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_))
 		return true;
 	return false;
@@ -472,14 +574,18 @@ inline bool graph::is_face_incorrect(shared_ptr<Face> face){
 	auto edge = face->edge_;
 	int counter = 0;
 
+	//cout << "##############xONE_FACEx############" << endl;
+
 	auto cur = edge;
 	do{
 
-		int first = cur->from_->index_ / 100;
-		int second = cur->from_->index_ % 100;
+		int first = cur->index_ / 100;
+		int second = cur->index_ % 100;
 
-		if (first == number_of_vertices - 1 || second == number_of_vertices - 1)
+		if ((first == number_of_vertices - 1 != second == number_of_vertices - 1)) //xor?
 			counter++;
+
+		//cout << first << ":f s:" << second << endl;
 	
 		cur = cur->next_;
 	} while (cur != edge);
@@ -622,6 +728,10 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		//cout << cur << endl;
 
+		//testing
+		//fingerprint = "123450235401345051240152303412";
+		//generator_of_fingerprints.done = true;
+
 		//check the fingerprint 
 		if (!is_correct_fingerprint(fingerprint)) continue;
 
@@ -630,7 +740,6 @@ inline void graph::create_all_possible_drawings() {
 		if (canonic_fingerprints[fingerprint]) continue;
 		canonic_fingerprints[fingerprint] = true;
 
-	
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
@@ -640,6 +749,7 @@ inline void graph::create_all_possible_drawings() {
 
 		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 
+		//print_graph(this);
 		if (done) {
 			cout << "yes" << endl;
 			output_file << fingerprint << "\n";
@@ -647,6 +757,7 @@ inline void graph::create_all_possible_drawings() {
 
 		edges.resize(0); segments.resize(0);
 		done = false;
+		outer_face = make_shared<Face>();
 	}
 
 	close_files();
