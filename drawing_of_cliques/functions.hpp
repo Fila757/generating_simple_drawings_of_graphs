@@ -19,8 +19,8 @@ using namespace std;
 #endif
 
 #ifndef SIZE_OF_ARRAY
-#define SIZE_OF_ARRAY 10
-#endif // !1
+#define SIZE_OF_ARRAY 7
+#endif 
 
 
 #define x first
@@ -111,6 +111,7 @@ struct graph {
 
 	bool is_some_of_faces_incorrect(Edge* edge);
 	bool is_face_incorrect(shared_ptr<Face> face);
+	bool is_face_incorrect_slower(shared_ptr<Face> face);
 
 };
 
@@ -185,8 +186,10 @@ inline void print_counters(Face* f) {
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 	
+	/*
 	cout << "before" << endl;
 	print_counters(face.get());
+	*/
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -249,6 +252,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		face->counter_of_edges[ab_edge_ptr->index_ % 100]++;
 	}
 
+	/*
 	if (outer_face_bool) {
 		cout << "after outer" << endl;
 		print_counters(outer_face.get());
@@ -258,15 +262,18 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		print_counters(face.get());
 		print_counters(new_face.get());
 	}
+	*/
 }
 inline void graph::add_vertex(Edge* edge) {
 
 
 	auto opposite = edge->opposite_;
 
+	/*
 	cout << "before adding vertex" << endl;
 	print_counters(edge->face_.get());
 	print_counters(opposite->face_.get());
+	*/
 
 	auto a = edge->from_;
 	auto b = edge->to_;
@@ -296,11 +303,11 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->face_->counter_of_edges[opposite->index_ / 100]++;
 	opposite->face_->counter_of_edges[opposite->index_ % 100]++;
 
-
+	/*
 	cout << "after adding vertex" << endl;
 	print_counters(edge->face_.get());
 	print_counters(opposite->face_.get());
-	
+	*/
 }
 
 inline void graph::delete_edge_back(bool outer_face_bool) {
@@ -308,6 +315,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	auto edge = edges.back();
 	auto opposite = *edge.opposite_;
 
+	/*
 	if (outer_face_bool) {
 		cout << "before del edge outer" << endl;
 		print_counters(outer_face.get());
@@ -317,6 +325,8 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 		print_counters(edge.face_.get());
 		print_counters(opposite.face_.get());
 	}
+	*/
+
 	auto a = edge.from_;
 	auto b = edge.to_;
 
@@ -365,6 +375,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	segments.pop_back();segments.pop_back();
 	edges.pop_back();edges.pop_back();
 
+	/*
 	if (outer_face_bool) {
 		cout << "after del edge outer" << endl;
 		print_counters(outer_face.get());
@@ -373,6 +384,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 		cout << "after del edge" << endl;
 		print_counters(face.get());
 	}
+	*/
 
 	//number_of_edges -= 2;
 }
@@ -385,9 +397,17 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	auto tob = edge->next_;
 	auto edge_opposite = tob->opposite_;
 
+	/*
 	cout << "before deleting vertex" << endl;
 	print_counters(edge->face_.get());
 	print_counters(edge_opposite->face_.get());
+	*/
+
+	/*
+	if (edge->face_ == edge_opposite->face_) {
+		cout << "saamee" << endl;
+	}
+	*/
 
 	auto a = toa->to_;
 	auto b = tob->to_;
@@ -419,10 +439,11 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
+	/*
 	cout << "after deleting vertex" << endl;
 	print_counters(edge->face_.get());
 	print_counters(edge_opposite->face_.get());
-
+	*/
 }
 
 inline void graph::create_special_vertex(int index) {
@@ -531,7 +552,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			/*important! changing to_ to the opposite direction */
 			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]->prev_;
 
-			if(!(max(a, b) == number_of_vertices - 1 && is_some_of_faces_incorrect(segments[edges.size() - 2]))){
+			if(max(a, b) != number_of_vertices - 1 || !is_some_of_faces_incorrect(segments[edges.size() - 2])){
 				//try to go further
 				//cout << "#############IN####################" << endl;
 				find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
@@ -564,12 +585,24 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 
 	//cout << "##############SOME_FACES################" << endl;
 
+	/*
+	if (is_face_incorrect(edge->face_) != is_face_incorrect_slower(edge->face_)) {
+		cout << "normal edges wrong" << endl;
+		is_face_incorrect_slower(edge->face_);
+	}
+
+	if (is_face_incorrect(opposite->face_) != is_face_incorrect_slower(opposite->face_)) {
+		cout << "opposite edges wrong" << endl;
+	}
+	*/
+
 	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_))
 		return true;
 	return false;
 }
 
-inline bool graph::is_face_incorrect(shared_ptr<Face> face){
+
+inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
 
 	auto edge = face->edge_;
 	int counter = 0;
@@ -595,6 +628,13 @@ inline bool graph::is_face_incorrect(shared_ptr<Face> face){
 		return true;
 	return false;
 
+}
+
+
+inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
+	if (face->counter_of_edges[number_of_vertices - 1] >= 3) //treshold by article
+		return true;
+	return false;
 }
 
 
