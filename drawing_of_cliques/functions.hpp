@@ -111,7 +111,7 @@ struct graph {
 
 	bool is_some_of_faces_incorrect(Edge* edge);
 	bool is_face_incorrect(shared_ptr<Face> face);
-	bool is_face_incorrect_slower(shared_ptr<Face> face);
+	//bool is_face_incorrect_slower(shared_ptr<Face> face);
 
 };
 
@@ -131,13 +131,17 @@ struct Face {
 	Edge* edge_;
 
 	Face() {
+		/*
 		for (int i = 0; i < SIZE_OF_ARRAY;i++)
 			counter_of_edges[i] = 0;
+		*/
 	}
 
 	//Face(Edge* edge) : edge_(edge) {}
 
-	int counter_of_edges[SIZE_OF_ARRAY];
+
+	int counter_of_last_edges = 0;
+	//int counter_of_edges[SIZE_OF_ARRAY];
 };
 
 struct Edge {
@@ -178,11 +182,13 @@ inline void print_graph(graph* g) {
 	}
 }
 
+/*
 inline void print_counters(Face* f) {
 	for (int i = 0; i < SIZE_OF_ARRAY;i++)
 		cout << f->counter_of_edges[i] << " ";
 	cout << endl;
 }
+*/
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 	
@@ -231,25 +237,18 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		auto cur_edge = start_edge->next_;
 		while (start_edge != cur_edge) {
 			cur_edge->face_ = new_face;
-			if (cur_edge->index_ / 100 != cur_edge->index_ % 100) {
-				new_face->counter_of_edges[cur_edge->index_ / 100]++;
-				new_face->counter_of_edges[cur_edge->index_ % 100]++;
+			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
+				new_face->counter_of_last_edges++;
 			}
 			cur_edge = cur_edge->next_;
 		}
 
-		for (int i = 0; i < SIZE_OF_ARRAY;i++) {
-			face->counter_of_edges[i] -= new_face->counter_of_edges[i];
-		}
-
+		face->counter_of_last_edges -= new_face->counter_of_last_edges;
 	}
 	
-	if (ab_edge_ptr->index_ / 100 != ab_edge_ptr->index_ % 100) {
-		new_face->counter_of_edges[ab_edge_ptr->index_ / 100]++;
-		new_face->counter_of_edges[ab_edge_ptr->index_ % 100]++;
-
-		face->counter_of_edges[ab_edge_ptr->index_ / 100]++;
-		face->counter_of_edges[ab_edge_ptr->index_ % 100]++;
+	if (ab_edge_ptr->index_ / 100 == number_of_vertices -1 != ab_edge_ptr->index_ % 100 == number_of_vertices - 1) {
+		new_face->counter_of_last_edges++;
+		face->counter_of_last_edges++;
 	}
 
 	/*
@@ -297,11 +296,10 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->next_ = toa;
 	opposite->opposite_ = tob;
 
-	edge->face_->counter_of_edges[edge->index_ / 100]++;
-	edge->face_->counter_of_edges[edge->index_ % 100]++;
-
-	opposite->face_->counter_of_edges[opposite->index_ / 100]++;
-	opposite->face_->counter_of_edges[opposite->index_ % 100]++;
+	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
+		edge->face_->counter_of_last_edges++;
+		opposite->face_->counter_of_last_edges++;
+	}
 
 	/*
 	cout << "after adding vertex" << endl;
@@ -343,9 +341,8 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	if (!outer_face_bool) {
 		while (opposite != *cur_edge) {
 			cur_edge->face_ = face;
-			if (cur_edge->index_ / 100 != cur_edge->index_ % 100) {
-				face->counter_of_edges[cur_edge->index_  / 100]++;
-				face->counter_of_edges[cur_edge->index_ % 100]++;
+			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
+				face->counter_of_last_edges++;
 			}
 			cur_edge = cur_edge->next_;
 		}
@@ -369,8 +366,9 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	/* delete the edge from list, pop from segments should be out of this function */
 	
-	face->counter_of_edges[edge.index_ / 100]--;
-	face->counter_of_edges[edge.index_ % 100]--;
+	if (edge.index_ / 100 == number_of_vertices - 1 != edge.index_ % 100 == number_of_vertices - 1) {
+		face->counter_of_last_edges--;
+	}
 
 	segments.pop_back();segments.pop_back();
 	edges.pop_back();edges.pop_back();
@@ -430,11 +428,11 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	edge->face_->edge_ = edge;
 	edge_opposite->face_->edge_ = edge_opposite;
 
-	edge->face_->counter_of_edges[edge->index_ / 100]--;
-	edge->face_->counter_of_edges[edge->index_ % 100]--;
 
-	edge_opposite->face_->counter_of_edges[edge_opposite->index_ / 100]--;
-	edge_opposite->face_->counter_of_edges[edge_opposite->index_ % 100]--;
+	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
+		edge->face_->counter_of_last_edges--;
+		edge_opposite->face_->counter_of_last_edges--;
+	}
 
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
@@ -602,6 +600,7 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 }
 
 
+/*
 inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
 
 	auto edge = face->edge_;
@@ -629,10 +628,10 @@ inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
 	return false;
 
 }
-
+*/
 
 inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
-	if (face->counter_of_edges[number_of_vertices - 1] >= 3) //treshold by article
+	if (face->counter_of_last_edges >= 3) //treshold by article
 		return true;
 	return false;
 }
@@ -942,7 +941,7 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 
 }
 
-
+/*
 inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
 	
 	//The realizable rotation systems of K4 with respect to (strong) isomorhism
@@ -970,6 +969,7 @@ inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
 	}
 	return false;
 }
+*/
 
 inline string find_lexical_min_rotation(string str)
 {

@@ -27,7 +27,7 @@ string find_lexical_min_rotation(string str)
 */
 int main()
 {
-    auto g = graph(7);
+    auto g = graph(6);
 
     //cout << "minimal" << g.find_canonic_fingerprint("123540523401435012450153202314") << endl;
 
