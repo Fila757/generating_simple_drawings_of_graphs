@@ -28,6 +28,15 @@ using namespace std;
 
 using array_4D = vector<vector<vector<vector<bool> > > >;
 
+long long fact[SIZE_OF_ARRAY + 5];
+
+void precount_factorials(){
+	fact[0] = 1;
+	for(int i = 1; i < SIZE_OF_ARRAY + 5;i++)
+		fact[i] = i * fact[i-1];
+	//cout << fact[SIZE_OF_ARRAY -1] << endl;
+}
+
 struct Vertex;
 struct Edge;
 struct Face;
@@ -74,9 +83,11 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto output_path = "data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
+
+		precount_factorials();
 	}
 
 	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool = false);
@@ -131,17 +142,15 @@ struct Face {
 	Edge* edge_;
 
 	Face() {
-		/*
-		for (int i = 0; i < SIZE_OF_ARRAY;i++)
-			counter_of_edges[i] = 0;
-		*/
-	}
+		for (int i = 0; i < SIZE_OF_ARRAY - 1;i++)
+			counter_of_same_last_edges[i] = 0;	
+		}
 
 	//Face(Edge* edge) : edge_(edge) {}
 
 
-	int counter_of_last_edges = 0;
-	//int counter_of_edges[SIZE_OF_ARRAY];
+	//int counter_of_last_edges = 0;
+	int counter_of_same_last_edges[SIZE_OF_ARRAY - 1];
 };
 
 struct Edge {
@@ -238,17 +247,20 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		while (start_edge != cur_edge) {
 			cur_edge->face_ = new_face;
 			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
-				new_face->counter_of_last_edges++;
+				new_face->counter_of_same_last_edges[min(cur_edge->index_ / 100, cur_edge->index_ % 100)]++;
 			}
 			cur_edge = cur_edge->next_;
 		}
 
-		face->counter_of_last_edges -= new_face->counter_of_last_edges;
+		for (int i = 0; i < SIZE_OF_ARRAY-1;i++) {
+			face->counter_of_same_last_edges[i] -= new_face->counter_of_same_last_edges[i];
+		}
+
 	}
 	
 	if (ab_edge_ptr->index_ / 100 == number_of_vertices -1 != ab_edge_ptr->index_ % 100 == number_of_vertices - 1) {
-		new_face->counter_of_last_edges++;
-		face->counter_of_last_edges++;
+		new_face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
+		face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
 	}
 
 	/*
@@ -297,8 +309,8 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->opposite_ = tob;
 
 	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
-		edge->face_->counter_of_last_edges++;
-		opposite->face_->counter_of_last_edges++;
+		edge->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
+		opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
 	}
 
 	/*
@@ -342,7 +354,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 		while (opposite != *cur_edge) {
 			cur_edge->face_ = face;
 			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
-				face->counter_of_last_edges++;
+				face->counter_of_same_last_edges[min(cur_edge->index_ / 100, cur_edge->index_ % 100)]++;
 			}
 			cur_edge = cur_edge->next_;
 		}
@@ -367,7 +379,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	/* delete the edge from list, pop from segments should be out of this function */
 	
 	if (edge.index_ / 100 == number_of_vertices - 1 != edge.index_ % 100 == number_of_vertices - 1) {
-		face->counter_of_last_edges--;
+		face->counter_of_same_last_edges[min(edge.index_ / 100, edge.index_ % 100)]--;
 	}
 
 	segments.pop_back();segments.pop_back();
@@ -379,7 +391,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 		print_counters(outer_face.get());
 	}
 	else {
-		cout << "after del edge" << endl;
+		cout << "after del edge" << endl; 
 		print_counters(face.get());
 	}
 	*/
@@ -430,8 +442,8 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 
 	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
-		edge->face_->counter_of_last_edges--;
-		edge_opposite->face_->counter_of_last_edges--;
+		edge->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]--;
+		edge_opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]--;
 	}
 
 	segments.pop_back(); segments.pop_back();
@@ -631,14 +643,21 @@ inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
 */
 
 inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
-	if (face->counter_of_last_edges >= 3) //treshold by article
+	int sum = 0;
+ 	for(int i = 0; i < SIZE_OF_ARRAY - 1;i++){
+		if (face->counter_of_same_last_edges[i] >= 2) //treshold by article
+			return true;
+
+		sum += (face->counter_of_same_last_edges[i] > 0);
+	}
+	if(sum >= 3)
 		return true;
 	return false;
 }
 
 
 inline long long factorial(int n) {
-	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
+	return fact[n];
 }
 
 /// <summary>
@@ -659,7 +678,7 @@ struct fingerprints {
 	fingerprints(int n) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
-		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto input_path = "data/graph"
 			+ to_string(n - 1) + ".txt";
 		input_file.open(input_path);
 
