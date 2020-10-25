@@ -29,6 +29,19 @@ int main()
 {
     auto g = graph(6);
 
+    cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
+
+    int number_of_threads = std::thread::hardware_concurrency();
+
+    //vector<thread> threads;
+
+    //for(int i = 0; i < number_of_threads;i++){
+     //   threads.push_back(thread(&graph::one_thread, &g, i));
+    //}
+
+    //for(int i = 0; i < number_of_threads;i++)
+    //    threads[i].join();
+
     //cout << "minimal" << g.find_canonic_fingerprint("123540523401435012450153202314") << endl;
 
     //cout << "minimal: " << g.find_canonic_fingerprint("12340423014301240321") << endl;

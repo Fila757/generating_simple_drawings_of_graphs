@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <fstream>
 #include <string>
+#include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -83,9 +85,11 @@ struct graph {
 		}
 
 
+		/*
 		auto output_path = "data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
+		*/
 
 		precount_factorials();
 	}
@@ -108,6 +112,7 @@ struct graph {
 
 	// to store canonic fingerprints
 	unordered_map<string, bool> canonic_fingerprints;
+	//mutex fingerprints_lock;
 
 	void create_special_vertex(int index);
 	void recolor_fingerprint(const string& rotation);
@@ -123,6 +128,8 @@ struct graph {
 	bool is_some_of_faces_incorrect(Edge* edge);
 	bool is_face_incorrect(shared_ptr<Face> face);
 	//bool is_face_incorrect_slower(shared_ptr<Face> face);
+
+	void one_thread(int i);
 
 };
 
@@ -191,20 +198,20 @@ inline void print_graph(graph* g) {
 	}
 }
 
-/*
+
 inline void print_counters(Face* f) {
-	for (int i = 0; i < SIZE_OF_ARRAY;i++)
-		cout << f->counter_of_edges[i] << " ";
+	for (int i = 0; i < SIZE_OF_ARRAY - 1;i++)
+		cout << f->counter_of_same_last_edges[i] << " ";
 	cout << endl;
 }
-*/
+
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 	
 	/*
 	cout << "before" << endl;
 	print_counters(face.get());
-	*/
+	*/	
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -246,7 +253,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		auto cur_edge = start_edge->next_;
 		while (start_edge != cur_edge) {
 			cur_edge->face_ = new_face;
-			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
+			if ((cur_edge->index_ / 100 == number_of_vertices - 1) != (cur_edge->index_ % 100 == number_of_vertices - 1)) {
 				new_face->counter_of_same_last_edges[min(cur_edge->index_ / 100, cur_edge->index_ % 100)]++;
 			}
 			cur_edge = cur_edge->next_;
@@ -258,11 +265,14 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	}
 	
-	if (ab_edge_ptr->index_ / 100 == number_of_vertices -1 != ab_edge_ptr->index_ % 100 == number_of_vertices - 1) {
+	//cout << ab_edge_ptr->index_ << endl;
+	//cout << "number_of_vertices -1 " << number_of_vertices -1 << endl;
+	if (((ab_edge_ptr->index_ / 100) == (number_of_vertices -1)) != ((ab_edge_ptr->index_ % 100) == (number_of_vertices - 1))) {
 		new_face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
 		face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
 	}
 
+	
 	/*
 	if (outer_face_bool) {
 		cout << "after outer" << endl;
@@ -273,7 +283,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		print_counters(face.get());
 		print_counters(new_face.get());
 	}
-	*/
+	*/	
+	
 }
 inline void graph::add_vertex(Edge* edge) {
 
@@ -308,7 +319,7 @@ inline void graph::add_vertex(Edge* edge) {
 	opposite->next_ = toa;
 	opposite->opposite_ = tob;
 
-	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
+	if ((edge->index_ / 100 == number_of_vertices - 1) != (edge->index_ % 100 == number_of_vertices - 1)) {
 		edge->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
 		opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
 	}
@@ -353,7 +364,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	if (!outer_face_bool) {
 		while (opposite != *cur_edge) {
 			cur_edge->face_ = face;
-			if (cur_edge->index_ / 100 == number_of_vertices - 1 != cur_edge->index_ % 100 == number_of_vertices - 1) {
+			if ((cur_edge->index_ / 100 == number_of_vertices - 1) != (cur_edge->index_ % 100 == number_of_vertices - 1)) {
 				face->counter_of_same_last_edges[min(cur_edge->index_ / 100, cur_edge->index_ % 100)]++;
 			}
 			cur_edge = cur_edge->next_;
@@ -378,7 +389,7 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	/* delete the edge from list, pop from segments should be out of this function */
 	
-	if (edge.index_ / 100 == number_of_vertices - 1 != edge.index_ % 100 == number_of_vertices - 1) {
+	if ((edge.index_ / 100 == number_of_vertices - 1) != (edge.index_ % 100 == number_of_vertices - 1)) {
 		face->counter_of_same_last_edges[min(edge.index_ / 100, edge.index_ % 100)]--;
 	}
 
@@ -441,7 +452,7 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	edge_opposite->face_->edge_ = edge_opposite;
 
 
-	if (edge->index_ / 100 == number_of_vertices - 1 != edge->index_ % 100 == number_of_vertices - 1) {
+	if ((edge->index_ / 100 == number_of_vertices - 1) != (edge->index_ % 100 == number_of_vertices - 1)) {
 		edge->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]--;
 		edge_opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]--;
 	}
@@ -559,6 +570,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			add_vertex(seg);
 			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_, a, b);
 
+
+
 			/*important! changing to_ to the opposite direction */
 			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]->prev_;
 
@@ -606,8 +619,9 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 	}
 	*/
 
-	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_))
+	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_)){
 		return true;
+	}
 	return false;
 }
 
@@ -647,9 +661,11 @@ inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
  	for(int i = 0; i < SIZE_OF_ARRAY - 1;i++){
 		if (face->counter_of_same_last_edges[i] >= 2) //treshold by article
 			return true;
+		//cout << face->counter_of_same_last_edges[i] << " ";
 
 		sum += (face->counter_of_same_last_edges[i] > 0);
 	}
+	//cout << endl;
 	if(sum >= 3)
 		return true;
 	return false;
@@ -1060,4 +1076,9 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 	}
 
 	return true;
+}
+
+
+void inline graph::one_thread(int index){
+
 }
