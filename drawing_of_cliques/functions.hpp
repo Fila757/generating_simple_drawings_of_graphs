@@ -12,6 +12,8 @@
 #include <fstream>
 #include <string>
 
+#include "delaunator.hpp"
+
 using namespace std;
 
 #ifndef M_PI
@@ -31,6 +33,8 @@ struct graph {
 
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
+
+	vector<Vertex> outer_vertices{Vertex(300, 300), Vertex(-300, 300), Vertex(-300, -300), Vertex(300, -300)}; 
 
 	int realized = 0;
 	bool done = false;
@@ -69,7 +73,7 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
+		auto output_path = "../VizualizerWPF/data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -103,6 +107,15 @@ struct graph {
 
 	void write_coordinates();
 
+	void create_coordinates(vector<Vertex> points, double** distances){
+
+		for(int i = 0; i < points.size();i++){
+			for(int j = 0; j < points.size();j++){
+				distances[i][j] = (points[i].x_ - points[j].x_) * (points[i].x_ - points[j].x_) + (points[i].y_ - points[j].y_) * (points[i].y_ - points[j].y_);
+			}
+		}
+	} 
+
 	//string find_canonic_fingerprint(const string& fingerprint);
 
 };
@@ -115,6 +128,8 @@ struct Vertex {
 	double x_, y_;
 
 	Vertex() {}
+
+	Vertex(double x, double y) : x_(x), y_(y) {}
 
 	//it is really good to be the opposite one because when you create new vertex 
 	//from the edge side then it is good to go from the intersection opposite side
@@ -136,18 +151,17 @@ struct Edge {
 	Edge* prev_;
 	Edge* opposite_;
 
-	shared_ptr<Vertex> from_;
-	shared_ptr<Vertex> to_;
+	vector<shared_ptr<Vertex> > vertices_;
 
 	shared_ptr<Face> face_;
 
 	Edge() {}
 
-	Edge(Edge* next, Edge* prev, Edge* opposite, shared_ptr<Vertex> from, shared_ptr<Vertex> to, shared_ptr<Face> face, int index) :
-		next_(next), prev_(prev), opposite_(opposite), from_(from), to_(to), face_(face), index_(index) {}
+	Edge(Edge* next, Edge* prev, Edge* opposite, vector<shared_ptr<Vertex> > vertices, shared_ptr<Face> face, int index) :
+		next_(next), prev_(prev), opposite_(opposite), vertices_(vertices), face_(face), index_(index) {}
 
 	bool operator==(const Edge& a) {
-		return (from_ == a.from_ && to_ == a.to_);
+		return (from_ == a.vertices_[0] && to_ == a.vertices_.back());
 	}
 
 	bool operator!=(const Edge& a) {
@@ -161,7 +175,7 @@ inline void print_graph(graph* g) {
 
 	int i = 0;
 	for (auto it : g->edges) {
-		cout << it.from_ << ":from to:" << it.to_ << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
+		cout << it.vertices_[0] << ":from to:" << it.vertices_.back() << " face:" << it.face_ << " prev:" << it.prev_->index_ << " next:" << it.next_->index_
 			<< " opp:" << ((it.opposite_ == nullptr) ? -1 : it.opposite_->index_) << " index:" << it.index_ <<  " s: " << i << endl;
 		i++;
 	}
@@ -195,6 +209,13 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
     tob = b->to_;
     fromb = tob->next_;
+
+	/* triangulation */
+
+
+	auto vertices = find_shortest_path(*a, *b, faces_vertices);
+
+	
 
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
@@ -485,7 +506,7 @@ struct fingerprints {
 
 	fingerprints(int n) {
 	
-		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
+		auto input_path = "data/graph"
 			+ to_string(n) + ".txt";
 		input_file.open(input_path);
 		
