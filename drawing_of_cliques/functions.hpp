@@ -13,12 +13,18 @@
 #include <string>
 
 #include "delaunator.hpp"
+#include <queue>
 
 using namespace std;
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
+
+#ifndef INF
+#define INF 10000000
+#endif // !INF
+
 
 #define x first
 #define y second
@@ -28,6 +34,56 @@ using array_4D = vector<vector<vector<vector<bool> > > >;
 struct Vertex;
 struct Edge;
 struct Face;
+
+struct Vertex {
+	Edge* to_;
+
+	int index_;
+
+	double x_, y_;
+
+	Vertex() {}
+
+	Vertex(double x, double y) : x_(x), y_(y) {}
+
+	//it is really good to be the opposite one because when you create new vertex 
+	//from the edge side then it is good to go from the intersection opposite side
+	Vertex(Edge* to) : to_(to) {}
+};
+
+struct Face {
+	Edge* edge_;
+
+	Face() {}
+
+	Face(Edge* edge) : edge_(edge) {}
+};
+
+struct Edge {
+	int index_ = 0;
+
+	Edge* next_;
+	Edge* prev_;
+	Edge* opposite_;
+
+	vector<shared_ptr<Vertex> > vertices_;
+
+	shared_ptr<Face> face_;
+
+	Edge() {}
+
+	Edge(Edge* next, Edge* prev, Edge* opposite, vector<shared_ptr<Vertex> > vertices, shared_ptr<Face> face, int index) :
+		next_(next), prev_(prev), opposite_(opposite), vertices_(vertices), face_(face), index_(index) {}
+
+	bool operator==(const Edge& a) {
+		return (vertices_[0] == a.vertices_[0] && vertices_.back() == a.vertices_.back());
+	}
+
+	bool operator!=(const Edge& a) {
+		return !(*this == a);
+	}
+
+};
 
 struct graph {
 
@@ -107,68 +163,56 @@ struct graph {
 
 	void write_coordinates();
 
-	void create_coordinates(vector<Vertex> points, double** distances){
-
-		for(int i = 0; i < points.size();i++){
-			for(int j = 0; j < points.size();j++){
-				distances[i][j] = (points[i].x_ - points[j].x_) * (points[i].x_ - points[j].x_) + (points[i].y_ - points[j].y_) * (points[i].y_ - points[j].y_);
-			}
-		}
-	} 
+	vector<shared_ptr<Vertex> > find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex> >& face_vertices);
 
 	//string find_canonic_fingerprint(const string& fingerprint);
 
 };
 
-struct Vertex {
-	Edge* to_;
+inline void create_coordinates(const vector<shared_ptr<Vertex> >& points, vector<vector<double> >& distances) {
 
-	int index_;
+	for (int i = 0; i < points.size();i++) {
+		for (int j = 0; j < points.size();j++) {
+			distances[i][j] = (points[i]->x_ - points[j]->x_) * (points[i]->x_ - points[j]->x_) + (points[i]->y_ - points[j]->y_) * (points[i]->y_ - points[j]->y_);
+		}
+	}
+}
 
-	double x_, y_;
+inline void dijsktra(vector<shared_ptr<Vertex> >& points, vector<vector<double> > distances, vector<int>& parent) {
 
-	Vertex() {}
+	vector<double> shortest;
+	shortest.resize(points.size());
 
-	Vertex(double x, double y) : x_(x), y_(y) {}
+	priority_queue<pair<double, int>, vector<pair<double, int> >, greater<pair<double, int> > > pq;
+	vector<bool> visited;
+	visited.resize(points.size());
 
-	//it is really good to be the opposite one because when you create new vertex 
-	//from the edge side then it is good to go from the intersection opposite side
-	Vertex(Edge* to) : to_(to) {}
-};
-
-struct Face {
-	Edge* edge_;
-
-	Face() {}
-
-	Face(Edge* edge) : edge_(edge) {}
-};
-
-struct Edge {
-	int index_ = 0;
-
-	Edge* next_;
-	Edge* prev_;
-	Edge* opposite_;
-
-	vector<shared_ptr<Vertex> > vertices_;
-
-	shared_ptr<Face> face_;
-
-	Edge() {}
-
-	Edge(Edge* next, Edge* prev, Edge* opposite, vector<shared_ptr<Vertex> > vertices, shared_ptr<Face> face, int index) :
-		next_(next), prev_(prev), opposite_(opposite), vertices_(vertices), face_(face), index_(index) {}
-
-	bool operator==(const Edge& a) {
-		return (from_ == a.vertices_[0] && to_ == a.vertices_.back());
+	for (int i = 0; i < points.size(); i++) {
+		shortest[i] = INF;
 	}
 
-	bool operator!=(const Edge& a) {
-		return !(*this == a);
-	}
+	shortest[0] = 0;
+	pq.push(make_pair(shortest[0], 0));
 
-};
+	while (!pq.empty()) {
+		auto top = pq.top();pq.pop();
+
+		if (visited[top.second]) continue;
+		visited[top.second] = true;
+
+		for (int w = 0; w < points.size();w++) {
+			if (top.second != w) {
+
+				if (shortest[w] > shortest[top.second] + distances[top.second][w]) {
+					shortest[w] = top.first + distances[top.second][w];
+					pq.push(make_pair(shortest[w], w));
+					parent[w] = top.second;
+				}
+			}
+		}
+	}
+}
+
 
 inline void print_graph(graph* g) {
 	cout << "number of edges: " << g->edges.size() << endl;
@@ -180,6 +224,34 @@ inline void print_graph(graph* g) {
 		i++;
 	}
 
+}
+
+vector<shared_ptr<Vertex> > graph::find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex > >& face_vertices) {
+	
+	vector<shared_ptr<Vertex> > all_vertices{ from };
+	all_vertices.push_back(to);
+	all_vertices.insert(all_vertices.end(), face_vertices.begin(), face_vertices.end());
+
+
+	vector<vector<double> > distances;
+	distances.resize(all_vertices.size());
+	for (int i = 0; i < all_vertices.size();i++)
+		distances[i].resize(all_vertices.size());
+	create_coordinates(all_vertices, distances);
+
+	vector<int> parent;
+	parent.resize(all_vertices.size());
+	dijsktra(all_vertices, distances, parent);
+
+	vector<shared_ptr<Vertex> > result;
+
+	int v = 1;
+	while (parent[v] != 0) {
+		result.push_back(all_vertices[v]);
+		v = parent[v];
+	}
+	result.push_back(all_vertices[0]);
+	return result;
 }
 
 inline vector<pair<double, double> > create_circle(double radius, double cx, double cy, int n) {
@@ -213,20 +285,48 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	/* triangulation */
 
 
-	auto vertices = find_shortest_path(*a, *b, faces_vertices);
+	vector<shared_ptr<Vertex> > faces_vertices;
+	auto start = face->edge_;
+	auto cur = start->next_;
+	faces_vertices.insert(faces_vertices.end(), start->vertices_.begin(), start->vertices_.end() - 1);
+
+	while (cur != start) {
+		faces_vertices.insert(faces_vertices.end(), cur->vertices_.begin(), cur->vertices_.end() - 1);
+		cur = cur->next_;
+	}
+
+	auto coords = vector<double>();
+	for (int i = 0; i < faces_vertices.size();i++) {
+		coords.push_back(faces_vertices[i]->x_);
+		coords.push_back(faces_vertices[i]->y_);
+	}
+
+	delaunator::Delaunator d(coords);
+
+	auto mids = vector<shared_ptr<Vertex> >();
+	for (int i = 0; i < d.triangles.size();i+=3) {
+		for (int j = 0; j < 3;j++) {
+			mids.push_back(make_shared<Vertex>(d.coords[2 * d.triangles[i + j]]));
+			mids.push_back(make_shared<Vertex>(d.coords[2 * d.triangles[i + j] + 1]));
+		}
+	}
+
+	auto vertices = find_shortest_path(a, b, mids);
 
 	
 
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
-	Edge ab_edge(fromb, toa, nullptr, a, b, face, a_index*100 + b_index); //edge from a to b
+	reverse(vertices.begin(), vertices.end());
+	Edge ab_edge(fromb, toa, nullptr, vertices, face, a_index*100 + b_index); //edge from a to b
 	edges.push_back(ab_edge); //number_of_edges++;
 	Edge* ab_edge_ptr = &edges.back();
 	segments.push_back(ab_edge_ptr);
 
 	//print_graph(this);
 
-	Edge ba_edge(froma, tob, ab_edge_ptr, b, a, new_face, b_index*100 + a_index); //edge from b to a
+	reverse(vertices.begin(), vertices.end());
+	Edge ba_edge(froma, tob, ab_edge_ptr, vertices, new_face, b_index*100 + a_index); //edge from b to a
 	edges.push_back(ba_edge); //number_of_edges++;
 	Edge* ba_edge_ptr = &edges.back();
 	segments.push_back(ba_edge_ptr);
@@ -257,26 +357,26 @@ inline void graph::add_vertex(Edge* edge) {
 
 	auto opposite = edge->opposite_;
 
-	auto a = edge->from_;
-	auto b = edge->to_;
+	auto a = edge->vertices_[0];
+	auto b = edge->vertices_.back();
 
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = -1;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
 
-	edges.push_back(Edge(edge->next_, edge, opposite, new_vertex, b, edge->face_, edge->index_)); //new vertex to b, part of normal edge
+	edges.push_back(Edge(edge->next_, edge, opposite, vector<shared_ptr<Vertex> >{ new_vertex, b }, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
 	segments.push_back(tob);
 
-	edges.push_back(Edge(opposite->next_, opposite, edge, new_vertex, a, opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
+	edges.push_back(Edge(opposite->next_, opposite, edge, vector<shared_ptr<Vertex> >{ new_vertex, a } , opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
 	auto toa = &edges.back();
 	segments.push_back(toa);
 
-	edge->to_ = new_vertex; //changing properties of edge
+	edge->vertices_.back() = new_vertex; //changing properties of edge
 	edge->next_ = tob;
 	edge->opposite_ = toa;
 
-	opposite->to_ = new_vertex; //changing properties of opposite
+	opposite->vertices_.back() = new_vertex; //changing properties of opposite
 	opposite->next_ = toa;
 	opposite->opposite_ = tob;
 
@@ -287,8 +387,8 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	auto edge = edges.back();
 	auto opposite = *edge.opposite_;
 
-	auto a = edge.from_;
-	auto b = edge.to_;
+	auto a = edge.vertices_[0];
+	auto b = edge.vertices_.back();
 
 	auto face = edge.face_;
 
@@ -339,13 +439,13 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	auto tob = edge->next_;
 	auto edge_opposite = tob->opposite_;
 
-	auto a = toa->to_;
-	auto b = tob->to_;
+	auto a = toa->vertices_.back();
+	auto b = tob->vertices_.back();
 
 	// reconnecting edges and therefore removing the vertex
 
-	edge->to_ = b;
-	edge_opposite->to_ = a;
+	edge->vertices_.back() = b;
+	edge_opposite->vertices_.back() = a;
 	edge->next_ = tob->next_;
 	edge_opposite->next_ = toa->next_;
 
@@ -377,7 +477,7 @@ inline void graph::create_special_vertex(int index, int x, int y) {
 	for (int i = 0; i < number_of_vertices - 1;i++) {
 		auto first_vertex = special_vertices[i];
 		auto second_vertex = special_vertices[(i + 1) % (number_of_vertices - 1)];
-		edges.push_back(Edge(nullptr, nullptr, nullptr, first_vertex, second_vertex, outer_face, 100*index + index));
+		edges.push_back(Edge(nullptr, nullptr, nullptr, vector<shared_ptr<Vertex> > {first_vertex, second_vertex}, outer_face, 100 * index + index));
 		second_vertex->to_ = &edges.back();
 		segments.push_back(&edges.back()); 
 	}
@@ -404,7 +504,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
-		add_edge(segments[starts[0][i]]->from_, segments[starts[i][0]]->from_, outer_face, 0, i, true); //from vertex is that in rotation
+		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, true); //from vertex is that in rotation
 	}
 }
 
@@ -431,7 +531,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_, a, b);
+			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -466,10 +566,10 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
-			add_edge(segments[s_index]->from_, segments[edges.size() - 1]->from_, segments[s_index]->face_, a, b);
+			add_edge(segments[s_index]->vertices_[0], segments[edges.size() - 1]->vertices_[0], segments[s_index]->face_, a, b);
 
 			/*important! changing to_ to the opposite direction */
-			segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3]->prev_; 
+			segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_; 
 
 			//try to go further
 			find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
@@ -478,11 +578,11 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				return;
 			}
 
-			//segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3];
+			//segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3];
 
 			//undo-intersect //not commutative!
 			delete_edge_back();
-			delete_vertex((seg->to_).get());
+			delete_vertex((seg->vertices_.back()).get());
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = false;
 		}
 		seg = seg->next_;
@@ -548,13 +648,17 @@ inline void graph::write_coordinates() {
 	for (int i = 0; i < number_of_vertices;i++) {
 		for (int j = i + 1;j < number_of_vertices;j++) {
 			for (int k = 0; k < drawing_edges[i][j].size();k++) {
-				output_file
-					<< drawing_edges[i][j][k].from_->x_ << " "
-					<< drawing_edges[i][j][k].from_->y_ << " "
-					<< drawing_edges[i][j][k].to_->x_ << " "
-					<< drawing_edges[i][j][k].to_->y_ << " ";
+				output_file << "( ";
+				for (int l = 0; l < drawing_edges[i][j][k].vertices_.size();l++) {
+					output_file
+						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
+						<< drawing_edges[i][j][k].vertices_[l]->y_ << " "
+						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
+						<< drawing_edges[i][j][k].vertices_[l]->y_ << " ";
+				}
+				output_file << ") ";
+				output_file << endl;
 			}
-			output_file << endl;
 		}
 	}
 
