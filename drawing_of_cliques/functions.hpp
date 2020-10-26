@@ -39,6 +39,11 @@ void precount_factorials(){
 	//cout << fact[SIZE_OF_ARRAY -1] << endl;
 }
 
+struct canonic_wraper{
+	unordered_map<string, bool> canonic_fingerprints;
+    mutex shared_mutex;
+};
+
 struct Vertex;
 struct Edge;
 struct Face;
@@ -51,6 +56,8 @@ struct graph {
 	int realized = 0;
 	bool done = false;
 
+	int index;
+
 	list<Edge> edges;
 
 	shared_ptr<Face> outer_face;
@@ -61,7 +68,10 @@ struct graph {
 		output_file.close();
 	}
 
-	graph(int n) {
+	graph(int n, int i, shared_ptr<canonic_wraper> shared_canonics) {
+		index = i;
+		canonic_fingerprints_wraper = shared_canonics;
+
 		number_of_vertices = n;
 		outer_face = make_shared<Face>();
 
@@ -85,11 +95,13 @@ struct graph {
 		}
 
 
-		/*
+		
 		auto output_path = "data/graph"
-			+ to_string(n) + ".txt";
+			+ to_string(n) + "_0" + to_string(index) + ".txt";
 		output_file.open(output_path);
-		*/
+
+		cout << "opened " << output_path << endl;
+		
 
 		precount_factorials();
 	}
@@ -111,8 +123,10 @@ struct graph {
 	vector<vector<int> > starts;
 
 	// to store canonic fingerprints
-	unordered_map<string, bool> canonic_fingerprints;
+	//unordered_map<string, bool> canonic_fingerprints;
 	//mutex fingerprints_lock;
+
+	shared_ptr<canonic_wraper> canonic_fingerprints_wraper;
 
 	void create_special_vertex(int index);
 	void recolor_fingerprint(const string& rotation);
@@ -129,7 +143,6 @@ struct graph {
 	bool is_face_incorrect(shared_ptr<Face> face);
 	//bool is_face_incorrect_slower(shared_ptr<Face> face);
 
-	void one_thread(int i);
 
 };
 
@@ -691,12 +704,16 @@ struct fingerprints {
 	/// <summary> 
 	// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes
 	/// </summary>
-	fingerprints(int n) {
+	fingerprints(int n, int index) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
 		auto input_path = "data/graph"
-			+ to_string(n - 1) + ".txt";
+			+ to_string(n - 1) + "_0" + to_string(index) + ".txt";
+
+		//cout << "input " << input_path << endl;
 		input_file.open(input_path);
+
+		//cout << "opened also " << input_path << endl;
 
 		string rotation_system;
 		if (!getline(input_file, rotation_system)) {
@@ -797,7 +814,9 @@ inline void graph::create_all_possible_drawings() {
 		}
 	}
 
-	auto generator_of_fingerprints = fingerprints(number_of_vertices);
+	auto generator_of_fingerprints = fingerprints(number_of_vertices, index);
+
+	//cout << "finger print created" << endl;
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		//cout << cur << endl;
@@ -809,11 +828,22 @@ inline void graph::create_all_possible_drawings() {
 		//check the fingerprint 
 		if (!is_correct_fingerprint(fingerprint)) continue;
 
+		//cout << "is correct " << endl;
+
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
-		if (canonic_fingerprints[fingerprint]) continue;
-		canonic_fingerprints[fingerprint] = true;
 
+		//cout << "finding canonics " << fingerprint << endl;
+
+		{
+			//cout << "inside" << endl;
+			lock_guard<mutex> canonic_lock(canonic_fingerprints_wraper->shared_mutex);
+			//cout << "lock created " << endl;
+			if (canonic_fingerprints_wraper->canonic_fingerprints[fingerprint]) continue;
+			canonic_fingerprints_wraper->canonic_fingerprints[fingerprint] = true;
+		}
+
+		//cout << "after lock guard" << endl;
 
 		create_all_special_vertices();
 		recolor_fingerprint(fingerprint);
@@ -1076,9 +1106,4 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 	}
 
 	return true;
-}
-
-
-void inline graph::one_thread(int index){
-
 }

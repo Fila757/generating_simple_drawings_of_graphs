@@ -25,22 +25,38 @@ string find_lexical_min_rotation(string str)
     return min;
 }
 */
+
 int main()
 {
-    auto g = graph(6);
+    int n = 7;
 
     cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
     int number_of_threads = std::thread::hardware_concurrency();
 
-    //vector<thread> threads;
+    vector<graph> graphs;
+    shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();
+ 
+    system(("split --numeric-suffixes=1 --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
 
-    //for(int i = 0; i < number_of_threads;i++){
-     //   threads.push_back(thread(&graph::one_thread, &g, i));
-    //}
+    for(int i = 0; i < number_of_threads - 1;i++){
+        graphs.push_back(graph(n, i+1, shared_wraper));
+    }
 
-    //for(int i = 0; i < number_of_threads;i++)
-    //    threads[i].join();
+    //cout << "graphs created" << endl;
+    vector<thread> threads;
+
+    for(int i = 0; i < number_of_threads - 1;i++){
+        threads.push_back(thread(&graph::create_all_possible_drawings, &graphs[i]));
+    }
+
+    //cout << "after run" << endl;
+
+    for(int i = 0; i < number_of_threads - 1;i++)
+        threads[i].join();
+
+    system(("cat data/graph" + to_string(n) + "_* > data/graph" + to_string(n) + ".txt").data());
+    system("rm data/*_*");
 
     //cout << "minimal" << g.find_canonic_fingerprint("123540523401435012450153202314") << endl;
 
@@ -53,7 +69,7 @@ int main()
     //cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
  
-    g.create_all_possible_drawings();
+    //g.create_all_possible_drawings();
     
     // testing relabeling because we have found 6 realizable RS written 
 
