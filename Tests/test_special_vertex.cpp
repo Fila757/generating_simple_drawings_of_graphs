@@ -5,7 +5,7 @@
 TEST(graphs_create_special_vertex, graph_3) {
     auto g = graph(3);
 
-    g.create_special_vertex(1);
+    g.create_special_vertex(1, 0, 0);
 
     EXPECT_EQ(g.edges.size(), 2);
 
@@ -16,8 +16,8 @@ TEST(graphs_create_special_vertex, graph_3) {
 
     //vertices 
     for (int i = 0; i < 2;i++) {
-        EXPECT_EQ(g.segments[i]->to_, g.segments[(i + 1) % 2]->from_);
-        EXPECT_EQ(g.segments[i]->to_->index_, 1);
+        EXPECT_EQ(g.segments[i]->vertices_.back(), g.segments[(i + 1) % 2]->vertices_[0]);
+        EXPECT_EQ(g.segments[i]->vertices_.back()->index_, 1);
     }
 
     //edges 
@@ -31,7 +31,7 @@ TEST(graphs_create_special_vertex, graph_3) {
 TEST(graphs_create_special_vertex, graph_4) {
     auto g = graph(4);
 
-    g.create_special_vertex(0);
+    g.create_special_vertex(0, 0, 0);
 
     EXPECT_EQ(g.edges.size(), 3);
 
@@ -42,8 +42,8 @@ TEST(graphs_create_special_vertex, graph_4) {
 
     //vertices 
     for (int i = 0; i < 3;i++) {
-        EXPECT_EQ(g.segments[i]->to_, g.segments[(i + 1) % 3]->from_);
-        EXPECT_EQ(g.segments[i]->to_->index_, 0);
+        EXPECT_EQ(g.segments[i]->vertices_.back(), g.segments[(i + 1) % 3]->vertices_[0]);
+        EXPECT_EQ(g.segments[i]->vertices_.back()->index_, 0);
     }
 
     //edges 
@@ -57,7 +57,7 @@ TEST(graphs_create_special_vertex, graph_4) {
 TEST(graphs_create_special_vertex, graph_5) {
     auto g = graph(5);
 
-    g.create_special_vertex(3);
+    g.create_special_vertex(3, 0, 0);
 
 
     EXPECT_EQ(g.edges.size(), 4);
@@ -69,8 +69,8 @@ TEST(graphs_create_special_vertex, graph_5) {
 
     //vertices 
     for (int i = 0; i < 4;i++) {
-        EXPECT_EQ(g.segments[i]->to_, g.segments[(i + 1) % 4]->from_);
-        EXPECT_EQ(g.segments[i]->to_->index_, 3);
+        EXPECT_EQ(g.segments[i]->vertices_.back(), g.segments[(i + 1) % 4]->vertices_[0]);
+        EXPECT_EQ(g.segments[i]->vertices_.back()->index_, 3);
     }
 
     //edges 

@@ -129,7 +129,7 @@ struct graph {
 		}
 
 
-		auto output_path = "../VizualizerWPF/data/graph"
+		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
 			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
@@ -226,7 +226,7 @@ inline void print_graph(graph* g) {
 
 }
 
-vector<shared_ptr<Vertex> > graph::find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex > >& face_vertices) {
+inline vector<shared_ptr<Vertex> > graph::find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex > >& face_vertices) {
 	
 	vector<shared_ptr<Vertex> > all_vertices{ from };
 	all_vertices.push_back(to);
@@ -284,37 +284,53 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	/* triangulation */
 
+	vector<shared_ptr<Vertex> > vertices;
 
-	vector<shared_ptr<Vertex> > faces_vertices;
-	auto start = face->edge_;
-	auto cur = start->next_;
-	faces_vertices.insert(faces_vertices.end(), start->vertices_.begin(), start->vertices_.end() - 1);
+	if (!outer_face_bool) {
+		vector<shared_ptr<Vertex> > faces_vertices;
+		auto start = face->edge_;
+		auto cur = start->next_;
+		faces_vertices.insert(faces_vertices.end(), start->vertices_.begin(), start->vertices_.end() - 1);
 
-	while (cur != start) {
-		faces_vertices.insert(faces_vertices.end(), cur->vertices_.begin(), cur->vertices_.end() - 1);
-		cur = cur->next_;
-	}
-
-	auto coords = vector<double>();
-	for (int i = 0; i < faces_vertices.size();i++) {
-		coords.push_back(faces_vertices[i]->x_);
-		coords.push_back(faces_vertices[i]->y_);
-	}
-
-	delaunator::Delaunator d(coords);
-
-	auto mids = vector<shared_ptr<Vertex> >();
-	for (int i = 0; i < d.triangles.size();i+=3) {
-		for (int j = 0; j < 3;j++) {
-			mids.push_back(make_shared<Vertex>(d.coords[2 * d.triangles[i + j]]));
-			mids.push_back(make_shared<Vertex>(d.coords[2 * d.triangles[i + j] + 1]));
+		while (cur != start) {
+			faces_vertices.insert(faces_vertices.end(), cur->vertices_.begin(), cur->vertices_.end() - 1);
+			cur = cur->next_;
 		}
+
+		auto coords = vector<double>();
+		for (int i = 0; i < faces_vertices.size();i++) {
+			coords.push_back(faces_vertices[i]->x_);
+			coords.push_back(faces_vertices[i]->y_);
+		}
+
+		for (int i = 0; i < outer_vertices.size();i++) {
+			coords.push_back(outer_vertices[i].x_);
+			coords.push_back(outer_vertices[i].y_);
+		}
+
+		delaunator::Delaunator d(coords);
+
+		set<pair<double, double> > visited_vertices;
+
+		//duplicits
+		auto mids = vector<shared_ptr<Vertex> >();
+		for (int i = 0; i < d.triangles.size();i += 3) {
+			for (int j = 0; j < 3;j++) {
+				auto vertex = make_shared<Vertex>((d.coords[2 * d.triangles[i + j]] + d.coords[2 * d.triangles[i + ((j + 1) % 3)]]) / 2,
+					(d.coords[2 * d.triangles[i + j] + 1] + d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1]) / 2);
+				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))) {
+					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
+					mids.push_back(vertex);
+				}
+			}
+		}
+
+		vertices = find_shortest_path(a, b, mids);
+
 	}
-
-	auto vertices = find_shortest_path(a, b, mids);
-
-	
-
+	else {
+		vertices = vector<shared_ptr<Vertex> >{ b, a };
+	}
 	auto new_face = !outer_face_bool ? make_shared<Face>() : outer_face; //new face or old face when creating star
 
 	reverse(vertices.begin(), vertices.end());
@@ -452,6 +468,9 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	//setting opposites
 	edge->opposite_ = edge_opposite;
 	edge_opposite->opposite_ = edge;
+
+	edge->face_->edge_ = edge;
+	edge_opposite->face_->edge_ = edge_opposite;
 
 	//removig the edges from the back of segments and edges
 	//because of the order and recursive algorithm we know they are the last one
@@ -606,7 +625,7 @@ struct fingerprints {
 
 	fingerprints(int n) {
 	
-		auto input_path = "data/graph"
+		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
 			+ to_string(n) + ".txt";
 		input_file.open(input_path);
 		
@@ -652,13 +671,11 @@ inline void graph::write_coordinates() {
 				for (int l = 0; l < drawing_edges[i][j][k].vertices_.size();l++) {
 					output_file
 						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
-						<< drawing_edges[i][j][k].vertices_[l]->y_ << " "
-						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
 						<< drawing_edges[i][j][k].vertices_[l]->y_ << " ";
 				}
 				output_file << ") ";
-				output_file << endl;
 			}
+			output_file << endl;
 		}
 	}
 
@@ -686,8 +703,10 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		
 		create_all_special_vertices();
+		print_graph(this);
 		recolor_fingerprint(fingerprint);
 		create_base_star();
+		print_graph(this);
 
 		//cout << fingerprint << endl;
 
