@@ -58,6 +58,23 @@ struct Vertex {
 	bool operator!=(const Vertex& a) {
 		return !(*this == a);
 	}
+
+	bool operator==(Vertex* a) {
+		return a->x_ == x_ && a->y_ == y_;
+	}
+
+	bool operator!=(Vertex* a) {
+		return !(this == a);
+	}
+
+
+	bool operator==(const Vertex* a) {
+		return a->x_ == x_ && a->y_ == y_;
+	}
+
+	bool operator!=(const Vertex* a) {
+		return !(this == a);
+	}
 };
 
 struct Face {
@@ -386,7 +403,23 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 				auto temp_coords = make_pair((d.coords[2 * d.triangles[i + j]] + d.coords[2 * d.triangles[i + ((j + 1) % 3)]]) / 2,
 					(d.coords[2 * d.triangles[i + j] + 1] + d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1]) / 2);
 
-				auto index = find(mids.begin(), mids.end(), temp_coords) - mids.begin();
+				auto temp_pair = make_pair((d.coords[2 * d.triangles[i + ((j + 1) % 3)]] + d.coords[2 * d.triangles[i + ((j + 2) % 3)]]) / 2,
+					(d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1] + d.coords[2 * d.triangles[i + ((j + 2) % 3)] + 1]) / 2);
+				auto temp_it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_pair.first, temp_pair.second);});
+		
+				auto temp_index = temp_it - mids.begin();
+
+				if (d.triangles[i + j] == a_index) {
+					distances[0][temp_index + 2] = 1;
+					distances[temp_index + 2][0] = 1;
+				}
+
+				if (d.triangles[i + j] == b_index) {
+					distances[1][temp_index + 2] = 1;
+					distances[temp_index + 2][1] = 1;
+				}
+
+				int index = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords.first, temp_coords.second);}) - mids.begin();
 
 				auto triangles = pair_indices[std::min(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])]
 					[max(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])];
@@ -394,17 +427,18 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 				for (int k = 0; k < triangles.size();k++) {
 					auto temp_coords1 = make_pair((d.coords[2 * triangles[k]] + d.coords[2 * d.triangles[i + j]]) / 2,
 						(d.coords[2 * triangles[k] + 1] + d.coords[2 * d.triangles[i + j] + 1]) / 2);
-					auto it = find(mids.begin(), mids.end(), temp_coords1);
+					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
 					auto index_second = it - mids.begin();
 
 					distances[index + 2][index_second + 2] = 1;
 					distances[index_second + 2][index + 2] = 1;
+
 				}
 
 				for (int k = 0; k < triangles.size();k++) {
 					auto temp_coords1 = make_pair((d.coords[2 * triangles[k]] + d.coords[2 * d.triangles[i + (j + 1) % 3]]) / 2,
 						(d.coords[2 * triangles[k] + 1] + d.coords[2 * d.triangles[i + (j + 1) % 3] + 1]) / 2);
-					auto it = find(mids.begin(), mids.end(), temp_coords1);
+					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
 					auto index_second = it - mids.begin();
 
 					distances[index + 2][index_second + 2] = 1;
