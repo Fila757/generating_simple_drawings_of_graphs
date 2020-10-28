@@ -287,7 +287,7 @@ namespace VizualizerWPF
                 //textblock.Text = 
                 foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
                 {
-                    if (vertex.Fill == Brushes.Green)
+                    if (FindVertex(vertex).state == VertexState.Intersection)
                         vertex.Visibility = Visibility.Hidden;
                 }
             }
@@ -295,7 +295,7 @@ namespace VizualizerWPF
             {
                 foreach(var vertex in mainCanvas.Children.OfType<Ellipse>())
                 {
-                    if (vertex.Fill == Brushes.Green)
+                    if (FindVertex(vertex).state == VertexState.Intersection)
                         vertex.Visibility = Visibility.Visible;
                 }
             }
@@ -806,7 +806,8 @@ namespace VizualizerWPF
                     Height = sizeOfVertex,
                     Fill = vertexTemp.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
                     Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections] ? Visibility.Hidden : Visibility.Visible
+                    Visibility = ((vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections]) ||
+                    (vertexTemp.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
 
                 };
 
