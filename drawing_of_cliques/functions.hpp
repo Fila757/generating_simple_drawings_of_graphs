@@ -90,7 +90,7 @@ struct graph {
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
 
-	vector<Vertex> outer_vertices{Vertex(300, 300), Vertex(-300, 300), Vertex(-300, -300), Vertex(300, -300)}; 
+	vector<Vertex> outer_vertices{Vertex(400, 400), Vertex(-400, 400), Vertex(-400, -400), Vertex(400, -400)}; 
 
 	int realized = 0;
 	bool done = false;
