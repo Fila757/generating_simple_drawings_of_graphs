@@ -14,6 +14,7 @@
 
 #include "delaunator.hpp"
 #include <queue>
+#include <unordered_set>
 
 using namespace std;
 
@@ -49,6 +50,14 @@ struct Vertex {
 	//it is really good to be the opposite one because when you create new vertex 
 	//from the edge side then it is good to go from the intersection opposite side
 	Vertex(Edge* to) : to_(to) {}
+
+	bool operator==(const Vertex& a) {
+		return x_ == a.x_ && y_ == a.y_;
+	}
+
+	bool operator!=(const Vertex& a) {
+		return !(*this == a);
+	}
 };
 
 struct Face {
@@ -163,7 +172,7 @@ struct graph {
 
 	void write_coordinates();
 
-	vector<shared_ptr<Vertex> > find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex> >& face_vertices);
+	vector<shared_ptr<Vertex> > find_shortest_path(const vector<vector<double> >& distances, vector<shared_ptr<Vertex> >& face_vertices);
 
 	//string find_canonic_fingerprint(const string& fingerprint);
 
@@ -173,7 +182,7 @@ inline void create_coordinates(const vector<shared_ptr<Vertex> >& points, vector
 
 	for (int i = 0; i < points.size();i++) {
 		for (int j = 0; j < points.size();j++) {
-			distances[i][j] = (points[i]->x_ - points[j]->x_) * (points[i]->x_ - points[j]->x_) + (points[i]->y_ - points[j]->y_) * (points[i]->y_ - points[j]->y_);
+			distances[i][j] = sqrt((points[i]->x_ - points[j]->x_) * (points[i]->x_ - points[j]->x_) + (points[i]->y_ - points[j]->y_) * (points[i]->y_ - points[j]->y_));
 		}
 	}
 }
@@ -226,18 +235,17 @@ inline void print_graph(graph* g) {
 
 }
 
-inline vector<shared_ptr<Vertex> > graph::find_shortest_path(shared_ptr<Vertex> from, shared_ptr<Vertex> to, const vector<shared_ptr<Vertex > >& face_vertices) {
-	
-	vector<shared_ptr<Vertex> > all_vertices{ from };
-	all_vertices.push_back(to);
-	all_vertices.insert(all_vertices.end(), face_vertices.begin(), face_vertices.end());
+inline vector<shared_ptr<Vertex> > graph::find_shortest_path(const vector<vector<double> > & distances, vector<shared_ptr<Vertex > >& all_vertices) {
 
 
-	vector<vector<double> > distances;
-	distances.resize(all_vertices.size());
-	for (int i = 0; i < all_vertices.size();i++)
-		distances[i].resize(all_vertices.size());
-	create_coordinates(all_vertices, distances);
+	/*
+	for (int i = 0; i < distances.size();i++) {
+		for (int j = 0; j < distances[i].size();j++) {
+			cout << distances[i][j] << " ";
+		}
+		cout << endl;
+	}
+	*/
 
 	vector<int> parent;
 	parent.resize(all_vertices.size());
@@ -246,7 +254,7 @@ inline vector<shared_ptr<Vertex> > graph::find_shortest_path(shared_ptr<Vertex> 
 	vector<shared_ptr<Vertex> > result;
 
 	int v = 1;
-	while (parent[v] != 0) {
+	while (v != 0) {
 		result.push_back(all_vertices[v]);
 		v = parent[v];
 	}
@@ -297,10 +305,15 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			cur = cur->next_;
 		}
 
+		vector<Vertex> uniques;
 		auto coords = vector<double>();
 		for (int i = 0; i < faces_vertices.size();i++) {
-			coords.push_back(faces_vertices[i]->x_);
-			coords.push_back(faces_vertices[i]->y_);
+			if (!(find(uniques.begin(), uniques.end(), *faces_vertices[i]) != uniques.end())) {
+				coords.push_back(faces_vertices[i]->x_);
+				coords.push_back(faces_vertices[i]->y_);
+
+				uniques.push_back(*faces_vertices[i]);
+			}
 		}
 
 		for (int i = 0; i < outer_vertices.size();i++) {
@@ -313,6 +326,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		set<pair<double, double> > visited_vertices;
 
 		//duplicits
+		vector<vector<vector<int> > > pair_indices;
+		pair_indices.resize(coords.size() / 2);
+		for (int i = 0; i < pair_indices.size();i++)
+			pair_indices[i].resize(pair_indices.size());
+
 		auto mids = vector<shared_ptr<Vertex> >();
 		for (int i = 0; i < d.triangles.size();i += 3) {
 			for (int j = 0; j < 3;j++) {
@@ -322,10 +340,81 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
 				}
+				pair_indices[std::min(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])]
+					[max(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])].push_back(d.triangles[i + ((j + 2) % 3)]);
 			}
 		}
 
-		vertices = find_shortest_path(a, b, mids);
+		vector<shared_ptr<Vertex> > all_vertices{ a };
+		all_vertices.push_back(b);
+		all_vertices.insert(all_vertices.end(), mids.begin(), mids.end());
+
+		int a_index;
+		int b_index;
+
+		for (int i = 0; i < d.triangles.size();i += 3) {
+			for (int j = 0; j < 3;j++) {
+				if (a->x_ == d.coords[2 * d.triangles[i + j]] && a->y_ == d.coords[2 * d.triangles[i + j] + 1]) {
+					a_index = d.triangles[i + j];
+					break;
+				}
+			}
+		}
+
+
+		for (int i = 0; i < d.triangles.size();i += 3) {
+			for (int j = 0; j < 3;j++) {
+				if (b->x_ == d.coords[2 * d.triangles[i + j]] && b->y_ == d.coords[2 * d.triangles[i + j] + 1]) {
+					b_index = d.triangles[i + j];
+					break;
+				}
+			}
+		}
+
+		vector<vector<double> > distances;
+		distances.resize(all_vertices.size());
+		for (int i = 0; i < all_vertices.size();i++) {
+			for (int j = 0; j < all_vertices.size();j++) {
+				distances[i].push_back(INF);
+			}
+		}
+		
+
+		for (int i = 0; i < d.triangles.size(); i += 3) {
+			//vector<pair<double, double> > one_triangle;
+			for (int j = 0; j < 3;j++) {
+				auto temp_coords = make_pair((d.coords[2 * d.triangles[i + j]] + d.coords[2 * d.triangles[i + ((j + 1) % 3)]]) / 2,
+					(d.coords[2 * d.triangles[i + j] + 1] + d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1]) / 2);
+
+				auto index = find(mids.begin(), mids.end(), temp_coords) - mids.begin();
+
+				auto triangles = pair_indices[std::min(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])]
+					[max(d.triangles[i + j], d.triangles[i + ((j + 1) % 3)])];
+
+				for (int k = 0; k < triangles.size();k++) {
+					auto temp_coords1 = make_pair((d.coords[2 * triangles[k]] + d.coords[2 * d.triangles[i + j]]) / 2,
+						(d.coords[2 * triangles[k] + 1] + d.coords[2 * d.triangles[i + j] + 1]) / 2);
+					auto it = find(mids.begin(), mids.end(), temp_coords1);
+					auto index_second = it - mids.begin();
+
+					distances[index + 2][index_second + 2] = 1;
+					distances[index_second + 2][index + 2] = 1;
+				}
+
+				for (int k = 0; k < triangles.size();k++) {
+					auto temp_coords1 = make_pair((d.coords[2 * triangles[k]] + d.coords[2 * d.triangles[i + (j + 1) % 3]]) / 2,
+						(d.coords[2 * triangles[k] + 1] + d.coords[2 * d.triangles[i + (j + 1) % 3] + 1]) / 2);
+					auto it = find(mids.begin(), mids.end(), temp_coords1);
+					auto index_second = it - mids.begin();
+
+					distances[index + 2][index_second + 2] = 1;
+					distances[index_second + 2][index + 2] = 1;
+				}
+
+			}
+		}
+
+		vertices = find_shortest_path(distances, all_vertices);
 
 	}
 	else {
@@ -703,10 +792,10 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		
 		create_all_special_vertices();
-		print_graph(this);
+		//print_graph(this);
 		recolor_fingerprint(fingerprint);
 		create_base_star();
-		print_graph(this);
+		//print_graph(this);
 
 		//cout << fingerprint << endl;
 

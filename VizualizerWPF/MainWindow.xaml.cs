@@ -688,6 +688,8 @@ namespace VizualizerWPF
 
                     var edge = FindEdgeFromVertices(from, to);
 
+                    if (edge == null)
+                        continue;
                     
                     foreach (var line in edge.lines)
                     {

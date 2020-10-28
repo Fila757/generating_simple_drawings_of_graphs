@@ -8,17 +8,47 @@ using namespace std;
 
 int main()
 {
-    auto g = graph(4);
+    auto g = graph(7);
 
     //cout << "minimal: " << g.find_canonic_fingerprint("12340423014301240321") << endl;
-    
+
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401420132") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234013404120312") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340234014301240132") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
     //cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
- 
+
+    /*
+    vector<vector<double> >distances{ 
+        {0, 1.4142, 2, 1.4142},
+        {1.4142, 0, 1.4142, 2},
+        {2, 1.4142, 0, 1.4142},
+        {1.4142, 2, 1.4142, 0}
+    };
+
+    vector<shared_ptr<Vertex> > points{ make_shared<Vertex>(1, 0), make_shared<Vertex>(0, 1), make_shared<Vertex>(-1, 0), make_shared<Vertex>(0, -1) };
+    vector<int> parents; parents.resize(4);
+
+    for (int i = 0; i < distances.size();i++) {
+        for (int j = 0; j < distances[i].size();j++) {
+            cout << distances[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    create_coordinates(points, distances);
+    
+    for (int i = 0; i < distances.size();i++) {
+        for (int j = 0; j < distances[i].size();j++) {
+            cout << distances[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    dijsktra(points, distances, parents);
+    */
+
     g.create_all_possible_drawings();
     
     // testing relabeling because we have found 6 realizable RS written 

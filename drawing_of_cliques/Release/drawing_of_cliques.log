@@ -1,128 +1,47 @@
 ﻿  drawing_of_cliques.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,38): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,32): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,56): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,50): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,75): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,69): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,95): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,89): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(124,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(125,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,32): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,37): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,48): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,52): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,66): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,71): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,82): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,86): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,100): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,105): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,116): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,120): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,134): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,139): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,150): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,154): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\queue(296,1): error C2207: 'std::priority_queue<_Ty,_Container,_Pr>::comp': a member of a class template cannot acquire a function type
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(136): message : see reference to class template instantiation 'std::priority_queue<std::pair<double,int>,std::vector<std::pair<double,int>,std::allocator<std::pair<double,int>>>,std::greater<std::pair<double,int>> (void)>' being compiled
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(140,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(153,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(237,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(183,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(184,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(212,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(247,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(320,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(329,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(340,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(631,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(633,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(692,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(694,23): warning C4018: '<': signed/unsigned mismatch
   functions.hpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,38): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,32): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,56): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,50): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,75): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,69): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,95): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(43,89): error C2064: term does not evaluate to a function taking 2 arguments
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(124,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(125,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,32): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,37): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,48): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,52): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,66): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,71): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,82): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,86): error C2039: 'x_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,100): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,105): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,116): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,120): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,134): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,139): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,150): error C2027: use of undefined type 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(34): message : see declaration of 'Vertex'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(126,154): error C2039: 'y_': is not a member of 'std::shared_ptr<Vertex>'
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(87): message : see declaration of 'std::shared_ptr<Vertex>'
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\queue(296,1): error C2207: 'std::priority_queue<_Ty,_Container,_Pr>::comp': a member of a class template cannot acquire a function type
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(136): message : see reference to class template instantiation 'std::priority_queue<std::pair<double,int>,std::vector<std::pair<double,int>,std::allocator<std::pair<double,int>>>,std::greater<std::pair<double,int>> (void)>' being compiled
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(140,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(153,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(237,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(183,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(184,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(199,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(212,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(247,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(320,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(329,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(340,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(631,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(633,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(692,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(694,23): warning C4018: '<': signed/unsigned mismatch
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 1591 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  drawing_of_cliques.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\Release\drawing_of_cliques.exe
