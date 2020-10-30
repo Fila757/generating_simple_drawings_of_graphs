@@ -312,6 +312,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	vector<shared_ptr<Vertex> > vertices;
 
 	if (!outer_face_bool) {
+
 		vector<shared_ptr<Vertex> > faces_vertices;
 		auto start = face->edge_;
 		auto cur = start->next_;
@@ -366,8 +367,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		all_vertices.push_back(b);
 		all_vertices.insert(all_vertices.end(), mids.begin(), mids.end());
 
-		int a_index;
-		int b_index;
+		int a_index = -1;
+		int b_index = -1;
 
 		for (int i = 0; i < d.triangles.size();i += 3) {
 			for (int j = 0; j < 3;j++) {
@@ -395,7 +396,14 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 				distances[i].push_back(INF);
 			}
 		}
+
+		vector<vector<double> > real_distances;
+		real_distances.resize(all_vertices.size());
+		for (int i = 0; i < all_vertices.size();i++) {
+			real_distances[i].resize(all_vertices.size());
+		}
 		
+		create_coordinates(all_vertices, real_distances);
 
 		for (int i = 0; i < d.triangles.size(); i += 3) {
 			//vector<pair<double, double> > one_triangle;
@@ -410,13 +418,13 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 				auto temp_index = temp_it - mids.begin();
 
 				if (d.triangles[i + j] == a_index) {
-					distances[0][temp_index + 2] = 1;
-					distances[temp_index + 2][0] = 1;
+					distances[0][temp_index + 2] = real_distances[0][temp_index + 2];
+					distances[temp_index + 2][0] = real_distances[temp_index + 2][0];
 				}
 
 				if (d.triangles[i + j] == b_index) {
-					distances[1][temp_index + 2] = 1;
-					distances[temp_index + 2][1] = 1;
+					distances[1][temp_index + 2] = real_distances[1][temp_index + 2];
+					distances[temp_index + 2][1] = real_distances[temp_index + 2][1];
 				}
 
 				int index = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords.first, temp_coords.second);}) - mids.begin();
@@ -430,8 +438,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
 					auto index_second = it - mids.begin();
 
-					distances[index + 2][index_second + 2] = 1;
-					distances[index_second + 2][index + 2] = 1;
+					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
+					distances[index_second + 2][index + 2] = real_distances[index_second + 2][index + 2];
 
 				}
 
@@ -441,12 +449,40 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
 					auto index_second = it - mids.begin();
 
-					distances[index + 2][index_second + 2] = 1;
-					distances[index_second + 2][index + 2] = 1;
+					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
+					distances[index_second + 2][index + 2] = real_distances[index_second + 2][index + 2];
 				}
 
 			}
 		}
+
+		for (int i = 0; i < d.triangles.size(); i += 3) {
+			for (int j = 0; j < 3;j++) {
+				if (((a->x_ == d.coords[2 * d.triangles[i + j]]) && (a->y_ == d.coords[2 * d.triangles[i + j] + 1]))
+					&&
+					((b->x_ == d.coords[2 * d.triangles[i + ((j + 1) % 3)]]) && (b->y_ == d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1]))
+					) {
+					distances[0][1] = real_distances[0][1];
+					distances[1][0] = real_distances[1][0];
+				}
+			}
+		}
+
+
+		for (int i = 0; i < d.triangles.size(); i += 3) {
+			for (int j = 0; j < 3;j++) {
+				if (((b->x_ == d.coords[2 * d.triangles[i + j]]) && (b->y_ == d.coords[2 * d.triangles[i + j] + 1]))
+					&&
+					((a->x_ == d.coords[2 * d.triangles[i + ((j + 1) % 3)]]) && (a->y_ == d.coords[2 * d.triangles[i + ((j + 1) % 3)] + 1]))
+					) {
+					distances[0][1] = real_distances[0][1];
+					distances[1][0] = real_distances[1][0];
+				}
+			}
+		}
+
+
+
 
 		vertices = find_shortest_path(distances, all_vertices);
 
