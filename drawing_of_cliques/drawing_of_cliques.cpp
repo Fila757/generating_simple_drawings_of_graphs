@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    auto g = graph(5);
+    auto g = graph(4);
 
     //cout << "minimal: " << g.find_canonic_fingerprint("12340423014301240321") << endl;
 

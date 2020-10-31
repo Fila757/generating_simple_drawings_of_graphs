@@ -125,7 +125,7 @@ struct graph {
 	int realized = 0;
 	bool done = false;
 
-	vector< pair<double, double> > most_away{ make_pair(150, 0), make_pair(0, 150), make_pair(-150, 0), make_pair(0, -150) };
+	vector< pair<double, double> > most_away{ make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
 
 	list<Edge> edges;
 
@@ -365,10 +365,24 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 		vector<pair<double, double> > coords;
 
+		vector<bool> local_most_away{ false, false, false, false };
+
 		coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_));
 		for (int i = 1; i < faces_vertices.size();i++) {
 			if (*faces_vertices[i] != *faces_vertices[i-1]) {
 				coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
+			}
+			for (int j = 0; j < 4;j++) {
+				if (abs(faces_vertices[i]->x_ - most_away[j].x) < 0.1 && abs(faces_vertices[i]->y_ - most_away[j].y) < 0.1) {
+					local_most_away[j] = true;
+				}
+			}
+		}
+
+		for (int j = 0; j < 4;j++) {
+			if (!local_most_away[j]) {
+				second_outer_face_bool = false;
+				break;
 			}
 		}
 
@@ -786,6 +800,7 @@ inline void graph::create_all_special_vertices() {
 
 	for (int i = 1; i < number_of_vertices;i++) { //the rest of a star
 		create_special_vertex(i, coordinates_of_special_vertices[i - 1].x, coordinates_of_special_vertices[i - 1].y);
+		vertices_.push_back(make_pair((int)coordinates_of_special_vertices[i - 1].x, (int)coordinates_of_special_vertices[i - 1].y));
 	}
 }
 
