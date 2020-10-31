@@ -311,6 +311,7 @@ inline int distance(pair<double, double> a) {
 }
 
 inline void graph::update_most_away(vector<pair<double, double> > vertices) {
+	most_away = { make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
 	for (int i = 0; i < vertices.size();i++) {
 		if (vertices[i].x >= 0 && vertices[i].y > 0) {
 			if(distance(vertices[i]) > distance(most_away[0]))
@@ -984,6 +985,9 @@ inline void graph::create_all_possible_drawings() {
 			write_coordinates();
 
 		}
+
+		vertices_.resize(0);
+		most_away = { make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
 
 		edges.resize(0); segments.resize(0);
 		done = false;
