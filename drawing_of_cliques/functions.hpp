@@ -16,6 +16,10 @@
 #include <queue>
 #include <unordered_set>
 
+//#include <boost/geometry.hpp>
+//#include <boost/geometry/geometries/point_xy.hpp>
+//#include <boost/geometry/geometries/polygon.hpp>
+
 using namespace std;
 
 #ifndef M_PI
@@ -116,10 +120,12 @@ struct graph {
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
 
-	vector<Vertex> outer_vertices{Vertex(300, 300), Vertex(300, -300), Vertex(-300, -300), Vertex(-300, 300)}; 
+	vector<Vertex> outer_vertices{Vertex(250, 250), Vertex(250, -250), Vertex(-250, -250), Vertex(-250, 250)}; 
 
 	int realized = 0;
 	bool done = false;
+
+	vector< shared_ptr<Vertex> > most_away{ make_shared<Vertex>(150, 0), make_shared<Vertex>(0, 150), make_shared<Vertex>(-150, 0), make_shared<Vertex>(0, -150) };
 
 	list<Edge> edges;
 
@@ -192,6 +198,8 @@ struct graph {
 	vector<shared_ptr<Vertex> > find_shortest_path(const vector<vector<double> >& distances, vector<shared_ptr<Vertex> >& face_vertices);
 
 	//string find_canonic_fingerprint(const string& fingerprint);
+
+	void update_most_away(vector<shared_ptr<Vertex> > vertices);
 
 };
 
@@ -296,6 +304,31 @@ inline vector<pair<double, double> > create_circle(double radius, double cx, dou
 	return circle;
 }
 
+inline int distance(shared_ptr<Vertex> a) {
+	return (a->x_ ) * (a->x_) + (a->y_) * (a->y_ );
+}
+
+inline void graph::update_most_away(vector<shared_ptr<Vertex> > vertices) {
+	for (int i = 0; i < vertices.size();i++) {
+		if (vertices[i]->x_ >= 0 && vertices[i]->y_ > 0) {
+			if(distance(vertices[i]) > distance(most_away[0]))
+				most_away[0] = vertices[i];
+		}
+		if (vertices[i]->x_ < 0 && vertices[i]->y_ >= 0) {
+			if (distance(vertices[i]) > distance(most_away[1]))
+				most_away[1] = vertices[i];
+		}
+		if (vertices[i]->x_ <= 0 && vertices[i]->y_ < 0) {
+			if (distance(vertices[i]) > distance(most_away[2]))
+				most_away[2] = vertices[i];
+		}
+		if (vertices[i]->x_ > 0 && vertices[i]->y_ <= 0) {
+			if (distance(vertices[i]) > distance(most_away[3]))
+				most_away[3] = vertices[i];
+		}
+	}
+}
+
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 
@@ -312,6 +345,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	vector<shared_ptr<Vertex> > vertices;
 
 	if (!outer_face_bool) {
+
+		bool second_outer_face_bool = true;
 
 		vector<shared_ptr<Vertex> > faces_vertices;
 		auto start = face->edge_;
@@ -333,24 +368,29 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 
-		int mn = INF;
-		int index_min;
-		for (int i = 0; i < outer_vertices.size();i++) {
-			if ((outer_vertices[i].x_ - faces_vertices.back()->x_) * (outer_vertices[i].x_ - faces_vertices.back()->x_) +
-				(outer_vertices[i].y_ - faces_vertices.back()->y_) * (outer_vertices[i].y_ - faces_vertices.back()->y_) < mn) {
-				index_min = i;
-				mn = (outer_vertices[i].x_ - faces_vertices.back()->x_) * (outer_vertices[i].x_ - faces_vertices.back()->x_) +
-					(outer_vertices[i].y_ - faces_vertices.back()->y_) * (outer_vertices[i].y_ - faces_vertices.back()->y_);
+		/* checking outer face */
+
+		if (second_outer_face_bool) {
+			/* minimum rotation of outer part*/
+			int mn = INF;
+			int index_min;
+			for (int i = 0; i < outer_vertices.size();i++) {
+				if ((outer_vertices[i].x_ - faces_vertices.back()->x_) * (outer_vertices[i].x_ - faces_vertices.back()->x_) +
+					(outer_vertices[i].y_ - faces_vertices.back()->y_) * (outer_vertices[i].y_ - faces_vertices.back()->y_) < mn) {
+					index_min = i;
+					mn = (outer_vertices[i].x_ - faces_vertices.back()->x_) * (outer_vertices[i].x_ - faces_vertices.back()->x_) +
+						(outer_vertices[i].y_ - faces_vertices.back()->y_) * (outer_vertices[i].y_ - faces_vertices.back()->y_);
+				}
 			}
+
+			rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
+
+			for (int i = 0; i < outer_vertices.size();i++) {
+				coords.push_back(make_pair(outer_vertices[i].x_, outer_vertices[i].y_));
+			}
+			coords.push_back(make_pair(outer_vertices[0].x_, outer_vertices[0].y_));
+
 		}
-
-		rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
-
-		for (int i = 0; i < outer_vertices.size();i++) {
-			coords.push_back(make_pair(outer_vertices[i].x_, outer_vertices[i].y_));
-		}
-		coords.push_back(make_pair(outer_vertices[0].x_, outer_vertices[0].y_));
-
 		vector<vector<pair<double, double> > > polygon{ coords };
 
 		std::vector<int> indices = mapbox::earcut<int>(polygon);
@@ -370,8 +410,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
 				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))
 					&&
-					!((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1) ||
-						(abs(indices[i + j] - indices[i + ((j + 1) % 3)] == indices.size() - 1)))
+					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1)
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
