@@ -125,13 +125,15 @@ struct graph {
 	int realized = 0;
 	bool done = false;
 
-	vector< shared_ptr<Vertex> > most_away{ make_shared<Vertex>(150, 0), make_shared<Vertex>(0, 150), make_shared<Vertex>(-150, 0), make_shared<Vertex>(0, -150) };
+	vector< pair<double, double> > most_away{ make_pair(150, 0), make_pair(0, 150), make_pair(-150, 0), make_pair(0, -150) };
 
 	list<Edge> edges;
 
 	shared_ptr<Face> outer_face;
 
 	ofstream output_file;
+
+	vector<pair<double, double> > vertices_;
 
 	void close_files() {
 		output_file.close();
@@ -199,7 +201,7 @@ struct graph {
 
 	//string find_canonic_fingerprint(const string& fingerprint);
 
-	void update_most_away(vector<shared_ptr<Vertex> > vertices);
+	void update_most_away(vector<pair<double, double>  > vertices);
 
 };
 
@@ -304,25 +306,25 @@ inline vector<pair<double, double> > create_circle(double radius, double cx, dou
 	return circle;
 }
 
-inline int distance(shared_ptr<Vertex> a) {
-	return (a->x_ ) * (a->x_) + (a->y_) * (a->y_ );
+inline int distance(pair<double, double> a) {
+	return (a.x ) * (a.x) + (a.y) * (a.y );
 }
 
-inline void graph::update_most_away(vector<shared_ptr<Vertex> > vertices) {
+inline void graph::update_most_away(vector<pair<double, double> > vertices) {
 	for (int i = 0; i < vertices.size();i++) {
-		if (vertices[i]->x_ >= 0 && vertices[i]->y_ > 0) {
+		if (vertices[i].x >= 0 && vertices[i].y > 0) {
 			if(distance(vertices[i]) > distance(most_away[0]))
 				most_away[0] = vertices[i];
 		}
-		if (vertices[i]->x_ < 0 && vertices[i]->y_ >= 0) {
+		if (vertices[i].x < 0 && vertices[i].y >= 0) {
 			if (distance(vertices[i]) > distance(most_away[1]))
 				most_away[1] = vertices[i];
 		}
-		if (vertices[i]->x_ <= 0 && vertices[i]->y_ < 0) {
+		if (vertices[i].x <= 0 && vertices[i].y < 0) {
 			if (distance(vertices[i]) > distance(most_away[2]))
 				most_away[2] = vertices[i];
 		}
-		if (vertices[i]->x_ > 0 && vertices[i]->y_ <= 0) {
+		if (vertices[i].x > 0 && vertices[i].y <= 0) {
 			if (distance(vertices[i]) > distance(most_away[3]))
 				most_away[3] = vertices[i];
 		}
@@ -347,6 +349,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	if (!outer_face_bool) {
 
 		bool second_outer_face_bool = true;
+
+		update_most_away(vertices_);
 
 		vector<shared_ptr<Vertex> > faces_vertices;
 		auto start = face->edge_;
@@ -559,6 +563,10 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 		vertices = find_shortest_path(distances, all_vertices);
 
+		for (int i = 1; i < vertices.size() - 1;i++) {
+			vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
+		}
+
 		//print_graph(this);
 
 	}
@@ -613,6 +621,8 @@ inline void graph::add_vertex(Edge* edge) {
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = -1;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
+
+	vertices_.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
 	edges.push_back(Edge(edge->next_, edge, opposite, vector<shared_ptr<Vertex> >{ new_vertex, b }, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -674,7 +684,11 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	outer_face = face; //just to end up with outer face
 
 	/* delete the edge from list, pop from segments should be out of this function */
-	
+
+	for (int i = 1; i < edge.vertices_.size() - 1;i++) {
+		vertices_.pop_back();
+	}
+
 	segments.pop_back();segments.pop_back();
 	edges.pop_back();edges.pop_back();
 
@@ -708,6 +722,9 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 	//removig the edges from the back of segments and edges
 	//because of the order and recursive algorithm we know they are the last one
+
+	vertices_.pop_back();
+
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
