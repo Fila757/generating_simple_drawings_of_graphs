@@ -368,7 +368,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			for (int j = 0; j < 3;j++) {
 				auto vertex = make_shared<Vertex>((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
-				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))) {
+				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))
+					&&
+					!((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1) ||
+						(abs(indices[i + j] - indices[i + ((j + 1) % 3)] == indices.size() - 1)))
+					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
 				}
@@ -422,13 +426,14 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		for (int i = 0; i < indices.size(); i += 3) {
 			//vector<pair<double, double> > one_triangle;
 			for (int j = 0; j < 3;j++) {
-				auto temp_coords = make_pair((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
-					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
 
 				auto temp_pair = make_pair((coords[indices[i + ((j + 1) % 3)]].x + coords[indices[i + ((j + 2) % 3)]].x) / 2,
 					(coords[indices[i + ((j + 1) % 3)]].y + coords[indices[i + ((j + 2) % 3)]].y) / 2);
 				auto temp_it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_pair.first, temp_pair.second);});
 		
+				if (temp_it == mids.end())
+					continue;
+
 				auto temp_index = temp_it - mids.begin();
 
 				if (indices[i + j] == a_index) {
@@ -441,7 +446,14 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					distances[temp_index + 2][1] = real_distances[temp_index + 2][1];
 				}
 
-				int index = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords.first, temp_coords.second);}) - mids.begin();
+				auto temp_coords = make_pair((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
+					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
+
+				auto temp_index_it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords.first, temp_coords.second);});
+				int index = temp_index_it - mids.begin();
+
+				if (temp_index_it == mids.end())
+					continue;
 
 				auto triangles = pair_indices[std::min(indices[i + j], indices[i + ((j + 1) % 3)])]
 					[max(indices[i + j], indices[i + ((j + 1) % 3)])];
@@ -450,6 +462,10 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					auto temp_coords1 = make_pair((coords[triangles[k]].x + coords[indices[i + j]].x) / 2,
 						(coords[triangles[k]].y + coords[indices[i + j]].y) / 2);
 					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
+					
+					if (it == mids.end())
+						continue;
+
 					auto index_second = it - mids.begin();
 
 					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
@@ -461,6 +477,10 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					auto temp_coords1 = make_pair((coords[triangles[k]].x + coords[indices[i + (j + 1) % 3]].x) / 2,
 						(coords[triangles[k]].y + coords[indices[i + (j + 1) % 3]].y) / 2);
 					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second);});
+					
+					if (it == mids.end())
+						continue;
+					
 					auto index_second = it - mids.begin();
 
 					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
