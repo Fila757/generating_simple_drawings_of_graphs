@@ -1,29 +1,25 @@
-#include "delaunator.hpp"
-#include <cstdio>
+#include <earcut.hpp>
 
 using namespace std;
+// The number type to use for tessellation
+using Coord = double;
 
-int main() {
-    /* x0, y0, x1, y1, ... */
-    std::vector<double> coords = {-10, 10, 10, 10, 10, -10, -10, -10, 0, 0, 
-    5, 0, 0, 5, -5, 0, 0, -5};
+// The index type. Defaults to uint32_t, but you can also pass uint16_t if you know that your
+// data won't have more than 65536 vertices.
+using N = uint32_t;
 
-    //triangulation happens here
-    delaunator::Delaunator d(coords);
+// Create array
+using Point = std::array<Coord, 2>;
+std::vector<std::vector<Point>> polygon;
 
-    for(int i = 0; i < d.triangles.size();i++){
-        cout << d.triangles[i] << endl;
-    }
+// Fill polygon structure with actual data. Any winding order works.
+// The first polyline defines the main polygon.
+polygon.push_back({ { 100, 0 }, { 100, 100 }, { 0, 100 }, { 0, 0 } });
+// Following polylines define holes.
+polygon.push_back({ { 75, 25 }, { 75, 75 }, { 25, 75 }, { 25, 25 } });
 
-    for(std::size_t i = 0; i < d.triangles.size(); i+=3) {
-        printf(
-            "Triangle points: [[%f, %f], [%f, %f], [%f, %f]]\n",
-            d.coords[2 * d.triangles[i]],        //tx0
-            d.coords[2 * d.triangles[i] + 1],    //ty0
-            d.coords[2 * d.triangles[i + 1]],    //tx1
-            d.coords[2 * d.triangles[i + 1] + 1],//ty1
-            d.coords[2 * d.triangles[i + 2]],    //tx2
-            d.coords[2 * d.triangles[i + 2] + 1] //ty2
-        );
-    }
-}
+// Run tessellation
+// Returns array of indices that refer to the vertices of the input polygon.
+// e.g: the index 6 would refer to {25, 75} in this example.
+// Three subsequent indices form a triangle. Output triangles are clockwise.
+std::vector<N> indices = mapbox::earcut<N>(polygon);
