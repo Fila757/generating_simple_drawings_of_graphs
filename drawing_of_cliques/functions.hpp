@@ -16,9 +16,12 @@
 #include <queue>
 #include <unordered_set>
 
-//#include <boost/geometry.hpp>
-//#include <boost/geometry/geometries/point_xy.hpp>
-//#include <boost/geometry/geometries/polygon.hpp>
+
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
+#include <boost/geometry/geometries/adapted/boost_tuple.hpp>
+
+BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 
 using namespace std;
 
@@ -125,7 +128,7 @@ struct graph {
 	int realized = 0;
 	bool done = false;
 
-	vector< pair<double, double> > most_away{ make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
+	vector< pair<double, double> > most_away;
 
 	list<Edge> edges;
 
@@ -310,26 +313,44 @@ inline int distance(pair<double, double> a) {
 	return (a.x ) * (a.x) + (a.y) * (a.y );
 }
 
-inline void graph::update_most_away(vector<pair<double, double> > vertices) {
-	most_away = { make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
+
+inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double> > vertices) {
+	typedef boost::tuple<double, double> point;
+	typedef boost::geometry::model::polygon<point> polygon;
+
+	polygon poly;
+
+	string poly_string = "polygon((";
 	for (int i = 0; i < vertices.size();i++) {
-		if (vertices[i].x >= 0 && vertices[i].y > 0) {
-			if(distance(vertices[i]) > distance(most_away[0]))
-				most_away[0] = vertices[i];
-		}
-		if (vertices[i].x < 0 && vertices[i].y >= 0) {
-			if (distance(vertices[i]) > distance(most_away[1]))
-				most_away[1] = vertices[i];
-		}
-		if (vertices[i].x <= 0 && vertices[i].y < 0) {
-			if (distance(vertices[i]) > distance(most_away[2]))
-				most_away[2] = vertices[i];
-		}
-		if (vertices[i].x > 0 && vertices[i].y <= 0) {
-			if (distance(vertices[i]) > distance(most_away[3]))
-				most_away[3] = vertices[i];
+		poly_string += to_string(vertices[i].x);
+		poly_string += " ";
+		poly_string += to_string(vertices[i].y);
+		if (i != vertices.size() - 1) {
+			poly_string += ", ";
 		}
 	}
+	poly_string += "))";
+	boost::geometry::read_wkt(poly_string, poly);
+
+	polygon hull;
+	boost::geometry::convex_hull(poly, hull);
+
+	/*
+	using boost::geometry::dsv;
+	std::cout
+		<< "polygon: " << dsv(poly) << std::endl
+		<< "hull: " << dsv(hull) << std::endl;
+	*/
+	vector<pair<double, double> > result;
+	
+	for (int i = 0; i < hull.outer().size();i++) {
+		result.push_back(make_pair(hull.outer()[i].get_head(), hull.outer()[i].get_tail().get_head()));
+	}
+	return result;
+}
+
+inline void graph::update_most_away(vector<pair<double, double> > vertices) {
+	most_away = make_convex_hull(vertices);
 }
 
 
@@ -366,21 +387,21 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 		vector<pair<double, double> > coords;
 
-		vector<bool> local_most_away{ false, false, false, false };
+		vector<bool> local_most_away; local_most_away.resize(most_away.size());
 
 		coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_));
 		for (int i = 1; i < faces_vertices.size();i++) {
 			if (*faces_vertices[i] != *faces_vertices[i-1]) {
 				coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
 			}
-			for (int j = 0; j < 4;j++) {
+			for (int j = 0; j < most_away.size();j++) {
 				if (abs(faces_vertices[i]->x_ - most_away[j].x) < 0.1 && abs(faces_vertices[i]->y_ - most_away[j].y) < 0.1) {
 					local_most_away[j] = true;
 				}
 			}
 		}
 
-		for (int j = 0; j < 4;j++) {
+		for (int j = 0; j < most_away.size();j++) {
 			if (!local_most_away[j]) {
 				second_outer_face_bool = false;
 				break;
@@ -987,7 +1008,7 @@ inline void graph::create_all_possible_drawings() {
 		}
 
 		vertices_.resize(0);
-		most_away = { make_pair(0, 0), make_pair(0, 0), make_pair(0, 0), make_pair(0, 0) };
+		most_away.resize(0);
 
 		edges.resize(0); segments.resize(0);
 		done = false;
