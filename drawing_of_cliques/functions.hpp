@@ -861,7 +861,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (seg == segments[t_index]) {
 
 			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
-			write_coordinates();
+			//write_coordinates();
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -884,7 +884,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			}
 
 			delete_edge_back();
-			write_coordinates();
+			//write_coordinates();
 		}
 
 		auto index_first_end = seg->index_ / 100;
@@ -901,7 +901,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
 			add_edge(segments[s_index]->vertices_[0], segments[edges.size() - 1]->vertices_[0], segments[s_index]->face_, a, b);
-			write_coordinates();
+			//write_coordinates();
 
 			/*important! changing to_ to the opposite direction */
 			segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_; 
@@ -919,7 +919,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			delete_edge_back();
 			delete_vertex((seg->vertices_.back()).get());
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = false;
-			write_coordinates();
+			//write_coordinates();
 		}
 		seg = seg->next_;
 	}
