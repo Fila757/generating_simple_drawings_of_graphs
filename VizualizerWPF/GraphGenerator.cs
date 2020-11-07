@@ -160,6 +160,10 @@ namespace VizualizerWPF
             string line;
             while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
+
+                if (line == "")
+                    continue;
+
                 List<Vertex> vertices = new List<Vertex>();
 
                 string[] temp = line.Split(new char[] {'(', ')'}, StringSplitOptions.RemoveEmptyEntries);

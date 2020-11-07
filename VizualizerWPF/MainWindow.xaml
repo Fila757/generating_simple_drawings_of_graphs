@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:VizualizerWPF"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="531" Width="765">
+        Title="MainWindow" Height="531" Width="764">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width= "55*"/>

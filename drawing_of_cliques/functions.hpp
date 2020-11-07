@@ -383,7 +383,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			faces_vertices.insert(faces_vertices.end(), cur->vertices_.begin(), cur->vertices_.end() - 1);
 			cur = cur->next_;
 		}
-		faces_vertices.push_back(start->vertices_[0]);
+		
+		if (*start->vertices_[0] == Vertex(0, 0))
+			rotate(faces_vertices.begin(), faces_vertices.begin() + 1, faces_vertices.end());
+
+		faces_vertices.push_back(faces_vertices[0]);
 
 		vector<pair<double, double> > coords;
 
@@ -431,6 +435,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			coords.push_back(make_pair(outer_vertices[0].x_, outer_vertices[0].y_));
 
 		}
+
 		vector<vector<pair<double, double> > > polygon{ coords };
 
 		std::vector<int> indices = mapbox::earcut<int>(polygon);
@@ -450,7 +455,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
 				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))
 					&&
-					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1)
+					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1)  && !(second_outer_face_bool && abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == indices.size() - 1)
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
@@ -519,6 +524,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 					distances[0][temp_index + 2] = real_distances[0][temp_index + 2];
 					distances[temp_index + 2][0] = real_distances[temp_index + 2][0];
 				}
+
 
 				if (indices[i + j] == b_index) {
 					distances[1][temp_index + 2] = real_distances[1][temp_index + 2];
@@ -594,9 +600,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 
-
-
-
 		vertices = find_shortest_path(distances, all_vertices);
 
 		for (int i = 1; i < vertices.size() - 1;i++) {
@@ -646,13 +649,19 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			cur_edge = cur_edge->next_;
 		}
 	}
+
+	face->edge_ = ab_edge_ptr;
 }
 inline void graph::add_vertex(Edge* edge) {
 
 	auto opposite = edge->opposite_;
 
-	auto a = edge->vertices_[0];
-	auto b = edge->vertices_.back();
+	
+	vector<shared_ptr<Vertex> > a_half(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
+	vector<shared_ptr<Vertex> > b_half(edge->vertices_.begin() + edge->vertices_.size() / 2, edge->vertices_.end());
+
+	auto a = a_half.back();
+	auto b = b_half[0];
 
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = -1;
@@ -660,19 +669,27 @@ inline void graph::add_vertex(Edge* edge) {
 
 	vertices_.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
-	edges.push_back(Edge(edge->next_, edge, opposite, vector<shared_ptr<Vertex> >{ new_vertex, b }, edge->face_, edge->index_)); //new vertex to b, part of normal edge
+	a_half.push_back(new_vertex);
+	reverse(a_half.begin(), a_half.end());
+
+	b_half.push_back(new_vertex);
+	rotate(b_half.rbegin(), b_half.rbegin() + 1, b_half.rend());
+
+	edges.push_back(Edge(edge->next_, edge, opposite, b_half, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
 	segments.push_back(tob);
 
-	edges.push_back(Edge(opposite->next_, opposite, edge, vector<shared_ptr<Vertex> >{ new_vertex, a } , opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
+	edges.push_back(Edge(opposite->next_, opposite, edge, a_half, opposite->face_, opposite->index_)); //create from new_vertex to a, part of opposite
 	auto toa = &edges.back();
 	segments.push_back(toa);
 
-	edge->vertices_.back() = new_vertex; //changing properties of edge
+	reverse(a_half.begin(), a_half.end());
+	edge->vertices_ = a_half; //changing properties of edge
 	edge->next_ = tob;
 	edge->opposite_ = toa;
 
-	opposite->vertices_.back() = new_vertex; //changing properties of opposite
+	reverse(b_half.begin(), b_half.end());
+	opposite->vertices_ = b_half; //changing properties of opposite
 	opposite->next_ = toa;
 	opposite->opposite_ = tob;
 
@@ -839,6 +856,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (seg == segments[t_index]) {
 
 			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
+			write_coordinates();
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -861,6 +879,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			}
 
 			delete_edge_back();
+			write_coordinates();
 		}
 
 		auto index_first_end = seg->index_ / 100;
@@ -870,10 +889,14 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//print_graph(this);
 
+			if (a == 2 && b == 4)
+				cout << "here" << endl;
+
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
 			add_edge(segments[s_index]->vertices_[0], segments[edges.size() - 1]->vertices_[0], segments[s_index]->face_, a, b);
+			write_coordinates();
 
 			/*important! changing to_ to the opposite direction */
 			segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_; 
@@ -891,6 +914,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			delete_edge_back();
 			delete_vertex((seg->vertices_.back()).get());
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = false;
+			write_coordinates();
 		}
 		seg = seg->next_;
 	}
