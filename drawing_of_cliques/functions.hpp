@@ -761,8 +761,13 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 	// reconnecting edges and therefore removing the vertex
 
-	edge->vertices_.back() = b;
-	edge_opposite->vertices_.back() = a;
+	vector<shared_ptr<Vertex> > former_vertices = edge->vertices_; former_vertices.pop_back();
+	edge_opposite->vertices_.pop_back();
+
+	former_vertices.insert(former_vertices.end(), edge_opposite->vertices_.begin(), edge_opposite->vertices_.end());
+
+	edge->vertices_ = former_vertices;reverse(former_vertices.begin(), former_vertices.end());
+	edge_opposite->vertices_ = former_vertices; //reversed
 	edge->next_ = tob->next_;
 	edge_opposite->next_ = toa->next_;
 
