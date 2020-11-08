@@ -384,8 +384,31 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			cur = cur->next_;
 		}
 		
-		if (*start->vertices_[0] == Vertex(0, 0))
-			rotate(faces_vertices.begin(), faces_vertices.begin() + 1, faces_vertices.end());
+		//find_vertex_shortest to outside layer
+		vector<vector<double> > outside_distances; outside_distances.resize(faces_vertices.size() + outer_vertices.size());
+		for (int i = 0; i < outside_distances.size();i++)
+			outside_distances[i].resize(outside_distances.size());
+
+		vector<shared_ptr<Vertex> > outside_points; 
+		for (int i = 0; i < outer_vertices.size();i++)
+			outside_points.push_back(make_shared<Vertex>(outer_vertices[i]));
+		outside_points.insert(outside_points.end(), faces_vertices.begin(), faces_vertices.end());
+		create_coordinates(outside_points, outside_distances);
+
+		int mn = INF; int mn_index = -1;
+		for (int i = 0; i < outer_vertices.size();i++) {
+			for (int j = outer_vertices.size(); j < outside_distances[i].size();j++) {
+				if (outside_distances[i][j] < mn) {
+					mn = outside_distances[i][j];
+					mn_index = j - outer_vertices.size();
+				}
+			}
+		}
+		
+		rotate(faces_vertices.begin(), faces_vertices.begin() + mn_index, faces_vertices.end());
+	
+		//if (*start->vertices_[0] == Vertex(0, 0))
+		//	rotate(faces_vertices.begin(), faces_vertices.begin() + 1, faces_vertices.end());
 
 		faces_vertices.push_back(faces_vertices[0]);
 
@@ -428,6 +451,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 
 			rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
+
+
 
 			for (int i = 0; i < outer_vertices.size();i++) {
 				coords.push_back(make_pair(outer_vertices[i].x_, outer_vertices[i].y_));
@@ -861,7 +886,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (seg == segments[t_index]) {
 
 			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
-			//write_coordinates();
+			if (realized == 10)
+				write_coordinates();
 
 			if (b < number_of_vertices - 1) {
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
@@ -884,7 +910,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			}
 
 			delete_edge_back();
-			//write_coordinates();
+			if(realized == 10)
+				write_coordinates();
 		}
 
 		auto index_first_end = seg->index_ / 100;
@@ -894,14 +921,15 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//print_graph(this);
 
-			if (a == 2 && b == 4)
+			if (realized == 10 && (a == 1 && b == 4) && (seg->index_ == 5 || seg->index_ == 500))
 				cout << "here" << endl;
 
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			add_vertex(seg);
 			add_edge(segments[s_index]->vertices_[0], segments[edges.size() - 1]->vertices_[0], segments[s_index]->face_, a, b);
-			//write_coordinates();
+			if (realized == 10)
+				write_coordinates();
 
 			/*important! changing to_ to the opposite direction */
 			segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_; 
@@ -919,7 +947,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			delete_edge_back();
 			delete_vertex((seg->vertices_.back()).get());
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = false;
-			//write_coordinates();
+			if (realized == 10)
+				write_coordinates();
 		}
 		seg = seg->next_;
 	}
