@@ -33,6 +33,9 @@ using namespace std;
 #define INF 10000000
 #endif // !INF
 
+#ifndef EPSILON
+#define EPSILON 0.001
+#endif
 
 #define x first
 #define y second
@@ -49,6 +52,8 @@ struct Vertex {
 	int index_;
 
 	double x_, y_;
+
+	double shift_epsilon = 0;
 
 	Vertex() {}
 
@@ -353,6 +358,10 @@ inline void graph::update_most_away(vector<pair<double, double> > vertices) {
 	most_away = make_convex_hull(vertices);
 }
 
+inline double det(pair<double, double> vec1, pair<double, double> vec2) {
+	return vec1.x * vec2.y - vec1.y * vec2.x;
+}
+
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 
@@ -419,7 +428,22 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_));
 		for (int i = 1; i < faces_vertices.size();i++) {
 			if (*faces_vertices[i] != *faces_vertices[i-1]) {
-				coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
+				if (*faces_vertices[i] != Vertex(0, 0) && faces_vertices[i]->index_ == -1) {
+					pair<double, double> vect = make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_);
+
+					//negative one is to the right
+					auto first_neg_vect = make_pair(-vect.x, vect.y);
+					auto second_neg_vect = make_pair(vect.x, -vect.y);
+
+					if(det(vect, first_neg_vect) < 0)
+
+					else {
+						coords.push_back(make_pair(faces_vertices[i]->x_ + , faces_vertices[i]->y_));
+					}
+				}
+				else {
+					coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
+				}
 			}
 			for (int j = 0; j < most_away.size();j++) {
 				if (abs(faces_vertices[i]->x_ - most_away[j].x) < 0.1 && abs(faces_vertices[i]->y_ - most_away[j].y) < 0.1) {
