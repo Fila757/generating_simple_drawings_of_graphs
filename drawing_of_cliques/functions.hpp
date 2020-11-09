@@ -55,7 +55,7 @@ struct Vertex {
 
 	double x_, y_;
 
-	double shift_epsilon = 0;
+	pair<double, double> shift_epsilon = make_pair(0, 0);
 
 	Vertex() {}
 
@@ -370,7 +370,43 @@ inline double det(pair<double, double> vec1, pair<double, double> vec2) {
 	return vec1.x * vec2.y - vec1.y * vec2.x;
 }
 
+//shifting to the right 
 
+
+/*		 
+	 <----
+	|	 ^
+	|	 | \\shift -->
+    |    | 
+	v --->
+*/
+
+inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, double> vect) { 
+
+	pair<double, double> first_neg_vect;
+	pair<double, double> second_neg_vect;
+
+	//negative one is to the right
+	if (vect.x == 0) {
+		first_neg_vect = make_pair(-vect.y, 0);
+		second_neg_vect = make_pair(vect.y, 0);
+	}
+	else if (vect.y == 0) {
+		first_neg_vect = make_pair(0, vect.x);
+		second_neg_vect = make_pair(0, -vect.x);
+	}
+	else {
+		first_neg_vect = make_pair(-vect.x, vect.y);
+		second_neg_vect = make_pair(vect.x, -vect.y);
+	}
+
+	if (det(vect, first_neg_vect) < 0) {
+		return make_pair(vect.x + EPSILON * first_neg_vect.x, vect.y + EPSILON * first_neg_vect.y);
+	}
+	else {
+		return make_pair(vect.x + EPSILON * second_neg_vect.x, vect.y + EPSILON * second_neg_vect.y);
+	}
+}
 
 
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
@@ -440,32 +476,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		for (int i = 1; i < faces_vertices.size();i++) {
 			if (*faces_vertices[i] != *faces_vertices[i-1]) {
 				if (faces_vertices[i]->index_ == -1) {
-					pair<double, double> vect = make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_);
-
-					pair<double, double> first_neg_vect;
-					pair<double, double> second_neg_vect;
-
-					//negative one is to the right
-					if (vect.x == 0) {
-						first_neg_vect = make_pair(-vect.y, 0);
-						second_neg_vect = make_pair(vect.y, 0);
-					}
-					else if (vect.y == 0) {
-						first_neg_vect = make_pair(0, vect.x);
-						second_neg_vect = make_pair(0, -vect.x);
-					}
-					else {
-						first_neg_vect = make_pair(-vect.x, vect.y);
-						second_neg_vect = make_pair(vect.x, -vect.y);
-					}
-
-					if (det(vect, first_neg_vect) < 0) {
-						indices_coords.push_back(make_pair(faces_vertices[i]->x_ + EPSILON * first_neg_vect.x, faces_vertices[i]->y_ + EPSILON * first_neg_vect.y));
-					}
-
-					else {
-						indices_coords.push_back(make_pair(faces_vertices[i]->x_ + EPSILON * second_neg_vect.x, faces_vertices[i]->y_ + EPSILON * second_neg_vect.y));
-					}
+					indices_coords.push_back(make_pair(faces_vertices[i]->x_ + faces_vertices[i]->shift_epsilon.x, faces_vertices[i]->y_ + faces_vertices[i]->shift_epsilon.y));
 				}
 				else {
 					indices_coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
@@ -759,6 +770,8 @@ inline void graph::add_vertex(Edge* edge) {
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = edge->vertices_.size() == 2 ? -1 : -2;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
+
+	new_vertex->shift_epsilon = get_shift(new_vertex, make_pair(b->x_ - a->x_, b->y_ - a->y_));
 
 	vertices_.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
