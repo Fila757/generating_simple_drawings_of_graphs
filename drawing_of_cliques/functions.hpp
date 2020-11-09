@@ -400,11 +400,11 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 		second_neg_vect = make_pair(vect.x, -vect.y);
 	}
 
-	if (det(vect, first_neg_vect) < 0) {
-		return make_pair(vect.x + EPSILON * first_neg_vect.x, vect.y + EPSILON * first_neg_vect.y);
+	if (det(vect, first_neg_vect) < 0) { //negative der is to the right
+		return make_pair(EPSILON * first_neg_vect.x, EPSILON * first_neg_vect.y);
 	}
 	else {
-		return make_pair(vect.x + EPSILON * second_neg_vect.x, vect.y + EPSILON * second_neg_vect.y);
+		return make_pair(EPSILON * second_neg_vect.x, EPSILON * second_neg_vect.y);
 	}
 }
 
@@ -966,8 +966,9 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			if (realized == 25 && (a == 1 && b == 4) && segments[s_index]->index_ == 101)
-				print_bool = true;
+			//if (realized == 25 && (a == 1 && b == 4) && segments[s_index]->index_ == 101)
+			//	print_bool = true;
+
 			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
 			if (print_bool)
 				write_coordinates();
@@ -1004,8 +1005,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//print_graph(this);
 
-			if (realized == 25 && (a == 1 && b == 4))
-				print_bool = true;
+			//if (realized == 25 && (a == 1 && b == 4))
+			//	print_bool = true;
 
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;

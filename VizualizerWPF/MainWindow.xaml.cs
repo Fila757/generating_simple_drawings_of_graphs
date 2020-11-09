@@ -15,7 +15,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
+
 
 /// <summary>
 /// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
@@ -45,6 +47,9 @@ namespace VizualizerWPF
     /// At the bottom there is a legend to know
     /// which color describe which number for k edges
     /// </summary>
+    
+
+    enum StateAutoMoving { Auto, None };
 
     enum StateChanging { Adding, Removing, None };
 
@@ -63,6 +68,9 @@ namespace VizualizerWPF
         /// </summary>
         StateChanging stateChanging = StateChanging.None;
         Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
+
+        StateAutoMoving stateAutoMoving = StateAutoMoving.None;
+        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
 
         GraphGenerator graphGenerator;
 
@@ -120,6 +128,10 @@ namespace VizualizerWPF
 
             StateChanged += ResizeWindowEvent;
 
+            dispatcherTimer.Tick += dispatcherTimer_Tick;
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
+            dispatcherTimer.Start();
+
             cx = 300; cy = 200;
             sizeOfVertex = 15;
             scale = 1.5;
@@ -131,6 +143,14 @@ namespace VizualizerWPF
             DrawGraph(graphCoordinates, 1);
 
         }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1 / (double)AutoMovingUpDown.Value);
+            if(stateAutoMoving == StateAutoMoving.Auto)
+                NextDrawing_Click(sender, new RoutedEventArgs());
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -231,6 +251,16 @@ namespace VizualizerWPF
 
             }
 
+        }
+
+        private void AutoButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            button.Background = stateAutoMoving == StateAutoMoving.Auto ?
+              (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.BlueViolet;
+
+            stateAutoMoving = stateAutoMoving == StateAutoMoving.Auto ? StateAutoMoving.None : StateAutoMoving.Auto;
         }
 
         /// <summary>
