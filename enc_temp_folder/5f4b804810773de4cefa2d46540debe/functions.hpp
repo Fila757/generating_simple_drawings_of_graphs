@@ -371,8 +371,6 @@ inline double det(pair<double, double> vec1, pair<double, double> vec2) {
 }
 
 
-
-
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
