@@ -9,9 +9,11 @@
         Title="MainWindow" Height="531" Width="764">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width= "55*"/>
-            <ColumnDefinition Width= "19*"/>
-            <ColumnDefinition Width= "11*"/>
+            <ColumnDefinition Width= "79*"/>
+            <ColumnDefinition Width= "79*"/>
+            <ColumnDefinition Width= "392*"/>
+            <ColumnDefinition Width= "100*"/>
+            <ColumnDefinition Width= "114*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height= "15*"/>
@@ -27,29 +29,29 @@
             <RowDefinition Height= "49*"/>
             <RowDefinition Height= "15*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="Adding" Content="Přídávání" Grid.Column= "2" Grid.Row= "1" Margin="3,3,3,3" Click="Adding_Click"/>
-        <Button x:Name="Removing" Content="Mazaní" Grid.Column= "2" Grid.Row= "2" Margin="3,3,3,3" Click="Removing_Click"/>
-        <Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "2" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>
-        <Button x:Name="Kedges" Content="K-hrany" Grid.Column= "2" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>
-        <ListBox x:Name="KedgesListBox" Grid.Column="2" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
+        <Button x:Name="Adding" Content="Přídávání" Grid.Column= "4" Grid.Row= "1" Margin="3,3,3,3" Click="Adding_Click"/>
+        <Button x:Name="Removing" Content="Mazaní" Grid.Column= "4" Grid.Row= "2" Margin="3,3,3,3" Click="Removing_Click"/>
+        <Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>
+        <Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>
+        <ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
             <ListBoxItem Content="AMk-hrany" FontSize="10" FontWeight="Bold"/>
             <ListBoxItem Content="2AMk-hrany" FontSize="10" FontWeight="Bold"/>
             <ListBoxItem Content="3AMk-hrany" FontSize="10" FontWeight="Bold"/>
         </ListBox>
-        <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="2" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>
-        <Button x:Name="NextDrawing" Content="Dalsi jednoduché &#xa; nakreslení velikosti:" Margin="3,3,3,3" Grid.Column="2" Grid.Row="8" Click="NextDrawing_Click"/>
-        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="2" Grid.Row="9" Margin="3,3,3,3" NumberDecimalDigits="0" 
+        <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>
+        <Button x:Name="NextDrawing" Content="Dalsi jednoduché &#xa; nakreslení velikosti:" Margin="3,3,3,3" Grid.Column="4" Grid.Row="8" Click="NextDrawing_Click"/>
+        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="4" Grid.Row="9" Margin="3,3,3,3" NumberDecimalDigits="0" 
                            MaxValue="7" MinValue="3"/>
 
-        <Image Name="legend" Grid.ColumnSpan ="2" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/>
+        <Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/>
 
-        <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="2"  Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
+        <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="4"  Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
 
-        <TextBlock x:Name="textBlockKEdges" Grid.Column ="1" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/>
+        <TextBlock x:Name="textBlockKEdges" Grid.Column ="3" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/>
         <TextBlock x:Name="textBlockAMKEdges" Grid.Column ="0" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/>
 
-        <Button x:Name="AutoMoving" Content="Auto" Margin="10,7,400,13" Grid.Row ="10"  Click="AutoButton_Click"/>
-        <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="0" Grid.Row="10" Margin="100,7,340,13" NumberDecimalDigits="1"  
+        <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3, 3, 3, 15" Grid.Row ="10"  Click="AutoButton_Click"/>
+        <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="10" Margin="3, 3, 3, 15" NumberDecimalDigits="1"  
                            MaxValue="10" MinValue="0.1"/>
 
     </Grid>
