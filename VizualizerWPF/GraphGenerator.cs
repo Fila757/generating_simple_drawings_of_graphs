@@ -52,6 +52,8 @@ namespace VizualizerWPF
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
+        public int counter = 0;
+
         /// <summary>
         /// it supposed to run from in it Visual Studio from bin/Debug(Release)/netcoreapp3.1/
         /// </summary>
@@ -77,13 +79,16 @@ namespace VizualizerWPF
         {
             List<double[] > doubleLine = new List<double[]>();
 
-            int FindNextLine(Point a)
+            int FindNextLine(Point a, int cur)
             {
                 for(int i = 0; i < line.Count; i++)
                 {
+                    //if (i != cur)
+                    //{
                     var from = new Point { X = Double.Parse(line[i].ElementAt(0)), Y = Double.Parse(line[i].ElementAt(1)) };
                     if (from == a)
                         return i;
+                    //}
                 }
 
                 return -1;
@@ -119,7 +124,7 @@ namespace VizualizerWPF
                 for (int i = 0; i < line.Count; i++)
                 {
                     var to = new Point { X = Double.Parse(line[i].ElementAt(line[i].Length - 2)), Y = Double.Parse(line[i].ElementAt(line[i].Length - 1)) };
-                    if (FindNextLine(to) == -1)
+                    if (FindNextLine(to, -1) == -1)
                         return i;
                 }
 
@@ -138,7 +143,7 @@ namespace VizualizerWPF
                     temp[i] = Double.Parse(line[cur][i]);
                 doubleLine.Add(temp);
 
-                cur = FindNextLine(new Point { X = doubleLine.Last().ElementAt(doubleLine.Last().Length - 2), Y = doubleLine.Last().ElementAt(doubleLine.Last().Length - 1)});
+                cur = FindNextLine(new Point { X = doubleLine.Last().ElementAt(doubleLine.Last().Length - 2), Y = doubleLine.Last().ElementAt(doubleLine.Last().Length - 1)}, cur);
             }
             temp = new double[line[cur].Length];
             for (int i = 0; i < line[cur].Length; i++)
@@ -157,10 +162,11 @@ namespace VizualizerWPF
         {
             graphCoordinates = new GraphCoordinates();
 
+
+
             string line;
             while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
-
                 if (line == "")
                     continue;
 
@@ -253,6 +259,7 @@ namespace VizualizerWPF
         /// <returns>New graph</returns>
         public GraphCoordinates GenerateNextDrawing()
         {
+            counter++; 
             return ReadUntillNextRS();
         }
     }

@@ -666,6 +666,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 
+		/*choosing the most away one*/
+
 		double mx = -1; int mx_index = -1;
 		for (int i = 2; i < distances.size();i++) {
 			if (abs(INF - distances[1][i]) > 1 && mx < distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i-2]->x_, mids[i-2]->y_))) {
@@ -678,6 +680,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			distances[1][i] = i == mx_index ? distances[1][i] : INF;
 			distances[i][1] = i == mx_index ? distances[i][1] : INF;
 		}
+
+		/*finding if points can be connected with line*/
 
 		for (int i = 0; i < indices.size(); i += 3) {
 			for (int j = 0; j < 3;j++) {
@@ -966,8 +970,10 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			//if (realized == 25 && (a == 1 && b == 4) && segments[s_index]->index_ == 101)
-			//	print_bool = true;
+			if (realized == 83) {
+				print_bool = true;
+				write_coordinates();
+			}
 
 			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
 			if (print_bool)

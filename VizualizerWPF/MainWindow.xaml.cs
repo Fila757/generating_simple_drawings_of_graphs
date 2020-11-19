@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -17,7 +18,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
-
 
 /// <summary>
 /// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
@@ -383,6 +383,12 @@ namespace VizualizerWPF
             }
                 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
+            testing.Text = graphGenerator.counter.ToString();
+
+            if(graphGenerator.counter == 76)
+            {
+                Console.WriteLine(5);
+            }
 
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);

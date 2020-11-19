@@ -54,8 +54,8 @@ C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliq
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1099,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1101,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1101,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1103,23): warning C4018: '<': signed/unsigned mismatch
   functions.hpp
 C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(222,20): warning C4018: '<': signed/unsigned mismatch
 C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(223,21): warning C4018: '<': signed/unsigned mismatch
@@ -112,8 +112,8 @@ C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliq
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1099,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1101,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1101,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1103,23): warning C4018: '<': signed/unsigned mismatch
   Generating code
   Previous IPDB not found, fall back to full compilation.
   All 2549 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
