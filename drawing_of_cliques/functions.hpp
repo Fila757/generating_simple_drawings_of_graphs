@@ -699,8 +699,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		/*choosing the most away one*/
 
 		double mx = -1; int mx_index = -1;
-		if ((b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) && second_outer_face_bool) {
-			if (abs(INF - distances[1][0]) > 1) {
+		if (b->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
+			if (abs(INF - distances[1][0]) > 1) { 
 				mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(a->x_, a->y_));
 				mx_index = 0;
 			}
@@ -713,7 +713,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		}
 
 
-		if ((b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) && second_outer_face_bool) {
+		if (b->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			distances[1][0] = 0 == mx_index ? distances[1][0] : INF;
 			distances[0][1] = 0 == mx_index ? distances[0][1] : INF;
 			for (int i = 2; i < distances.size();i++) {
@@ -722,6 +722,14 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 		vertices = find_shortest_path(distances, all_vertices);
+
+		/*remove duplicates because mid can be in mids and as well normal vertex*/
+		vector<shared_ptr<Vertex> > temp_uniques; temp_uniques.push_back(vertices[0]);
+		for (int i = 1; i < vertices.size();i++) {
+			if (*vertices[i] != *vertices[i - 1])
+				temp_uniques.push_back(vertices[i]);
+		}
+		vertices = temp_uniques;
 
 		for (int i = 1; i < vertices.size() - 1;i++) {
 			vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
@@ -984,7 +992,6 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (seg == segments[t_index]) {
 
 			if (realized == 2) {
-				print_bool = true;
 				write_coordinates();
 			}
 
@@ -1101,8 +1108,12 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 34) {
+	if (counter == 0) {
 		cout << "HEU" << endl;
+		//print_bool = true;
+	}
+	if (counter == 15) {
+		cout << "HEU2" << endl;
 	}
 	counter++;
 
@@ -1123,6 +1134,9 @@ inline void graph::write_coordinates() {
 			for (int k = 0; k < drawing_edges[i][j].size();k++) {
 				output_file << "( ";
 				for (int l = 0; l < drawing_edges[i][j][k].vertices_.size();l++) {
+					if (drawing_edges[i][j][k].vertices_[0]->x_ == drawing_edges[i][j][k].vertices_[1]->x_ && drawing_edges[i][j][k].vertices_[0]->y_ == drawing_edges[i][j][k].vertices_[1]->y_) {
+						cout << "same" << endl;
+					}
 					output_file
 						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
 						<< drawing_edges[i][j][k].vertices_[l]->y_ << " ";

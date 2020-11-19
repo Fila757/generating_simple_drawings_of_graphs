@@ -260,6 +260,10 @@ namespace VizualizerWPF
         public GraphCoordinates GenerateNextDrawing()
         {
             counter++; 
+            if(counter == 35)
+            {
+                //MessageBox.Show("Bug");
+            }
             return ReadUntillNextRS();
         }
     }
