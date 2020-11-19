@@ -135,6 +135,8 @@ struct graph {
 	int realized = 0;
 	bool done = false;
 
+	int counter = 0;
+
 	vector< pair<double, double> > most_away;
 
 	list<Edge> edges;
@@ -666,21 +668,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 
-		/*choosing the most away one*/
-
-		double mx = -1; int mx_index = -1;
-		for (int i = 2; i < distances.size();i++) {
-			if (abs(INF - distances[1][i]) > 1 && mx < distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i-2]->x_, mids[i-2]->y_))) {
-				mx_index = i;
-				mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
-			}
-		}
-
-		for (int i = 2; i < distances.size();i++) {
-			distances[1][i] = i == mx_index ? distances[1][i] : INF;
-			distances[i][1] = i == mx_index ? distances[i][1] : INF;
-		}
-
 		/*finding if points can be connected with line*/
 
 		for (int i = 0; i < indices.size(); i += 3) {
@@ -708,6 +695,32 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 		}
 
+
+		/*choosing the most away one*/
+
+		double mx = -1; int mx_index = -1;
+		if ((b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) && second_outer_face_bool) {
+			if (abs(INF - distances[1][0]) > 1) {
+				mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(a->x_, a->y_));
+				mx_index = 0;
+			}
+			for (int i = 2; i < distances.size();i++) {
+				if (abs(INF - distances[1][i]) > 1 && mx < distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) {
+					mx_index = i;
+					mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
+				}
+			}
+		}
+
+
+		if ((b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) && second_outer_face_bool) {
+			distances[1][0] = 0 == mx_index ? distances[1][0] : INF;
+			distances[0][1] = 0 == mx_index ? distances[0][1] : INF;
+			for (int i = 2; i < distances.size();i++) {
+				distances[1][i] = i == mx_index ? distances[1][i] : INF;
+				distances[i][1] = i == mx_index ? distances[i][1] : INF;
+			}
+		}
 		vertices = find_shortest_path(distances, all_vertices);
 
 		for (int i = 1; i < vertices.size() - 1;i++) {
@@ -772,7 +785,7 @@ inline void graph::add_vertex(Edge* edge) {
 	auto b = b_half[0];
 
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
-	new_vertex->index_ = edge->vertices_.size() == 2 ? -1 : -2;
+	new_vertex->index_ = ((edge->index_ / 100 == 0) || (edge->index_ % 100 == 0)) ? -1 : -2;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
 
 	new_vertex->shift_epsilon = get_shift(new_vertex, make_pair(b->x_ - a->x_, b->y_ - a->y_));
@@ -970,7 +983,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			if (realized == 83) {
+			if (realized == 2) {
 				print_bool = true;
 				write_coordinates();
 			}
@@ -1087,6 +1100,11 @@ struct fingerprints {
 };
 
 inline void graph::write_coordinates() {
+
+	if (counter == 34) {
+		cout << "HEU" << endl;
+	}
+	counter++;
 
 	vector<vector<vector<Edge> > > drawing_edges;
 	drawing_edges.resize(number_of_vertices);
