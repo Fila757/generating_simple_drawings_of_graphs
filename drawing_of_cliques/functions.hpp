@@ -182,11 +182,13 @@ struct graph {
 		output_file.open(output_path);
 	}
 
-	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool = false);
+	void add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, shared_ptr<Vertex> next_vertex, bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
 
 	void delete_edge_back(bool outer_face_bool = false);
 	void delete_vertex(Vertex* a);
+
+	void redirect_previous_segment(int a, int b, shared_ptr<Vertex> destination);
 
 	/*finger print part*/
 
@@ -411,7 +413,7 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 }
 
 
-inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
+inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, shared_ptr<Vertex> next_vertex, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -515,7 +517,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			}
 
 			rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
-
 
 
 			for (int i = 0; i < outer_vertices.size();i++) {
@@ -701,11 +702,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		double mx = -1; int mx_index = -1;
 		if (b->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			if (abs(INF - distances[1][0]) > 1) { 
-				mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(a->x_, a->y_));
+				mx = distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(a->x_, a->y_)); // coordinates_of_special_vertices[b_index - 1]
 				mx_index = 0;
 			}
 			for (int i = 2; i < distances.size();i++) {
-				if (abs(INF - distances[1][i]) > 1 && mx < distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) {
+				if (abs(INF - distances[1][i]) > 1 && mx < distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) { // coordinates_of_special_vertices[b_index - 1]
 					mx_index = i;
 					mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
 				}
@@ -963,7 +964,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
-		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, true); //from vertex is that in rotation
+		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, shared_ptr<Vertex>() ,true); //from vertex is that in rotation
 	}
 }
 
@@ -976,6 +977,22 @@ inline void graph::create_all_special_vertices() {
 	for (int i = 1; i < number_of_vertices;i++) { //the rest of a star
 		create_special_vertex(i, coordinates_of_special_vertices[i - 1].x, coordinates_of_special_vertices[i - 1].y);
 		vertices_.push_back(make_pair((int)coordinates_of_special_vertices[i - 1].x, (int)coordinates_of_special_vertices[i - 1].y));
+	}
+}
+
+inline void graph::redirect_previous_segment(int a_index, int b_index, shared_ptr<Vertex> destination) {
+	if (segments[segments.size() - 2]->index_ == 100 * a_index + b_index) {
+		auto edge_to_change = segments[segments.size() - 2];
+
+		auto a = edge_to_change->vertices_[0];
+		auto b = edge_to_change->vertices_.back();
+
+		/*find which face is the the stable one by maintaning pointer to i.e. prev_ edge of edge_to change*/
+		auto prev = edge_to_change->prev_;
+		delete_edge_back();
+		auto face = prev->face_;
+
+		add_edge(a, b, face, a_index, b_index, destination);
 	}
 }
 
@@ -995,7 +1012,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				write_coordinates();
 			}
 
-			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b);
+			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b, shared_ptr<Vertex>());
 			if (print_bool)
 				write_coordinates();
 
