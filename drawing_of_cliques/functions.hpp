@@ -1003,13 +1003,21 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 		auto b = edge_to_change->vertices_.back();
 
 		/*find which face is the the stable one by maintaning pointer to i.e. prev_ edge of edge_to change*/
+
 		auto prev = edge_to_change->prev_;
 		delete_edge_back();
-		write_coordinates();
+		
+		if(print_bool)
+			write_coordinates();
+
 		auto face = prev->face_;
 
+		/*swaping to_ attribute of divided edge new vertex is important!*/
+		segments[edges.size() - 1]->vertices_[0]->to_ = segments[edges.size() - 2]->prev_;
 		add_edge(a, b, face, a_index, b_index, destination);
-		write_coordinates();
+		segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_;
+		if (print_bool)
+			write_coordinates();
 	}
 }
 
@@ -1026,7 +1034,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 		if (seg == segments[t_index]) {
 
 			if (realized == 0) {
-				print_bool = true;
+				//print_bool = true;
 				write_coordinates();
 			}
 
