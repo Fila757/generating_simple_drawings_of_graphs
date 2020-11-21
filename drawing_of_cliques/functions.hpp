@@ -189,6 +189,7 @@ struct graph {
 	void delete_vertex(Vertex* a);
 
 	void redirect_previous_segment(int a, int b, shared_ptr<Vertex> destination);
+	shared_ptr<Vertex> tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half, bool just_get_vertex = false);
 
 	/*finger print part*/
 
@@ -708,7 +709,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			for (int i = 2; i < distances.size();i++) {
 				if (abs(INF - distances[1][i]) > 1 && mx < distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) { // coordinates_of_special_vertices[b_index - 1]
 					mx_index = i;
-					mx = distance(coordinates_of_special_vertices[b_index - 1], make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
+					mx = distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
 				}
 			}
 		}
@@ -782,13 +783,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	face->edge_ = ab_edge_ptr;
 }
-inline void graph::add_vertex(Edge* edge) {
 
-	auto opposite = edge->opposite_;
+inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half, bool just_get_vertex) {
 
-	
-	vector<shared_ptr<Vertex> > a_half(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
-	vector<shared_ptr<Vertex> > b_half(edge->vertices_.begin() + edge->vertices_.size() / 2, edge->vertices_.end());
+	a_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
+	b_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin() + edge->vertices_.size() / 2, edge->vertices_.end());
 
 	auto a = a_half.back();
 	auto b = b_half[0];
@@ -796,6 +795,9 @@ inline void graph::add_vertex(Edge* edge) {
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = ((edge->index_ / 100 == 0) || (edge->index_ % 100 == 0)) ? -1 : -2;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
+
+	if (just_get_vertex) //before vertices adding
+		return new_vertex;
 
 	new_vertex->shift_epsilon = get_shift(new_vertex, make_pair(b->x_ - a->x_, b->y_ - a->y_));
 
@@ -806,6 +808,18 @@ inline void graph::add_vertex(Edge* edge) {
 
 	b_half.push_back(new_vertex);
 	rotate(b_half.rbegin(), b_half.rbegin() + 1, b_half.rend());
+
+	return new_vertex;
+}
+
+inline void graph::add_vertex(Edge* edge) {
+
+	auto opposite = edge->opposite_;
+
+	vector<shared_ptr<Vertex> > a_half;
+	vector<shared_ptr<Vertex> > b_half;
+
+	tearup_lines_in_half(edge, a_half, b_half);
 
 	edges.push_back(Edge(edge->next_, edge, opposite, b_half, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -982,6 +996,7 @@ inline void graph::create_all_special_vertices() {
 
 inline void graph::redirect_previous_segment(int a_index, int b_index, shared_ptr<Vertex> destination) {
 	if (segments[segments.size() - 2]->index_ == 100 * a_index + b_index) {
+
 		auto edge_to_change = segments[segments.size() - 2];
 
 		auto a = edge_to_change->vertices_[0];
@@ -990,9 +1005,11 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 		/*find which face is the the stable one by maintaning pointer to i.e. prev_ edge of edge_to change*/
 		auto prev = edge_to_change->prev_;
 		delete_edge_back();
+		write_coordinates();
 		auto face = prev->face_;
 
 		add_edge(a, b, face, a_index, b_index, destination);
+		write_coordinates();
 	}
 }
 
@@ -1008,11 +1025,20 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			if (realized == 2) {
+			if (realized == 0) {
+				print_bool = true;
 				write_coordinates();
 			}
 
-			add_edge(segments[s_index]->vertices_[0], segments[t_index]->vertices_[0], segments[s_index]->face_, a, b, shared_ptr<Vertex>());
+			redirect_previous_segment(a, b, segments[t_index]->vertices_[0]);
+			add_edge(
+				segments[s_index]->vertices_[0],
+				segments[t_index]->vertices_[0],
+				segments[s_index]->face_,
+				a,
+				b,
+				make_shared<Vertex>(coordinates_of_special_vertices[b - 1].x, coordinates_of_special_vertices[b - 1].y)
+				);
 			if (print_bool)
 				write_coordinates();
 
@@ -1053,8 +1079,19 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
+			
+			auto empty = vector<shared_ptr<Vertex> >();
+			redirect_previous_segment(a, b, tearup_lines_in_half(seg, empty, empty, true));
+
 			add_vertex(seg);
-			add_edge(segments[s_index]->vertices_[0], segments[edges.size() - 1]->vertices_[0], segments[s_index]->face_, a, b);
+			add_edge(
+				segments[s_index]->vertices_[0],
+				segments[edges.size() - 1]->vertices_[0],
+				segments[s_index]->face_,
+				a,
+				b,
+				make_shared<Vertex>(coordinates_of_special_vertices[b - 1].x, coordinates_of_special_vertices[b - 1].y)
+				);
 			if(print_bool)
 				write_coordinates();
 
