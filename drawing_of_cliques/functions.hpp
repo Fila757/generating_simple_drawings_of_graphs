@@ -55,7 +55,8 @@ struct Vertex {
 
 	double x_, y_;
 
-	pair<double, double> shift_epsilon = make_pair(0, 0);
+	pair<double, double> shift_first = make_pair(0, 0);
+	pair<double, double> shift_second = make_pair(0, 0);
 
 	Vertex() {}
 
@@ -367,6 +368,12 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 	return result;
 }
 
+inline bool compare(pair<double, double> a, pair<double, double> b) {
+	if (abs(a.x - b.x) < 0.1 && abs(a.y - b.y) < 0.1)
+		return true;
+	return false;
+}
+
 inline void graph::update_most_away(vector<pair<double, double> > vertices) {
 	most_away = make_convex_hull(vertices);
 }
@@ -480,8 +487,19 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 		coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_)); indices_coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_));
 		for (int i = 1; i < faces_vertices.size();i++) {
 			if (*faces_vertices[i] != *faces_vertices[i-1]) {
-				if (faces_vertices[i]->index_ == -1) {
-					indices_coords.push_back(make_pair(faces_vertices[i]->x_ + faces_vertices[i]->shift_epsilon.x, faces_vertices[i]->y_ + faces_vertices[i]->shift_epsilon.y));
+				if (faces_vertices[i]->index_ == -1 &&
+					compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_first)
+					||
+					compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_second)){
+					auto shift = get_shift(
+						faces_vertices[i],
+						make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_,
+							faces_vertices[i]->y_ - faces_vertices[i - 1]->y_));
+
+					indices_coords.push_back(make_pair(
+						faces_vertices[i]->x_ + shift.x,
+						faces_vertices[i]->y_ + shift.y
+						));
 				}
 				else {
 					indices_coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
@@ -799,7 +817,8 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	if (just_get_vertex) //before vertices adding
 		return new_vertex;
 
-	new_vertex->shift_epsilon = get_shift(new_vertex, make_pair(b->x_ - a->x_, b->y_ - a->y_));
+	new_vertex->shift_first = make_pair(new_vertex->x_ - a->x_, new_vertex->y_ - a->y_);
+	new_vertex->shift_second = make_pair(new_vertex->x_ - b->x_, new_vertex->y_ - b->y_);
 
 	vertices_.push_back(make_pair(new_vertex->x_, new_vertex->y_));
 
@@ -1089,7 +1108,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
 			
 			auto empty = vector<shared_ptr<Vertex> >();
-			redirect_previous_segment(a, b, tearup_lines_in_half(seg, empty, empty, true));
+			auto empty2 = vector<shared_ptr<Vertex> >();
+			redirect_previous_segment(a, b, tearup_lines_in_half(seg, empty, empty2, true));
 
 			add_vertex(seg);
 			add_edge(
@@ -1170,11 +1190,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 0) {
+	if (counter == 49) {
 		cout << "HEU" << endl;
-		//print_bool = true;
+		print_bool = true;
 	}
-	if (counter == 15) {
+	if (counter == 49) {
 		cout << "HEU2" << endl;
 	}
 	counter++;
