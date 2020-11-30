@@ -1297,11 +1297,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 39) {
+	if (counter == 203) {
 		cout << "HEU" << endl;
-		//print_bool = true;
+		print_bool = true;
 	}
-	if (counter == 69) {
+	if (counter == 4584) {
 		cout << "HEU2" << endl;
 	}
 	counter++;

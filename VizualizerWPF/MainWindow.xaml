@@ -55,7 +55,7 @@
 
         <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3, 3, 3, 15" Grid.Row ="10"  Click="AutoButton_Click"/>
         <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="10" Margin="3, 3, 3, 15" NumberDecimalDigits="1"  
-                           MaxValue="10" MinValue="0.1"/>
+                           MaxValue="1000" MinValue="0.1"/>
 
     </Grid>
 </Window>
