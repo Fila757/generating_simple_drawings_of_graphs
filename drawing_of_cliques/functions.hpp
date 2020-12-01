@@ -189,8 +189,8 @@ struct graph {
 		shared_ptr<Face> face,
 		int a_index,
 		int b_index,
-		shared_ptr<Vertex> previous_vertex,
-		shared_ptr<Vertex> next_vertex,
+		pair<double, double> previous_vertex,
+		pair<double, double> next_vertex,
 		bool outer_face_bool = false);
 	void add_vertex(Edge* edge);
 
@@ -198,9 +198,23 @@ struct graph {
 	void delete_vertex(Vertex* a);
 
 	void redirect_previous_segment(int a, int b, shared_ptr<Vertex> destination);
-	shared_ptr<Vertex> tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half, bool just_get_vertex = false);
+	shared_ptr<Vertex> tearup_lines_in_half(
+		Edge* edge,
+		vector<shared_ptr<Vertex> >& a_half,
+		vector<shared_ptr<Vertex> >& b_half,
+		bool just_get_vertex = false
+	);
 
-	vector<shared_ptr<Vertex> > find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, shared_ptr<Vertex> previous_vertex, shared_ptr<Vertex> next_vertex, bool outer_face_bool = false);
+	vector<shared_ptr<Vertex> > find_path_through_triangulation(
+		shared_ptr<Vertex> a,
+		shared_ptr<Vertex> b,
+		shared_ptr<Face> face,
+		int a_index,
+		int b_index,
+		pair<double, double> shift_previous,
+		pair<double, double> shift_next,
+		bool outer_face_bool = false
+	);
 	/*finger print part*/
 
 	//number of edges indexer
@@ -432,15 +446,15 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> vertex, pair<double, double> vect) {
 
 	auto shift = get_shift(vertex, vect);
-	return make_pair(10 * (shift.x / distance(shift)), 10 * (shift.y / distance(shift)));
+	return make_pair(100 * (shift.x / sqrt(distance(shift))), 100 * ((shift.y / sqrt(distance(shift)))));
 
 }
 
 
 inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b,
 	shared_ptr<Face> face, int a_index, int b_index,
-	shared_ptr<Vertex> previous_vertex,
-	shared_ptr<Vertex> next_vertex, bool outer_face_bool) {
+	pair<double, double> shift_previous,
+	pair<double, double> shift_next, bool outer_face_bool) {
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
 	toa = a->to_;
@@ -584,7 +598,9 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
 				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))
 					&&
-					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1) && !(second_outer_face_bool && abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == indices.size() - 1)
+					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1) 
+					&&
+					!(second_outer_face_bool && abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == indices.size() - 1)
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
@@ -735,9 +751,13 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 
 		/*choosing the most in the one direction one*/
+		auto next_vertex = make_shared<Vertex>();
 
+		next_vertex->x_ = b->x_ + (second_outer_face_bool ? shift_next.x : -shift_next.x);
+		next_vertex->y_ = b->y_ + (second_outer_face_bool ? shift_next.y : -shift_next.y);
+		
 		mn = INF; mn_index = -1;
-		if (b->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
+		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			if (abs(INF - distances[1][0]) > 1) {
 				mn = distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(a->x_, a->y_)); // coordinates_of_special_vertices[b_index - 1]
 				mn_index = 0;
@@ -751,7 +771,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		}
 
 
-		if (b->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
+		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			distances[1][0] = 0 == mn_index ? distances[1][0] : INF;
 			distances[0][1] = 0 == mn_index ? distances[0][1] : INF;
 			for (int i = 2; i < distances.size(); i++) {
@@ -762,8 +782,13 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		// a also wants right direction
 
+		auto previous_vertex = make_shared<Vertex>();
+
+		previous_vertex->x_ = a->x_ + (second_outer_face_bool ? shift_previous.x : -shift_previous.x);
+		previous_vertex->y_ = a->y_ + (second_outer_face_bool ? shift_previous.y : -shift_previous.y);
+
 		mn = INF; mn_index = -1;
-		if (a->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
+		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			if (abs(INF - distances[0][1]) > 1) {
 				mn = distance(make_pair(previous_vertex->x_, previous_vertex->y_), make_pair(b->x_, b->y_)); // coordinates_of_special_vertices[b_index - 1]
 				mn_index = 1;
@@ -777,7 +802,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		}
 
 
-		if (a->index_ == -1 && second_outer_face_bool) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
+		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			distances[0][1] = 1 == mn_index ? distances[0][1] : INF;
 			distances[1][0] = 1 == mn_index ? distances[1][0] : INF;
 			for (int i = 2; i < distances.size(); i++) {
@@ -796,6 +821,10 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		}
 		vertices = temp_uniques;
 
+		if (vertices.size() == 0) {
+			cout << "WTF20" << endl;
+		}
+
 		return vertices;
 
 		//print_graph(this);
@@ -808,7 +837,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 }
 
-inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, shared_ptr<Vertex> previous_vertex, shared_ptr<Vertex> next_vertex, bool outer_face_bool) {
+inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, pair<double, double> shift_previous, pair<double, double> shift_next, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -818,7 +847,11 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	tob = b->to_;
 	fromb = tob->next_;
 	
-	auto vertices = find_path_through_triangulation(a, b, face, a_index, b_index, previous_vertex, next_vertex, outer_face_bool);
+	auto vertices = find_path_through_triangulation(a, b, face, a_index, b_index, shift_previous, shift_next, outer_face_bool);
+
+	if (vertices.size() == 0)
+		cout << "WTF3" << endl;
+
 	for (int i = 1; i < vertices.size() - 1; i++) {
 		vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
 	}
@@ -890,6 +923,10 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	b_half.push_back(new_vertex);
 	rotate(b_half.rbegin(), b_half.rbegin() + 1, b_half.rend());
 
+	if (a_half.size() == 0 || b_half.size() == 0) {
+		cout << "WHY" << endl;
+	}
+
 	return new_vertex;
 }
 
@@ -901,6 +938,9 @@ inline void graph::add_vertex(Edge* edge) {
 	vector<shared_ptr<Vertex> > b_half;
 
 	tearup_lines_in_half(edge, a_half, b_half);
+
+	if (a_half.size() == 0 || b_half.size() == 0)
+		cout << "WTF2" << endl;
 
 	edges.push_back(Edge(edge->next_, edge, opposite, b_half, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -1059,7 +1099,7 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
-		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, shared_ptr<Vertex>(), shared_ptr<Vertex>() ,true); //from vertex is that in rotation
+		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, make_pair(0, 0), make_pair(0, 0), true); //from vertex is that in rotation
 	}
 }
 
@@ -1095,7 +1135,7 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 
 		/*swaping to_ attribute of divided edge new vertex is important!*/
 		segments[edges.size() - 1]->vertices_[0]->to_ = segments[edges.size() - 2]->prev_;
-		add_edge(a, b, face, a_index, b_index, a, destination);
+		add_edge(a, b, face, a_index, b_index, make_pair(0, 0), make_pair(0, 0));
 		segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_;
 		if (print_bool)
 			write_coordinates();
@@ -1131,12 +1171,12 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			redirect_previous_segment(a, b, vertices[vertices.size() - 2]); //segments[t_index]->vertices_[0]
 			*/
-			auto coords = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
+			auto shift_previous = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
 				make_pair(segments[segments.size() - 3]->vertices_[1]->x_ - segments[segments.size() - 3]->vertices_[0]->x_, 
 					segments[segments.size() - 3]->vertices_[1]->y_ - segments[segments.size() - 3]->vertices_[0]->y_
 				));
 			if (segments[s_index]->vertices_[0]->index_ != -1)
-				coords = make_pair(segments[s_index]->vertices_[0]->x_, segments[s_index]->vertices_[0]->y_);
+				shift_previous = make_pair(0, 0);
 
 			add_edge(
 				segments[s_index]->vertices_[0],
@@ -1144,8 +1184,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				segments[s_index]->face_,
 				a,
 				b,
-				make_shared<Vertex>(coords.x, coords.y),
-				make_shared<Vertex>(coordinates_of_special_vertices[b - 1].x, coordinates_of_special_vertices[b - 1].y)
+				shift_previous,
+				make_pair(0, 0)
 				);
 			if (print_bool)
 				write_coordinates();
@@ -1205,18 +1245,32 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			redirect_previous_segment(a, b, vertices[vertices.size() - 2]);
 			*/
 
+			if (counter == 90 && edges.size() == 160) {
+				cout << "WTF" << endl;
+				for (auto it = edges.begin(); it != edges.end(); it++) {
+					if (it->vertices_.size() == 0) {
+						cout << "WTF MIDDLE" << endl;
+					}
+				}
+				cout << "WTFEND" << endl;
+			}
+
 			add_vertex(seg);
 
-			auto shift = find_vertex_in_right_direction(segments[edges.size() - 2]->vertices_[0],
-				make_pair(segments[edges.size() - 2]->vertices_[1]->x_ - segments[edges.size() - 2]->vertices_[0]->x_,
-					segments[edges.size() - 2]->vertices_[1]->y_ - segments[edges.size() - 2]->vertices_[0]->y_));
-
-			auto coords = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
+			auto shift_previous = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
 				make_pair(segments[segments.size() - 5]->vertices_[1]->x_ - segments[segments.size() - 5]->vertices_[0]->x_,
 					segments[segments.size() - 5]->vertices_[1]->y_ - segments[segments.size() - 5]->vertices_[0]->y_
 				));
+
+			auto shift_next = find_vertex_in_right_direction(segments[edges.size() - 2]->vertices_[0],
+				make_pair(segments[edges.size() - 2]->vertices_[1]->x_ - segments[edges.size() - 2]->vertices_[0]->x_,
+					segments[edges.size() - 2]->vertices_[1]->y_ - segments[edges.size() - 2]->vertices_[0]->y_));
+
 			if (segments[s_index]->vertices_[0]->index_ != -1)
-				coords = make_pair(segments[s_index]->vertices_[0]->x_, segments[s_index]->vertices_[0]->y_);
+				shift_previous = make_pair(0, 0);
+
+			if (segments[edges.size() - 1]->vertices_[0]->index_ != -1)
+				shift_next = make_pair(0, 0);
 
 			add_edge(
 				segments[s_index]->vertices_[0],
@@ -1224,8 +1278,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				segments[s_index]->face_,
 				a,
 				b,
-				make_shared<Vertex>(coords.x, coords.y),
-				make_shared<Vertex>(segments[edges.size() - 2]->vertices_[0]->x_ + shift.x, segments[edges.size() - 2]->vertices_[0]->y_ + shift.y)
+				shift_previous,
+				shift_next
 				);
 			if(print_bool)
 				write_coordinates();
@@ -1297,11 +1351,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 203) {
+	if (counter == 89) {
 		cout << "HEU" << endl;
 		print_bool = true;
 	}
-	if (counter == 4584) {
+	if (counter == 93) {
 		cout << "HEU2" << endl;
 	}
 	counter++;
