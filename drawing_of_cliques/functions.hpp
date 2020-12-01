@@ -596,11 +596,21 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 			for (int j = 0; j < 3; j++) {
 				auto vertex = make_shared<Vertex>((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
-				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_))
+				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_)) //should be first one there
 					&&
-					!(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == 1) 
+					((second_outer_face_bool && (
+						(indices[i + j] == coords.size() - 1 && indices[i + ((j + 1) % 3)] == coords.size() - 2) // line going from inner to upper boundary
+						||
+						(indices[i + j] == coords.size() - 2 && indices[i + ((j + 1) % 3)] == coords.size() - 1))) 
+						||
+						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)) //no one on boundary, except the one one the outer face going from inner to outer boundary
 					&&
-					!(second_outer_face_bool && abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == indices.size() - 1)
+					((second_outer_face_bool && (
+						(indices[i + j] == 0 && indices[i + ((j + 1) % 3)] == coords.size() - 2) //considering also 0 as possible number of "zero" vertex
+						||
+						(indices[i + j] == coords.size() - 2 && indices[i + ((j + 1) % 3)] == 0)))
+						||
+						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != coords.size() - 2))
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
