@@ -763,8 +763,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		/*choosing the most in the one direction one*/
 		auto next_vertex = make_shared<Vertex>();
 
-		next_vertex->x_ = b->x_ + (second_outer_face_bool ? shift_next.x : -shift_next.x);
-		next_vertex->y_ = b->y_ + (second_outer_face_bool ? shift_next.y : -shift_next.y);
+		next_vertex->x_ = b->x_ + shift_next.x;//(second_outer_face_bool ? shift_next.x : -shift_next.x);
+		next_vertex->y_ = b->y_ + shift_next.y;//(second_outer_face_bool ? shift_next.y : -shift_next.y);
 		
 		mn = INF; mn_index = -1;
 		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
@@ -794,8 +794,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		auto previous_vertex = make_shared<Vertex>();
 
-		previous_vertex->x_ = a->x_ + (second_outer_face_bool ? shift_previous.x : -shift_previous.x);
-		previous_vertex->y_ = a->y_ + (second_outer_face_bool ? shift_previous.y : -shift_previous.y);
+		previous_vertex->x_ = a->x_ + shift_previous.x;//(second_outer_face_bool ? shift_previous.x : -shift_previous.x);
+		previous_vertex->y_ = a->y_ + shift_previous.y;//(second_outer_face_bool ? shift_previous.y : -shift_previous.y);
 
 		mn = INF; mn_index = -1;
 		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
@@ -1361,11 +1361,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 89) {
+	if (counter == 153) {
 		cout << "HEU" << endl;
 		print_bool = true;
 	}
-	if (counter == 93) {
+	if (counter == 17400) {
 		cout << "HEU2" << endl;
 	}
 	counter++;
