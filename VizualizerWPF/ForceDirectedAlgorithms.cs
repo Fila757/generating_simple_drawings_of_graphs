@@ -83,10 +83,27 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
+        public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
+        {
+            var newGraphCoordinates = new GraphCoordinates();
+            List<Edge> edges = new List<Edge>();
+            HashSet<Vertex> vertices = new HashSet<Vertex>();
+            foreach(var edge in graphCoordinates.edges)
+            {
+                foreach(var line in edge.lines)
+                {
+                    edges.Add(new Edge(new List<Point> { new Point {line.X1, line.Y1}, new Point { line.X2, line.Y2 } }, new List<Line> { line }));
+                }
+            }
+
+
+            return newGraphCoordinates;
+        }
+
         public Edge CountWholeForceForEdge(Edge e, List<Vertex> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
-            Edge newEdge = new Edge();
-            newEdge.points.Add(e.points[0]);
+            Edge newEdge = new Edge(e.points, e.lines);
+            //newEdge.points.Add(e.points[0]);
             for (int i = 1; i < e.points.Count - 1; i++)
             {
 
@@ -128,7 +145,7 @@ namespace VizualizerWPF
                         normalized = normalized.Scale(Rs[v][j]);
 
                         finalForce = Min(finalForce, normalized);
-                        newEdge.points.Add(v + finalForce);
+                        newEdge.points[i] = v + finalForce;
                         break;
 
                     }
