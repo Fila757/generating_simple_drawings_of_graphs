@@ -83,30 +83,90 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
+        public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        {
+            Vector finalForce = origin.ToVector();
+
+            foreach (var vertex in neighbors)
+            {
+                finalForce += CountAttractionForce(vertex, v);
+            }
+            foreach (var vertex in vertices)
+            {
+                finalForce += CountRepulsionForce(v, vertex);
+            }
+
+            foreach (var edge in edges)
+            {
+                finalForce += CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
+            }
+
+            foreach (var vertex in vertices)
+            {
+                foreach (var neigh in neighbors)
+                {
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
+                }
+            }
+
+            /* chechk regioun condition */
+
+            for (int j = 0; j < 8; j++)
+            {
+                int j2 = (j + 1) % 8;
+                if (IsBetween(RegionVectors[j], RegionVectors[j2], finalForce))
+                {
+
+                    Vector normalized = new Vector(finalForce.X, finalForce.Y);
+                    normalized.Normalize();
+                    normalized = normalized.Scale(Rs[v][j]);
+
+                    finalForce = Min(finalForce, normalized);
+                    return v + finalForce; 
+                }
+            }
+            return origin;
+        }
+
         public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
             var newGraphCoordinates = new GraphCoordinates();
             List<Edge> edges = new List<Edge>();
-            HashSet<Vertex> vertices = new HashSet<Vertex>();
+            List<Point> vertices = new List<Point>();
             foreach(var edge in graphCoordinates.edges)
             {
                 foreach(var line in edge.lines)
                 {
-                    edges.Add(new Edge(new List<Point> { new Point {line.X1, line.Y1}, new Point { line.X2, line.Y2 } }, new List<Line> { line }));
+                    edges.Add(new Edge(new List<Point> { new Point(line.X1, line.Y1), new Point(line.X2, line.Y2)  }, new List<Line> { line }));
+                }
+
+                for(int i = 1; i < edge.points.Count - 1; i++)
+                {
+                    vertices.Add(edge.points[i]);
                 }
             }
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                vertices.Add(vertex.center);
+            }
 
+            Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
+            CountRadiuses(vertices, edges, Rs);
 
             return newGraphCoordinates;
         }
 
-        public Edge CountWholeForceForEdge(Edge e, List<Vertex> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        {
+
+        }
+
+        public Edge CountWholeForceForEdge(Edge e, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Edge newEdge = new Edge(e.points, e.lines);
             //newEdge.points.Add(e.points[0]);
             for (int i = 1; i < e.points.Count - 1; i++)
             {
-
                 var v = e.points[i];
 
                 /* count forces */
@@ -118,7 +178,7 @@ namespace VizualizerWPF
 
                 foreach (var vertex in vertices)
                 {
-                    finalForce += CountRepulsionForce(v, vertex.center);
+                    finalForce += CountRepulsionForce(v, vertex);
                 }
 
                 foreach (var edge in edges)
@@ -128,8 +188,8 @@ namespace VizualizerWPF
 
                 foreach (var vertex in vertices)
                 {
-                    finalForce -= CountRepulsionEdgeForce(vertex.center, v, new Point(e.lines[i - 1].X1, e.lines[i - 1].Y1));
-                    finalForce -= CountRepulsionEdgeForce(vertex.center, v, new Point(e.lines[i + 1].X2, e.lines[i + 1].Y2));
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, new Point(e.lines[i - 1].X1, e.lines[i - 1].Y1));
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, new Point(e.lines[i + 1].X2, e.lines[i + 1].Y2));
                 }
 
                 /* chechk regioun condition */
@@ -151,7 +211,7 @@ namespace VizualizerWPF
                     }
                 }
             }
-            newEdge.points.Add(e.points.Last());
+            //newEdge.points.Add(e.points.Last());
             return newEdge;
         }
         
