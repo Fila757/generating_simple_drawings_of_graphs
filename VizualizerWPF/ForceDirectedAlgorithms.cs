@@ -158,7 +158,57 @@ namespace VizualizerWPF
 
         void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
+            foreach(var vertex in Rs.Keys)
+            {
+                Rs[vertex] = new double[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+            }
 
+            foreach(Point v in vertices)
+            {
+                
+                foreach(var edge in edges)
+                {
+                    Point a = edge.points[0];
+                    Point b = edge.points[1];
+
+                    Point i_v = Projection(v, a, b);
+                    Vector difference = i_v - a;
+                    Vector vector = b - a;
+                    var coef = difference.Divide(vector);
+                    if (1 > coef && coef > 0)
+                    {
+                        int s = INF;
+                        for (int i = 0; i < 8; i++)
+                        {
+                            int i2 = (i + 1) % 8;
+                            if (IsBetween(RegionVectors[i], RegionVectors[i2], i_v - v))
+                            {
+                                s = i;
+                            }
+                        }
+                        for (int i = -2; i <= 2; i++)
+                        {
+                            Rs[v][(s + i + 8) % 8] = Math.Min(Rs[v][(s + i + 8) % 8], Distance(v, i_v) / 3);
+                        }
+                        for (int i = 2; i <= 6; i++)
+                        {
+                            Rs[a][(s + i + 8) % 8] = Math.Min(Rs[a][(s + i + 8) % 8], Distance(v, i_v) / 3);
+                            Rs[b][(s + i + 8) % 8] = Math.Min(Rs[b][(s + i + 8) % 8], Distance(v, i_v) / 3);
+                        }
+                    }
+                    else
+                    {
+                        for(int i = 0; i < 8; i++)
+                        {
+                            Rs[v][(i + 8) % 8] = Math.Min(Rs[v][(i + 8) % 8], Math.Min(Distance(a, v), Distance(b, v)) / 3);
+
+                            Rs[a][(i + 8) % 8] = Math.Min(Rs[a][(i + 8) % 8], Distance(a, v) / 3);
+                            Rs[b][(i + 8) % 8] = Math.Min(Rs[b][(i + 8) % 8], Distance(b, v) / 3);
+                        }
+                    }
+
+                }
+            }
         }
 
         public Edge CountWholeForceForEdge(Edge e, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
