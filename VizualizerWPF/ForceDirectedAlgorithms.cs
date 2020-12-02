@@ -8,11 +8,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Shapes;
+
 
 
 namespace VizualizerWPF
 {
+
     class ForceDirectedAlgorithms
     {
         int gamma = 10;
@@ -31,6 +34,17 @@ namespace VizualizerWPF
             new Vector(-10, -10),
             new Vector(0, -10),
          };
+
+        Vertex FindVertex(GraphCoordinates graphCoordinates, Point center)
+        {
+            foreach (var vertex in graphCoordinates.vertices)
+            {
+                if (vertex.center == center)
+                    return vertex;
+            }
+
+            throw new ArgumentException("There is no such a vertex with that center");
+        }
 
         public Vector Min(Vector vector1, Vector vector2)
         {
@@ -66,7 +80,7 @@ namespace VizualizerWPF
         {
             Vector av = v - a;
             Vector ab = b - a;
-            var cosOfAngle = (av.X * ab.X + av.Y * ab.Y) / ((Distance(av.ToPoint(), origin) * Distance(ab.ToPoint(), origin)));
+            var cosOfAngle = (av.X * ab.X + av.Y * ab.Y) / (Distance(av.ToPoint(), origin) * Distance(ab.ToPoint(), origin));
 
             return (cosOfAngle * av).ToPoint();
         }
@@ -83,13 +97,13 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
-        public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        public Point CountForceInnerVertex(Point v, List<Vertex> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Vector finalForce = origin.ToVector();
 
             foreach (var vertex in neighbors)
             {
-                finalForce += CountAttractionForce(vertex, v);
+                finalForce += CountAttractionForce(vertex.center, v);
             }
             foreach (var vertex in vertices)
             {
@@ -105,7 +119,7 @@ namespace VizualizerWPF
             {
                 foreach (var neigh in neighbors)
                 {
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh.center);
                 }
             }
 
@@ -152,6 +166,53 @@ namespace VizualizerWPF
 
             Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
             CountRadiuses(vertices, edges, Rs);
+
+            foreach (var edge in graphCoordinates.edges)
+            {
+                newGraphCoordinates.edges.Add(CountWholeForceForEdge(edge, vertices, edges, Rs));
+            }
+
+            foreach (var edge in newGraphCoordinates.edges)
+            {
+                var vertex1 = FindVertex(graphCoordinates, edge.points[0]);
+                ellipse = new Ellipse
+                {
+                    Width = MainWindow.sizeOfVertex,
+                    Height = MainWindowsizeOfVertex,
+                    Fill = vertex1.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Margin = new Thickness(vertexTemp.center.X - MainWindowsizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = ((vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections]) ||
+                    (vertexTemp.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
+
+                newGraphCoordinates.vertices.Add(
+                    new Vertex { 
+                        center = CountForceInnerVertex(vertex1.center, graphCoordinates.neighbors[vertex1], vertices, edges, Rs),
+                        state = vertex1.state
+                        
+                        };
+
+                ellipse.MouseDown += ellipse_MouseDown;
+                mainCanvas.Children.Add(ellipse);
+
+                Panel.SetZIndex(ellipse, vertexTemp.state == VertexState.Regular ? 100 : 10);
+
+                vertexTemp.ellipse = ellipse;
+            });
+
+                var vertex2 = FindVertex(graphCoordinates, edge.points.Last());
+                newGraphCoordinates.vertices.Add(
+                    new Vertex
+                    {
+                        center = CountForceInnerVertex(vertex2.center, graphCoordinates.neighbors[vertex2], vertices, edges, Rs),
+                        state = vertex2.state
+                    });
+
+                newGraphCoordinates.vertices.Add(vertex1);
+                newGraphCoordinates.vertices.Add(vertex2);
+
+                newGraphCoordinates.AddToDictionary(vertex1, vertex2);
+                newGraphCoordinates.AddToDictionary(vertex2, vertex1);
+            }
 
             return newGraphCoordinates;
         }

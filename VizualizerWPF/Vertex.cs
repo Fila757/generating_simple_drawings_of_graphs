@@ -19,7 +19,7 @@ namespace VizualizerWPF
     /// Implementing  IEqualityComparer<Vertex>, IEquatable<Vertex> 
     /// to index HashSet and Dictionary
     /// </summary>
-    struct Vertex : IEqualityComparer<Vertex>, IEquatable<Vertex>
+    public struct Vertex : IEqualityComparer<Vertex>, IEquatable<Vertex>
     {
         public Ellipse ellipse;
         public Point center ;

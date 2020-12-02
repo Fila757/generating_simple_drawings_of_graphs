@@ -75,8 +75,8 @@ namespace VizualizerWPF
         GraphGenerator graphGenerator;
 
         double cx, cy; 
-        public double sizeOfVertex;
-        double scale;
+        static public double sizeOfVertex;
+        static double scale;
 
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
@@ -414,6 +414,19 @@ namespace VizualizerWPF
 
             throw new ArgumentException("There is no such a vertex, containing ellipse");
         }
+
+
+        public Vertex FindVertex(Point center)
+        {
+            foreach (var vertex in graphCoordinates.vertices)
+            {
+                if (vertex.center == center)
+                    return vertex;
+            }
+
+            throw new ArgumentException("There is no such a vertex with that center");
+        }
+
         /// <summary>
         /// Function to find ends of <c>edge</c>
         /// </summary>
