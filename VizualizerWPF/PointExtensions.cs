@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using 
 
 namespace VizualizerWPF
 {
@@ -39,6 +40,26 @@ namespace VizualizerWPF
         public static Vector ToVector(this Point point)
         {
             return (Vector)point;
+        }
+
+        public static Point ToPoint(this Vector vector)
+        {
+            return (Point)vector;
+        }
+
+        public static double Divide(this Vector vector1, Vector vector2)
+        {
+            return vector1.X / vector2.X;
+        }
+
+        public static Point Substract(this Point point, double a)
+        {
+            return new Point(point.X - a, point.Y - a);
+        }
+
+        public static Vector Scale(this Vector vector, double a)
+        {
+            return vector.ToPoint().Scale(a).ToVector();
         }
     }
 

@@ -585,6 +585,10 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		set<pair<double, double> > visited_vertices;
 
+		if (counter >= 11443) {
+			cout << "BLEEE2" << endl;
+		}
+
 		//duplicits
 		vector<vector<vector<int> > > pair_indices;
 		pair_indices.resize(coords.size());
@@ -759,6 +763,9 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 			}
 		}
 
+		if (counter >= 11443) {
+			cout << "BLEEE2" << endl;
+		}
 
 		/*choosing the most in the one direction one*/
 		auto next_vertex = make_shared<Vertex>();
@@ -1181,6 +1188,9 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			redirect_previous_segment(a, b, vertices[vertices.size() - 2]); //segments[t_index]->vertices_[0]
 			*/
+			if (counter >= 11443) {
+				cout << "Blee" << endl;
+			}
 			auto shift_previous = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
 				make_pair(segments[segments.size() - 3]->vertices_[1]->x_ - segments[segments.size() - 3]->vertices_[0]->x_, 
 					segments[segments.size() - 3]->vertices_[1]->y_ - segments[segments.size() - 3]->vertices_[0]->y_
@@ -1365,7 +1375,7 @@ inline void graph::write_coordinates() {
 		cout << "HEU" << endl;
 		print_bool = true;
 	}
-	if (counter == 17400) {
+	if (counter == 11442) {
 		cout << "HEU2" << endl;
 	}
 	counter++;
@@ -1429,9 +1439,14 @@ inline void graph::create_all_possible_drawings() {
 		create_base_star();
 		//print_graph(this);
 
-		//cout << fingerprint << endl;
-
-		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		//cout << counter << endl;
+		
+		if (counter < 153) {
+			done = true;
+		}
+		else {
+			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		}
 
 		if (done) {
 			cout << "yes" << endl;

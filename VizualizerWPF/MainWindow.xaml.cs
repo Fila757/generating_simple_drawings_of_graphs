@@ -47,7 +47,7 @@ namespace VizualizerWPF
     /// At the bottom there is a legend to know
     /// which color describe which number for k edges
     /// </summary>
-    
+
 
     enum StateAutoMoving { Auto, None };
 
@@ -385,7 +385,7 @@ namespace VizualizerWPF
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             testing.Text = graphGenerator.counter.ToString();
 
-            if(graphGenerator.counter == 76)
+            if(graphGenerator.counter == 11441)
             {
                 Console.WriteLine(5);
             }
