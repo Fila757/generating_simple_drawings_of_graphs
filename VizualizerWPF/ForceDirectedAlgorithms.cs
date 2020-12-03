@@ -41,6 +41,7 @@ namespace VizualizerWPF
             new Vector(-10, 0),
             new Vector(-10, -10),
             new Vector(0, -10),
+            new Vector(10, -10)
          };
 
         static Vertex FindVertex(GraphCoordinates graphCoordinates, Point center)
@@ -276,7 +277,7 @@ namespace VizualizerWPF
                     var line = new Line
                     {
                         X1 = edge.points[i - 1].X,
-                        Y1 = edge.points[i-1].Y,
+                        Y1 = edge.points[i - 1].Y,
                         X2 = edge.points[i].X,
                         Y2 = edge.points[i].Y,
                         Stroke = Brushes.Red,
@@ -296,9 +297,9 @@ namespace VizualizerWPF
 
         static void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
-            foreach(var vertex in Rs.Keys)
+            foreach(var vertex in vertices)
             {
-                Rs[vertex] = new double[8] { 0, 0, 0, 0, 0, 0, 0, 0 };
+                Rs[vertex] = new double[8] { INF, INF, INF, INF, INF, INF, INF, INF };
             }
 
             foreach(Point v in vertices)
@@ -361,8 +362,8 @@ namespace VizualizerWPF
 
                 Vector finalForce = origin.ToVector();
 
-                finalForce += CountAttractionForce(new Point(e.lines[i - 1].X1, e.lines[i - 1].Y1), v);
-                finalForce += CountAttractionForce(new Point(e.lines[i + 1].X2, e.lines[i + 1].Y2), v);
+                finalForce += CountAttractionForce(e.points[i-1], v);
+                finalForce += CountAttractionForce(e.points[i+1], v);
 
                 foreach (var vertex in vertices)
                 {
@@ -376,8 +377,8 @@ namespace VizualizerWPF
 
                 foreach (var vertex in vertices)
                 {
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, new Point(e.lines[i - 1].X1, e.lines[i - 1].Y1));
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, new Point(e.lines[i + 1].X2, e.lines[i + 1].Y2));
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i-1]);
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i+1]);
                 }
 
                 /* chechk regioun condition */

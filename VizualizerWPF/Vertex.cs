@@ -9,7 +9,7 @@ namespace VizualizerWPF
     /// <summary>
     /// Enum to recongize state of vertex
     /// </summary>
-    enum VertexState { Intersection, Regular , Middle};
+    public enum VertexState { Intersection, Regular , Middle};
 
     /// <summary>
     /// Struct to store vertices
