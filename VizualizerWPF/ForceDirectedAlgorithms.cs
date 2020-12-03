@@ -127,11 +127,12 @@ namespace VizualizerWPF
 
             foreach (var vertex in neighbors)
             {
-                finalForce += CountAttractionForce(vertex, v);
+                 finalForce += CountAttractionForce(vertex, v);
             }
             foreach (var vertex in vertices)
             {
-                finalForce += CountRepulsionForce(v, vertex);
+                if(vertex != v)
+                    finalForce += CountRepulsionForce(v, vertex);
             }
 
             foreach (var edge in edges)
@@ -211,11 +212,13 @@ namespace VizualizerWPF
                     }) ;
             }
 
-               
-            /* create lines */ 
-            foreach(var edge in newGraphCoordinates.edges)
+
+            /* create lines */
+
+            foreach(var edge in graphCoordinates.edges)
             {
                 var lines = new List<Line>();
+                var points = new List<Point>() { convertor[edge.points[0]] };
                 for(int i = 1; i < edge.points.Count; i++)
                 {
                     var line = new Line
@@ -224,12 +227,22 @@ namespace VizualizerWPF
                         Y1 = convertor[edge.points[i - 1]].Y,
                         X2 = convertor[edge.points[i]].X,
                         Y2 = convertor[edge.points[i]].Y,
-
                     };
 
+                    points.Add(convertor[edge.points[i]]);
                     lines.Add(line);
                 }
-                edge.lines = lines;
+                newGraphCoordinates.edges.Add(new Edge(points, lines));
+
+                Vertex actualZero = FindVertex(newGraphCoordinates, convertor[edge.points[0]]);
+                Vertex actualLast = FindVertex(newGraphCoordinates, convertor[edge.points.Last()]);
+                if (newGraphCoordinates.vertices.Contains(actualZero))
+                    newGraphCoordinates.vertices.TryGetValue(actualZero, out actualZero);
+                if (newGraphCoordinates.vertices.Contains(actualLast))
+                    newGraphCoordinates.vertices.TryGetValue(actualLast, out actualLast);
+
+                newGraphCoordinates.AddToDictionary(actualZero, actualLast);
+                newGraphCoordinates.AddToDictionary(actualLast, actualZero);
             }
 
             return newGraphCoordinates;
