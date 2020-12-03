@@ -17,23 +17,23 @@ using System.Windows.Shapes;
 namespace VizualizerWPF
 {
 
-    class ForceDirectedAlgorithms
+    static class ForceDirectedAlgorithms
     {
-        int gamma = 10;
-        int delta = 10;
+        static int gamma = 10;
+        static int delta = 10;
 
-        int INF = 1000000;
+        static int INF = 1000000;
 
-        Point origin = new Point(0, 0);
+        static Point origin = new Point(0, 0);
 
-        MainWindow mainWindow;
+        static MainWindow mainWindow;
 
-        public ForceDirectedAlgorithms(MainWindow mainWindow)
+        public static void Init(MainWindow mainWindow2)
         {
-            this.mainWindow = mainWindow;
+            mainWindow = mainWindow2;
         }
 
-        Vector[] RegionVectors = new Vector[] {
+        static Vector[] RegionVectors = new Vector[] {
             new Vector(10, 0),
             new Vector(10, 10),
             new Vector(0, 10),
@@ -43,7 +43,7 @@ namespace VizualizerWPF
             new Vector(0, -10),
          };
 
-        Vertex FindVertex(GraphCoordinates graphCoordinates, Point center)
+        static Vertex FindVertex(GraphCoordinates graphCoordinates, Point center)
         {
             foreach (var vertex in graphCoordinates.vertices)
             {
@@ -54,7 +54,7 @@ namespace VizualizerWPF
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
-        List<Point> FindNeighbors(Vertex vertex)
+        static List<Point> FindNeighbors(Vertex vertex)
         {
             List<Point> neighbors = new List<Point>();
             foreach (var line in mainWindow.mainCanvas.Children.OfType<Line>())
@@ -69,37 +69,37 @@ namespace VizualizerWPF
             return neighbors;
         }
 
-        public Vector Min(Vector vector1, Vector vector2)
+        static public Vector Min(Vector vector1, Vector vector2)
         {
             return Distance(vector1.ToPoint(), origin) < Distance(vector2.ToPoint(), origin) ? vector1 : vector2;
         }
 
-        double Determinant(Vector a, Vector b)
+        static double Determinant(Vector a, Vector b)
         {
             return a.X * b.Y - b.X * a.Y;
         }
 
-        bool IsBetween(Vector first, Vector second, Vector middle)
+        static bool IsBetween(Vector first, Vector second, Vector middle)
         {
             return Determinant(first, middle) * Determinant(second, middle) <= 0;
         }
 
-        double Distance(Point a, Point b)
+        static double Distance(Point a, Point b)
         {
             return Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
         }
 
-        public Vector CountAttractionForce(Point a, Point b)
+        static public Vector CountAttractionForce(Point a, Point b)
         {
             return (Distance(a, b) / delta) * (b - a);
         }
 
-        public Vector CountRepulsionForce(Point a, Point b)
+        static public Vector CountRepulsionForce(Point a, Point b)
         {
             return ((-delta * delta) / (Distance(a, b) * Distance(a, b))) * (b - a);
         }
 
-        Point Projection(Point v, Point a, Point b)
+        static Point Projection(Point v, Point a, Point b)
         {
             Vector av = v - a;
             Vector ab = b - a;
@@ -108,7 +108,7 @@ namespace VizualizerWPF
             return (cosOfAngle * av).ToPoint();
         }
 
-        public Vector CountRepulsionEdgeForce(Point v, Point a, Point b)
+        static public Vector CountRepulsionEdgeForce(Point v, Point a, Point b)
         {
             Point i_v = Projection(v, a, b);
             Vector difference = i_v - a;
@@ -120,7 +120,7 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
-        public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        static public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Vector finalForce = origin.ToVector();
 
@@ -165,7 +165,7 @@ namespace VizualizerWPF
             return origin;
         }
 
-        public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
+        static public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
 
             mainWindow.mainCanvas.Children.Clear(); // to clear canvas
@@ -294,7 +294,7 @@ namespace VizualizerWPF
             return newGraphCoordinates;
         }
 
-        void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        static void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             foreach(var vertex in Rs.Keys)
             {
@@ -349,7 +349,7 @@ namespace VizualizerWPF
             }
         }
 
-        public Edge CountWholeForceForEdge(Edge e, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        static public Edge CountWholeForceForEdge(Edge e, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Edge newEdge = new Edge(e.points, e.lines);
             //newEdge.points.Add(e.points[0]);
