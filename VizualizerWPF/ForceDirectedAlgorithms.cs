@@ -212,7 +212,7 @@ namespace VizualizerWPF
             }
 
                
-            /* create lines */ !!!
+            /* create lines */ 
             foreach(var edge in newGraphCoordinates.edges)
             {
                 var lines = new List<Line>();
@@ -220,10 +220,10 @@ namespace VizualizerWPF
                 {
                     var line = new Line
                     {
-                        X1 = edge.points[i - 1].X,
-                        Y1 = edge.points[i - 1].Y,
-                        X2 = edge.points[i].X,
-                        Y2 = edge.points[i].Y,
+                        X1 = convertor[edge.points[i - 1]].X,
+                        Y1 = convertor[edge.points[i - 1]].Y,
+                        X2 = convertor[edge.points[i]].X,
+                        Y2 = convertor[edge.points[i]].Y,
 
                     };
 
