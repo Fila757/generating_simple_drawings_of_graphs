@@ -54,6 +54,21 @@ namespace VizualizerWPF
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
+        List<Point> FindNeighbors(Vertex vertex)
+        {
+            List<Point> neighbors = new List<Point>();
+            foreach (var line in mainWindow.mainCanvas.Children.OfType<Line>())
+            {
+                if(CollisionDetection.CenterOfEllipseOnLine(line, vertex.ellipse))
+                {
+                    //maybe compare absolute difference is < 0.5
+                    neighbors.Add(new Point(line.X1, line.Y1) == vertex.center ? new Point(line.X2, line.Y2) : new Point(line.X1, line.Y1));
+                }
+
+            }
+            return neighbors;
+        }
+
         public Vector Min(Vector vector1, Vector vector2)
         {
             return Distance(vector1.ToPoint(), origin) < Distance(vector2.ToPoint(), origin) ? vector1 : vector2;
@@ -105,13 +120,13 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
-        public Point CountForceInnerVertex(Point v, List<Vertex> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Vector finalForce = origin.ToVector();
 
             foreach (var vertex in neighbors)
             {
-                finalForce += CountAttractionForce(vertex.center, v);
+                finalForce += CountAttractionForce(vertex, v);
             }
             foreach (var vertex in vertices)
             {
@@ -127,7 +142,7 @@ namespace VizualizerWPF
             {
                 foreach (var neigh in neighbors)
                 {
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh.center);
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
                 }
             }
 
@@ -152,6 +167,9 @@ namespace VizualizerWPF
 
         public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
+
+            mainWindow.mainCanvas.Children.Clear(); // to clear canvas
+
             var newGraphCoordinates = new GraphCoordinates();
             List<Edge> edges = new List<Edge>();
             List<Point> vertices = new List<Point>();
@@ -184,7 +202,9 @@ namespace VizualizerWPF
             {
                 var vertex1 = FindVertex(graphCoordinates, edge.points[0]);
 
-                var center1 = CountForceInnerVertex(vertex1.center, graphCoordinates.neighbors[vertex1], vertices, edges, Rs);
+                var neighbors1 = FindNeighbors(vertex1); 
+
+                var center1 = CountForceInnerVertex(vertex1.center, neighbors1, vertices, edges, Rs);
 
                 var ellipse1 = new Ellipse
                 {
@@ -211,7 +231,9 @@ namespace VizualizerWPF
 
                 var vertex2 = FindVertex(graphCoordinates, edge.points.Last());
 
-                var center2 = CountForceInnerVertex(vertex2.center, graphCoordinates.neighbors[vertex2], vertices, edges, Rs);
+                var neighbors2 = FindNeighbors(vertex1);
+
+                var center2 = CountForceInnerVertex(vertex2.center, neighbors2, vertices, edges, Rs);
 
                 var ellipse2 = new Ellipse
                 {
@@ -240,6 +262,30 @@ namespace VizualizerWPF
 
                 newGraphCoordinates.AddToDictionary(vertex1, vertex2);
                 newGraphCoordinates.AddToDictionary(vertex2, vertex1);
+            }
+
+            /* create lines */
+            foreach(var edge in newGraphCoordinates.edges)
+            {
+                var lines = new List<Line>();
+                for(int i = 1; i < edge.points.Count; i++)
+                {
+                    var line = new Line
+                    {
+                        X1 = edge.points[i - 1].X,
+                        Y1 = edge.points[i-1].Y,
+                        X2 = edge.points[i].X,
+                        Y2 = edge.points[i].Y,
+                        Stroke = Brushes.Red,
+                        StrokeThickness = mainWindow.sizeOfVertex / 3
+                    };
+                    Panel.SetZIndex(line, 1);
+                    line.MouseDown += mainWindow.line_MouseDown;
+                    mainWindow.mainCanvas.Children.Add(line);
+
+                    lines.Add(line);
+                }
+                edge.lines = lines;
             }
 
             return newGraphCoordinates;

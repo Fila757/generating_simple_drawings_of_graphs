@@ -627,7 +627,7 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void line_MouseDown(object sender, RoutedEventArgs e)
+        public void line_MouseDown(object sender, RoutedEventArgs e)
         {
             Line line = sender as Line;
 
