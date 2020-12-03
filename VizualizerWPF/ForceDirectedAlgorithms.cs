@@ -187,7 +187,10 @@ namespace VizualizerWPF
             }
             foreach(var vertex in graphCoordinates.vertices)
             {
-                vertices.Add(vertex.center);
+                if (vertex.state == VertexState.Regular) //important to add just the ones that hasnt been added and are not intersections
+                {
+                    vertices.Add(vertex.center);
+                }
             }
 
             Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
