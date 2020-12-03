@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -24,6 +25,13 @@ namespace VizualizerWPF
         int INF = 1000000;
 
         Point origin = new Point(0, 0);
+
+        MainWindow mainWindow;
+
+        public ForceDirectedAlgorithms(MainWindow mainWindow)
+        {
+            this.mainWindow = mainWindow;
+        }
 
         Vector[] RegionVectors = new Vector[] {
             new Vector(10, 0),
@@ -175,35 +183,55 @@ namespace VizualizerWPF
             foreach (var edge in newGraphCoordinates.edges)
             {
                 var vertex1 = FindVertex(graphCoordinates, edge.points[0]);
-                ellipse = new Ellipse
+
+                var center1 = CountForceInnerVertex(vertex1.center, graphCoordinates.neighbors[vertex1], vertices, edges, Rs);
+
+                var ellipse1 = new Ellipse
                 {
-                    Width = MainWindow.sizeOfVertex,
-                    Height = MainWindowsizeOfVertex,
+                    Width = mainWindow.sizeOfVertex,
+                    Height = mainWindow.sizeOfVertex,
                     Fill = vertex1.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertexTemp.center.X - MainWindowsizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = ((vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections]) ||
-                    (vertexTemp.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
+                    Margin = new Thickness(vertex1.center.X - mainWindow.sizeOfVertex / 2, vertex1.center.Y - mainWindow.sizeOfVertex / 2, 0, 0),
+                    Visibility = ((vertex1.state == VertexState.Intersection && !mainWindow.statesCalculation[StateCalculation.Intersections]) ||
+                    (vertex1.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
+                };
 
-                newGraphCoordinates.vertices.Add(
-                    new Vertex { 
-                        center = CountForceInnerVertex(vertex1.center, graphCoordinates.neighbors[vertex1], vertices, edges, Rs),
-                        state = vertex1.state
-                        
-                        };
+                ellipse1.MouseDown += mainWindow.ellipse_MouseDown;
+                mainWindow.mainCanvas.Children.Add(ellipse1);
+                Panel.SetZIndex(ellipse1, vertex1.state == VertexState.Regular ? 100 : 10);
 
-                ellipse.MouseDown += ellipse_MouseDown;
-                mainCanvas.Children.Add(ellipse);
-
-                Panel.SetZIndex(ellipse, vertexTemp.state == VertexState.Regular ? 100 : 10);
-
-                vertexTemp.ellipse = ellipse;
-            });
-
-                var vertex2 = FindVertex(graphCoordinates, edge.points.Last());
                 newGraphCoordinates.vertices.Add(
                     new Vertex
                     {
-                        center = CountForceInnerVertex(vertex2.center, graphCoordinates.neighbors[vertex2], vertices, edges, Rs),
+                        center = center1,
+                        ellipse = ellipse1,
+                        state = vertex1.state
+
+                    });
+
+                var vertex2 = FindVertex(graphCoordinates, edge.points.Last());
+
+                var center2 = CountForceInnerVertex(vertex2.center, graphCoordinates.neighbors[vertex2], vertices, edges, Rs);
+
+                var ellipse2 = new Ellipse
+                {
+                    Width = mainWindow.sizeOfVertex,
+                    Height = mainWindow.sizeOfVertex,
+                    Fill = vertex2.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Margin = new Thickness(vertex2.center.X - mainWindow.sizeOfVertex / 2, vertex2.center.Y - mainWindow.sizeOfVertex / 2, 0, 0),
+                    Visibility = ((vertex2.state == VertexState.Intersection && !mainWindow.statesCalculation[StateCalculation.Intersections]) ||
+                    (vertex2.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
+                };
+
+                ellipse2.MouseDown += mainWindow.ellipse_MouseDown;
+                mainWindow.mainCanvas.Children.Add(ellipse2);
+                Panel.SetZIndex(ellipse2, vertex2.state == VertexState.Regular ? 100 : 10);
+
+                newGraphCoordinates.vertices.Add(
+                    new Vertex
+                    {
+                        center = center2,
+                        ellipse = ellipse2,
                         state = vertex2.state
                     });
 

@@ -56,7 +56,7 @@ namespace VizualizerWPF
     /// <summary>
     /// Enum for showing Intersection, KEdges, AtMostKEdge...
     /// </summary>
-    enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges}; //AM = AtMost
+    public enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges}; //AM = AtMost
 
     public partial class MainWindow : Window
     {
@@ -67,7 +67,7 @@ namespace VizualizerWPF
         /// <param name="graphGenerator">It is class for generating all drawings</param>
         /// </summary>
         StateChanging stateChanging = StateChanging.None;
-        Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
+        public Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
 
         StateAutoMoving stateAutoMoving = StateAutoMoving.None;
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
@@ -75,8 +75,8 @@ namespace VizualizerWPF
         GraphGenerator graphGenerator;
 
         double cx, cy; 
-        static public double sizeOfVertex;
-        static double scale;
+        public double sizeOfVertex;
+        public double scale;
 
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
@@ -464,7 +464,7 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ellipse_MouseDown(object sender, RoutedEventArgs e)
+        public void ellipse_MouseDown(object sender, RoutedEventArgs e)
         {
             Ellipse ellipse = sender as Ellipse;
             //MessageBox.Show(new { x = ellipse.Margin.Left, y= ellipse.Margin.Top }.ToString());
