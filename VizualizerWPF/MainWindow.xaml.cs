@@ -142,9 +142,10 @@ namespace VizualizerWPF
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             graphCoordinates = graphGenerator.GenerateNextDrawing();
-            DrawGraph(graphCoordinates, 1);
-            MessageBox.Show("Testing");
             graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+            DrawGraph(graphCoordinates, 1);
+            //MessageBox.Show("Testing");
+           
 
         }
 

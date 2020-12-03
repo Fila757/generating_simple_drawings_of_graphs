@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static int gamma = 10;
-        static int delta = 10;
+        static int gamma = 1;
+        static int delta = 1;
 
         static int INF = 1000000;
 
@@ -55,9 +55,9 @@ namespace VizualizerWPF
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
-        static List<Point> FindNeighbors(Vertex vertex)
+        static HashSet<Point> FindNeighbors(Vertex vertex)
         {
-            List<Point> neighbors = new List<Point>();
+            HashSet<Point> neighbors = new HashSet<Point>();
             foreach (var line in mainWindow.mainCanvas.Children.OfType<Line>())
             {
                 if(CollisionDetection.CenterOfEllipseOnLine(line, vertex.ellipse))
@@ -121,7 +121,7 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
-        static public Point CountForceInnerVertex(Point v, List<Point> neighbors, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        static public Point CountForceInnerVertex(Point v, HashSet<Point> neighbors, HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Vector finalForce = origin.ToVector();
 
@@ -163,112 +163,56 @@ namespace VizualizerWPF
                     return v + finalForce; 
                 }
             }
-            return origin;
+
+            throw new ArgumentException("It is not in any region");
         }
 
         static public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
 
-            mainWindow.mainCanvas.Children.Clear(); // to clear canvas
+            mainWindow.mainCanvas.Children.Clear(); 
 
             var newGraphCoordinates = new GraphCoordinates();
             List<Edge> edges = new List<Edge>();
-            List<Point> vertices = new List<Point>();
+            HashSet<Point> vertices = new HashSet<Point>();
+
+            Dictionary<Point, Point> convertor = new Dictionary<Point, Point>();
+
             foreach(var edge in graphCoordinates.edges)
             {
                 foreach(var line in edge.lines)
                 {
                     edges.Add(new Edge(new List<Point> { new Point(line.X1, line.Y1), new Point(line.X2, line.Y2)  }, new List<Line> { line }));
                 }
-
-                for(int i = 1; i < edge.points.Count - 1; i++)
-                {
-                    vertices.Add(edge.points[i]);
-                }
             }
             foreach(var vertex in graphCoordinates.vertices)
             {
-                if (vertex.state == VertexState.Regular) //important to add just the ones that hasnt been added and are not intersections
-                {
-                    vertices.Add(vertex.center);
-                }
+                vertices.Add(vertex.center);
             }
 
             Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
             CountRadiuses(vertices, edges, Rs);
 
-            foreach (var edge in graphCoordinates.edges)
+
+            foreach(var vertex in graphCoordinates.vertices)
             {
-                newGraphCoordinates.edges.Add(CountWholeForceForEdge(edge, vertices, edges, Rs));
+                var neighbors = FindNeighbors(vertex);
+                convertor[vertex.center] = CountForceInnerVertex(vertex.center, neighbors, vertices, edges, Rs);
             }
 
-            foreach (var edge in newGraphCoordinates.edges)
+            foreach(var vertex in graphCoordinates.vertices)
             {
-                var vertex1 = FindVertex(graphCoordinates, edge.points[0]);
-
-                var neighbors1 = FindNeighbors(vertex1); 
-
-                var center1 = CountForceInnerVertex(vertex1.center, neighbors1, vertices, edges, Rs);
-
-                var ellipse1 = new Ellipse
-                {
-                    Width = mainWindow.sizeOfVertex,
-                    Height = mainWindow.sizeOfVertex,
-                    Fill = vertex1.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertex1.center.X - mainWindow.sizeOfVertex / 2, vertex1.center.Y - mainWindow.sizeOfVertex / 2, 0, 0),
-                    Visibility = ((vertex1.state == VertexState.Intersection && !mainWindow.statesCalculation[StateCalculation.Intersections]) ||
-                    (vertex1.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
-                };
-
-                ellipse1.MouseDown += mainWindow.ellipse_MouseDown;
-                mainWindow.mainCanvas.Children.Add(ellipse1);
-                Panel.SetZIndex(ellipse1, vertex1.state == VertexState.Regular ? 100 : 10);
-
                 newGraphCoordinates.vertices.Add(
                     new Vertex
                     {
-                        center = center1,
-                        ellipse = ellipse1,
-                        state = vertex1.state
-
-                    });
-
-                var vertex2 = FindVertex(graphCoordinates, edge.points.Last());
-
-                var neighbors2 = FindNeighbors(vertex1);
-
-                var center2 = CountForceInnerVertex(vertex2.center, neighbors2, vertices, edges, Rs);
-
-                var ellipse2 = new Ellipse
-                {
-                    Width = mainWindow.sizeOfVertex,
-                    Height = mainWindow.sizeOfVertex,
-                    Fill = vertex2.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
-                    Margin = new Thickness(vertex2.center.X - mainWindow.sizeOfVertex / 2, vertex2.center.Y - mainWindow.sizeOfVertex / 2, 0, 0),
-                    Visibility = ((vertex2.state == VertexState.Intersection && !mainWindow.statesCalculation[StateCalculation.Intersections]) ||
-                    (vertex2.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
-                };
-
-                ellipse2.MouseDown += mainWindow.ellipse_MouseDown;
-                mainWindow.mainCanvas.Children.Add(ellipse2);
-                Panel.SetZIndex(ellipse2, vertex2.state == VertexState.Regular ? 100 : 10);
-
-                newGraphCoordinates.vertices.Add(
-                    new Vertex
-                    {
-                        center = center2,
-                        ellipse = ellipse2,
-                        state = vertex2.state
-                    });
-
-                newGraphCoordinates.vertices.Add(vertex1);
-                newGraphCoordinates.vertices.Add(vertex2);
-
-                newGraphCoordinates.AddToDictionary(vertex1, vertex2);
-                newGraphCoordinates.AddToDictionary(vertex2, vertex1);
+                        center = convertor[vertex.center],
+                        ellipse = new Ellipse(),
+                        state = vertex.state
+                    }) ;
             }
 
-            /* create lines */
+               
+            /* create lines */ !!!
             foreach(var edge in newGraphCoordinates.edges)
             {
                 var lines = new List<Line>();
@@ -280,12 +224,8 @@ namespace VizualizerWPF
                         Y1 = edge.points[i - 1].Y,
                         X2 = edge.points[i].X,
                         Y2 = edge.points[i].Y,
-                        Stroke = Brushes.Red,
-                        StrokeThickness = mainWindow.sizeOfVertex / 3
+
                     };
-                    Panel.SetZIndex(line, 1);
-                    line.MouseDown += mainWindow.line_MouseDown;
-                    mainWindow.mainCanvas.Children.Add(line);
 
                     lines.Add(line);
                 }
@@ -295,7 +235,7 @@ namespace VizualizerWPF
             return newGraphCoordinates;
         }
 
-        static void CountRadiuses(List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        static void CountRadiuses(HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             foreach(var vertex in vertices)
             {
@@ -309,6 +249,9 @@ namespace VizualizerWPF
                 {
                     Point a = edge.points[0];
                     Point b = edge.points[1];
+
+                    if(a == v || b == v) //is needed outherwise zero
+                        continue;
 
                     Point i_v = Projection(v, a, b);
                     Vector difference = i_v - a;
@@ -350,20 +293,21 @@ namespace VizualizerWPF
             }
         }
 
-        static public Edge CountWholeForceForEdge(Edge e, List<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        /*
+        static public Edge CountWholeForceForEdge(Edge e, HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             Edge newEdge = new Edge(e.points, e.lines);
             //newEdge.points.Add(e.points[0]);
-            for (int i = 1; i < e.points.Count - 1; i++)
+            for (int i = 1; i < e.points.Count - 2; i += 2)
             {
                 var v = e.points[i];
 
-                /* count forces */
+                // count forces 
 
                 Vector finalForce = origin.ToVector();
 
                 finalForce += CountAttractionForce(e.points[i-1], v);
-                finalForce += CountAttractionForce(e.points[i+1], v);
+                finalForce += CountAttractionForce(e.points[i+2], v);
 
                 foreach (var vertex in vertices)
                 {
@@ -378,10 +322,10 @@ namespace VizualizerWPF
                 foreach (var vertex in vertices)
                 {
                     finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i-1]);
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i+1]);
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i+2]);
                 }
 
-                /* chechk regioun condition */
+                // check regioun condition 
 
                 for (int j = 0; j < 8; j++)
                 {
@@ -395,6 +339,7 @@ namespace VizualizerWPF
 
                         finalForce = Min(finalForce, normalized);
                         newEdge.points[i] = v + finalForce;
+                        newEdge.points[i + 1] = v + finalForce; //because their are the same
                         break;
 
                     }
@@ -403,7 +348,7 @@ namespace VizualizerWPF
             //newEdge.points.Add(e.points.Last());
             return newEdge;
         }
-        
+        */
     }
 
 }
