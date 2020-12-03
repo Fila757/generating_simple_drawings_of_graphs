@@ -142,6 +142,9 @@ namespace VizualizerWPF
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             graphCoordinates = graphGenerator.GenerateNextDrawing();
+
+            DrawGraph(graphCoordinates, 1);
+
             graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             DrawGraph(graphCoordinates, 1);
             //MessageBox.Show("Testing");
@@ -845,6 +848,8 @@ namespace VizualizerWPF
         /// <param name="scale"></param>
         void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
+
+            mainCanvas.Children.Clear();
 
             /*Updating vertices*/
             var vertices = new HashSet<Vertex>();

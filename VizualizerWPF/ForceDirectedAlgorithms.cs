@@ -170,9 +170,6 @@ namespace VizualizerWPF
 
         static public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
-
-            mainWindow.mainCanvas.Children.Clear(); 
-
             var newGraphCoordinates = new GraphCoordinates();
             List<Edge> edges = new List<Edge>();
             HashSet<Point> vertices = new HashSet<Point>();
