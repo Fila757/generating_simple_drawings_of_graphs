@@ -124,6 +124,8 @@ namespace VizualizerWPF
             foreach (StateCalculation state in Enum.GetValues(typeof(StateCalculation)))
                 statesCalculation[state] = false;
 
+            statesCalculation[StateCalculation.Intersections] = true;
+
             InitializeComponent();
 
             StateChanged += ResizeWindowEvent;
@@ -702,7 +704,7 @@ namespace VizualizerWPF
         /// </summary>
         private void ReCalculateKEdges()
         {
-            int kEdgesPicked = (int)KhranyUpDown.Value;
+            int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
             var kEdgdesValues = Enumerable.Repeat(0, kEdgesPicked + 1).ToArray();
 
