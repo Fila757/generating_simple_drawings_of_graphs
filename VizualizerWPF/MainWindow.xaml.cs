@@ -146,7 +146,7 @@ namespace VizualizerWPF
             DrawGraph(graphCoordinates, 1);
 
             graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            DrawGraph(graphCoordinates, 1);
+            DrawGraph(graphCoordinates, 1, true);
             //MessageBox.Show("Testing");
            
 
@@ -399,7 +399,11 @@ namespace VizualizerWPF
             }
 
             mainCanvas.Children.Clear();
-            DrawGraph(graphCoordinates, WindowState ==  WindowState.Maximized ? scale : 1);
+            DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
+
+            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+            DrawGraph(graphCoordinates, 1, true);
+           
         }
 
         private void DeleteEdgeFromDictionary(Vertex from, Vertex to)
@@ -846,11 +850,17 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="graphCoordinates">Class to store graph</param>
         /// <param name="scale"></param>
-        void DrawGraph(GraphCoordinates graphCoordinates, double scale)
+        void DrawGraph(GraphCoordinates graphCoordinates, double scale, bool skipShift = false)
         {
 
-            mainCanvas.Children.Clear();
-
+            //mainCanvas.Children.Clear();
+            double copy_cx = cx; double copy_cy = cy;
+            if (skipShift)
+            {
+                cx = 0;
+                cy = 0;
+            }
+                
             /*Updating vertices*/
             var vertices = new HashSet<Vertex>();
             foreach(var vertex in graphCoordinates.vertices)
@@ -947,6 +957,8 @@ namespace VizualizerWPF
             graphCoordinates.neighbors = neighborsTemp;
 
             ReCalculateKEdges();
+
+            cx = copy_cx; cy = copy_cy;
         }
        
     }

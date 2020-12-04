@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static int gamma = 1;
-        static int delta = 1;
+        static int gamma = 5;
+        static int delta = 10;
 
         static int INF = 1000000;
 
