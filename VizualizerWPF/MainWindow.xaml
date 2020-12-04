@@ -21,24 +21,25 @@
             <RowDefinition Height= "26*"/>
             <RowDefinition Height= "28*"/>
             <RowDefinition Height= "29*"/>
-            <RowDefinition Height= "105*"/>
-            <RowDefinition Height= "60*"/>
-            <RowDefinition Height= "38*"/>
+            <RowDefinition Height= "40*"/>
+            <RowDefinition Height= "48*"/>
+            <RowDefinition Height= "115*"/>
             <RowDefinition Height= "62*"/>
             <RowDefinition Height= "33*"/>
             <RowDefinition Height= "49*"/>
             <RowDefinition Height= "15*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Adding_Click"/>
-        <Button x:Name="Removing" Content="Mazaní" Grid.Column= "4" Grid.Row= "2" Margin="3,3,3,3" Click="Removing_Click"/>
-        <Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>
-        <Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>
-        <ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
+        <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,3,3,3" Click="Adding_Click"/>
+        <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
+        <Button x:Name="Invariant" Content="Removing" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" />
+        <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
+        <!--<Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>-->
+        <!--<ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
             <ListBoxItem Content="AMk-hrany" FontSize="10" FontWeight="Bold"/>
             <ListBoxItem Content="2AMk-hrany" FontSize="10" FontWeight="Bold"/>
             <ListBoxItem Content="3AMk-hrany" FontSize="10" FontWeight="Bold"/>
-        </ListBox>
-        <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>
+        </ListBox>-->
+        <!--<syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>-->
         <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
         <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="NextDrawing_Click"/>
         <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
@@ -58,13 +59,13 @@
         <TextBlock x:Name="infoDrawings" Grid.Column ="4" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Drawings:"/>
         <TextBlock x:Name="infoOptimal" Grid.Column ="4" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Optimal:"/>
         <TextBlock x:Name="infoCrossings" Grid.Column ="3" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Crossings:"/>
-        <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,0" Visibility="Visible" Text="INFO:"/>
-        <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,0" Visibility="Visible" Text="NODES:"/>
+        <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,38" Visibility="Visible" Text="INFO:" Grid.RowSpan="2" />
+        <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:"/>
 
 
 
-        <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3,3,3,15" Grid.Row ="10"  Click="AutoButton_Click"/>
-        <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="10" Margin="3,3,3,15" NumberDecimalDigits="1"  
+        <Button x:Name="AutoMoving" Content="Auto" Grid.Column="4" Margin="3,3,50,3" Grid.Row ="6"  Click="AutoButton_Click"/>
+        <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="4" Grid.Row="6" Margin="65,3,5,3" NumberDecimalDigits="1"  
                            MaxValue="1000" MinValue="0.1"/>
 
     </Grid>
