@@ -342,6 +342,7 @@ namespace VizualizerWPF
 
         }
 
+        /*
         /// <summary>
         /// Function to change if K edges counting (textBlock) is visible
         /// </summary>
@@ -351,7 +352,7 @@ namespace VizualizerWPF
         {
             Button button = sender as Button;
 
-            /*changing color*/
+            // changing color
             button.Background = statesCalculation[StateCalculation.KEdges] ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
 
@@ -361,6 +362,9 @@ namespace VizualizerWPF
             else
                 textBlockKEdges.Visibility = Visibility.Hidden;
         }
+        */
+
+        /*
         /// <summary>
         /// Function to change if AtMost, AMAM and AMAMAM K edges counting (textBlock) is visible 
         /// </summary>
@@ -377,6 +381,7 @@ namespace VizualizerWPF
                 textBlockAMKEdges.Visibility = Visibility.Hidden;
             ReCalculateKEdges();
         }
+        */
         /// <summary>
         /// Function to generate new drawing of clique from data
         /// If value on UpDown counter is changed then new data file is loaded
@@ -702,11 +707,14 @@ namespace VizualizerWPF
         /// and counting <c>k</c> for every edge
         /// Then summing function for AM, AMAM, AMAMAM k edges is called
         /// </summary>
+        /// 
+        int maximalkEdges = 7;
+
         private void ReCalculateKEdges()
         {
-            int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
+            //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
-            var kEdgdesValues = Enumerable.Repeat(0, kEdgesPicked + 1).ToArray();
+            var kEdgdesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
 
@@ -746,9 +754,10 @@ namespace VizualizerWPF
                     if (sum < 0)
                         throw new ArgumentException("You cannot add edge between already connected vertices");
                     */
-                    if (sum <= kEdgesPicked) // only needed this ones
-                        kEdgdesValues[sum]++;
-
+                    /*
+                    if (sum <= kEdgesPicked) // only needed this ones */
+                    kEdgdesValues[sum]++;
+                    
                     var edge = FindEdgeFromVertices(from, to);
 
                     if (edge == null)
@@ -757,18 +766,24 @@ namespace VizualizerWPF
                     foreach (var line in edge.lines)
                     {
                         line.Stroke = colors[sum];
+                        /*
                         if (sum <= kEdgesPicked)
                             line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
                         else
-                            line.StrokeDashArray = DoubleCollection.Parse("");
+                        */
+                        line.StrokeDashArray = DoubleCollection.Parse("");
                     }
                 }
             }
 
+            for(int i = 0; i <= maximalkEdges; i++)
+            {
+                TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
+                textBlock.Text = kEdgdesValues[i].ToString();
+            }
 
-
-            CalculateAMEdgesAndPrint(kEdgdesValues, kEdgesPicked);
-            textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
+            CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
+            //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
             RedrawGraph(graphCoordinates, 1);
 
@@ -801,12 +816,33 @@ namespace VizualizerWPF
                 }
             }
 
+            for(int i = 0; i <= size; i++)
+            {
+                TextBlock textBlock = FindName($"amKEdges{i}") as TextBlock;
+                textBlock.Text = AMKEdgesArray[0, i].ToString();
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                TextBlock textBlock = FindName($"amAmKEdges{i}") as TextBlock;
+                textBlock.Text = AMKEdgesArray[1, i].ToString();
+            }
+
+            for (int i = 0; i <= size; i++)
+            {
+                TextBlock textBlock = FindName($"amAmAmKEdges{i}") as TextBlock;
+                textBlock.Text = AMKEdgesArray[2, i].ToString();
+            }
+ 
+
+            /*
             if (statesCalculation[StateCalculation.AMKEdges])
                 textBlockAMKEdges.Text = $"AM K hran velikost {size} je {AMKEdgesArray[0, size]}";
             else if (statesCalculation[StateCalculation.AMAMKEdges])
                 textBlockAMKEdges.Text = $"AMAM K hran velikost {size} je {AMKEdgesArray[1, size]}";
             else if (statesCalculation[StateCalculation.AMAMAMKEdges])
                 textBlockAMKEdges.Text = $"AMAMAM K hran velikost {size} je {AMKEdgesArray[2, size]}";
+            */
         }
         
         /// <summary>
