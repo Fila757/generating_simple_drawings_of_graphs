@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static int gamma = 5;
-        static int delta = 10;
+        static int gamma = 1;
+        static int delta = 1;
 
         static int INF = 1000000;
 
@@ -144,7 +144,7 @@ namespace VizualizerWPF
             {
                 foreach (var neigh in neighbors)
                 {
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
+                    finalForce += CountRepulsionEdgeForce(vertex, v, neigh);
                 }
             }
 
