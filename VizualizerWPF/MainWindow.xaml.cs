@@ -147,13 +147,20 @@ namespace VizualizerWPF
 
             DrawGraph(graphCoordinates, 1);
 
-            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            DrawGraph(graphCoordinates, 1, true);
+            //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+            //DrawGraph(graphCoordinates, 1, true);
             //MessageBox.Show("Testing");
            
 
         }
 
+
+        private int optimalCrossingNumber() {
+            return ((int)NextDrawingUpDown.Value / 2) *
+                (((int)NextDrawingUpDown.Value - 1) / 2) *
+                (((int)NextDrawingUpDown.Value - 2) / 2) *
+                (((int)NextDrawingUpDown.Value - 3) / 2) / 4;
+        }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1 / (double)AutoMovingUpDown.Value);
@@ -314,6 +321,9 @@ namespace VizualizerWPF
         /// <param name="e"></param>
         private void Intersections_Click(object sender, RoutedEventArgs e)
         {
+
+            int numberOfIntersections = 0;
+
             Button button = sender as Button;
 
             /*changing color*/
@@ -328,7 +338,9 @@ namespace VizualizerWPF
                 foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
                 {
                     if (FindVertex(vertex).state == VertexState.Intersection)
+                    {
                         vertex.Visibility = Visibility.Hidden;
+                    }
                 }
             }
             else
@@ -336,9 +348,14 @@ namespace VizualizerWPF
                 foreach(var vertex in mainCanvas.Children.OfType<Ellipse>())
                 {
                     if (FindVertex(vertex).state == VertexState.Intersection)
+                    {
                         vertex.Visibility = Visibility.Visible;
+                        numberOfIntersections++;
+                    }
                 }
             }
+
+            optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
 
         }
 
@@ -413,6 +430,23 @@ namespace VizualizerWPF
            
         }
 
+        /*
+        private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
+        {
+            
+            graphGenerator.GeneratePreviousDrawing();
+            numberOfDrawing.Text = graphGenerator.counter.ToString();
+
+            mainCanvas.Children.Clear();
+            DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
+
+            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+            DrawGraph(graphCoordinates, 1, true);
+
+
+        }
+        */
+
         private void DeleteEdgeFromDictionary(Vertex from, Vertex to)
         {
             if (graphCoordinates.neighbors.ContainsKey(from))
@@ -425,12 +459,15 @@ namespace VizualizerWPF
         /// <returns></returns>
         private Vertex FindVertex(Ellipse ellipse)
         {
+
+            return FindVertex(new Point(ellipse.Margin.Left + sizeOfVertex / 2, ellipse.Margin.Top + sizeOfVertex / 2));
+            /*
             foreach(var vertex in graphCoordinates.vertices)
             {
                 if (vertex.ellipse == ellipse)
                     return vertex;
             }
-
+            */
             throw new ArgumentException("There is no such a vertex, containing ellipse");
         }
 
@@ -597,7 +634,7 @@ namespace VizualizerWPF
                 }
             }
 
-            ReCalculateKEdges();
+            UpdateStats();
         }
 
         /// <summary>
@@ -671,7 +708,7 @@ namespace VizualizerWPF
 
             }
 
-            ReCalculateKEdges();
+            UpdateStats();
         }
 
         private double Determinant(Vector a, Vector b)
@@ -844,6 +881,22 @@ namespace VizualizerWPF
                 textBlockAMKEdges.Text = $"AMAMAM K hran velikost {size} je {AMKEdgesArray[2, size]}";
             */
         }
+
+        private void UpdateStats()
+        {
+            int numberOfIntersections = 0;
+            foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
+            {
+                if (FindVertex(vertex).state == VertexState.Intersection)
+                {
+                    numberOfIntersections++;
+                }
+            }
+        
+           optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
+
+           ReCalculateKEdges();
+        }
         
         /// <summary>
         /// Function to add vertex when the place is empty
@@ -891,7 +944,7 @@ namespace VizualizerWPF
         void DrawGraph(GraphCoordinates graphCoordinates, double scale, bool skipShift = false)
         {
 
-            //mainCanvas.Children.Clear();
+            mainCanvas.Children.Clear();
             double copy_cx = cx; double copy_cy = cy;
             if (skipShift)
             {
@@ -994,7 +1047,7 @@ namespace VizualizerWPF
 
             graphCoordinates.neighbors = neighborsTemp;
 
-            ReCalculateKEdges();
+            UpdateStats();
 
             cx = copy_cx; cy = copy_cy;
         }

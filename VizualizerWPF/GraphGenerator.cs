@@ -253,6 +253,21 @@ namespace VizualizerWPF
             return graphCoordinates;
         }
 
+        /*
+        private GraphCoordinates ReadUntillPreviousRS()
+        {
+            int counterOfSharps = 0;
+            while(counterOfSharps < 2 && streamReader.BaseStream.Position > 0)
+            {
+                streamReader.BaseStream.Position = streamReader.BaseStream.Seek(-1, SeekOrigin.Current);
+                if (streamReader.Peek() >= 0 && Convert.ToChar(streamReader.Peek()) == '#')
+                    counterOfSharps++;
+            }
+            
+            return ReadUntillNextRS();
+        }
+        */
+
         /// <summary>
         /// Get next drawing
         /// </summary>
@@ -266,5 +281,13 @@ namespace VizualizerWPF
             }
             return ReadUntillNextRS();
         }
+
+        /*
+        public GraphCoordinates GeneratePreviousDrawing()
+        {
+            counter--;
+            return ReadUntillPreviousRS();
+        }
+        */
     }
 }
