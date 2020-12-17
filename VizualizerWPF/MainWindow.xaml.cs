@@ -138,7 +138,7 @@ namespace VizualizerWPF
 
             cx = 300; cy = 200;
             sizeOfVertex = 15;
-            scale = 1.5;
+            scale = 1;//1.5;
 
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
