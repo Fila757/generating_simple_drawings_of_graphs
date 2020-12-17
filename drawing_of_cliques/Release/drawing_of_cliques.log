@@ -1,115 +1,117 @@
 ﻿  drawing_of_cliques.cpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(251,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(252,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(267,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(280,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(366,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(388,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(488,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(492,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(498,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,42): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(501,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(270,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(271,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(286,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(299,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(385,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(407,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(507,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(511,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(517,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(518,42): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(520,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
           with
           [
               _Ty=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(520,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(541,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(548,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(561,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(565,115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(573,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(591,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(595,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(653,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(654,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(661,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(667,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(703,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(718,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(737,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(750,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(772,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(775,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(778,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(787,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(803,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(806,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(809,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(818,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(828,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(865,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1018,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1123,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(539,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(567,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(580,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(584,115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(592,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(614,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(618,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(676,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(677,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(684,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(690,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(726,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(741,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(760,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(773,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(798,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(801,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(804,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(813,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(829,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(832,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(835,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(844,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(854,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(862,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(899,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1052,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1157,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1123,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1157,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1387,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1389,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1426,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1428,23): warning C4018: '<': signed/unsigned mismatch
   functions.hpp
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(251,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(252,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(267,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(280,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(366,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(388,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(488,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(492,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(498,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(499,42): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(501,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(270,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(271,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(286,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(299,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(385,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(407,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(507,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(511,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(517,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(518,42): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(520,33): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
           with
           [
               _Ty=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(520,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(541,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(548,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(561,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(565,115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(573,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(591,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(595,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(653,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(654,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(661,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(667,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(703,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(718,23): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(737,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(750,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(772,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(775,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(778,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(787,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(803,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(806,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(809,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(818,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(828,21): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(865,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1018,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1123,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(539,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(560,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(567,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(580,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(584,115): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(592,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(614,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(618,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(676,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(677,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(684,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(690,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(726,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(741,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(760,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(773,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(798,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(801,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(804,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(813,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(829,18): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(832,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(835,19): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(844,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(854,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(862,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(899,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1052,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1157,108): warning C4244: 'argument': conversion from '_Ty2' to 'int', possible loss of data
           with
           [
               _Ty2=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1123,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1157,66): warning C4244: 'argument': conversion from '_Ty1' to 'int', possible loss of data
           with
           [
               _Ty1=double
           ]
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1387,22): warning C4018: '<': signed/unsigned mismatch
-C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1389,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1426,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\drawing_of_cliques\functions.hpp(1428,23): warning C4018: '<': signed/unsigned mismatch
   Generating code
   Previous IPDB not found, fall back to full compilation.
-  All 2561 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 2565 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   Finished generating code
   drawing_of_cliques.vcxproj -> C:\Users\filip\source\repos\generating-simple-drawings-of-graphs\Release\drawing_of_cliques.exe

@@ -246,6 +246,25 @@ struct graph {
 
 };
 
+
+inline bool if_two_segmetns_intersects(pair<shared_ptr<Vertex>, shared_ptr<Vertex> > line1, pair<shared_ptr<Vertex>, shared_ptr<Vertex> > line2)
+{
+	auto denominator = (line2.second->y_ - line2.first->y_) * (line1.second->x_ - line1.first->x_) - (line2.second->x_ - line2.first->x_) * (line1.second->y_ - line1.first->y_);
+
+	auto numT = -line1.first->x_ * (line2.second->y_ - line2.first->y_) + line1.first->y_ * (line2.second->x_ - line2.first->x_) +
+		line2.first->x_ * (line2.second->y_ - line2.first->y_) - line2.first->y_ * (line2.second->x_ - line2.first->x_);
+	auto numS = -line1.first->x_ * (line1.second->y_ - line1.first->y_) + line1.first->y_ * (line1.second->x_ - line1.first->x_) +
+		line2.first->x_ * (line1.second->y_ - line1.first->y_) - line2.first->y_ * (line1.second->x_ - line1.first->x_);
+
+
+	auto s = numS / denominator;
+	auto t = numT / denominator;
+
+	if (denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
+		return true;
+	return false;
+}
+
 inline void create_coordinates(const vector<shared_ptr<Vertex> >& points, vector<vector<double> >& distances) {
 
 	for (int i = 0; i < points.size();i++) {
@@ -422,18 +441,10 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 	pair<double, double> second_neg_vect;
 
 	//negative one is to the right
-	if (vect.x == 0) {
-		first_neg_vect = make_pair(-vect.y, 0);
-		second_neg_vect = make_pair(vect.y, 0);
-	}
-	else if (vect.y == 0) {
-		first_neg_vect = make_pair(0, vect.x);
-		second_neg_vect = make_pair(0, -vect.x);
-	}
-	else {
-		first_neg_vect = make_pair(-vect.x, vect.y);
-		second_neg_vect = make_pair(vect.x, -vect.y);
-	}
+
+	first_neg_vect = make_pair(-vect.y, vect.x);
+	second_neg_vect = make_pair(vect.y, -vect.x);
+	
 
 	if (det(vect, first_neg_vect) < 0) { //negative der is to the right
 		return make_pair(EPSILON * first_neg_vect.x, EPSILON * first_neg_vect.y);
@@ -837,6 +848,14 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				temp_uniques.push_back(vertices[i]);
 		}
 		vertices = temp_uniques;
+
+		/*resolce knots */
+	
+		for (int i = 3; i < vertices.size(); i++) {
+			if (if_two_segmetns_intersects(make_pair(vertices[i - 3], vertices[i - 2]), make_pair(vertices[i - 1], vertices[i])))
+				swap(vertices[i - 2], vertices[i - 1]);
+		}
+		
 
 		if (vertices.size() == 0) {
 			cout << "WTF20" << endl;
@@ -1265,6 +1284,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 			redirect_previous_segment(a, b, vertices[vertices.size() - 2]);
 			*/
 
+			/*
 			if (counter == 90 && edges.size() == 160) {
 				cout << "WTF" << endl;
 				for (auto it = edges.begin(); it != edges.end(); it++) {
@@ -1274,6 +1294,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				}
 				cout << "WTFEND" << endl;
 			}
+			*/
 
 			add_vertex(seg);
 
@@ -1373,7 +1394,7 @@ inline void graph::write_coordinates() {
 
 	if (counter == 153) {
 		cout << "HEU" << endl;
-		print_bool = true;
+		//print_bool = true;
 	}
 	if (counter == 11442) {
 		cout << "HEU2" << endl;
@@ -1441,12 +1462,17 @@ inline void graph::create_all_possible_drawings() {
 
 		//cout << counter << endl;
 		
+		/*
 		if (counter < 153) {
 			done = true;
 		}
-		else {
-			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
-		}
+		*/
+
+		//else {
+
+		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		
+		//}
 
 		if (done) {
 			cout << "yes" << endl;

@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static double gamma = 0.1;
-        static double delta = 0.1;
+        static double gamma = 1;
+        static double delta = 1;
 
         static int INF = 50;
 
@@ -129,6 +129,11 @@ namespace VizualizerWPF
 
         static public Point CountForceInnerVertex(Point v, HashSet<Point> neighbors, HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
+            if(v.X == 393 && v.Y == 74)
+            {
+                Console.WriteLine("rr");
+            }
+
             Vector finalForce = origin.ToVector();
 
             foreach (var vertex in neighbors)
@@ -144,6 +149,10 @@ namespace VizualizerWPF
             foreach (var edge in edges)
             {
                 finalForce += CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
+                if (Double.IsNaN(finalForce.X))
+                {
+                    Console.WriteLine("NaN");
+                }
             }
 
             foreach (var vertex in vertices)
