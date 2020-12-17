@@ -197,6 +197,7 @@ namespace VizualizerWPF
             Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
             CountRadiuses(vertices, edges, Rs);
 
+            /*
             foreach(var (point, arr) in Rs)
             {
                 //Rs[point] = new double[] { 1, 1, 1, 1, 1, 1, 1, 1 };
@@ -208,6 +209,7 @@ namespace VizualizerWPF
 
                 MessageBox.Show(debugger);
             }
+            */
 
             foreach(var vertex in graphCoordinates.vertices)
             {
