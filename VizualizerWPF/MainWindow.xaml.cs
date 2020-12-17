@@ -78,6 +78,8 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
+        int Smoothing => 1;
+
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
@@ -149,11 +151,23 @@ namespace VizualizerWPF
 
             //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             //DrawGraph(graphCoordinates, 1, true);
+
+            MakeSmoother();
+
             //MessageBox.Show("Testing");
-           
+
 
         }
 
+
+        private void MakeSmoother()
+        {
+            for (int i = 0; i < Smoothing; i++)
+            {
+                graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+                DrawGraph(graphCoordinates, 1, true);
+            }
+        }
 
         private int optimalCrossingNumber() {
             return ((int)NextDrawingUpDown.Value / 2) *
@@ -425,8 +439,10 @@ namespace VizualizerWPF
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
-            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            DrawGraph(graphCoordinates, 1, true);
+            //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+            //DrawGraph(graphCoordinates, 1, true);
+
+            MakeSmoother();
            
         }
 
