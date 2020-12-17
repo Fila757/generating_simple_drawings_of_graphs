@@ -31,7 +31,7 @@
         </Grid.RowDefinitions>
         <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,3,3,3" Click="Adding_Click"/>
         <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
-        <Button x:Name="Invariant" Content="Removing" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" />
+        <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" />
         <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
         <!--<Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>-->
         <!--<ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
