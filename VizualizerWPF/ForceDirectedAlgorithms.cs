@@ -22,7 +22,7 @@ namespace VizualizerWPF
         static double gamma = 0.1;
         static double delta = 0.1;
 
-        static int INF = 1000000;
+        static int INF = 50;
 
         static Point origin = new Point(0, 0);
 
