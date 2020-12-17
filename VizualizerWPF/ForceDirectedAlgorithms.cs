@@ -80,9 +80,14 @@ namespace VizualizerWPF
             return a.X * b.Y - b.X * a.Y;
         }
 
+        static bool IsAcute(Vector first, Vector second)
+        {
+            return (first.X * second.X + first.Y * second.Y) > 0;
+        }
+
         static bool IsBetween(Vector first, Vector second, Vector middle)
         {
-            return Determinant(first, middle) * Determinant(second, middle) <= 0;
+            return (Determinant(first, middle) * Determinant(second, middle) <= 0) && (IsAcute(first, middle) && IsAcute(second, middle));
         }
 
         static double Distance(Point a, Point b)
@@ -106,7 +111,8 @@ namespace VizualizerWPF
             Vector ab = b - a;
             var cosOfAngle = (av.X * ab.X + av.Y * ab.Y) / (Distance(av.ToPoint(), origin) * Distance(ab.ToPoint(), origin));
 
-            return (cosOfAngle * av).ToPoint();
+            ab.Normalize();
+            return Distance((cosOfAngle * av).ToPoint(), origin) * ab + a;
         }
 
         static public Vector CountRepulsionEdgeForce(Point v, Point a, Point b)
