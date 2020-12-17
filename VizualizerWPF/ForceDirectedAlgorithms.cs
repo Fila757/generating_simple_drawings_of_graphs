@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static double gamma = 1;
-        static double delta = 1;
+        static double gamma = 100;
+        static double delta = 100;
 
         static int INF = 50;
 
@@ -152,6 +152,7 @@ namespace VizualizerWPF
                 if (Double.IsNaN(finalForce.X))
                 {
                     Console.WriteLine("NaN");
+                    CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
                 }
             }
 
@@ -160,8 +161,18 @@ namespace VizualizerWPF
                 foreach (var neigh in neighbors)
                 {
                     finalForce += CountRepulsionEdgeForce(vertex, v, neigh);
+                    if (Double.IsNaN(finalForce.X))
+                    {
+                        Console.WriteLine("NaN");
+                        CountRepulsionEdgeForce(vertex, v, neigh);
+                    }
                 }
             }
+
+            /* special case point on line, should be resolve */
+
+            if (Double.IsNaN(finalForce.X) && Double.IsNaN(finalForce.Y))
+                finalForce = new Vector(INF, INF);
 
             /* chechk regioun condition */
 

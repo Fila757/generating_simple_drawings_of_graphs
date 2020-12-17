@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 1;
+        int Smoothing => 10;
 
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
