@@ -198,7 +198,7 @@ namespace VizualizerWPF
                 Vertex vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Scale(scale);
 
-                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - scale * sizeOfVertex / 2, vertexTemp.center.Y - scale * sizeOfVertex / 2, 0, 0);
+                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0);
 
                 vertexTemp.ellipse.Height *= 1; //scale;
                 vertexTemp.ellipse.Width *= 1; //scale;
@@ -908,10 +908,11 @@ namespace VizualizerWPF
                     numberOfIntersections++;
                 }
             }
-        
-           optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
 
-           ReCalculateKEdges();
+            optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
+            crossings.Text = numberOfIntersections.ToString();
+
+            ReCalculateKEdges();
         }
         
         /// <summary>
