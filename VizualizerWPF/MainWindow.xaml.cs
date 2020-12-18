@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 10;
+        int Smoothing => 5;
 
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
@@ -138,7 +138,7 @@ namespace VizualizerWPF
 
             cx = 300; cy = 200;
             sizeOfVertex = 15;
-            scale = 1;//1.5;
+            scale = 1.5;
 
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
@@ -200,8 +200,8 @@ namespace VizualizerWPF
 
                 vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - scale * sizeOfVertex / 2, vertexTemp.center.Y - scale * sizeOfVertex / 2, 0, 0);
 
-                vertexTemp.ellipse.Height *= scale;
-                vertexTemp.ellipse.Width *= scale;
+                vertexTemp.ellipse.Height *= 1; //scale;
+                vertexTemp.ellipse.Width *= 1; //scale;
 
                mainCanvas.Children.Add(vertexTemp.ellipse);
                vertices.Add(vertexTemp);
@@ -219,7 +219,7 @@ namespace VizualizerWPF
                     line.Y1 *= scale;
                     line.X2 *= scale;
                     line.Y2 *= scale;
-                    line.StrokeThickness *= scale;
+                    line.StrokeThickness *= 1;// scale;
 
                     mainCanvas.Children.Add(line);
                 }
@@ -269,7 +269,7 @@ namespace VizualizerWPF
             if(WindowState == WindowState.Normal)
             {
                 RedrawGraph(graphCoordinates, 1 / scale);
-                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex / scale;
+                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex; // scale;
                 selectedVertices.Clear();
 
             }
@@ -277,7 +277,7 @@ namespace VizualizerWPF
             if (WindowState == WindowState.Maximized)
             {
                 RedrawGraph(graphCoordinates, scale);
-                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex * scale;
+                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex; //* scale;
                 selectedVertices.Clear();
 
             }
