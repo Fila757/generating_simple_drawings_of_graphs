@@ -55,12 +55,24 @@ namespace VizualizerWPF
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
-        static HashSet<Point> FindNeighbors(Vertex vertex)
+        static HashSet<Point> FindNeighbors(GraphCoordinates graphCoordinates, Vertex vertex)
         {
             HashSet<Point> neighbors = new HashSet<Point>();
-            foreach (var line in mainWindow.mainCanvas.Children.OfType<Line>())
+
+
+            /* creating lines from graphCoordinates */
+
+            List<Line> lines = new List<Line>();
+            foreach (var edge in graphCoordinates.edges) {
+                foreach(var l in edge.lines)
+                {
+                    lines.Add(l);
+                }
+            }
+
+            foreach (var line in lines)
             {
-                if(CollisionDetection.CenterOfEllipseOnLine(line, vertex.ellipse))
+                if(CollisionDetection.CenterOnLine(line, vertex.center))
                 {
                     //maybe compare absolute difference is < 0.5
                     neighbors.Add(new Point(line.X1, line.Y1) == vertex.center ? new Point(line.X2, line.Y2) : new Point(line.X1, line.Y1));
@@ -196,6 +208,8 @@ namespace VizualizerWPF
 
         static public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
+            mainWindow.mainCanvas.Children.Clear();
+
             var newGraphCoordinates = new GraphCoordinates();
             List<Edge> edges = new List<Edge>();
             HashSet<Point> vertices = new HashSet<Point>();
@@ -233,7 +247,7 @@ namespace VizualizerWPF
 
             foreach(var vertex in graphCoordinates.vertices)
             {
-                var neighbors = FindNeighbors(vertex);
+                var neighbors = FindNeighbors(graphCoordinates, vertex);
                 convertor[vertex.center] = CountForceInnerVertex(vertex.center, neighbors, vertices, edges, Rs);
             }
 
@@ -342,62 +356,6 @@ namespace VizualizerWPF
             }
         }
 
-        /*
-        static public Edge CountWholeForceForEdge(Edge e, HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
-        {
-            Edge newEdge = new Edge(e.points, e.lines);
-            //newEdge.points.Add(e.points[0]);
-            for (int i = 1; i < e.points.Count - 2; i += 2)
-            {
-                var v = e.points[i];
-
-                // count forces 
-
-                Vector finalForce = origin.ToVector();
-
-                finalForce += CountAttractionForce(e.points[i-1], v);
-                finalForce += CountAttractionForce(e.points[i+2], v);
-
-                foreach (var vertex in vertices)
-                {
-                    finalForce += CountRepulsionForce(v, vertex);
-                }
-
-                foreach (var edge in edges)
-                {
-                    finalForce += CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
-                }
-
-                foreach (var vertex in vertices)
-                {
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i-1]);
-                    finalForce -= CountRepulsionEdgeForce(vertex, v, e.points[i+2]);
-                }
-
-                // check regioun condition 
-
-                for (int j = 0; j < 8; j++)
-                {
-                    int j2 = (j + 1) % 8;
-                    if (IsBetween(RegionVectors[j], RegionVectors[j2], finalForce))
-                    {
-
-                        Vector normalized = new Vector(finalForce.X, finalForce.Y);
-                        normalized.Normalize();
-                        normalized = normalized.Scale(Rs[v][j]);
-
-                        finalForce = Min(finalForce, normalized);
-                        newEdge.points[i] = v + finalForce;
-                        newEdge.points[i + 1] = v + finalForce; //because their are the same
-                        break;
-
-                    }
-                }
-            }
-            //newEdge.points.Add(e.points.Last());
-            return newEdge;
-        }
-        */
     }
 
 }
