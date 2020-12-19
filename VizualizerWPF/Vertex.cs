@@ -25,6 +25,12 @@ namespace VizualizerWPF
         public Point center ;
         public VertexState state;
 
+        public static bool Compare(Point a, Point b)
+        {
+            if (Math.Abs(a.X - b.X) < 0.1 && Math.Abs(a.Y - b.Y) < 0.1)
+                return true;
+            return false;
+        }
 
         public Vertex(Ellipse ellipse, Point point, VertexState state)
         {
@@ -35,7 +41,7 @@ namespace VizualizerWPF
 
         public static bool operator ==(Vertex a, Vertex b)
         {
-            return a.center == b.center;
+            return Compare(a.center, b.center);
         }
 
         public static bool operator !=(Vertex a, Vertex b)
@@ -49,7 +55,7 @@ namespace VizualizerWPF
                 return false;
 
             var vertex = (Vertex)obj;
-            return center == vertex.center;
+            return Compare(center, vertex.center);
         }
 
         public override int GetHashCode()

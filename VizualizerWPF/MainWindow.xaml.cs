@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 5;
+        int Smoothing => 10;
 
         HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
 
@@ -87,39 +87,6 @@ namespace VizualizerWPF
         Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
             Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
 
-
-        /// <summary>
-        /// Function which remain state that maximally one of the listBox option is selected
-        /// </summary>
-        /// <param name="listBox">listBoc given in WPF</param>
-        private void SelectOnlyOneOption(ListBox listBox)
-        {
-            if (listBox.SelectedIndex == 0)
-            {
-                statesCalculation[StateCalculation.AMKEdges] = true;
-                statesCalculation[StateCalculation.AMAMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMAMKEdges] = false;
-            }
-            else if (listBox.SelectedIndex == 1)
-            {
-                statesCalculation[StateCalculation.AMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMKEdges] = true;
-                statesCalculation[StateCalculation.AMAMAMKEdges] = false;
-            }
-            else if (listBox.SelectedIndex == 2)
-            {
-                statesCalculation[StateCalculation.AMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMAMKEdges] = true;
-            }
-            else
-            {
-                statesCalculation[StateCalculation.AMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMKEdges] = false;
-                statesCalculation[StateCalculation.AMAMAMKEdges] = false;
-            }
-
-        }
 
         public MainWindow()
         {
@@ -136,7 +103,7 @@ namespace VizualizerWPF
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Start();
 
-            cx = 300; cy = 200;
+            cx = 350; cy = 300;
             sizeOfVertex = 15;
             scale = 1.5;
 
@@ -165,8 +132,9 @@ namespace VizualizerWPF
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-                DrawGraph(graphCoordinates, 1, true);
+                //DrawGraph(graphCoordinates, 1, true);
             }
+            DrawGraph(graphCoordinates, 1, true);
         }
 
         private int optimalCrossingNumber() {
@@ -488,11 +456,18 @@ namespace VizualizerWPF
         }
 
 
+        public bool Compare(Point a, Point b)
+        {
+            if (Math.Abs(a.X - b.X) < 0.1 && Math.Abs(a.Y - b.Y) < 0.1)
+                return true;
+            return false;
+        }
+
         public Vertex FindVertex(Point center)
         {
             foreach (var vertex in graphCoordinates.vertices)
             {
-                if (vertex.center == center)
+                if (Compare(vertex.center, center))
                     return vertex;
             }
 
@@ -976,7 +951,7 @@ namespace VizualizerWPF
 
                 var vertexTemp = vertex;
 
-                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
                 vertexTemp.center = coordinates;
 
                 var ellipse = new Ellipse
@@ -1009,7 +984,7 @@ namespace VizualizerWPF
                 var tempPoints = new List<Point>();
                 foreach (var point in edge.points)
                 {
-                    tempPoints.Add(point.Scale(scale).Add(new Point(cx + (sizeOfVertex / 2), cy + (sizeOfVertex / 2)))); //first scale, then add
+                    tempPoints.Add(point.Scale(scale).Add(new Point(cx, cy))); //first scale, then add
                 }
 
                 edge.points = tempPoints;
@@ -1019,10 +994,10 @@ namespace VizualizerWPF
                 {
                     var l = new Line
                     {
-                        X1 = line.X1 * scale + cx + sizeOfVertex / 2,
-                        Y1 = line.Y1 * scale + cy + sizeOfVertex / 2,
-                        X2 = line.X2 * scale + cx + sizeOfVertex / 2,
-                        Y2 = line.Y2 * scale + cy + sizeOfVertex / 2,
+                        X1 = line.X1 * scale + cx,
+                        Y1 = line.Y1 * scale + cy,
+                        X2 = line.X2 * scale + cx,
+                        Y2 = line.Y2 * scale + cy,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
@@ -1043,7 +1018,7 @@ namespace VizualizerWPF
             foreach(var (vertex, listOfVertices) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
-                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
                 vertexTemp.center = coordinates;
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
@@ -1052,7 +1027,7 @@ namespace VizualizerWPF
                 foreach(var el in listOfVertices)
                 {
                     Vertex vertexTemp2 = el;
-                    var coordinates2 = vertexTemp2.center.Scale(scale).Add(new Point(cx + sizeOfVertex / 2, cy + sizeOfVertex / 2));
+                    var coordinates2 = vertexTemp2.center.Scale(scale).Add(new Point(cx, cy));
                     vertexTemp2.center = coordinates2;
 
                     graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);

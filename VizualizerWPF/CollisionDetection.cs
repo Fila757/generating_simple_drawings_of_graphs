@@ -93,6 +93,26 @@ namespace VizualizerWPF
             return false;
         }
 
+
+        public static bool CenterOnLine(Line line, Point center)
+        { 
+            if (((line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
+                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 <= epsilon
+                    &&
+                    (line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
+                    + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 >= -epsilon)
+                    &&
+                   Math.Min(line.X1, line.X2) <= center.X
+                   &&
+                   center.X <= Math.Max(line.X1, line.X2)
+                   &&
+                   Math.Min(line.Y1, line.Y2) <= center.Y
+                   &&
+                   center.Y <= Math.Max(line.Y1, line.Y2))
+                return true;
+            return false;
+        }
+
         /// <summary>
         /// Detect if <c>point</c> is inside <c>ellipse</c> (circle)
         /// </summary>
