@@ -29,6 +29,8 @@
             <RowDefinition Height= "49*"/>
             <RowDefinition Height= "15*"/>
         </Grid.RowDefinitions>
+        
+        <Button x:Name="AddingPolyline" Content="Adding Polyline" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="AddingPolyline_Click"/>
         <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,3,3,3" Click="Adding_Click"/>
         <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
         <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" />
