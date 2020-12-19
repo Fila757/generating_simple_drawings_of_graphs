@@ -277,7 +277,7 @@ namespace VizualizerWPF
             button.Background = stateChanging == StateChanging.Adding ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
-            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            //AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
@@ -308,7 +308,7 @@ namespace VizualizerWPF
             /*changing color*/
             button.Background = stateChanging == StateChanging.AddingPolyline ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
-            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            //Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
