@@ -277,6 +277,7 @@ namespace VizualizerWPF
             button.Background = stateChanging == StateChanging.Adding ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
@@ -294,10 +295,27 @@ namespace VizualizerWPF
             button.Background = stateChanging == StateChanging.Removing ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Removing ? StateChanging.None : StateChanging.Removing;
 
         }
+
+        private void AddingPolyline_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            /*changing color*/
+            button.Background = stateChanging == StateChanging.AddingPolyline ?
+                (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
+            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+
+            stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
+
+        }
+
+
         /// <summary>
         /// Function to change if intersection are visible or not, intersection can be recognized by green color
         /// </summary>
