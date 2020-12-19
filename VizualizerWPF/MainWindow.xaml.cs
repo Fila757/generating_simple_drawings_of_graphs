@@ -51,7 +51,7 @@ namespace VizualizerWPF
 
     enum StateAutoMoving { Auto, None };
 
-    enum StateChanging { Adding, Removing, None };
+    enum StateChanging { AddingPolyline, Adding, Removing, None };
 
     /// <summary>
     /// Enum for showing Intersection, KEdges, AtMostKEdge...
@@ -80,7 +80,8 @@ namespace VizualizerWPF
 
         int Smoothing => 10;
 
-        HashSet<Vertex> selectedVertices = new HashSet<Vertex>();
+        List<Vertex> selectedVertices = new List<Vertex>();
+        List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
 
@@ -110,6 +111,7 @@ namespace VizualizerWPF
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
 
+        
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             graphCoordinates = graphGenerator.GenerateNextDrawing();
@@ -341,46 +343,7 @@ namespace VizualizerWPF
 
         }
 
-        /*
-        /// <summary>
-        /// Function to change if K edges counting (textBlock) is visible
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Kedges_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
 
-            // changing color
-            button.Background = statesCalculation[StateCalculation.KEdges] ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
-
-            statesCalculation[StateCalculation.KEdges] = !statesCalculation[StateCalculation.KEdges];
-            if (statesCalculation[StateCalculation.KEdges])
-                textBlockKEdges.Visibility = Visibility.Visible;
-            else
-                textBlockKEdges.Visibility = Visibility.Hidden;
-        }
-        */
-
-        /*
-        /// <summary>
-        /// Function to change if AtMost, AMAM and AMAMAM K edges counting (textBlock) is visible 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-        private void KedgesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selection = sender as ListBox;
-            SelectOnlyOneOption(selection);
-            if (selection.SelectedIndex != -1)
-                textBlockAMKEdges.Visibility = Visibility.Visible;
-            else
-                textBlockAMKEdges.Visibility = Visibility.Hidden;
-            ReCalculateKEdges();
-        }
-        */
         /// <summary>
         /// Function to generate new drawing of clique from data
         /// If value on UpDown counter is changed then new data file is loaded
