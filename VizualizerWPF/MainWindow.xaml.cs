@@ -140,10 +140,15 @@ namespace VizualizerWPF
         }
 
         private int optimalCrossingNumber() {
-            return ((int)NextDrawingUpDown.Value / 2) *
-                (((int)NextDrawingUpDown.Value - 1) / 2) *
-                (((int)NextDrawingUpDown.Value - 2) / 2) *
-                (((int)NextDrawingUpDown.Value - 3) / 2) / 4;
+
+            int numberOfVertices = 0;
+            foreach (var vertex in graphCoordinates.vertices)
+                numberOfVertices += (vertex.state == VertexState.Regular) ? 1 : 0;
+
+            return (numberOfVertices / 2) *
+                ((numberOfVertices - 1) / 2) *
+                ((numberOfVertices - 2) / 2) *
+                ((numberOfVertices - 3) / 2) / 4;
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
@@ -570,7 +575,7 @@ namespace VizualizerWPF
                     selectedVertices.Clear();
                     selectedCanvasPlaces.Clear();
 
-                    List<Ellipse> intersections = new List<Ellipse>();
+                    List<Vertex> intersections = new List<Vertex>();
                     foreach (var line in lines)
                     {
                         foreach (var l in mainCanvas.Children.OfType<Line>())
@@ -590,9 +595,9 @@ namespace VizualizerWPF
                                 };
                                 ellipse2.MouseDown += ellipse_MouseDown;
                                 Panel.SetZIndex(ellipse2, 10);
-                                intersections.Add(ellipse2);
+                                //intersections.Add(ellipse2);
 
-                                graphCoordinates.vertices.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
+                                intersections.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
 
                                 //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
                             }
@@ -600,7 +605,23 @@ namespace VizualizerWPF
                     }
 
                     foreach (var el in intersections)
-                        mainCanvas.Children.Add(el);
+                    {
+                        bool collision = false;
+                        foreach (var vertex in graphCoordinates.vertices)
+                        {
+                            if (CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
+                            {
+                                collision = true;
+                                break;
+                            }
+                        }
+
+                        if (!collision)
+                        {
+                            graphCoordinates.vertices.Add(el);
+                            mainCanvas.Children.Add(el.ellipse);
+                        }
+                    }
 
 
                     /* adding after to not make problems with intersecting with others line segments of these new edge */
