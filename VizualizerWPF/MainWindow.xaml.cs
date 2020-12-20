@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 10;
+        int Smoothing => 5;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -277,7 +277,7 @@ namespace VizualizerWPF
             button.Background = stateChanging == StateChanging.Adding ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
-            //AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
@@ -308,7 +308,7 @@ namespace VizualizerWPF
             /*changing color*/
             button.Background = stateChanging == StateChanging.AddingPolyline ?
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
-            //Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
@@ -497,16 +497,28 @@ namespace VizualizerWPF
             Ellipse ellipse = sender as Ellipse;
             //MessageBox.Show(new { x = ellipse.Margin.Left, y= ellipse.Margin.Top }.ToString());
 
-            if (stateChanging == StateChanging.Adding)
+            if (stateChanging == StateChanging.Adding || stateChanging == StateChanging.AddingPolyline)
             {
-                if (ellipse.Fill == Brushes.Green) return;
-                selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex/2, Y = ellipse.Margin.Top + sizeOfVertex/2}, VertexState.Regular));
+                if (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red) return;
+                selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2 }, VertexState.Regular));
+                
+                if(selectedVertices.Count == 1)
+                {
+                    selectedCanvasPlaces.Clear();
+                }
                 if (selectedVertices.Count == 2)
                 {
+
+                    if(selectedVertices[0] == selectedVertices[1])
+                    {
+                        selectedVertices.RemoveAt(1);
+                        return;
+                    }
                     if (FindEdgeFromVertices(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1)) != null)
                     {
                         MessageBox.Show("You cannot add edge where there is already put one");
                         selectedVertices.Clear();
+                        selectedCanvasPlaces.Clear();
                         return;
                     }
 
@@ -618,7 +630,7 @@ namespace VizualizerWPF
 
                     foreach (var l in tempEdge.lines)
                     {
-                        RemoveIntersections(l);
+                        RemoveIntersectionsAndMiddleOnes(l);
                         mainCanvas.Children.Remove(l);
                     }
 
@@ -626,7 +638,7 @@ namespace VizualizerWPF
                 }
 
                 /* removing vertex */
-                if (ellipse.Fill != Brushes.Green) //intersection is not in vertices and in neigbours
+                if (ellipse.Fill != Brushes.Green && ellipse.Fill != Brushes.Red) //intersection is not in vertices and in neigbours
                 {
                     mainCanvas.Children.Remove(ellipse);
                     graphCoordinates.neighbors.Remove(FindVertex(ellipse));
@@ -660,13 +672,13 @@ namespace VizualizerWPF
         /// Function to remove all intersection with <c>line</c> from canvas 
         /// </summary>
         /// <param name="line"></param>
-        private void RemoveIntersections(Line line)
+        private void RemoveIntersectionsAndMiddleOnes(Line line)
         {
             var removedIntersections = new List<Ellipse>();
             foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
             {
                 if (CollisionDetection.LineAndEllipse(line, ellipse)
-                    && ellipse.Fill == Brushes.Green)
+                    && (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red))
                     removedIntersections.Add(ellipse);
 
             }
@@ -699,7 +711,7 @@ namespace VizualizerWPF
 
                 foreach (var l in tempEdge.lines)
                 {
-                    RemoveIntersections(l);
+                    RemoveIntersectionsAndMiddleOnes(l);
 
                     mainCanvas.Children.Remove(l);
                 }
@@ -936,12 +948,13 @@ namespace VizualizerWPF
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
-                    Fill = Brushes.Blue,
+                    Fill = Brushes.Red,
                     Margin = new Thickness(pos.X - sizeOfVertex / 2, pos.Y - sizeOfVertex / 2, 0, 0)
                 };
                 Panel.SetZIndex(ellipse, 100);
                 ellipse.MouseDown += ellipse_MouseDown;
-                mainCanvas.Children.Add(ellipse);
+                
+                //mainCanvas.Children.Add(ellipse);
 
                 var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Middle);
                 graphCoordinates.vertices.Add(vertex);
@@ -985,7 +998,8 @@ namespace VizualizerWPF
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
-                    Fill = vertexTemp.state == VertexState.Regular ? Brushes.Blue : Brushes.Green,
+                    Fill = vertexTemp.state == VertexState.Regular ? Brushes.Blue :
+                    ((vertexTemp.state == VertexState.Intersection) ? Brushes.Green : Brushes.Red),
                     Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
                     Visibility = ((vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections]) ||
                     (vertexTemp.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible

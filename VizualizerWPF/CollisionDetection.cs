@@ -43,7 +43,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
-            if (denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
+            if (denominator != 0 && (s >= -0.001 && s <= 1.001) && (t >= -0.001 && t <= 1.001))
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return new Point { X = -1, Y = -1 };
         }
