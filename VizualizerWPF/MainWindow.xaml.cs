@@ -561,6 +561,12 @@ namespace VizualizerWPF
                     graphCoordinates.AddToDictionary(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1));
                     graphCoordinates.AddToDictionary(selectedVertices.ElementAt(1), selectedVertices.ElementAt(0));
 
+                    foreach(var vertex in selectedCanvasPlaces)
+                    {
+                        graphCoordinates.vertices.Add(vertex);
+                        mainCanvas.Children.Add(vertex.ellipse);
+                    }
+
                     selectedVertices.Clear();
                     selectedCanvasPlaces.Clear();
 
@@ -834,7 +840,7 @@ namespace VizualizerWPF
             CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
-            RedrawGraph(graphCoordinates, 1);
+            //RedrawGraph(graphCoordinates, 1);
 
         }
         /// <summary>
@@ -944,12 +950,16 @@ namespace VizualizerWPF
 
             if(stateChanging == StateChanging.AddingPolyline)
             {
+
+                //PrintNumberOfEllipses();
+
                 Ellipse ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = Brushes.Red,
-                    Margin = new Thickness(pos.X - sizeOfVertex / 2, pos.Y - sizeOfVertex / 2, 0, 0)
+                    Margin = new Thickness(pos.X - sizeOfVertex / 2, pos.Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = Visibility.Hidden
                 };
                 Panel.SetZIndex(ellipse, 100);
                 ellipse.MouseDown += ellipse_MouseDown;
@@ -957,12 +967,24 @@ namespace VizualizerWPF
                 //mainCanvas.Children.Add(ellipse);
 
                 var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Middle);
-                graphCoordinates.vertices.Add(vertex);
+                
+                //graphCoordinates.vertices.Add(vertex);
 
                 selectedCanvasPlaces.Add(vertex);
+
+                //PrintNumberOfEllipses();
             }
 
            
+        }
+
+        void PrintNumberOfEllipses()
+        {
+            int localCounter = 0;
+            foreach (var p in mainCanvas.Children.OfType<Ellipse>())
+                localCounter++;
+            MessageBox.Show(localCounter.ToString());
+
         }
 
         /// <summary>
