@@ -18,7 +18,7 @@ namespace VizualizerWPF
 
     class HalfLineWithCoeffients
     {
-        public LineWithCoeffients line;
+        public Line line;
         
         public LineWithCoeffients border;
         public int direction;
@@ -41,6 +41,29 @@ namespace VizualizerWPF
         /// </summary>
         static double epsilon = 0.5;
 
+
+
+        public static Point LineAndHalfLine (Line line1, HalfLineWithCoeffients halfLine)
+        {
+            var line2 = halfLine.line;
+
+            var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
+
+            if (denominator == 0)
+                throw new ArgumentException("Line and Halfline are parralel");
+
+            var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
+                 line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
+            //var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
+                //line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
+
+
+            //var s = numS / denominator;
+            var t = numT / denominator;
+               
+            return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
+
+        }
         /// <summary>
         /// Detect intersection of two line segment
         /// </summary>
@@ -198,27 +221,36 @@ namespace VizualizerWPF
             };
         }
 
+        /*
         static LineWithCoeffients GetLineWithCoeffientsByPointAndVector(Point point, Vector v)
         {
             double c = -(v.X * point.X + v.Y * point.Y);
 
             return new LineWithCoeffients { a = v.X, b = v.Y, c = c };
         }
+        */
 
-        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToMid(Line line) {
+        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line) {
             var mid = GetAlmostMid(line);
 
             var border = GetLineWithCoefficients(line);
+            var newLine = new Line {
+                X1 = mid.X,
+                Y1 = mid.Y,
+                X2 = (mid + new Vector { X = -border.b, Y = border.a }).X,
+                Y2 = (mid + new Vector { X = -border.b, Y = border.a }).Y 
+            };
+
             var leftHalfLine = new HalfLineWithCoeffients {
                 border = border,
-                line = GetLineWithCoeffientsByPointAndVector(mid, new Vector { X = -border.b, Y = border.a }),
+                line = newLine,
                 direction = 1
                 };
 
             var rightHalfLine = new HalfLineWithCoeffients
             {
                 border = border,
-                line = GetLineWithCoeffientsByPointAndVector(mid, new Vector { X = -border.b, Y = border.a }),
+                line = newLine,
                 direction = -1
             };
 
@@ -228,13 +260,21 @@ namespace VizualizerWPF
         public static int GetOrientation(Line mainLine, List<Line> lines)
         {
 
+            (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine);
 
+            var leftHalfLine = halfLines.Item1;
 
             int numberOfIntersections = 0;
             foreach(var line in lines)
             {
-                if()
+                var intersection = LineAndHalfLine(line, leftHalfLine);
+                if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
+                    numberOfIntersections++;
             }
+
+            if (numberOfIntersections % 2 == 1)
+                return 1;
+            return -1;
         }
 
     }
