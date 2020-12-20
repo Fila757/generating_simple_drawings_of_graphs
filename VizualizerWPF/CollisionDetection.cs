@@ -1,5 +1,6 @@
 ﻿using Syncfusion.Windows.Shared;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -7,6 +8,22 @@ using Path = System.Windows.Shapes.Path;
 
 namespace VizualizerWPF
 {
+
+    class LineWithCoeffients
+    {
+        public double a;
+        public double b;
+        public double c;
+    }
+
+    class HalfLineWithCoeffients
+    {
+        public LineWithCoeffients line;
+        
+        public LineWithCoeffients border;
+        public int direction;
+
+    }
     class CollisionDetection
     {
         /// <summary>
@@ -164,5 +181,61 @@ namespace VizualizerWPF
                 return true;
             return false;
         }
+
+
+        static Point GetAlmostMid(Line line)
+        {
+            return new Point((2 * line.X1 + line.X2) / 3, (2 * line.Y1 + line.Y2) / 3); 
+        }
+
+
+        static LineWithCoeffients GetLineWithCoefficients(Line line)
+        {
+            return new LineWithCoeffients {
+                a = line.Y1 - line.Y2,
+                b = line.X2 - line.X1,
+                c = (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 
+            };
+        }
+
+        static LineWithCoeffients GetLineWithCoeffientsByPointAndVector(Point point, Vector v)
+        {
+            double c = -(v.X * point.X + v.Y * point.Y);
+
+            return new LineWithCoeffients { a = v.X, b = v.Y, c = c };
+        }
+
+        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToMid(Line line) {
+            var mid = GetAlmostMid(line);
+
+            var border = GetLineWithCoefficients(line);
+            var leftHalfLine = new HalfLineWithCoeffients {
+                border = border,
+                line = GetLineWithCoeffientsByPointAndVector(mid, new Vector { X = -border.b, Y = border.a }),
+                direction = 1
+                };
+
+            var rightHalfLine = new HalfLineWithCoeffients
+            {
+                border = border,
+                line = GetLineWithCoeffientsByPointAndVector(mid, new Vector { X = -border.b, Y = border.a }),
+                direction = -1
+            };
+
+            return (leftHalfLine, rightHalfLine);
+        }
+
+        public static int GetOrientation(Line mainLine, List<Line> lines)
+        {
+
+
+
+            int numberOfIntersections = 0;
+            foreach(var line in lines)
+            {
+                if()
+            }
+        }
+
     }
 }
