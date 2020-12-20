@@ -609,7 +609,7 @@ namespace VizualizerWPF
                         bool collision = false;
                         foreach (var vertex in graphCoordinates.vertices)
                         {
-                            if (CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
+                            if (vertex.state == VertexState.Regular && CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
                             {
                                 collision = true;
                                 break;
