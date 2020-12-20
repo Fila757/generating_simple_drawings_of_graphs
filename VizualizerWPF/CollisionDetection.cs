@@ -43,26 +43,27 @@ namespace VizualizerWPF
 
 
 
-        public static Point LineAndHalfLine (Line line1, HalfLineWithCoeffients halfLine)
+        public static Point? LineAndHalfLine (Line line1, HalfLineWithCoeffients halfLine)
         {
             var line2 = halfLine.line;
 
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
             if (denominator == 0)
-                throw new ArgumentException("Line and Halfline are parralel");
+                throw new ArgumentException("Line and Halfline are parralel"); //first special case when parralel, second when tangent to point should not bother us
 
             var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
                  line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
-            //var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
-                //line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
+            var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
+                line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
 
 
-            //var s = numS / denominator;
+            var s = numS / denominator;
             var t = numT / denominator;
-               
-            return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
-
+            
+            if(s >= -0.001 && s <= 1.001) //line1 is just segments so we need to check limits of s
+                return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
+            return null;
         }
         /// <summary>
         /// Detect intersection of two line segment
