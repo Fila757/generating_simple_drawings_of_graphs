@@ -120,11 +120,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+      "projectUniqueName": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
       "projectName": "VizualizerWPF",
-      "projectPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+      "projectPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
       "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
+      "outputPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -139,6 +139,7 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {}
         }
       },
@@ -150,6 +151,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Syncfusion.Shared.WPF": {
             "target": "Package",
@@ -174,7 +176,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
