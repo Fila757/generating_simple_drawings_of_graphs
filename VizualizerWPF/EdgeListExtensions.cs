@@ -10,7 +10,8 @@ namespace VizualizerWPF
         {
             foreach (var el in list)
             {
-                if (Vertex.Compare(el.points.Last(), point))
+                var last = CollisionDetection.ChooseOppositeOne(el, point);
+                if (Vertex.Compare(last, point))
                     return el;
             }
             return null;
@@ -21,7 +22,7 @@ namespace VizualizerWPF
             var result = new List<Point>();
             foreach(var el in list)
             {
-                result.Add(CollisionDetection.ChooseRightOne(el, point));
+                result.Add(CollisionDetection.ChooseOppositeOne(el, point));
             }
             return result;
         } 

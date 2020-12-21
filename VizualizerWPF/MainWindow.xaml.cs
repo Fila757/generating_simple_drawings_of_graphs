@@ -797,7 +797,7 @@ namespace VizualizerWPF
                 foreach (var e1 in value)
                 {
 
-                    var to = FindVertex(e1.points.Last());
+                    var to = FindVertex(CollisionDetection.ChooseOppositeOne(e1, from.center));
 
                     if (visited[(from, to)]) continue;
                     visited[(from, to)] = true;
@@ -806,7 +806,7 @@ namespace VizualizerWPF
                     int sum = 0;
                     foreach (var e2 in graphCoordinates.neighbors[to])
                     {
-                        var third = FindVertex(e2.points.Last());
+                        var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
                         var e3 = graphCoordinates.neighbors[from].ContainsEnd(third.center);
                         if (e3 != null){
                             if (third == from || third == to) continue;

@@ -294,7 +294,7 @@ namespace VizualizerWPF
             return new Line { X1 = line.X2, Y1 = line.Y2, X2 = line.X1, Y2 = line.Y1 };
         }
 
-        public static Point ChooseRightOne(Edge edge, Point point)
+        public static Point ChooseOppositeOne(Edge edge, Point point)
         {
             return Vertex.Compare(edge.points[0], point) ? edge.points.Last() : edge.points[0];
         }
