@@ -111,9 +111,9 @@ namespace VizualizerWPF
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
 
-        
 
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); ;
             graphCoordinates = graphGenerator.GenerateNextDrawing();
 
             DrawGraph(graphCoordinates, 1);
@@ -774,7 +774,7 @@ namespace VizualizerWPF
         /// Then summing function for AM, AMAM, AMAMAM k edges is called
         /// </summary>
         /// 
-        int maximalkEdges = 7;
+        int maximalkEdges = 8;
 
         private void ReCalculateKEdges()
         {
@@ -821,7 +821,9 @@ namespace VizualizerWPF
                     }
 
                     int inter;
-                    if (sum > (inter = graphCoordinates.neighbors[from].Intersect(graphCoordinates.neighbors[to]).Count()) / 2)
+                    if (sum > (inter =
+                        graphCoordinates.neighbors[from].GetEnds(from.center)
+                        .Intersect(graphCoordinates.neighbors[to].GetEnds(to.center)).Count()) / 2)
                         sum = inter - sum; //pick smaller
 
                     /*

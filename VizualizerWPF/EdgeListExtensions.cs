@@ -8,13 +8,23 @@ namespace VizualizerWPF
     {
         public static Edge ContainsEnd(this List<Edge> list, Point point)
         {
-            foreach(var el in list)
+            foreach (var el in list)
             {
                 if (Vertex.Compare(el.points.Last(), point))
                     return el;
             }
             return null;
         }
+
+        public static List<Point> GetEnds(this List<Edge> list, Point point){
+
+            var result = new List<Point>();
+            foreach(var el in list)
+            {
+                result.Add(Vertex.Compare(el.points[0], point) ? el.points.Last() : el.points[0]);
+            }
+            return result;
+        } 
     }
 
 }
