@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -291,6 +292,11 @@ namespace VizualizerWPF
         static Line MakeReversedLine(Line line)
         {
             return new Line { X1 = line.X2, Y1 = line.Y2, X2 = line.X1, Y2 = line.Y1 };
+        }
+
+        public static Point ChooseRightOne(Edge edge, Point point)
+        {
+            return Vertex.Compare(edge.points[0], point) ? edge.points.Last() : edge.points[0];
         }
 
         public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)

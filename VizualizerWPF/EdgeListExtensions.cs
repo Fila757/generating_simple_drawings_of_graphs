@@ -21,7 +21,7 @@ namespace VizualizerWPF
             var result = new List<Point>();
             foreach(var el in list)
             {
-                result.Add(Vertex.Compare(el.points[0], point) ? el.points.Last() : el.points[0]);
+                result.Add(CollisionDetection.ChooseRightOne(el, point));
             }
             return result;
         } 
