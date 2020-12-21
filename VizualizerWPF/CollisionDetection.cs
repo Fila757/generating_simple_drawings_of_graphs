@@ -268,9 +268,14 @@ namespace VizualizerWPF
             int numberOfIntersections = 0;
             foreach(var line in lines)
             {
-                var intersection = LineAndHalfLine(line, leftHalfLine);
-                if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
-                    numberOfIntersections++;
+                var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+
+                if (intersectionOrNull.HasValue)
+                {
+                    Point intersection = intersectionOrNull.Value; 
+                    if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
+                        numberOfIntersections++;
+                }
             }
 
             if (numberOfIntersections % 2 == 1)
