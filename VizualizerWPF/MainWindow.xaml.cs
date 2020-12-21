@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 1;
+        int Smoothing => 0;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -807,7 +807,7 @@ namespace VizualizerWPF
                     foreach (var e2 in graphCoordinates.neighbors[to])
                     {
                         var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
-                        var e3 = graphCoordinates.neighbors[from].ContainsEnd(third.center);
+                        var e3 = graphCoordinates.neighbors[from].ContainsEnd(from.center, third.center);
                         if (e3 != null){
                             if (third == from || third == to) continue;
 

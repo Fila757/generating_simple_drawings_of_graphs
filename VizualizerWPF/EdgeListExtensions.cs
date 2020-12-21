@@ -6,11 +6,11 @@ namespace VizualizerWPF
 {
     public static class EdgeListExtensions
     {
-        public static Edge ContainsEnd(this List<Edge> list, Point point)
+        public static Edge ContainsEnd(this List<Edge> list, Point oppositeTo, Point point)
         {
             foreach (var el in list)
             {
-                var last = CollisionDetection.ChooseOppositeOne(el, point);
+                var last = CollisionDetection.ChooseOppositeOne(el, oppositeTo);
                 if (Vertex.Compare(last, point))
                     return el;
             }

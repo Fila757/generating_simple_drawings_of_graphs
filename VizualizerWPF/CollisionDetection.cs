@@ -67,7 +67,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if(s >= -0.001 && s <= 1.001) //line1 is just segments so we need to check limits of s
+            if(t >= -0.001 && t <= 1.001) //line1 is just segments so we need to check limits of s
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
@@ -244,8 +244,8 @@ namespace VizualizerWPF
             var newLine = new Line {
                 X1 = mid.X,
                 Y1 = mid.Y,
-                X2 = (mid + new Vector { X = -border.b, Y = border.a }).X,
-                Y2 = (mid + new Vector { X = -border.b, Y = border.a }).Y 
+                X2 = (mid + new Vector { X = border.a, Y = border.b }).X, //orthogonal vector is given in eqution of line
+                Y2 = (mid + new Vector { X = border.a, Y = border.b }).Y 
             };
 
             var leftHalfLine = new HalfLineWithCoeffients {
