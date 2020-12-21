@@ -856,6 +856,10 @@ namespace VizualizerWPF
             {
                 TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
                 textBlock.Text = kEdgdesValues[i].ToString();
+
+
+                textBlock = FindName($"theoremAmAmAmKEdges{i}") as TextBlock;
+                textBlock.Text = (kEdgdesValues[i] >= (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24))).ToString();
             }
 
             CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
