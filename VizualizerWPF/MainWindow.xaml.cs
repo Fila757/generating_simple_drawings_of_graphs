@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 5;
+        int Smoothing => 1;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -554,7 +554,7 @@ namespace VizualizerWPF
                     graphCoordinates.edges.Add(edge);
 
                     graphCoordinates.AddToDictionary(selectedVertices[0], edge);
-                    graphCoordinates.AddToDictionary(selectedVertices[1], new Edge { points = edge.points, lines = edge.lines, direction = -1 });
+                    graphCoordinates.AddToDictionary(selectedVertices[1], edge);
 
                     foreach(var vertex in selectedCanvasPlaces)
                     {
@@ -642,8 +642,8 @@ namespace VizualizerWPF
 
                     var (start, end) = FindEdgeEnds(tempEdge);
 
-                    DeleteEdgeFromDictionary(start, end);
-                    DeleteEdgeFromDictionary(end, start);
+                    DeleteEdgeFromDictionary(start, tempEdge);
+                    DeleteEdgeFromDictionary(end, tempEdge);
 
                     foreach (var l in tempEdge.lines)
                     {
@@ -723,8 +723,8 @@ namespace VizualizerWPF
                 var tempEdge = FindEdge(line); 
                 var (start, end) = FindEdgeEnds(tempEdge);
 
-                DeleteEdgeFromDictionary(start, end);
-                DeleteEdgeFromDictionary(end, start);
+                DeleteEdgeFromDictionary(start, tempEdge);
+                DeleteEdgeFromDictionary(end, tempEdge);
 
                 foreach (var l in tempEdge.lines)
                 {
@@ -794,18 +794,26 @@ namespace VizualizerWPF
 
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
-                foreach (var to in value)
+                foreach (var e1 in value)
                 {
+
+                    var to = FindVertex(e1.points.Last());
+
                     if (visited[(from, to)]) continue;
                     visited[(from, to)] = true;
                     visited[(to, from)] = true;
 
                     int sum = 0;
-                    foreach (var third in graphCoordinates.neighbors[to])
+                    foreach (var e2 in graphCoordinates.neighbors[to])
                     {
-                        if(graphCoordinates.neighbors[from].Contains(third)){
+                        var third = FindVertex(e2.points.Last());
+                        var e3 = graphCoordinates.neighbors[from].ContainsEnd(third.center);
+                        if (e3 != null){
                             if (third == from || third == to) continue;
-                            if (Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
+
+                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
+
+                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2) > 0)
                             {
                                 sum++;
                             }
@@ -914,9 +922,9 @@ namespace VizualizerWPF
         private void UpdateStats()
         {
             int numberOfIntersections = 0;
-            foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
+            foreach (var vertex in graphCoordinates.vertices)
             {
-                if (FindVertex(vertex).state == VertexState.Intersection)
+                if (vertex.state == VertexState.Intersection)
                 {
                     numberOfIntersections++;
                 }
@@ -956,7 +964,7 @@ namespace VizualizerWPF
 
                 var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular);
                 graphCoordinates.vertices.Add(vertex);
-                graphCoordinates.neighbors.Add(vertex, new List<Vertex>());
+                graphCoordinates.neighbors.Add(vertex, new List<Edge>());
             }
 
             if(stateChanging == StateChanging.AddingPolyline)
@@ -1087,31 +1095,20 @@ namespace VizualizerWPF
 
             }
 
-            
+
             /* Updating neighbors */
-            var neighborsTemp = new Dictionary<Vertex, List<Vertex> >();
-            foreach(var (vertex, listOfVertices) in graphCoordinates.neighbors)
+
+            var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
+            foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
-                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
-                vertexTemp.center = coordinates;
+                vertexTemp.center = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
 
-                List<Vertex> listTemp = new List<Vertex>();
-                foreach(var el in listOfVertices)
-                {
-                    Vertex vertexTemp2 = el;
-                    var coordinates2 = vertexTemp2.center.Scale(scale).Add(new Point(cx, cy));
-                    vertexTemp2.center = coordinates2;
+                neighborsTemp[vertexTemp] = listOfEdges;
 
-                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
-                    listTemp.Add(vertexTemp2);
-                }
-
-                neighborsTemp.Add(vertexTemp, listTemp);
             }
-
             graphCoordinates.neighbors = neighborsTemp;
 
             UpdateStats();

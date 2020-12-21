@@ -242,7 +242,7 @@ namespace VizualizerWPF
                 
 
                 graphCoordinates.AddToDictionary(actualZero, edge);
-                graphCoordinates.AddToDictionary(actualLast, new Edge { lines = edge.lines, points = edge.points, direction = -1 });
+                graphCoordinates.AddToDictionary(actualLast, edge);
 
                 graphCoordinates.vertices.AddList(vertices);
             }

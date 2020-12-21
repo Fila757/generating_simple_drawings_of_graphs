@@ -50,8 +50,13 @@ namespace VizualizerWPF
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
             if (denominator == 0)
-                throw new ArgumentException("Line and Halfline are parralel"); //first special case when parralel, second when tangent to point should not bother us
+            {
+                MessageBox.Show("Parralel");
+                return null;
+                //throw new ArgumentException("Line and Halfline are parralel"); 
+                //first special case when parralel
 
+            }
             var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
                  line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
             var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
@@ -281,6 +286,27 @@ namespace VizualizerWPF
             if (numberOfIntersections % 2 == 1)
                 return 1;
             return -1;
+        }
+
+        static Line MakeReversedLine(Line line)
+        {
+            return new Line { X1 = line.X2, Y1 = line.Y2, X2 = line.X1, Y2 = line.Y1 };
+        }
+
+        public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)
+        {
+            var result = new List<Line>();
+
+            for (int i = 1; i < e1.lines.Count; i++) //skip the first one and return as mainLine
+                result.Add(e1.lines[i]);
+
+            foreach (var line in e2.lines)
+                result.Add(line);
+
+            foreach (var line in e3.lines)
+                result.Add(line);
+
+            return (e1.lines[0], result);
         }
 
     }
