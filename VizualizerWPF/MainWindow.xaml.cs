@@ -209,29 +209,18 @@ namespace VizualizerWPF
             }
 
             /* Updating neighbors */
-            var neighborsTemp = new Dictionary<Vertex, List<Vertex>>();
-            foreach (var (vertex, listOfVertices) in graphCoordinates.neighbors)
+            var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
+            foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Scale(scale);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
 
-                List<Vertex> listTemp = new List<Vertex>();
-                foreach (var el in listOfVertices)
-                {
-                    Vertex vertexTemp2 = el;
-                    vertexTemp2.center = vertexTemp2.center.Scale(scale);
+                neighborsTemp[vertexTemp] = listOfEdges;
 
-                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
-                    listTemp.Add(vertexTemp2);
-                }
-
-                neighborsTemp.Add(vertexTemp, listTemp);
             }
-
             graphCoordinates.neighbors = neighborsTemp;
-
         }
 
         /// <summary>
@@ -417,7 +406,7 @@ namespace VizualizerWPF
         }
         */
 
-        private void DeleteEdgeFromDictionary(Vertex from, Vertex to)
+        private void DeleteEdgeFromDictionary(Vertex from, Edge to)
         {
             if (graphCoordinates.neighbors.ContainsKey(from))
                 graphCoordinates.neighbors[from].Remove(to);
@@ -556,15 +545,16 @@ namespace VizualizerWPF
                     var allPoints = new List<Point>();
                     foreach (var vertex in allVertices)
                         allPoints.Add(vertex.center);
-               
 
-                    graphCoordinates.edges.Add(new Edge(
+                    var edge = new Edge(
                         allPoints,
                         lines
-                    ));
+                    );
 
-                    graphCoordinates.AddToDictionary(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1));
-                    graphCoordinates.AddToDictionary(selectedVertices.ElementAt(1), selectedVertices.ElementAt(0));
+                    graphCoordinates.edges.Add(edge);
+
+                    graphCoordinates.AddToDictionary(selectedVertices[0], edge);
+                    graphCoordinates.AddToDictionary(selectedVertices[1], new Edge { points = edge.points, lines = edge.lines, direction = -1 });
 
                     foreach(var vertex in selectedCanvasPlaces)
                     {
@@ -1059,10 +1049,11 @@ namespace VizualizerWPF
                 vertices.Add(vertexTemp);
             }
 
+            graphCoordinates.vertices = vertices;
+
             /*Updating edges*/
 
-            graphCoordinates.vertices = vertices;
-            foreach(var edge in graphCoordinates.edges)
+            foreach (var edge in graphCoordinates.edges)
             {
 
                 var tempPoints = new List<Point>();
