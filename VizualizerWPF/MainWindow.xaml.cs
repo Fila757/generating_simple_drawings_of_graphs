@@ -408,8 +408,8 @@ namespace VizualizerWPF
 
         private void DeleteEdgeFromDictionary(Vertex from, Edge to)
         {
-            if (graphCoordinates.neighbors.ContainsKey(from))
-                graphCoordinates.neighbors[from].Remove(to);
+            //if (graphCoordinates.neighbors.ContainsKey(from))
+            graphCoordinates.neighbors[from].Remove(to);
         }
         /// <summary>
         /// Function to find vertex containg <c>ellipse</c>
