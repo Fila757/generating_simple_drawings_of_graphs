@@ -65,12 +65,21 @@
         <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:" FontWeight="Bold" FontStyle="Normal"/>
 
 
-
-        <Button x:Name="AutoMoving" Content="Auto" Grid.Column="4" Margin="3,3,50,3" Grid.Row ="6"  Click="AutoButton_Click"/>
-        <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="4" Grid.Row="6" Margin="65,3,5,3" NumberDecimalDigits="1"  
+        <Grid Grid.Row="6" Grid.RowSpan ="1" Grid.Column="4" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height= "1*"/>
+            </Grid.RowDefinitions>
+        
+            <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3,3,3,3" Grid.Row ="0"  Click="AutoButton_Click"/>
+            <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="0" Margin="3,3,3,3" NumberDecimalDigits="1"  
                            MaxValue="1000" MinValue="0.1"/>
 
-        <Grid Grid.Row="7" Grid.RowSpan ="4" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible">
+            </Grid>
+            <Grid Grid.Row="7" Grid.RowSpan ="4" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width= "1*"/>
                 <ColumnDefinition Width= "1*"/>
