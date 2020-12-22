@@ -52,7 +52,7 @@ namespace VizualizerWPF
 
             if (denominator == 0)
             {
-                MessageBox.Show("Parralel");
+                //MessageBox.Show("Parralel");
                 return null;
                 //throw new ArgumentException("Line and Halfline are parralel"); 
                 //first special case when parralel

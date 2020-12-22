@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 0;
+        int Smoothing => 5;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -923,6 +923,9 @@ namespace VizualizerWPF
                 {
                     textBlock.Text = "NaN";
                 }
+
+                if (textBlock.Text == "F")
+                    MessageBox.Show("HEUREKA WRONG");
             }
  
 
