@@ -852,17 +852,15 @@ namespace VizualizerWPF
                 }
             }
 
-            for(int i = 0; i <= maximalkEdges; i++)
+
+            CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
+
+            for (int i = 0; i <= maximalkEdges; i++)
             {
                 TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
                 textBlock.Text = kEdgdesValues[i].ToString();
-
-
-                textBlock = FindName($"theoremAmAmAmKEdges{i}") as TextBlock;
-                textBlock.Text = (kEdgdesValues[i] >= (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24))).ToString();
             }
 
-            CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
             //RedrawGraph(graphCoordinates, 1);
@@ -908,10 +906,23 @@ namespace VizualizerWPF
                 textBlock.Text = AMKEdgesArray[1, i].ToString();
             }
 
+
             for (int i = 0; i <= size; i++)
             {
                 TextBlock textBlock = FindName($"amAmAmKEdges{i}") as TextBlock;
                 textBlock.Text = AMKEdgesArray[2, i].ToString();
+
+
+                
+                textBlock = FindName($"theoremAmAmAmKEdges{i}") as TextBlock;
+                if (graphCoordinates.edges.Count >= (((2 * i + 3) * (2 * i + 2)) / 2))
+                {
+                    textBlock.Text = (AMKEdgesArray[2, i] >= (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24))) ? "T" : "F";
+                }
+                else
+                {
+                    textBlock.Text = "NaN";
+                }
             }
  
 
