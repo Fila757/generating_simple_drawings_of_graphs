@@ -938,6 +938,7 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	a_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
 	b_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin() + edge->vertices_.size() / 2, edge->vertices_.end());
 
+
 	auto a = a_half.back();
 	auto b = b_half[0];
 
