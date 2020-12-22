@@ -220,8 +220,8 @@
             <TextBlock x:Name="infoTheoremamAmAmKEdges2" Grid.Column ="2" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
             <TextBlock x:Name="theoremAmAmAmKEdges2" Grid.Column ="2" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
-            <TextBlock x:Name="infoTheoremamAmAmKEdges3" Grid.Column ="4" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
-            <TextBlock x:Name="theoremAmAmAmKEdges3" Grid.Column ="4" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+            <TextBlock x:Name="infoTheoremamAmAmKEdges3" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges3" Grid.Column ="3" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
             <TextBlock x:Name="infoTheoremamAmAmKEdges4" Grid.Column ="4" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
             <TextBlock x:Name="theoremAmAmAmKEdges4" Grid.Column ="4" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
