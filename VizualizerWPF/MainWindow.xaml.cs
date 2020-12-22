@@ -457,24 +457,8 @@ namespace VizualizerWPF
         private (Vertex, Vertex) FindEdgeEnds(Edge edge)
         {
 
-            var first = new Vertex();
-            var second = new Vertex();
-
-            bool firstBool = true;
-
-            foreach(var vertex in graphCoordinates.vertices)
-            {
-                if (vertex.state == VertexState.Regular &&
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], vertex.ellipse) && firstBool)
-                {
-                    first = vertex;
-                    firstBool = false;
-                }
-
-                else if (vertex.state == VertexState.Regular &&
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), vertex.ellipse) && !firstBool)
-                    second = vertex;
-            }
+            var first = FindVertex(edge.points[0]);
+            var second = FindVertex(edge.points.Last());
 
             return (first, second);
         }
@@ -1124,7 +1108,7 @@ namespace VizualizerWPF
                 Vertex vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
 
-                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
+                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp); //to set also ellipse on right sizes
 
                 neighborsTemp[vertexTemp] = listOfEdges;
 

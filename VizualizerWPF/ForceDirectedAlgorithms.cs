@@ -288,10 +288,13 @@ namespace VizualizerWPF
 
                 Vertex actualZero = FindVertex(newGraphCoordinates, convertor[edge.points[0]]);
                 Vertex actualLast = FindVertex(newGraphCoordinates, convertor[edge.points.Last()]);
+                
+                /*
                 if (newGraphCoordinates.vertices.Contains(actualZero))
                     newGraphCoordinates.vertices.TryGetValue(actualZero, out actualZero);
                 if (newGraphCoordinates.vertices.Contains(actualLast))
                     newGraphCoordinates.vertices.TryGetValue(actualLast, out actualLast);
+                */
 
                 newGraphCoordinates.AddToDictionary(actualZero, newEdge);
                 newGraphCoordinates.AddToDictionary(actualLast, newEdge);

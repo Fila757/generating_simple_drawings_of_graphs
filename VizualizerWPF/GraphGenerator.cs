@@ -235,11 +235,13 @@ namespace VizualizerWPF
 
                 
                 Vertex actualZero = vertices[0]; Vertex actualLast = vertices[vertices.Count - 1];
+                
+                /*
                 if (graphCoordinates.vertices.Contains(vertices[0]))
                     graphCoordinates.vertices.TryGetValue(vertices[0], out actualZero);
                 if (graphCoordinates.vertices.Contains(vertices[vertices.Count - 1]))
                     graphCoordinates.vertices.TryGetValue(vertices[vertices.Count - 1], out actualLast);
-                
+                */
 
                 graphCoordinates.AddToDictionary(actualZero, edge);
                 graphCoordinates.AddToDictionary(actualLast, edge);
