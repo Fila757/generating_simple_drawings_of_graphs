@@ -505,7 +505,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		outside_points.insert(outside_points.end(), faces_vertices.begin(), faces_vertices.end());
 		create_coordinates(outside_points, outside_distances);
 
-		int mn = INF; int mn_index = -1;
+		double mn = INF; int mn_index = -1;
 		for (int i = 0; i < outer_vertices.size(); i++) {
 			for (int j = outer_vertices.size(); j < outside_distances[i].size(); j++) {
 				if (outside_distances[i][j] < mn) {
@@ -530,10 +530,10 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_)); indices_coords.push_back(make_pair(faces_vertices[0]->x_, faces_vertices[0]->y_));
 		for (int i = 1; i < faces_vertices.size(); i++) {
 			if (*faces_vertices[i] != *faces_vertices[i - 1]) {
-				if (faces_vertices[i]->index_ == -1 &&
-					compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_first)
+				if ((faces_vertices[i]->index_ == -1) &&
+					(compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_first)
 					||
-					compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_second)) {
+					compare(make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_, faces_vertices[i]->y_ - faces_vertices[i - 1]->y_), faces_vertices[i]->shift_second))) {
 					auto shift = get_shift(
 						faces_vertices[i],
 						make_pair(faces_vertices[i]->x_ - faces_vertices[i - 1]->x_,
@@ -567,7 +567,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		if (second_outer_face_bool) {
 			/* minimum rotation of outer part*/
-			int mn = INF;
+			double mn = INF;
 			int index_min;
 			for (int i = 0; i < outer_vertices.size(); i++) {
 				if ((outer_vertices[i].x_ - faces_vertices.back()->x_) * (outer_vertices[i].x_ - faces_vertices.back()->x_) +
@@ -849,8 +849,9 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		}
 		vertices = temp_uniques;
 
-		/*resolce knots */
+		/*resolve knots */
 	
+		
 		for (int i = 3; i < vertices.size(); i++) {
 			if (if_two_segmetns_intersects(make_pair(vertices[i - 3], vertices[i - 2]), make_pair(vertices[i - 1], vertices[i])))
 				swap(vertices[i - 2], vertices[i - 1]);
@@ -1393,11 +1394,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 153) {
+	if (counter == 130) {//146) { // 143
 		cout << "HEU" << endl;
-		//print_bool = true;
+		print_bool = true;
 	}
-	if (counter == 11442) {
+	if (counter == 3173) { //3183
 		cout << "HEU2" << endl;
 	}
 	counter++;
@@ -1463,17 +1464,17 @@ inline void graph::create_all_possible_drawings() {
 
 		//cout << counter << endl;
 		
-		/*
-		if (counter < 153) {
+		
+		if (counter < 130) {
 			done = true;
 		}
-		*/
-
-		//else {
-
-		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 		
-		//}
+
+		else {
+
+			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		
+		}
 
 		if (done) {
 			cout << "yes" << endl;
