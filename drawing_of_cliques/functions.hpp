@@ -1396,7 +1396,7 @@ inline void graph::write_coordinates() {
 
 	if (counter == 130) {//146) { // 143
 		cout << "HEU" << endl;
-		print_bool = true;
+		//print_bool = true;
 	}
 	if (counter == 3173) { //3183
 		cout << "HEU2" << endl;
@@ -1465,16 +1465,16 @@ inline void graph::create_all_possible_drawings() {
 		//cout << counter << endl;
 		
 		
-		if (counter < 130) {
-			done = true;
-		}
+		//if (counter < 130) {
+		//	done = true;
+		//}
 		
 
-		else {
+		//else {
 
-			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
 		
-		}
+		//}
 
 		if (done) {
 			cout << "yes" << endl;
