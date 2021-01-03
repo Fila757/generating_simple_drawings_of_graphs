@@ -374,7 +374,7 @@ namespace VizualizerWPF
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
-            if(graphGenerator.counter == 11441)
+            if(graphGenerator.counter == 10516)
             {
                 Console.WriteLine(5);
             }

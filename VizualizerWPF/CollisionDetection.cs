@@ -213,9 +213,9 @@ namespace VizualizerWPF
         }
 
 
-        static Point GetAlmostMid(Line line)
+        static Point GetAlmostMid(Line line, int a, int b)
         {
-            return new Point((2 * line.X1 + line.X2) / 3, (2 * line.Y1 + line.Y2) / 3); 
+            return new Point((a * line.X1 + b * line.X2) / (a+b), (a * line.Y1 + b * line.Y2) / (a+b)); 
         }
 
 
@@ -237,8 +237,8 @@ namespace VizualizerWPF
         }
         */
 
-        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line) {
-            var mid = GetAlmostMid(line);
+        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line, int a, int b) {
+            var mid = GetAlmostMid(line, a, b);
 
             var border = GetLineWithCoefficients(line);
             var newLine = new Line {
@@ -267,26 +267,66 @@ namespace VizualizerWPF
         public static int GetOrientation(Line mainLine, List<Line> lines)
         {
 
-            (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine);
-
-            var leftHalfLine = halfLines.Item1;
-
-            int numberOfIntersections = 0;
-            foreach(var line in lines)
+            int[] numberOfIntersections = new int[3] { 0, 0, 0 };
+            for (int i = 0; i < 3; i++)
             {
-                var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+                (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2*i + 2, 7 - (2*i + 2));
 
-                if (intersectionOrNull.HasValue)
+                var leftHalfLine = halfLines.Item1;
+
+                foreach (var line in lines)
                 {
-                    Point intersection = intersectionOrNull.Value; 
-                    if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
-                        numberOfIntersections++;
+                    var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+
+                    if (intersectionOrNull.HasValue)
+                    {
+                        Point intersection = intersectionOrNull.Value;
+                        if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
+                            numberOfIntersections[i]++;
+                    }
                 }
             }
 
-            if (numberOfIntersections % 2 == 1)
-                return 1;
-            return -1;
+
+            if (numberOfIntersections[0] % 2 == numberOfIntersections[1] % 2&& numberOfIntersections[1] % 2 == numberOfIntersections[2] % 2)
+            {
+                if (numberOfIntersections[0] % 2 == 1)
+                    return 1;
+                return -1;
+            }
+            else
+            {
+                MessageBox.Show("Corner case when rotation counted");
+                if (numberOfIntersections[0] % 2 == numberOfIntersections[1] % 2)
+                {
+                    if (numberOfIntersections[0] % 2 == 1)
+                        return 1;
+                    return -1;
+                }
+
+                else if (numberOfIntersections[1] % 2 == numberOfIntersections[2] % 2)
+                {
+                    if (numberOfIntersections[1] % 2 == 1)
+                        return 1;
+                    return -1;
+                }
+
+                else if (numberOfIntersections[2] % 2 == numberOfIntersections[0] % 2)
+                {
+                    if (numberOfIntersections[2] % 2 == 1)
+                        return 1;
+                    return -1;
+                }
+
+                else
+                {
+                    MessageBox.Show("Two dont agree when rotation counted");
+                    return 0;
+                }
+
+
+            }
+            
         }
 
         static Line MakeReversedLine(Line line)
