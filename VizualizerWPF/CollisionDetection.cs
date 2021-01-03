@@ -267,10 +267,10 @@ namespace VizualizerWPF
         public static int GetOrientation(Line mainLine, List<Line> lines)
         {
 
-            int[] numberOfIntersections = new int[3] { 0, 0, 0 };
-            for (int i = 0; i < 3; i++)
+            int[] numberOfIntersections = new int[5] { 0, 0, 0, 0, 0 };
+            for (int i = 0; i < 5; i++)
             {
-                (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2*i + 2, 7 - (2*i + 2));
+                (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
 
                 var leftHalfLine = halfLines.Item1;
 
@@ -287,46 +287,28 @@ namespace VizualizerWPF
                 }
             }
 
+            int oddOnes = 0;
 
-            if (numberOfIntersections[0] % 2 == numberOfIntersections[1] % 2&& numberOfIntersections[1] % 2 == numberOfIntersections[2] % 2)
+            for (int i = 0; i < 5; i++)
             {
-                if (numberOfIntersections[0] % 2 == 1)
+                if (numberOfIntersections[i] % 2 == 1)
+                    oddOnes++;
+            }
+
+
+            if (oddOnes >= 4 || oddOnes <= 1)
+            {
+                if (oddOnes >= 4)
                     return 1;
                 return -1;
             }
+
             else
             {
-                MessageBox.Show("Corner case when rotation counted");
-                if (numberOfIntersections[0] % 2 == numberOfIntersections[1] % 2)
-                {
-                    if (numberOfIntersections[0] % 2 == 1)
-                        return 1;
-                    return -1;
-                }
-
-                else if (numberOfIntersections[1] % 2 == numberOfIntersections[2] % 2)
-                {
-                    if (numberOfIntersections[1] % 2 == 1)
-                        return 1;
-                    return -1;
-                }
-
-                else if (numberOfIntersections[2] % 2 == numberOfIntersections[0] % 2)
-                {
-                    if (numberOfIntersections[2] % 2 == 1)
-                        return 1;
-                    return -1;
-                }
-
-                else
-                {
-                    MessageBox.Show("Two dont agree when rotation counted");
-                    return 0;
-                }
-
-
+                MessageBox.Show("Four dont agree when rotation counted");
+                return 0;
             }
-            
+
         }
 
         static Line MakeReversedLine(Line line)
