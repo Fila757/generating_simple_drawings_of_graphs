@@ -295,23 +295,16 @@ namespace VizualizerWPF
                                 numberOfIntersections[i]++;
                         }
                     }
+                    return (numberOfIntersections[i] % 2) == 1 ? 1 : -1;
                 }
                 catch(ArgumentException)
                 {
-                    numberOfIntersections[i] = -1;
+                    continue;
                 }
             }
-
-            for(int i = 0; i < 5; i++)
-            {
-                if(numberOfIntersections[i] != -1)
-                {
-                    return (numberOfIntersections[i] % 2 == 1) ? 1 : -1;
-                }
-            }
-            
-            MessageBox.Show("Four dont agree when rotation counted");
-            return 0;
+       
+            MessageBox.Show("Line goes always through vertex");
+            throw new ArgumentException("Line goes always through vertex");
             
 
         }
