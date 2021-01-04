@@ -666,6 +666,11 @@ namespace VizualizerWPF
                 }
             }
 
+            if(stateChanging == StateChanging.Invariant)
+            {
+
+            }
+
             UpdateStats();
         }
 
