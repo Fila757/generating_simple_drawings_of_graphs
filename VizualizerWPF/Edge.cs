@@ -15,6 +15,8 @@ namespace VizualizerWPF
         public List<Point> points;
         public List<Line> lines;
         //public int direction = 1;
+
+        public int kEdge = 0;
         public Edge() { }
 
         public Edge(List<Point> points, List<Line> lines)

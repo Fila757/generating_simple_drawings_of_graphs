@@ -51,7 +51,7 @@ namespace VizualizerWPF
 
     enum StateAutoMoving { Auto, None };
 
-    enum StateChanging { AddingPolyline, Adding, Removing, None };
+    enum StateChanging { AddingPolyline, Adding, Removing, Invariant, None };
 
     /// <summary>
     /// Enum for showing Intersection, KEdges, AtMostKEdge...
@@ -272,6 +272,7 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
@@ -290,6 +291,7 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Removing ? StateChanging.None : StateChanging.Removing;
 
@@ -304,12 +306,29 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
 
         }
 
+        private void Invariant_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
 
+            /*changing color*/
+            button.Background = stateChanging == StateChanging.Invariant ?
+                (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
+            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+
+            stateChanging = stateChanging == StateChanging.Invariant ? StateChanging.None : StateChanging.Invariant;
+
+        }
+
+
+        
         /// <summary>
         /// Function to change if intersection are visible or not, intersection can be recognized by green color
         /// </summary>
@@ -820,8 +839,10 @@ namespace VizualizerWPF
                     
                     var edge = FindEdgeFromVertices(from, to);
 
-                    if (edge == null)
-                        continue;
+                    //if (edge == null) 
+                    //    continue;
+
+                    edge.kEdge = sum;
                     
                     foreach (var line in edge.lines)
                     {
@@ -905,7 +926,7 @@ namespace VizualizerWPF
                 }
                 else
                 {
-                    textBlock.Text = "NaN";
+                    textBlock.Text = "-";
                 }
 
                 if (textBlock.Text == "F")
