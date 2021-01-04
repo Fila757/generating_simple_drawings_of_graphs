@@ -52,9 +52,11 @@ namespace VizualizerWPF
 
             if (denominator == 0)
             {
-                //MessageBox.Show("Parralel");
-                return null;
-                //throw new ArgumentException("Line and Halfline are parralel"); 
+
+                if (Math.Abs(GetLineWithCoefficients(line1).c - GetLineWithCoefficients(line2).c) < 0.00001)
+                    throw new ArgumentException("Line and Halfline are parralel and intersect");
+                else
+                    return null;
                 //first special case when parralel
 
             }
@@ -67,7 +69,12 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if(t >= -0.001 && t <= 1.001) //line1 is just segments so we need to check limits of s
+            if((t >= -0.00001 && t <= 0.00001) || (t >= 0.99999 && t <= 1.00001))
+            {
+                throw new ArgumentException("Intersects point");
+            }
+
+            if(t >= -0.00001 && t <= 1.00001) //line1 is just segments so we need to check limits of s
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
@@ -270,44 +277,42 @@ namespace VizualizerWPF
             int[] numberOfIntersections = new int[5] { 0, 0, 0, 0, 0 };
             for (int i = 0; i < 5; i++)
             {
-                (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
-
-                var leftHalfLine = halfLines.Item1;
-
-                foreach (var line in lines)
+                try
                 {
-                    var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+                    (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
 
-                    if (intersectionOrNull.HasValue)
+                    var leftHalfLine = halfLines.Item1;
+
+                    foreach (var line in lines)
                     {
-                        Point intersection = intersectionOrNull.Value;
-                        if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
-                            numberOfIntersections[i]++;
+
+                        var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+
+                        if (intersectionOrNull.HasValue)
+                        {
+                            Point intersection = intersectionOrNull.Value;
+                            if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
+                                numberOfIntersections[i]++;
+                        }
                     }
+                }
+                catch(ArgumentException)
+                {
+                    numberOfIntersections[i] = -1;
                 }
             }
 
-            int oddOnes = 0;
-
-            for (int i = 0; i < 5; i++)
+            for(int i = 0; i < 5; i++)
             {
-                if (numberOfIntersections[i] % 2 == 1)
-                    oddOnes++;
+                if(numberOfIntersections[i] != -1)
+                {
+                    return (numberOfIntersections[i] % 2 == 1) ? 1 : -1;
+                }
             }
-
-
-            if (oddOnes >= 4 || oddOnes <= 1)
-            {
-                if (oddOnes >= 4)
-                    return 1;
-                return -1;
-            }
-
-            else
-            {
-                MessageBox.Show("Four dont agree when rotation counted");
-                return 0;
-            }
+            
+            MessageBox.Show("Four dont agree when rotation counted");
+            return 0;
+            
 
         }
 
