@@ -282,17 +282,22 @@ namespace VizualizerWPF
                     points.Add(convertor[edge.points[i]]);
                     lines.Add(line);
                 }
-                newGraphCoordinates.edges.Add(new Edge(points, lines));
+
+                var newEdge = new Edge(points, lines);
+                newGraphCoordinates.edges.Add(newEdge);
 
                 Vertex actualZero = FindVertex(newGraphCoordinates, convertor[edge.points[0]]);
                 Vertex actualLast = FindVertex(newGraphCoordinates, convertor[edge.points.Last()]);
+                
+                /*
                 if (newGraphCoordinates.vertices.Contains(actualZero))
                     newGraphCoordinates.vertices.TryGetValue(actualZero, out actualZero);
                 if (newGraphCoordinates.vertices.Contains(actualLast))
                     newGraphCoordinates.vertices.TryGetValue(actualLast, out actualLast);
+                */
 
-                newGraphCoordinates.AddToDictionary(actualZero, actualLast);
-                newGraphCoordinates.AddToDictionary(actualLast, actualZero);
+                newGraphCoordinates.AddToDictionary(actualZero, newEdge);
+                newGraphCoordinates.AddToDictionary(actualLast, newEdge);
             }
 
             return newGraphCoordinates;

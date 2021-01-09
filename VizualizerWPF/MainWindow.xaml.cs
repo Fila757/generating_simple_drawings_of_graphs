@@ -51,7 +51,7 @@ namespace VizualizerWPF
 
     enum StateAutoMoving { Auto, None };
 
-    enum StateChanging { AddingPolyline, Adding, Removing, None };
+    enum StateChanging { AddingPolyline, Adding, Removing, Invariant, None };
 
     /// <summary>
     /// Enum for showing Intersection, KEdges, AtMostKEdge...
@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 5;
+        int Smoothing => 0;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -111,9 +111,9 @@ namespace VizualizerWPF
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
 
-        
 
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); ;
             graphCoordinates = graphGenerator.GenerateNextDrawing();
 
             DrawGraph(graphCoordinates, 1);
@@ -209,29 +209,18 @@ namespace VizualizerWPF
             }
 
             /* Updating neighbors */
-            var neighborsTemp = new Dictionary<Vertex, List<Vertex>>();
-            foreach (var (vertex, listOfVertices) in graphCoordinates.neighbors)
+            var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
+            foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Scale(scale);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
 
-                List<Vertex> listTemp = new List<Vertex>();
-                foreach (var el in listOfVertices)
-                {
-                    Vertex vertexTemp2 = el;
-                    vertexTemp2.center = vertexTemp2.center.Scale(scale);
+                neighborsTemp[vertexTemp] = listOfEdges;
 
-                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
-                    listTemp.Add(vertexTemp2);
-                }
-
-                neighborsTemp.Add(vertexTemp, listTemp);
             }
-
             graphCoordinates.neighbors = neighborsTemp;
-
         }
 
         /// <summary>
@@ -283,6 +272,7 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
@@ -301,6 +291,7 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Removing ? StateChanging.None : StateChanging.Removing;
 
@@ -315,12 +306,29 @@ namespace VizualizerWPF
                 (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
             Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
             Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
 
         }
 
+        private void Invariant_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
 
+            /*changing color*/
+            button.Background = stateChanging == StateChanging.Invariant ?
+                (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
+            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
+
+            stateChanging = stateChanging == StateChanging.Invariant ? StateChanging.None : StateChanging.Invariant;
+
+        }
+
+
+        
         /// <summary>
         /// Function to change if intersection are visible or not, intersection can be recognized by green color
         /// </summary>
@@ -385,7 +393,7 @@ namespace VizualizerWPF
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
-            if(graphGenerator.counter == 11441)
+            if(graphGenerator.counter == 10516)
             {
                 Console.WriteLine(5);
             }
@@ -400,27 +408,36 @@ namespace VizualizerWPF
            
         }
 
-        /*
+        
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
-            
-            graphGenerator.GeneratePreviousDrawing();
+            int tmpCounter = graphGenerator.counter;
+
+            if (tmpCounter == 1)
+            {
+                MessageBox.Show("There is no previous one");
+                return;
+            }
+
+            graphGenerator.CloseFile();
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+            graphGenerator.counter = tmpCounter;
+
+            graphCoordinates = graphGenerator.GeneratePreviousDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
-            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            DrawGraph(graphCoordinates, 1, true);
-
+            MakeSmoother();
 
         }
-        */
 
-        private void DeleteEdgeFromDictionary(Vertex from, Vertex to)
+
+        private void DeleteEdgeFromDictionary(Vertex from, Edge to)
         {
-            if (graphCoordinates.neighbors.ContainsKey(from))
-                graphCoordinates.neighbors[from].Remove(to);
+            //if (graphCoordinates.neighbors.ContainsKey(from))
+            graphCoordinates.neighbors[from].Remove(to);
         }
         /// <summary>
         /// Function to find vertex containg <c>ellipse</c>
@@ -468,24 +485,8 @@ namespace VizualizerWPF
         private (Vertex, Vertex) FindEdgeEnds(Edge edge)
         {
 
-            var first = new Vertex();
-            var second = new Vertex();
-
-            bool firstBool = true;
-
-            foreach(var vertex in graphCoordinates.vertices)
-            {
-                if (vertex.state == VertexState.Regular &&
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], vertex.ellipse) && firstBool)
-                {
-                    first = vertex;
-                    firstBool = false;
-                }
-
-                else if (vertex.state == VertexState.Regular &&
-                    CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), vertex.ellipse) && !firstBool)
-                    second = vertex;
-            }
+            var first = FindVertex(edge.points[0]);
+            var second = FindVertex(edge.points.Last());
 
             return (first, second);
         }
@@ -506,15 +507,15 @@ namespace VizualizerWPF
             {
                 if (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red) return;
                 selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2 }, VertexState.Regular));
-                
-                if(selectedVertices.Count == 1)
+
+                if (selectedVertices.Count == 1)
                 {
                     selectedCanvasPlaces.Clear();
                 }
                 if (selectedVertices.Count == 2)
                 {
 
-                    if(selectedVertices[0] == selectedVertices[1])
+                    if (selectedVertices[0] == selectedVertices[1])
                     {
                         selectedVertices.RemoveAt(1);
                         return;
@@ -535,14 +536,14 @@ namespace VizualizerWPF
 
                     var lines = new List<Line>();
 
-                    for(int i = 0; i < allVertices.Count - 1; i++)
+                    for (int i = 0; i < allVertices.Count - 1; i++)
                     {
                         var line = new Line
                         {
                             X1 = allVertices[i].center.X,
                             Y1 = allVertices[i].center.Y,
-                            X2 = allVertices[i+1].center.X,
-                            Y2 = allVertices[i+1].center.Y,
+                            X2 = allVertices[i + 1].center.X,
+                            Y2 = allVertices[i + 1].center.Y,
                             Stroke = Brushes.Red,
                             StrokeThickness = sizeOfVertex / 3
                         };
@@ -556,17 +557,18 @@ namespace VizualizerWPF
                     var allPoints = new List<Point>();
                     foreach (var vertex in allVertices)
                         allPoints.Add(vertex.center);
-               
 
-                    graphCoordinates.edges.Add(new Edge(
+                    var edge = new Edge(
                         allPoints,
                         lines
-                    ));
+                    );
 
-                    graphCoordinates.AddToDictionary(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1));
-                    graphCoordinates.AddToDictionary(selectedVertices.ElementAt(1), selectedVertices.ElementAt(0));
+                    graphCoordinates.edges.Add(edge);
 
-                    foreach(var vertex in selectedCanvasPlaces)
+                    graphCoordinates.AddToDictionary(selectedVertices[0], edge);
+                    graphCoordinates.AddToDictionary(selectedVertices[1], edge);
+
+                    foreach (var vertex in selectedCanvasPlaces)
                     {
                         graphCoordinates.vertices.Add(vertex);
                         mainCanvas.Children.Add(vertex.ellipse);
@@ -629,7 +631,7 @@ namespace VizualizerWPF
                         mainCanvas.Children.Add(line);
 
                 }
-            
+
             }
 
             if (stateChanging == StateChanging.Removing)
@@ -644,7 +646,8 @@ namespace VizualizerWPF
                 }
 
                 /* removing edges */
-                foreach (var line in intersectedLines) {
+                foreach (var line in intersectedLines)
+                {
 
                     var tempEdge = FindEdge(line);
                     if (tempEdge is null)
@@ -652,8 +655,8 @@ namespace VizualizerWPF
 
                     var (start, end) = FindEdgeEnds(tempEdge);
 
-                    DeleteEdgeFromDictionary(start, end);
-                    DeleteEdgeFromDictionary(end, start);
+                    DeleteEdgeFromDictionary(start, tempEdge);
+                    DeleteEdgeFromDictionary(end, tempEdge);
 
                     foreach (var l in tempEdge.lines)
                     {
@@ -665,7 +668,7 @@ namespace VizualizerWPF
                 }
 
                 /* removing vertex */
-                if (ellipse.Fill != Brushes.Green && ellipse.Fill != Brushes.Red) //intersection is not in vertices and in neigbours
+                if (ellipse.Fill == Brushes.Blue) //intersection is not in vertices and in neigbours
                 {
                     mainCanvas.Children.Remove(ellipse);
                     graphCoordinates.neighbors.Remove(FindVertex(ellipse));
@@ -673,7 +676,17 @@ namespace VizualizerWPF
                 }
             }
 
-            UpdateStats();
+            if (stateChanging == StateChanging.Invariant)
+            {
+                var vertex = FindVertex(ellipse);
+
+                if(vertex.state == VertexState.Regular)
+                    ReCalculateKEdges(vertex);
+            }
+            else
+            { 
+                UpdateStats();
+            }
         }
 
         /// <summary>
@@ -733,8 +746,8 @@ namespace VizualizerWPF
                 var tempEdge = FindEdge(line); 
                 var (start, end) = FindEdgeEnds(tempEdge);
 
-                DeleteEdgeFromDictionary(start, end);
-                DeleteEdgeFromDictionary(end, start);
+                DeleteEdgeFromDictionary(start, tempEdge);
+                DeleteEdgeFromDictionary(end, tempEdge);
 
                 foreach (var l in tempEdge.lines)
                 {
@@ -784,13 +797,14 @@ namespace VizualizerWPF
         /// Then summing function for AM, AMAM, AMAMAM k edges is called
         /// </summary>
         /// 
-        int maximalkEdges = 7;
+        int maximalkEdges = 8;
 
-        private void ReCalculateKEdges()
+        private void ReCalculateKEdges(Vertex? without = null)
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
             var kEdgdesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+            var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
 
@@ -802,63 +816,135 @@ namespace VizualizerWPF
                 }
             }
 
+            if(without.HasValue)
+            {
+                var vertexWithout = without.Value;
+                foreach(var v in graphCoordinates.neighbors.Keys)
+                {
+                    visited[(vertexWithout, v)] = true;
+                    visited[(v, vertexWithout)] = true;
+
+                    var tempEdge = FindEdgeFromVertices(vertexWithout, v);
+
+                    if (tempEdge == null) // it doesnt have to be clique
+                        continue;
+
+                    foreach(var line in tempEdge.lines)
+                        line.StrokeDashArray = DoubleCollection.Parse("");
+                }
+            }
+
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
-                foreach (var to in value)
+                foreach (var e1 in value)
                 {
+
+                    var to = FindVertex(CollisionDetection.ChooseOppositeOne(e1, from.center));
+
                     if (visited[(from, to)]) continue;
                     visited[(from, to)] = true;
                     visited[(to, from)] = true;
 
-                    int sum = 0;
-                    foreach (var third in graphCoordinates.neighbors[to])
+                    int sumRight = 0;
+                    int sumLeft = 0;
+                    foreach (var e2 in graphCoordinates.neighbors[to])
                     {
-                        if(graphCoordinates.neighbors[from].Contains(third)){
-                            if (third == from || third == to) continue;
-                            if (Determinant(to.center.Substract(from.center).ToVector(), third.center.Substract(to.center).ToVector()) >= 0)
-                            {
-                                sum++;
-                            }
+                        var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
+                        var e3 = graphCoordinates.neighbors[from].ContainsEnd(from.center, third.center);
+                        if (e3 != null){
+                            if (third == from || third == to || (without.HasValue && without.Value == third)) continue;
+
+                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
+
+                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2) > 0)
+                                sumRight++;
+                            else
+                                sumLeft++;
                         }
                     }
 
-                    int inter;
-                    if (sum > (inter = graphCoordinates.neighbors[from].Intersect(graphCoordinates.neighbors[to]).Count()) / 2)
-                        sum = inter - sum; //pick smaller
+                    int sum = sumRight < sumLeft ? sumRight : sumLeft; 
 
+                    /*
+                    int inter;
+                    if (sum > (inter =
+                        graphCoordinates.neighbors[from].GetEnds(from.center)
+                        .Intersect(graphCoordinates.neighbors[to].GetEnds(to.center)).Count()) / 2)
+                        sum = inter - sum; //pick smaller
+                    */
                     /*
                     if (sum < 0)
                         throw new ArgumentException("You cannot add edge between already connected vertices");
                     */
                     /*
                     if (sum <= kEdgesPicked) // only needed this ones */
+
                     kEdgdesValues[sum]++;
                     
                     var edge = FindEdgeFromVertices(from, to);
 
-                    if (edge == null)
-                        continue;
-                    
+                    //if (edge == null) 
+                    //    continue;
+
+                    bool invariant = false;
+
+                    if (without.HasValue)
+                    {
+                        if (edge.kEdge == sum)
+                        {
+                            invariant = true;
+                            invariantKEdges[sum]++;
+                        }
+                    }
+                    else
+                    {
+                        edge.kEdge = sum;
+                    }
+
                     foreach (var line in edge.lines)
                     {
-                        line.Stroke = colors[sum];
-                        /*
-                        if (sum <= kEdgesPicked)
-                            line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+
+                        if (without.HasValue)
+                        {
+                            if (invariant)
+                                line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+                            else
+                            {
+                                line.StrokeDashArray = DoubleCollection.Parse("");
+                            }
+                        }
+                        
                         else
-                        */
-                        line.StrokeDashArray = DoubleCollection.Parse("");
+                            line.Stroke = colors[sum];
                     }
                 }
             }
 
-            for(int i = 0; i <= maximalkEdges; i++)
+
+            if (!without.HasValue)
             {
-                TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
-                textBlock.Text = kEdgdesValues[i].ToString();
+                CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
+
+                for (int i = 0; i <= maximalkEdges; i++)
+                {
+                    TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
+                    textBlock.Text = kEdgdesValues[i].ToString();
+                }
             }
 
-            CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
+            else
+            {
+                int invariantSum = invariantKEdges[0];
+                TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
+                textBlock.Text = invariantSum.ToString();
+
+                for (int i = 1; i <= maximalkEdges; i++)
+                {
+                    invariantSum += invariantKEdges[i];
+                    textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
+                    textBlock.Text = invariantSum.ToString();
+                }
+            }
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
             //RedrawGraph(graphCoordinates, 1);
@@ -904,10 +990,26 @@ namespace VizualizerWPF
                 textBlock.Text = AMKEdgesArray[1, i].ToString();
             }
 
+
             for (int i = 0; i <= size; i++)
             {
                 TextBlock textBlock = FindName($"amAmAmKEdges{i}") as TextBlock;
                 textBlock.Text = AMKEdgesArray[2, i].ToString();
+
+
+                
+                textBlock = FindName($"theoremAmAmAmKEdges{i}") as TextBlock;
+                if (graphCoordinates.edges.Count >= (((2 * i + 3) * (2 * i + 2)) / 2))
+                {
+                    textBlock.Text = (AMKEdgesArray[2, i] >= (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24))) ? "T" : "F";
+                }
+                else
+                {
+                    textBlock.Text = "-";
+                }
+
+                if (textBlock.Text == "F")
+                    MessageBox.Show("HEUREKA WRONG");
             }
  
 
@@ -924,9 +1026,9 @@ namespace VizualizerWPF
         private void UpdateStats()
         {
             int numberOfIntersections = 0;
-            foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
+            foreach (var vertex in graphCoordinates.vertices)
             {
-                if (FindVertex(vertex).state == VertexState.Intersection)
+                if (vertex.state == VertexState.Intersection)
                 {
                     numberOfIntersections++;
                 }
@@ -966,7 +1068,7 @@ namespace VizualizerWPF
 
                 var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular);
                 graphCoordinates.vertices.Add(vertex);
-                graphCoordinates.neighbors.Add(vertex, new List<Vertex>());
+                graphCoordinates.neighbors.Add(vertex, new List<Edge>());
             }
 
             if(stateChanging == StateChanging.AddingPolyline)
@@ -1059,10 +1161,11 @@ namespace VizualizerWPF
                 vertices.Add(vertexTemp);
             }
 
+            graphCoordinates.vertices = vertices;
+
             /*Updating edges*/
 
-            graphCoordinates.vertices = vertices;
-            foreach(var edge in graphCoordinates.edges)
+            foreach (var edge in graphCoordinates.edges)
             {
 
                 var tempPoints = new List<Point>();
@@ -1096,31 +1199,20 @@ namespace VizualizerWPF
 
             }
 
-            
+
             /* Updating neighbors */
-            var neighborsTemp = new Dictionary<Vertex, List<Vertex> >();
-            foreach(var (vertex, listOfVertices) in graphCoordinates.neighbors)
+
+            var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
+            foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
-                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
-                vertexTemp.center = coordinates;
+                vertexTemp.center = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
 
-                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
+                graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp); //to set also ellipse on right sizes
 
-                List<Vertex> listTemp = new List<Vertex>();
-                foreach(var el in listOfVertices)
-                {
-                    Vertex vertexTemp2 = el;
-                    var coordinates2 = vertexTemp2.center.Scale(scale).Add(new Point(cx, cy));
-                    vertexTemp2.center = coordinates2;
+                neighborsTemp[vertexTemp] = listOfEdges;
 
-                    graphCoordinates.vertices.TryGetValue(vertexTemp2, out vertexTemp2);
-                    listTemp.Add(vertexTemp2);
-                }
-
-                neighborsTemp.Add(vertexTemp, listTemp);
             }
-
             graphCoordinates.neighbors = neighborsTemp;
 
             UpdateStats();

@@ -18,7 +18,7 @@ namespace VizualizerWPF
         
         public HashSet<Vertex> vertices = new HashSet<Vertex>();
         public List<Edge> edges = new List<Edge>();
-        public Dictionary<Vertex, List<Vertex>> neighbors = new Dictionary<Vertex, List<Vertex>>();
+        public Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
 
         /// <summary>
         /// Safe version of adding to dictionary 
@@ -26,7 +26,7 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
-        public void AddToDictionary(Vertex key, Vertex value)
+        public void AddToDictionary(Vertex key, Edge value)
         {
             if (neighbors.ContainsKey(key))
             {
@@ -34,7 +34,7 @@ namespace VizualizerWPF
             }
             else
             {
-                neighbors[key] = new List<Vertex>();
+                neighbors[key] = new List<Edge>();
                 neighbors[key].Add(value);
             }
         }
@@ -158,16 +158,14 @@ namespace VizualizerWPF
         /// and generate graph out of it
         /// </summary>
         /// <returns>New graph</returns>
-        GraphCoordinates ReadUntillNextRS()
+        GraphCoordinates ReadUntillNextRS(bool skip = false)
         {
             graphCoordinates = new GraphCoordinates();
-
-
 
             string line;
             while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
-                if (line == "")
+                if (line == "" || skip)
                     continue;
 
                 List<Vertex> vertices = new List<Vertex>();
@@ -233,14 +231,18 @@ namespace VizualizerWPF
 
                 graphCoordinates.edges.Add(edge);
 
+                
                 Vertex actualZero = vertices[0]; Vertex actualLast = vertices[vertices.Count - 1];
+                
+                /*
                 if (graphCoordinates.vertices.Contains(vertices[0]))
                     graphCoordinates.vertices.TryGetValue(vertices[0], out actualZero);
                 if (graphCoordinates.vertices.Contains(vertices[vertices.Count - 1]))
                     graphCoordinates.vertices.TryGetValue(vertices[vertices.Count - 1], out actualLast);
+                */
 
-                graphCoordinates.AddToDictionary(actualZero, actualLast);
-                graphCoordinates.AddToDictionary(actualLast, actualZero);
+                graphCoordinates.AddToDictionary(actualZero, edge);
+                graphCoordinates.AddToDictionary(actualLast, edge);
 
                 graphCoordinates.vertices.AddList(vertices);
             }
@@ -275,19 +277,23 @@ namespace VizualizerWPF
         public GraphCoordinates GenerateNextDrawing()
         {
             counter++; 
-            if(counter == 35)
-            {
-                //MessageBox.Show("Bug");
-            }
+
             return ReadUntillNextRS();
         }
 
-        /*
+        
         public GraphCoordinates GeneratePreviousDrawing()
         {
             counter--;
-            return ReadUntillPreviousRS();
+
+            int tmpCounter = 1;
+            while (tmpCounter < counter)
+            {
+                ReadUntillNextRS(true);
+                tmpCounter++;
+            }
+            return ReadUntillNextRS();
         }
-        */
+        
     }
 }

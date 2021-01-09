@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Windows.Shared;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -50,8 +51,15 @@ namespace VizualizerWPF
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
             if (denominator == 0)
-                throw new ArgumentException("Line and Halfline are parralel"); //first special case when parralel, second when tangent to point should not bother us
+            {
 
+                if (Math.Abs(GetLineWithCoefficients(line1).c - GetLineWithCoefficients(line2).c) < 0.00001)
+                    throw new ArgumentException("Line and Halfline are parralel and intersect");
+                else
+                    return null;
+                //first special case when parralel
+
+            }
             var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
                  line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
             var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
@@ -61,7 +69,12 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if(s >= -0.001 && s <= 1.001) //line1 is just segments so we need to check limits of s
+            if((t >= -0.00001 && t <= 0.00001) || (t >= 0.99999 && t <= 1.00001))
+            {
+                throw new ArgumentException("Intersects point");
+            }
+
+            if(t >= -0.00001 && t <= 1.00001) //line1 is just segments so we need to check limits of s
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
@@ -207,9 +220,9 @@ namespace VizualizerWPF
         }
 
 
-        static Point GetAlmostMid(Line line)
+        static Point GetAlmostMid(Line line, int a, int b)
         {
-            return new Point((2 * line.X1 + line.X2) / 3, (2 * line.Y1 + line.Y2) / 3); 
+            return new Point((a * line.X1 + b * line.X2) / (a+b), (a * line.Y1 + b * line.Y2) / (a+b)); 
         }
 
 
@@ -231,15 +244,15 @@ namespace VizualizerWPF
         }
         */
 
-        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line) {
-            var mid = GetAlmostMid(line);
+        static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line, int a, int b) {
+            var mid = GetAlmostMid(line, a, b);
 
             var border = GetLineWithCoefficients(line);
             var newLine = new Line {
                 X1 = mid.X,
                 Y1 = mid.Y,
-                X2 = (mid + new Vector { X = -border.b, Y = border.a }).X,
-                Y2 = (mid + new Vector { X = -border.b, Y = border.a }).Y 
+                X2 = (mid + new Vector { X = border.a, Y = border.b }).X, //orthogonal vector is given in eqution of line
+                Y2 = (mid + new Vector { X = border.a, Y = border.b }).Y 
             };
 
             var leftHalfLine = new HalfLineWithCoeffients {
@@ -261,26 +274,65 @@ namespace VizualizerWPF
         public static int GetOrientation(Line mainLine, List<Line> lines)
         {
 
-            (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine);
-
-            var leftHalfLine = halfLines.Item1;
-
-            int numberOfIntersections = 0;
-            foreach(var line in lines)
+            int[] numberOfIntersections = new int[5] { 0, 0, 0, 0, 0 };
+            for (int i = 0; i < 5; i++)
             {
-                var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
-
-                if (intersectionOrNull.HasValue)
+                try
                 {
-                    Point intersection = intersectionOrNull.Value; 
-                    if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
-                        numberOfIntersections++;
+                    (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
+
+                    var leftHalfLine = halfLines.Item1;
+
+                    foreach (var line in lines)
+                    {
+
+                        var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+
+                        if (intersectionOrNull.HasValue)
+                        {
+                            Point intersection = intersectionOrNull.Value;
+                            if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
+                                numberOfIntersections[i]++;
+                        }
+                    }
+                    return (numberOfIntersections[i] % 2) == 1 ? 1 : -1;
+                }
+                catch(ArgumentException)
+                {
+                    continue;
                 }
             }
+       
+            MessageBox.Show("Line goes always through vertex");
+            throw new ArgumentException("Line goes always through vertex");
+            
 
-            if (numberOfIntersections % 2 == 1)
-                return 1;
-            return -1;
+        }
+
+        static Line MakeReversedLine(Line line)
+        {
+            return new Line { X1 = line.X2, Y1 = line.Y2, X2 = line.X1, Y2 = line.Y1 };
+        }
+
+        public static Point ChooseOppositeOne(Edge edge, Point point)
+        {
+            return Vertex.Compare(edge.points[0], point) ? edge.points.Last() : edge.points[0];
+        }
+
+        public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)
+        {
+            var result = new List<Line>();
+
+            for (int i = 1; i < e1.lines.Count; i++) //skip the first one and return as mainLine
+                result.Add(e1.lines[i]);
+
+            foreach (var line in e2.lines)
+                result.Add(line);
+
+            foreach (var line in e3.lines)
+                result.Add(line);
+
+            return (e1.lines[0], result);
         }
 
     }
