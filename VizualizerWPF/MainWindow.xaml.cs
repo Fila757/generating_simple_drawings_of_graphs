@@ -78,7 +78,7 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        int Smoothing => 0;
+        int Smoothing => 5;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -113,8 +113,9 @@ namespace VizualizerWPF
 
 
 
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); ;
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
+            numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             DrawGraph(graphCoordinates, 1);
 
@@ -684,7 +685,8 @@ namespace VizualizerWPF
                     ReCalculateKEdges(vertex);
             }
             else
-            { 
+            {
+                ZeroInvariantEdgesValues();
                 UpdateStats();
             }
         }
@@ -760,6 +762,7 @@ namespace VizualizerWPF
 
             }
 
+            ZeroInvariantEdgesValues();
             UpdateStats();
         }
 
@@ -950,6 +953,23 @@ namespace VizualizerWPF
             //RedrawGraph(graphCoordinates, 1);
 
         }
+
+        void ZeroInvariantEdgesValues()
+        {
+
+            foreach(var edge in graphCoordinates.edges)
+            {
+                foreach(var line in edge.lines)
+                    line.StrokeDashArray = DoubleCollection.Parse("");
+            }
+
+            for (int i = 0; i <= maximalkEdges; i++)
+            {
+                var textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
+                textBlock.Text = 0.ToString();
+            }
+        }
+
         /// <summary>
         /// Summing function to find wanted values
         /// </summary>
@@ -1215,6 +1235,7 @@ namespace VizualizerWPF
             }
             graphCoordinates.neighbors = neighborsTemp;
 
+            ZeroInvariantEdgesValues();
             UpdateStats();
 
             cx = copy_cx; cy = copy_cy;
