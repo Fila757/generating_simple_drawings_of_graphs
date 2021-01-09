@@ -668,7 +668,7 @@ namespace VizualizerWPF
                 }
 
                 /* removing vertex */
-                if (ellipse.Fill != Brushes.Green && ellipse.Fill != Brushes.Red) //intersection is not in vertices and in neigbours
+                if (ellipse.Fill == Brushes.Blue) //intersection is not in vertices and in neigbours
                 {
                     mainCanvas.Children.Remove(ellipse);
                     graphCoordinates.neighbors.Remove(FindVertex(ellipse));
@@ -824,6 +824,10 @@ namespace VizualizerWPF
                     visited[(v, vertexWithout)] = true;
 
                     var tempEdge = FindEdgeFromVertices(vertexWithout, v);
+
+                    if (tempEdge == null) // it doesnt have to be clique
+                        continue;
+
                     foreach(var line in tempEdge.lines)
                         line.StrokeDashArray = DoubleCollection.Parse("");
                 }
