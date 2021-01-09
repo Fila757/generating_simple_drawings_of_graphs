@@ -678,7 +678,10 @@ namespace VizualizerWPF
 
             if (stateChanging == StateChanging.Invariant)
             {
-                ReCalculateKEdges(FindVertex(ellipse));
+                var vertex = FindVertex(ellipse);
+
+                if(vertex.state == VertexState.Regular)
+                    ReCalculateKEdges(vertex);
             }
             else
             { 
