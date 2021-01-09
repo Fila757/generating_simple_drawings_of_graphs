@@ -408,22 +408,31 @@ namespace VizualizerWPF
            
         }
 
-        /*
+        
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
-            
-            graphGenerator.GeneratePreviousDrawing();
+            int tmpCounter = graphGenerator.counter;
+
+            if (tmpCounter == 1)
+            {
+                MessageBox.Show("There is no previous one");
+                return;
+            }
+
+            graphGenerator.CloseFile();
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+            graphGenerator.counter = tmpCounter;
+
+            graphCoordinates = graphGenerator.GeneratePreviousDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
-            graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            DrawGraph(graphCoordinates, 1, true);
-
+            MakeSmoother();
 
         }
-        */
+
 
         private void DeleteEdgeFromDictionary(Vertex from, Edge to)
         {

@@ -43,7 +43,7 @@
         </ListBox>-->
         <!--<syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>-->
         <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
-        <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2"/>
+        <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="PreviousDrawing_Click"/>
         <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
                            MaxValue="7" MinValue="3"/>
 
@@ -54,7 +54,7 @@
         <!--TextBlock x:Name="textBlockKEdges" Grid.Column ="3" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
         <!--TextBlock x:Name="textBlockAMKEdges" Grid.Column ="0" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
 
-        <TextBlock x:Name="numberOfDrawing" Grid.Column ="4" Grid.Row= "1" TextAlignment="right" Visibility="Visible" Margin="0,8,0,26" Grid.RowSpan="2"/>
+        <TextBlock x:Name="numberOfDrawing" Grid.Column ="4" Grid.Row= "1" TextAlignment="center" Visibility="Visible" Margin="0,8,0,26" Grid.RowSpan="2"/>
         <TextBlock x:Name="optimal" Grid.Column ="4" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="0,8,0,3" Text="NO"/>
         <TextBlock x:Name="crossings" Grid.Column ="3" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="15,8,0,3" Text="1"/>
         <TextBlock x:Name="infoVertices" Grid.Column ="3" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Vertices:"/>

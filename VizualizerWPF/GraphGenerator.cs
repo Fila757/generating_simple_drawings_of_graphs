@@ -158,16 +158,14 @@ namespace VizualizerWPF
         /// and generate graph out of it
         /// </summary>
         /// <returns>New graph</returns>
-        GraphCoordinates ReadUntillNextRS()
+        GraphCoordinates ReadUntillNextRS(bool skip = false)
         {
             graphCoordinates = new GraphCoordinates();
-
-
 
             string line;
             while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
             {
-                if (line == "")
+                if (line == "" || skip)
                     continue;
 
                 List<Vertex> vertices = new List<Vertex>();
@@ -286,12 +284,19 @@ namespace VizualizerWPF
             return ReadUntillNextRS();
         }
 
-        /*
+        
         public GraphCoordinates GeneratePreviousDrawing()
         {
             counter--;
-            return ReadUntillPreviousRS();
+
+            int tmpCounter = 1;
+            while (tmpCounter < counter)
+            {
+                ReadUntillNextRS(true);
+                tmpCounter++;
+            }
+            return ReadUntillNextRS();
         }
-        */
+        
     }
 }
