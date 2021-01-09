@@ -677,7 +677,7 @@ namespace VizualizerWPF
 
             if(stateChanging == StateChanging.Invariant)
             {
-
+                
             }
 
             UpdateStats();
@@ -793,7 +793,7 @@ namespace VizualizerWPF
         /// 
         int maximalkEdges = 8;
 
-        private void ReCalculateKEdges()
+        private void ReCalculateKEdges(Vertex? without = null)
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
@@ -809,6 +809,16 @@ namespace VizualizerWPF
                 }
             }
 
+            if(without.HasValue)
+            {
+                var vertexWithout = without.Value;
+                foreach(var v in graphCoordinates.neighbors.Keys)
+                {
+                    visited[(vertexWithout, v)] = true;
+                    visited[(v, vertexWithout)] = true;
+                }
+            }
+
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
                 foreach (var e1 in value)
@@ -820,35 +830,40 @@ namespace VizualizerWPF
                     visited[(from, to)] = true;
                     visited[(to, from)] = true;
 
-                    int sum = 0;
+                    int sumRight = 0;
+                    int sumLeft = 0;
                     foreach (var e2 in graphCoordinates.neighbors[to])
                     {
                         var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
                         var e3 = graphCoordinates.neighbors[from].ContainsEnd(from.center, third.center);
                         if (e3 != null){
-                            if (third == from || third == to) continue;
+                            if (third == from || third == to || (without.HasValue && without.Value == third)) continue;
 
                             (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
 
                             if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2) > 0)
-                            {
-                                sum++;
-                            }
+                                sumRight++;
+                            else
+                                sumLeft++;
                         }
                     }
 
+                    int sum = sumRight < sumLeft ? sumRight : sumLeft; 
+
+                    /*
                     int inter;
                     if (sum > (inter =
                         graphCoordinates.neighbors[from].GetEnds(from.center)
                         .Intersect(graphCoordinates.neighbors[to].GetEnds(to.center)).Count()) / 2)
                         sum = inter - sum; //pick smaller
-
+                    */
                     /*
                     if (sum < 0)
                         throw new ArgumentException("You cannot add edge between already connected vertices");
                     */
                     /*
                     if (sum <= kEdgesPicked) // only needed this ones */
+
                     kEdgdesValues[sum]++;
                     
                     var edge = FindEdgeFromVertices(from, to);
@@ -856,30 +871,41 @@ namespace VizualizerWPF
                     //if (edge == null) 
                     //    continue;
 
-                    edge.kEdge = sum;
+                    bool invariant = false;
+
+                    if (without.HasValue)
+                    {
+                        if (edge.kEdge == sum)
+                            invariant = true;
+                    }
+                    else
+                    {
+                        edge.kEdge = sum;
+                    }
                     
                     foreach (var line in edge.lines)
                     {
                         line.Stroke = colors[sum];
-                        /*
-                        if (sum <= kEdgesPicked)
+                        
+                        if (invariant)
                             line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
                         else
-                        */
-                        line.StrokeDashArray = DoubleCollection.Parse("");
+                            line.StrokeDashArray = DoubleCollection.Parse("");
                     }
                 }
             }
 
 
-            CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
-
-            for (int i = 0; i <= maximalkEdges; i++)
+            if (!without.HasValue)
             {
-                TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
-                textBlock.Text = kEdgdesValues[i].ToString();
-            }
+                CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
 
+                for (int i = 0; i <= maximalkEdges; i++)
+                {
+                    TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
+                    textBlock.Text = kEdgdesValues[i].ToString();
+                }
+            }
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
             //RedrawGraph(graphCoordinates, 1);
