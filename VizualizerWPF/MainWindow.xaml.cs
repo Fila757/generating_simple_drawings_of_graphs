@@ -507,15 +507,15 @@ namespace VizualizerWPF
             {
                 if (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red) return;
                 selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2 }, VertexState.Regular));
-                
-                if(selectedVertices.Count == 1)
+
+                if (selectedVertices.Count == 1)
                 {
                     selectedCanvasPlaces.Clear();
                 }
                 if (selectedVertices.Count == 2)
                 {
 
-                    if(selectedVertices[0] == selectedVertices[1])
+                    if (selectedVertices[0] == selectedVertices[1])
                     {
                         selectedVertices.RemoveAt(1);
                         return;
@@ -536,14 +536,14 @@ namespace VizualizerWPF
 
                     var lines = new List<Line>();
 
-                    for(int i = 0; i < allVertices.Count - 1; i++)
+                    for (int i = 0; i < allVertices.Count - 1; i++)
                     {
                         var line = new Line
                         {
                             X1 = allVertices[i].center.X,
                             Y1 = allVertices[i].center.Y,
-                            X2 = allVertices[i+1].center.X,
-                            Y2 = allVertices[i+1].center.Y,
+                            X2 = allVertices[i + 1].center.X,
+                            Y2 = allVertices[i + 1].center.Y,
                             Stroke = Brushes.Red,
                             StrokeThickness = sizeOfVertex / 3
                         };
@@ -568,7 +568,7 @@ namespace VizualizerWPF
                     graphCoordinates.AddToDictionary(selectedVertices[0], edge);
                     graphCoordinates.AddToDictionary(selectedVertices[1], edge);
 
-                    foreach(var vertex in selectedCanvasPlaces)
+                    foreach (var vertex in selectedCanvasPlaces)
                     {
                         graphCoordinates.vertices.Add(vertex);
                         mainCanvas.Children.Add(vertex.ellipse);
@@ -631,7 +631,7 @@ namespace VizualizerWPF
                         mainCanvas.Children.Add(line);
 
                 }
-            
+
             }
 
             if (stateChanging == StateChanging.Removing)
@@ -646,7 +646,8 @@ namespace VizualizerWPF
                 }
 
                 /* removing edges */
-                foreach (var line in intersectedLines) {
+                foreach (var line in intersectedLines)
+                {
 
                     var tempEdge = FindEdge(line);
                     if (tempEdge is null)
@@ -675,12 +676,14 @@ namespace VizualizerWPF
                 }
             }
 
-            if(stateChanging == StateChanging.Invariant)
+            if (stateChanging == StateChanging.Invariant)
             {
-                
+                ReCalculateKEdges(FindVertex(ellipse));
             }
-
-            UpdateStats();
+            else
+            { 
+                UpdateStats();
+            }
         }
 
         /// <summary>
@@ -816,6 +819,10 @@ namespace VizualizerWPF
                 {
                     visited[(vertexWithout, v)] = true;
                     visited[(v, vertexWithout)] = true;
+
+                    var tempEdge = FindEdgeFromVertices(vertexWithout, v);
+                    foreach(var line in tempEdge.lines)
+                        line.StrokeDashArray = DoubleCollection.Parse("");
                 }
             }
 
@@ -882,15 +889,22 @@ namespace VizualizerWPF
                     {
                         edge.kEdge = sum;
                     }
-                    
+
                     foreach (var line in edge.lines)
                     {
-                        line.Stroke = colors[sum];
+
+                        if (without.HasValue)
+                        {
+                            if (invariant)
+                                line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+                            else
+                            {
+                                line.StrokeDashArray = DoubleCollection.Parse("");
+                            }
+                        }
                         
-                        if (invariant)
-                            line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
-                        else
-                            line.StrokeDashArray = DoubleCollection.Parse("");
+                        if(!without.HasValue)
+                            line.Stroke = colors[sum];
                     }
                 }
             }
