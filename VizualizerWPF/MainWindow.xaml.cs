@@ -804,6 +804,7 @@ namespace VizualizerWPF
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
             var kEdgdesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+            var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
 
@@ -890,7 +891,10 @@ namespace VizualizerWPF
                     if (without.HasValue)
                     {
                         if (edge.kEdge == sum)
+                        {
                             invariant = true;
+                            invariantKEdges[sum]++;
+                        }
                     }
                     else
                     {
@@ -910,7 +914,7 @@ namespace VizualizerWPF
                             }
                         }
                         
-                        if(!without.HasValue)
+                        else
                             line.Stroke = colors[sum];
                     }
                 }
@@ -925,6 +929,20 @@ namespace VizualizerWPF
                 {
                     TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
                     textBlock.Text = kEdgdesValues[i].ToString();
+                }
+            }
+
+            else
+            {
+                int invariantSum = invariantKEdges[0];
+                TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
+                textBlock.Text = invariantSum.ToString();
+
+                for (int i = 1; i <= maximalkEdges; i++)
+                {
+                    invariantSum += invariantKEdges[i];
+                    textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
+                    textBlock.Text = invariantSum.ToString();
                 }
             }
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
