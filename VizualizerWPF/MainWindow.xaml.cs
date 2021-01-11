@@ -78,6 +78,9 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
+        double actualHeight;
+        double actualWidth;
+
         int Smoothing => 5;
 
         List<Vertex> selectedVertices = new List<Vertex>();
@@ -130,6 +133,12 @@ namespace VizualizerWPF
         }
 
 
+        private void Canvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            actualWidth = mainCanvas.ActualWidth;
+            actualHeight = mainCanvas.ActualHeight;
+        }
+
         private void MakeSmoother()
         {
             for (int i = 0; i < Smoothing; i++)
@@ -166,6 +175,12 @@ namespace VizualizerWPF
         private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
             mainCanvas.Children.Clear();
+
+            (double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.vertices);
+
+            cx = coordinatesAndScale.Item1;
+            cy = coordinatesAndScale.Item2;
+            scale = coordinatesAndScale.Item3;
 
             /* Updating Vertices */
             var vertices = new HashSet<Vertex>();
@@ -1130,6 +1145,40 @@ namespace VizualizerWPF
 
         }
 
+        (double, double, double) FindClipingSizes(HashSet<Vertex> vertices)
+        {
+            double leftX = 100000000, rightX = -100000000, topY = -100000000, bottomY = 100000000;
+
+            foreach(var vertex in vertices)
+            {
+                if(leftX > vertex.center.X)
+                {
+                    leftX = vertex.center.X;
+                }
+
+                if(rightX < vertex.center.X)
+                {
+                    rightX = vertex.center.X;
+                }
+
+                if(topY < vertex.center.Y)
+                {
+                    topY = vertex.center.Y;
+                }
+
+                if(bottomY > vertex.center.Y)
+                {
+                    bottomY = vertex.center.Y; // in usual coordinates system
+                }
+            }
+
+            double sizeX = Math.Abs(rightX - leftX);
+            double sizeY = Math.Abs(topY - bottomY);
+
+            return (-sizeX, -sizeY, Math.Min(actualWidth / sizeX, actualHeight / sizeY)); //actual?
+
+        }
+
         /// <summary>
         /// Function similar to ReDrawGraph function but 
         /// there is only rescaling needed
@@ -1142,12 +1191,26 @@ namespace VizualizerWPF
         {
 
             mainCanvas.Children.Clear();
-            double copy_cx = cx; double copy_cy = cy;
+
+
             if (skipShift)
             {
-                cx = 0;
-                cy = 0;
+                (double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.vertices);
+
+                cx = coordinatesAndScale.Item1;
+                cy = coordinatesAndScale.Item2;
+                scale = coordinatesAndScale.Item3;
+
+                
             }
+
+            //if (skipShift)
+            //{
+            //    double copyCx = cx; double copyCy = cy;
+
+            //    cx = 0;
+            //    cy = 0;
+            //}
                 
             /*Updating vertices*/
             var vertices = new HashSet<Vertex>();
@@ -1238,7 +1301,7 @@ namespace VizualizerWPF
             ZeroInvariantEdgesValues();
             UpdateStats();
 
-            cx = copy_cx; cy = copy_cy;
+            //cx = copyCx; cy = copyCy;
         }
        
     }
