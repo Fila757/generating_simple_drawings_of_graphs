@@ -78,8 +78,8 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        double actualHeight;
-        double actualWidth;
+        double actualHeight = 0;
+        double actualWidth = 0;
 
         int Smoothing => 5;
 
@@ -101,7 +101,9 @@ namespace VizualizerWPF
 
             InitializeComponent();
 
-            StateChanged += ResizeWindowEvent;
+            //StateChanged += ResizeWindowEvent;
+            //SizeChanged += Canvas_Loaded;
+            SizeChanged += ResizeWindowEvent;
 
             dispatcherTimer.Tick += dispatcherTimer_Tick;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
@@ -137,6 +139,9 @@ namespace VizualizerWPF
         {
             actualWidth = mainCanvas.ActualWidth;
             actualHeight = mainCanvas.ActualHeight;
+
+            mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = 0, X2 = actualWidth, Y2 = 0 });
+            mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth, Y2 = actualHeight });
         }
 
         private void MakeSmoother()
@@ -176,7 +181,7 @@ namespace VizualizerWPF
         {
             mainCanvas.Children.Clear();
 
-            (double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.vertices);
+            (double, double, double) coordinatesAndScale = FindClipingSizes(GetAllPoints(graphCoordinates));
 
             cx = coordinatesAndScale.Item1;
             cy = coordinatesAndScale.Item2;
@@ -246,6 +251,8 @@ namespace VizualizerWPF
         /// <param name="e"></param>
         private void ResizeWindowEvent(object sender, EventArgs e)
         {
+            Canvas_Loaded(sender, new RoutedEventArgs());
+
             if(WindowState == WindowState.Normal)
             {
                 RedrawGraph(graphCoordinates, 1 / scale);
@@ -1145,38 +1152,54 @@ namespace VizualizerWPF
 
         }
 
-        (double, double, double) FindClipingSizes(HashSet<Vertex> vertices)
+        (double, double, double) FindClipingSizes(HashSet<Point> points)
         {
             double leftX = 100000000, rightX = -100000000, topY = -100000000, bottomY = 100000000;
 
-            foreach(var vertex in vertices)
+            foreach(var point in points)
             {
-                if(leftX > vertex.center.X)
+                if(leftX > point.X)
                 {
-                    leftX = vertex.center.X;
+                    leftX = point.X;
                 }
 
-                if(rightX < vertex.center.X)
+                if(rightX < point.X)
                 {
-                    rightX = vertex.center.X;
+                    rightX = point.X;
                 }
 
-                if(topY < vertex.center.Y)
+                if(topY < point.Y)
                 {
-                    topY = vertex.center.Y;
+                    topY = point.Y;
                 }
 
-                if(bottomY > vertex.center.Y)
+                if(bottomY > point.Y)
                 {
-                    bottomY = vertex.center.Y; // in usual coordinates system
+                    bottomY = point.Y; // in usual coordinates system
                 }
             }
 
             double sizeX = Math.Abs(rightX - leftX);
             double sizeY = Math.Abs(topY - bottomY);
 
-            return (-sizeX, -sizeY, Math.Min(actualWidth / sizeX, actualHeight / sizeY)); //actual?
+            return (-leftX, -bottomY, Math.Min(actualWidth / sizeX, actualHeight / sizeY)); //actual?
 
+        }
+
+        HashSet<Point> GetAllPoints(GraphCoordinates graphCoordinates)
+        {
+            HashSet<Point> result = new HashSet<Point>();
+            foreach (var vertex in graphCoordinates.vertices)
+                result.Add(vertex.center);
+            foreach (var edge in graphCoordinates.edges)
+            {
+                foreach(var point in edge.points)
+                {
+                    result.Add(point);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -1193,16 +1216,16 @@ namespace VizualizerWPF
             mainCanvas.Children.Clear();
 
 
-            if (skipShift)
+            if (!(actualWidth == 0 && actualHeight == 0))
             {
-                (double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.vertices);
+
+                (double, double, double) coordinatesAndScale = FindClipingSizes(GetAllPoints(graphCoordinates));
 
                 cx = coordinatesAndScale.Item1;
                 cy = coordinatesAndScale.Item2;
                 scale = coordinatesAndScale.Item3;
-
-                
             }
+            
 
             //if (skipShift)
             //{
@@ -1219,7 +1242,7 @@ namespace VizualizerWPF
 
                 var vertexTemp = vertex;
 
-                var coordinates = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
+                var coordinates = vertexTemp.center.Add(new Point(cx, cy)).Scale(scale);
                 vertexTemp.center = coordinates;
 
                 var ellipse = new Ellipse
@@ -1254,7 +1277,7 @@ namespace VizualizerWPF
                 var tempPoints = new List<Point>();
                 foreach (var point in edge.points)
                 {
-                    tempPoints.Add(point.Scale(scale).Add(new Point(cx, cy))); //first scale, then add
+                    tempPoints.Add(point.Add(new Point(cx, cy)).Scale(scale)); //first scale, then add
                 }
 
                 edge.points = tempPoints;
@@ -1264,10 +1287,10 @@ namespace VizualizerWPF
                 {
                     var l = new Line
                     {
-                        X1 = line.X1 * scale + cx,
-                        Y1 = line.Y1 * scale + cy,
-                        X2 = line.X2 * scale + cx,
-                        Y2 = line.Y2 * scale + cy,
+                        X1 = (line.X1 + cx) * scale,
+                        Y1 = (line.Y1 + cy) * scale,
+                        X2 = (line.X2 + cx) * scale,
+                        Y2 = (line.Y2 + cy) * scale,
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
@@ -1289,7 +1312,7 @@ namespace VizualizerWPF
             foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
-                vertexTemp.center = vertexTemp.center.Scale(scale).Add(new Point(cx, cy));
+                vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scale);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp); //to set also ellipse on right sizes
 

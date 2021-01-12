@@ -40,7 +40,7 @@ namespace VizualizerWPF
         /// <summary>
         /// Error
         /// </summary>
-        static double epsilon = 0.5;
+        static double epsilon = 0.1;
 
 
 
@@ -136,13 +136,13 @@ namespace VizualizerWPF
                     (line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
                     + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 >= -epsilon)
                     &&
-                   Math.Min(line.X1, line.X2) <= center.X
+                   Math.Min(line.X1, line.X2) <= center.X + epsilon
                    &&
-                   center.X <= Math.Max(line.X1, line.X2)
+                   center.X <= Math.Max(line.X1, line.X2) + epsilon
                    &&
-                   Math.Min(line.Y1, line.Y2) <= center.Y
+                   Math.Min(line.Y1, line.Y2) <= center.Y + epsilon
                    &&
-                   center.Y <= Math.Max(line.Y1, line.Y2))
+                   center.Y <= Math.Max(line.Y1, line.Y2) + epsilon) 
                 return true;
             return false;
         }
