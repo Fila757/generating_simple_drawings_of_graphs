@@ -74,7 +74,7 @@ namespace VizualizerWPF
 
         GraphGenerator graphGenerator;
 
-        double cx, cy; 
+        double cx = 100, cy = 100; 
         public double sizeOfVertex;
         public double scale;
 
@@ -109,7 +109,6 @@ namespace VizualizerWPF
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1);
             dispatcherTimer.Start();
 
-            cx = 350; cy = 300;
             sizeOfVertex = 15;
             scale = 1.5;
 
