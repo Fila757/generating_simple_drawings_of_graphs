@@ -74,7 +74,7 @@ namespace VizualizerWPF
 
         GraphGenerator graphGenerator;
 
-        double cx = 100, cy = 100; 
+        double cx = 81.25, cy = 219.75; 
         public double sizeOfVertex;
         public double scale;
 
