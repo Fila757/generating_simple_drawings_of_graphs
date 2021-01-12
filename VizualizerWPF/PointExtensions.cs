@@ -57,7 +57,10 @@ namespace VizualizerWPF
 
         public static double Divide(this Vector vector1, Vector vector2)
         {
-            return vector1.X / vector2.X;
+            if(vector2.X == 0 && vector1.X == 0)
+                return vector1.Y / vector2.Y; 
+            else
+                return vector1.X / vector2.X;
         }
 
         public static Point Substract(this Point point, double a)
