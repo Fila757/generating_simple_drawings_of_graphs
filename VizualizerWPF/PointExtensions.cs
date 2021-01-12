@@ -19,6 +19,14 @@ namespace VizualizerWPF
             return tempPoint;
         }
 
+        public static Point Scale(this Point point, double scaleX, double scaleY)
+        {
+            Point tempPoint = new Point();
+            tempPoint.X = point.X * scaleX;
+            tempPoint.Y = point.Y * scaleY;
+            return tempPoint;
+        }
+
         public static Point Add(this Point point, Point point1)
         {
             Point tempPoint = new Point();
