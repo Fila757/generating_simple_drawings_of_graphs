@@ -244,6 +244,12 @@ namespace VizualizerWPF
         }
         */
 
+
+        public static double GetDistance(Line line)
+        {
+            return Math.Sqrt((line.X2 - line.X1) * (line.X2 - line.X1) + (line.Y2 - line.Y1) * (line.Y2 - line.Y1));
+        }
+
         static (HalfLineWithCoeffients, HalfLineWithCoeffients) GetPerpendicularToAlmostMid(Line line, int a, int b) {
             var mid = GetAlmostMid(line, a, b);
 

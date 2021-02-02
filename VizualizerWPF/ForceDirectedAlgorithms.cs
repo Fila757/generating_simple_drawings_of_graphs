@@ -19,10 +19,10 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static double gamma = 100;
-        static double delta = 100;
+        static double gamma = 1;
+        static double delta = 1000;
 
-        static int INF = 50;
+        static int INF = 1000;
 
         static Point origin = new Point(0, 0);
 

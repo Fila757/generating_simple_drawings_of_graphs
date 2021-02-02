@@ -198,23 +198,32 @@ namespace VizualizerWPF
                     if (i == 0)
                     {
                         vertices.Add(new Vertex(new Ellipse(), points.First(), stateFrom));
+                        edge.points.Add(points.First());
+
                         for (int j = 1; j < points.Count - 1; j++)
                         {
                             vertices.Add(new Vertex(new Ellipse(), points[j], VertexState.Middle));
+                            edge.points.Add(points[j]);
                         }
+
                         vertices.Add(new Vertex(new Ellipse(), points.Last(), stateTo));
+                        edge.points.Add(points.Last());
+
                     }
                     else
                     {
                         for (int j = 1; j < points.Count - 1; j++)
                         {
                             vertices.Add(new Vertex(new Ellipse(), points[j], VertexState.Middle));
+                            edge.points.Add(points[j]);
                         }
+
                         vertices.Add(new Vertex(new Ellipse(), points.Last(), stateTo));
+                        edge.points.Add(points.Last());
                     }
 
-                    foreach (var point in points)
-                        edge.points.Add(point);
+                    //foreach (var point in points)
+                    //    edge.points.Add(point);
 
 
                     for (int j = 0; j < points.Count - 1; j++)

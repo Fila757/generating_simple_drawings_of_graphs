@@ -81,7 +81,7 @@ namespace VizualizerWPF
         double actualHeight = 0;
         double actualWidth = 0;
 
-        int Smoothing => 5;
+        int Smoothing => 10;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -397,6 +397,10 @@ namespace VizualizerWPF
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
+            if(optimal.Text == "YES")
+            {
+                MessageBox.Show("Optimal");
+            }
 
         }
 
@@ -1205,6 +1209,66 @@ namespace VizualizerWPF
             return result;
         }
 
+        int divisionConst = 50;
+
+        (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
+        {
+            var edgePoints = new List<Point>();
+            var edgeLines = new List<Line>();
+
+            int count = (int)Math.Ceiling(CollisionDetection.GetDistance(line) / divisionConst) ;
+            double length = CollisionDetection.GetDistance(line) / count;
+
+            Vector direction = new Vector(line.X2 - line.X1, line.Y2 - line.Y1);
+            direction.Normalize();
+
+            edgePoints.Add(new Point(line.X1, line.Y1));
+            for (int i = 1; i < count; i++)
+            {
+                edgePoints.Add(new Point(line.X1, line.Y1) + direction * (i * length));
+
+                var ellipse = new Ellipse
+                {
+                    Width = sizeOfVertex,
+                    Height = sizeOfVertex,
+                    Fill = Brushes.Red,
+                    Margin = new Thickness(edgePoints.Last().X - sizeOfVertex / 2, edgePoints.Last().Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = Visibility.Hidden
+
+                };
+
+                ellipse.MouseDown += ellipse_MouseDown;
+                mainCanvas.Children.Add(ellipse);
+
+                Panel.SetZIndex(ellipse, 10);
+
+                graphCoordinates.vertices.Add(new Vertex(ellipse, edgePoints.Last(), VertexState.Middle));
+            }
+            edgePoints.Add(new Point(line.X2, line.Y2));
+
+            for(int i = 1; i < edgePoints.Count; i++)
+            {
+                var l = new Line
+                {
+                    X1 = edgePoints[i - 1].X,
+                    Y1 = edgePoints[i - 1].Y,
+                    X2 = edgePoints[i].X,
+                    Y2 = edgePoints[i].Y,
+                    Stroke = Brushes.Red,
+                    StrokeThickness = sizeOfVertex / 3
+                };
+
+                Panel.SetZIndex(l, 1);
+                l.MouseDown += line_MouseDown;
+                mainCanvas.Children.Add(l);
+
+                edgeLines.Add(l);
+            }
+
+            edgePoints.RemoveAt(0); edgePoints.RemoveAt(edgePoints.Count - 1);
+            return (edgeLines, edgePoints);
+            
+        }
         /// <summary>
         /// Function similar to ReDrawGraph function but 
         /// there is only rescaling needed
@@ -1280,12 +1344,17 @@ namespace VizualizerWPF
             {
 
                 var tempPoints = new List<Point>();
+
+                /*
                 foreach (var point in edge.points)
                 {
                     tempPoints.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY)); //first scale, then add
                 }
 
                 edge.points = tempPoints;
+                */
+
+                int index = 0;
 
                 List<Line> tempLines = new List<Line>();
                 foreach (var line in edge.lines)
@@ -1299,15 +1368,19 @@ namespace VizualizerWPF
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
-                    Panel.SetZIndex(l, 1);
-                    l.MouseDown += line_MouseDown;
-                    mainCanvas.Children.Add(l);
 
-                    tempLines.Add(l);
+                    var linesAndPoints = SubDivideLine(l, graphCoordinates);
+
+                    tempLines.AddRange(linesAndPoints.Item1);
+                    tempPoints.Add(edge.points[index].Add(new Point(cx, cy)).Scale(scaleX, scaleY));
+                    tempPoints.AddRange(linesAndPoints.Item2);
+                    index++;
                 }
 
+                tempPoints.Add(edge.points[index].Add(new Point(cx, cy)).Scale(scaleX, scaleY));
                 edge.lines = tempLines;
 
+                edge.points = tempPoints;
             }
 
 
