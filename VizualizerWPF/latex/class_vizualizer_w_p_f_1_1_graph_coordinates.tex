@@ -1,0 +1,90 @@
+\hypertarget{class_vizualizer_w_p_f_1_1_graph_coordinates}{}\doxysection{Vizualizer\+W\+P\+F.\+Graph\+Coordinates Class Reference}
+\label{class_vizualizer_w_p_f_1_1_graph_coordinates}\index{VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}}
+
+
+Class to store graph to know what to draw on canvas 
+\begin{DoxyParams}{Parameters}
+{\em vertices} & Hashset to store vertices\\
+\hline
+{\em edge} & List to store edges\\
+\hline
+{\em neigbors} & Dictionary to store neighbors of all vertices\\
+\hline
+\end{DoxyParams}
+ 
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_coordinates_a748aab05d13e5be6e7a7700b6bb3f5fd}{Add\+To\+Dictionary}} (\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}} key, \mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}} value)
+\begin{DoxyCompactList}\small\item\em Safe version of adding to dictionary if value is not present, new list is created \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Hash\+Set$<$ \mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}} $>$ \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_coordinates_aecf049a510b1f890671f33ec4225e48a}{vertices}} = new Hash\+Set$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$()
+\item 
+List$<$ \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_edge}{Edge}} $>$ \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_coordinates_aeb18673ab8a84d42e0f29d0f0098da60}{edges}} = new List$<$\mbox{\hyperlink{class_vizualizer_w_p_f_1_1_edge}{Edge}}$>$()
+\item 
+Dictionary$<$ \mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}, List$<$ \mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}} $>$ $>$ \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_coordinates_a5d29126f7ee674afea5b21a078eee871}{neighbors}} = new Dictionary$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}, List$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$$>$()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to store graph to know what to draw on canvas 
+\begin{DoxyParams}{Parameters}
+{\em vertices} & Hashset to store vertices\\
+\hline
+{\em edge} & List to store edges\\
+\hline
+{\em neigbors} & Dictionary to store neighbors of all vertices\\
+\hline
+\end{DoxyParams}
+
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_graph_coordinates_a748aab05d13e5be6e7a7700b6bb3f5fd}\label{class_vizualizer_w_p_f_1_1_graph_coordinates_a748aab05d13e5be6e7a7700b6bb3f5fd}} 
+\index{VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}!AddToDictionary@{AddToDictionary}}
+\index{AddToDictionary@{AddToDictionary}!VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}}
+\doxysubsubsection{\texorpdfstring{AddToDictionary()}{AddToDictionary()}}
+{\footnotesize\ttfamily void Vizualizer\+W\+P\+F.\+Graph\+Coordinates.\+Add\+To\+Dictionary (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}}]{key,  }\item[{\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}}]{value }\end{DoxyParamCaption})}
+
+
+
+Safe version of adding to dictionary if value is not present, new list is created 
+
+
+\begin{DoxyParams}{Parameters}
+{\em key} & \\
+\hline
+{\em value} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_graph_coordinates_aeb18673ab8a84d42e0f29d0f0098da60}\label{class_vizualizer_w_p_f_1_1_graph_coordinates_aeb18673ab8a84d42e0f29d0f0098da60}} 
+\index{VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}!edges@{edges}}
+\index{edges@{edges}!VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}}
+\doxysubsubsection{\texorpdfstring{edges}{edges}}
+{\footnotesize\ttfamily List$<$\mbox{\hyperlink{class_vizualizer_w_p_f_1_1_edge}{Edge}}$>$ Vizualizer\+W\+P\+F.\+Graph\+Coordinates.\+edges = new List$<$\mbox{\hyperlink{class_vizualizer_w_p_f_1_1_edge}{Edge}}$>$()}
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_graph_coordinates_a5d29126f7ee674afea5b21a078eee871}\label{class_vizualizer_w_p_f_1_1_graph_coordinates_a5d29126f7ee674afea5b21a078eee871}} 
+\index{VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}!neighbors@{neighbors}}
+\index{neighbors@{neighbors}!VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}}
+\doxysubsubsection{\texorpdfstring{neighbors}{neighbors}}
+{\footnotesize\ttfamily Dictionary$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}, List$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$ $>$ Vizualizer\+W\+P\+F.\+Graph\+Coordinates.\+neighbors = new Dictionary$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}, List$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$$>$()}
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_graph_coordinates_aecf049a510b1f890671f33ec4225e48a}\label{class_vizualizer_w_p_f_1_1_graph_coordinates_aecf049a510b1f890671f33ec4225e48a}} 
+\index{VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}!vertices@{vertices}}
+\index{vertices@{vertices}!VizualizerWPF.GraphCoordinates@{VizualizerWPF.GraphCoordinates}}
+\doxysubsubsection{\texorpdfstring{vertices}{vertices}}
+{\footnotesize\ttfamily Hash\+Set$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$ Vizualizer\+W\+P\+F.\+Graph\+Coordinates.\+vertices = new Hash\+Set$<$\mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}$>$()}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_graph_generator_8cs}{Graph\+Generator.\+cs}}\end{DoxyCompactItemize}

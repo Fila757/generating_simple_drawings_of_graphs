@@ -2,7 +2,7 @@
 #include "../drawing_of_cliques/functions.hpp"
 #include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.3/build/native/include/gtest/gtest.h"
 
-
+/*
 TEST(canonic_fingerprint, graph_4) {
 	auto g = graph(4);
 
@@ -30,3 +30,4 @@ TEST(right_chosing_canonics, graph_5) {
 	EXPECT_EQ(g.find_canonic_fingerprint("12340342014302410321"), "12340342014302410321");
 
 }
+*/

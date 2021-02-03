@@ -18,8 +18,8 @@ TEST(graphs_all_special_vertices, graph_3) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
@@ -53,8 +53,8 @@ TEST(graphs_all_special_vertices, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -86,8 +86,8 @@ TEST(graphs_all_special_vertices, graph_5) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -119,8 +119,8 @@ TEST(graphs_all_special_vertices, graph_8) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }

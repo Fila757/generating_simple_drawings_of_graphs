@@ -6,43 +6,283 @@
         xmlns:local="clr-namespace:VizualizerWPF"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="531" Width="765">
+        Title="Graph Drawer" Height="531" Width="764">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width= "217*"/>
-            <ColumnDefinition Width= "38*"/>
+            <ColumnDefinition Width= "79*"/>
+            <ColumnDefinition Width= "79*"/>
+            <ColumnDefinition Width= "381*"/>
+            <ColumnDefinition Width= "114*"/>
+            <ColumnDefinition Width= "111*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height= "15*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "60*"/>
+            <RowDefinition Height= "33*"/>
             <RowDefinition Height= "38*"/>
+            <RowDefinition Height= "26*"/>
+            <RowDefinition Height= "28*"/>
+            <RowDefinition Height= "29*"/>
+            <RowDefinition Height= "40*"/>
+            <RowDefinition Height= "48*"/>
+            <RowDefinition Height= "115*"/>
             <RowDefinition Height= "62*"/>
             <RowDefinition Height= "33*"/>
-            <RowDefinition Height= "49*"/>
-            <RowDefinition Height= "15*"/>
+            <RowDefinition Height= "57*"/>
+            <RowDefinition Height= "7*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="Adding" Content="Přídávání" Grid.Column= "1" Grid.Row= "1" Margin="3,3,3,3" Click="Adding_Click"/>
-        <Button x:Name="Removing" Content="Mazaní" Grid.Column= "1" Grid.Row= "2" Margin="3,3,3,3" Click="Removing_Click"/>
-        <Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "1" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>
-        <Button x:Name="Kedges" Content="K-hrany" Grid.Column= "1" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>
-        <ListBox x:Name="KedgesListBox" Grid.Column="1" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
-            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
-            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
-            <ListBoxItem Content="k-hrany" FontSize="10" FontWeight="Bold"/>
-        </ListBox>
-        <syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="1" Grid.Row="7" Margin="3,3,3,3"/>
-        <Button x:Name="NextDrawing" Content="Dalsi jednoduché &#xa; nakreslení velikosti:" Margin="3,3,3,3" Grid.Column="1" Grid.Row="8" Click="NextDrawing_Click"/>
-        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="1" Grid.Row="9" Margin="3,3,3,3"/>
-        
-        <Image Name="legend" Grid.Column="0" Grid.Row="10" Source="/re_numbered_legend.png" Stretch="Uniform"/>
 
-        <Canvas x:Name="mainCanvas" Grid.Column="0" Grid.Row ="1" Grid.RowSpan="9" MouseDown="canvas_MouseDown" Background="Transparent"/>
+        <Button x:Name="AddingPolyline" Content="Adding Polyline" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="AddingPolyline_Click"/>
+        <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,3,3,3" Click="Adding_Click"/>
+        <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
+        <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Invariant_Click"/>
+        <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
+        <!--<Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>-->
+        <!--<ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
+            <ListBoxItem Content="theoremAmk-hrany" FontSize="10" FontWeight="Bold"/>
+            <ListBoxItem Content="2AMk-hrany" FontSize="10" FontWeight="Bold"/>
+            <ListBoxItem Content="3AMk-hrany" FontSize="10" FontWeight="Bold"/>
+        </ListBox>-->
+        <!--<syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>-->
+        <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
+        <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="PreviousDrawing_Click"/>
+        <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
+                           MaxValue="7" MinValue="3"/>
+
+        <!--Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/-->
+
+        <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="3"  Grid.Row ="0" Grid.RowSpan="11" MouseDown="canvas_MouseDown" Background="Transparent" Loaded="Canvas_Loaded"/>
+
+        <!--TextBlock x:Name="textBlockKEdges" Grid.Column ="3" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
+        <!--TextBlock x:Name="textBlockAMKEdges" Grid.Column ="0" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
+
+        <TextBlock x:Name="numberOfDrawing" Grid.Column ="4" Grid.Row= "1" TextAlignment="center" Visibility="Visible" Margin="0,8,0,26" Grid.RowSpan="2"/>
+        <TextBlock x:Name="optimal" Grid.Column ="4" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="0,8,0,3" Text="NO"/>
+        <TextBlock x:Name="crossings" Grid.Column ="3" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="15,8,0,3" Text="1"/>
+        <TextBlock x:Name="infoVertices" Grid.Column ="3" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Vertices:"/>
+        <TextBlock x:Name="infoDrawings" Grid.Column ="4" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Drawings:"/>
+        <TextBlock x:Name="infoOptimal" Grid.Column ="4" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Optimal:"/>
+        <TextBlock x:Name="infoCrossings" Grid.Column ="3" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Crossings:"/>
+        <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,38" Visibility="Visible" Text="INFO:" Grid.RowSpan="2" FontWeight="Bold" />
+        <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:" FontWeight="Bold" FontStyle="Normal"/>
 
 
+        <Grid Grid.Row="6" Grid.RowSpan ="1" Grid.Column="4" Visibility="Visible" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height= "1*"/>
+            </Grid.RowDefinitions>
+
+            <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3,3,3,3" Grid.Row ="0"  Click="AutoButton_Click"/>
+            <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="0" Margin="3,3,3,3" NumberDecimalDigits="1"  
+                           MaxValue="1000" MinValue="0.1"/>
+
+        </Grid>
+        <Grid Grid.Row="7" Grid.RowSpan ="4" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+                <ColumnDefinition Width= "1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="infoKEdges" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="K-Edges: "/>
+
+            <TextBlock x:Name="infoKEdges0" Grid.Column ="0" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="kEdges0" Grid.Column ="0" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges1" Grid.Column ="1" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="kEdges1" Grid.Column ="1" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges2" Grid.Column ="2" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="kEdges2" Grid.Column ="2" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges3" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="kEdges3" Grid.Column ="3" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges4" Grid.Column ="4" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="kEdges4" Grid.Column ="4" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges5" Grid.Column ="5" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="kEdges5" Grid.Column ="5" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges6" Grid.Column ="6" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="kEdges6" Grid.Column ="6" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges7" Grid.Column ="7" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="kEdges7" Grid.Column ="7" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infokEdges8" Grid.Column ="8" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="kEdges8" Grid.Column ="8" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoAmKEdges" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="amK-Edges: "/>
+
+            <TextBlock x:Name="infoamKEdges0" Grid.Column ="0" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="amKEdges0" Grid.Column ="0" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges1" Grid.Column ="1" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="amKEdges1" Grid.Column ="1" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges2" Grid.Column ="2" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="amKEdges2" Grid.Column ="2" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges3" Grid.Column ="3" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="amKEdges3" Grid.Column ="3" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges4" Grid.Column ="4" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="amKEdges4" Grid.Column ="4" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges5" Grid.Column ="5" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="amKEdges5" Grid.Column ="5" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges6" Grid.Column ="6" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="amKEdges6" Grid.Column ="6" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges7" Grid.Column ="7" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="amKEdges7" Grid.Column ="7" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamKEdges8" Grid.Column ="8" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="amKEdges8" Grid.Column ="8" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoAMAMKEdges" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="amAMK-Edges: "/>
+
+            <TextBlock x:Name="infoamAmKEdges0" Grid.Column ="0" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="amAmKEdges0" Grid.Column ="0" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges1" Grid.Column ="1" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="amAmKEdges1" Grid.Column ="1" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges2" Grid.Column ="2" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="amAmKEdges2" Grid.Column ="2" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges3" Grid.Column ="3" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="amAmKEdges3" Grid.Column ="3" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges4" Grid.Column ="4" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="amAmKEdges4" Grid.Column ="4" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges5" Grid.Column ="5" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="amAmKEdges5" Grid.Column ="5" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges6" Grid.Column ="6" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="amAmKEdges6" Grid.Column ="6" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges7" Grid.Column ="7" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="amAmKEdges7" Grid.Column ="7" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmKEdges8" Grid.Column ="8" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="amAmKEdges8" Grid.Column ="8" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+
+
+            <TextBlock x:Name="infoAmAmAmKEdges" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="1, 0, 0, 0" Visibility="Visible" Text="amAMAMK-Edges: "/>
+
+            <TextBlock x:Name="infoamAmAmKEdges0" Grid.Column ="0" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="amAmAmKEdges0" Grid.Column ="0" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges1" Grid.Column ="1" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="amAmAmKEdges1" Grid.Column ="1" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges2" Grid.Column ="2" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="amAmAmKEdges2" Grid.Column ="2" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges3" Grid.Column ="3" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="amAmAmKEdges3" Grid.Column ="3" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges4" Grid.Column ="4" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="amAmAmKEdges4" Grid.Column ="4" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges5" Grid.Column ="5" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="amAmAmKEdges5" Grid.Column ="5" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges6" Grid.Column ="6" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="amAmAmKEdges6" Grid.Column ="6" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges7" Grid.Column ="7" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="amAmAmKEdges7" Grid.Column ="7" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoamAmAmKEdges8" Grid.Column ="8" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="amAmAmKEdges8" Grid.Column ="8" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+
+            <TextBlock x:Name="infoTheoremAmAmAmKEdges" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="theoremAmAMAMK-Edges: "/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges0" Grid.Column ="0" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges0" Grid.Column ="0" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges1" Grid.Column ="1" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges1" Grid.Column ="1" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges2" Grid.Column ="2" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges2" Grid.Column ="2" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges3" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges3" Grid.Column ="3" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges4" Grid.Column ="4" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges4" Grid.Column ="4" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges5" Grid.Column ="5" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges5" Grid.Column ="5" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges6" Grid.Column ="6" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges6" Grid.Column ="6" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges7" Grid.Column ="7" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges7" Grid.Column ="7" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoTheoremamAmAmKEdges8" Grid.Column ="8" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="theoremAmAmAmKEdges8" Grid.Column ="8" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+
+            <!--Rectangle Grid.Column ="8" Grid.Row= "3"  Margin="0,20,0,20" Visibility="Visible" Stroke="Black"/-->
+
+            
+            <TextBlock x:Name="infoInvariantAmKedges" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariantAmK-Edges: "/>
+
+            <TextBlock x:Name="infoInvariantAmKedges0" Grid.Column ="0" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="invariantAmKedges0" Grid.Column ="0" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges1" Grid.Column ="1" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="invariantAmKedges1" Grid.Column ="1" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges2" Grid.Column ="2" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="invariantAmKedges2" Grid.Column ="2" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges3" Grid.Column ="3" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="invariantAmKedges3" Grid.Column ="3" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges4" Grid.Column ="4" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="invariantAmKedges4" Grid.Column ="4" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges5" Grid.Column ="5" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="invariantAmKedges5" Grid.Column ="5" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges6" Grid.Column ="6" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="invariantAmKedges6" Grid.Column ="6" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges7" Grid.Column ="7" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="invariantAmKedges7" Grid.Column ="7" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="invariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+                                                                                                                                                                                                                                                             
+
+
+        </Grid>
     </Grid>
 </Window>

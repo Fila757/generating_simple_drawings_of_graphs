@@ -36,6 +36,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dijsktra.cpp" />
     <ClCompile Include="test_all_special_vertices.cpp" />
     <ClCompile Include="test_adding_and_deleting_edges.cpp" />
     <ClCompile Include="pch.cpp">

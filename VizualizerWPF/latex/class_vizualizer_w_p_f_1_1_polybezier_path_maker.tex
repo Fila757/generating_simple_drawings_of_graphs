@@ -1,0 +1,54 @@
+\hypertarget{class_vizualizer_w_p_f_1_1_polybezier_path_maker}{}\doxysection{Vizualizer\+W\+P\+F.\+Polybezier\+Path\+Maker Class Reference}
+\label{class_vizualizer_w_p_f_1_1_polybezier_path_maker}\index{VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}}
+
+
+ 
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a6b44830e97771a615cec3a7eb61a6c41}{Make\+Curve}} (Point\mbox{[}$\,$\mbox{]} points, double tension)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static Point\mbox{[}$\,$\mbox{]} \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_polybezier_path_maker_aeb73794b246b8239ad1d6d3e40e7497d}{Make\+Curve\+Points}} (Point\mbox{[}$\,$\mbox{]} points, double tension)
+\item 
+static \mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a0cebc24d87190f891a9e41990ffbbc21}{Make\+Bezier\+Path}} (Point\mbox{[}$\,$\mbox{]} points)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+{\ttfamily  Point\mbox{[}\mbox{]} points1 = \{ new Point(60, 30), new Point(200, 130), new Point(100, 150), new Point(200, 50), \}; Path path1 = Polybezier\+Path\+Maker.\+Make\+Curve(points1, 0);}
+
+{\ttfamily  path1.\+Stroke = Brushes.\+Light\+Green; path1.\+Stroke\+Thickness = 5; main\+Canvas.\+Children.\+Add(path1);}
+
+{\ttfamily  Path path2 = \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a6b44830e97771a615cec3a7eb61a6c41}{Polybezier\+Path\+Maker.\+Make\+Curve}}(new Point\mbox{[}2\mbox{]} \{ new Point(50, 50), new Point(122, 122) \}, 0); path2.\+Stroke = Brushes.\+Light\+Coral; path2.\+Stroke\+Thickness = 5; main\+Canvas.\+Children.\+Add(path2); }
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a0cebc24d87190f891a9e41990ffbbc21}\label{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a0cebc24d87190f891a9e41990ffbbc21}} 
+\index{VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}!MakeBezierPath@{MakeBezierPath}}
+\index{MakeBezierPath@{MakeBezierPath}!VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}}
+\doxysubsubsection{\texorpdfstring{MakeBezierPath()}{MakeBezierPath()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} Vizualizer\+W\+P\+F.\+Polybezier\+Path\+Maker.\+Make\+Bezier\+Path (\begin{DoxyParamCaption}\item[{Point\mbox{[}$\,$\mbox{]}}]{points }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a6b44830e97771a615cec3a7eb61a6c41}\label{class_vizualizer_w_p_f_1_1_polybezier_path_maker_a6b44830e97771a615cec3a7eb61a6c41}} 
+\index{VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}!MakeCurve@{MakeCurve}}
+\index{MakeCurve@{MakeCurve}!VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}}
+\doxysubsubsection{\texorpdfstring{MakeCurve()}{MakeCurve()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{_collision_detection_8cs_a61b7f2bf5f669396253f68971cad840e}{Path}} Vizualizer\+W\+P\+F.\+Polybezier\+Path\+Maker.\+Make\+Curve (\begin{DoxyParamCaption}\item[{Point\mbox{[}$\,$\mbox{]}}]{points,  }\item[{double}]{tension }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_vizualizer_w_p_f_1_1_polybezier_path_maker_aeb73794b246b8239ad1d6d3e40e7497d}\label{class_vizualizer_w_p_f_1_1_polybezier_path_maker_aeb73794b246b8239ad1d6d3e40e7497d}} 
+\index{VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}!MakeCurvePoints@{MakeCurvePoints}}
+\index{MakeCurvePoints@{MakeCurvePoints}!VizualizerWPF.PolybezierPathMaker@{VizualizerWPF.PolybezierPathMaker}}
+\doxysubsubsection{\texorpdfstring{MakeCurvePoints()}{MakeCurvePoints()}}
+{\footnotesize\ttfamily static Point \mbox{[}$\,$\mbox{]} Vizualizer\+W\+P\+F.\+Polybezier\+Path\+Maker.\+Make\+Curve\+Points (\begin{DoxyParamCaption}\item[{Point\mbox{[}$\,$\mbox{]}}]{points,  }\item[{double}]{tension }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{_polybezier_path_maker_8cs}{Polybezier\+Path\+Maker.\+cs}}\end{DoxyCompactItemize}

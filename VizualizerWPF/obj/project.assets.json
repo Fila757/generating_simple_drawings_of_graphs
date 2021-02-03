@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "NumericUpDown/3.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/NumericUpDown.dll": {}
+        },
+        "runtime": {
+          "lib/NumericUpDown.dll": {}
+        }
+      },
       "Syncfusion.Licensing/18.2.0.57": {
         "type": "package",
         "compile": {
@@ -26,6 +35,18 @@
     }
   },
   "libraries": {
+    "NumericUpDown/3.0.2": {
+      "sha512": "qh6KgNrVvzFtG3EAS3bxqgA27RMm1R2HpJ0n998lYqIz3zwxQN9DlZs8rTRtcEziJbV5TEZBPvySPbTyeIWqGQ==",
+      "type": "package",
+      "path": "numericupdown/3.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/NumericUpDown.dll",
+        "numericupdown.3.0.2.nupkg.sha512",
+        "numericupdown.nuspec"
+      ]
+    },
     "Syncfusion.Licensing/18.2.0.57": {
       "sha512": "FLNvydR2jg9DtxgEhaLJaI/9lW7Be14HGr6X9el5GbUUqnUcQyxWERRx6RSeLesOl/hBXsnaMuI6fcQYczQ6lw==",
       "type": "package",
@@ -111,6 +132,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "NumericUpDown >= 3.0.2",
       "Syncfusion.Shared.WPF >= 18.2.0.57"
     ]
   },
@@ -120,11 +142,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+      "projectUniqueName": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
       "projectName": "VizualizerWPF",
-      "projectPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+      "projectPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
       "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
+      "outputPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -153,6 +175,10 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "NumericUpDown": {
+            "target": "Package",
+            "version": "[3.0.2, )"
+          },
           "Syncfusion.Shared.WPF": {
             "target": "Package",
             "version": "[18.2.0.57, )"
@@ -179,5 +205,17 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'NumericUpDown 3.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "NumericUpDown",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
 }

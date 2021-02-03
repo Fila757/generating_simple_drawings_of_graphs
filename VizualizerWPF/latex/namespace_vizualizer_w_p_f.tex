@@ -1,0 +1,157 @@
+\hypertarget{namespace_vizualizer_w_p_f}{}\doxysection{Vizualizer\+W\+PF Namespace Reference}
+\label{namespace_vizualizer_w_p_f}\index{VizualizerWPF@{VizualizerWPF}}
+
+
+In this project Syncfusion.\+W\+PF nuget is required because Syncfusion Up\+Down is used Also english version of file system is assumed because decimal dots are used (25.\+4)  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_app}{App}}
+\begin{DoxyCompactList}\small\item\em Interaction logic for App.\+xaml \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_collision_detection}{Collision\+Detection}}
+\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_edge}{Edge}}
+\begin{DoxyCompactList}\small\item\em Class to store edges in graph meaming all lines and points \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_coordinates}{Graph\+Coordinates}}
+\begin{DoxyCompactList}\small\item\em Class to store graph to know what to draw on canvas 
+\begin{DoxyParams}{Parameters}
+{\em vertices} & Hashset to store vertices\\
+\hline
+{\em edge} & List to store edges\\
+\hline
+{\em neigbors} & Dictionary to store neighbors of all vertices\\
+\hline
+\end{DoxyParams}
+\end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_graph_generator}{Graph\+Generator}}
+\begin{DoxyCompactList}\small\item\em Class to read drawing from file, create and store graphs \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_hash_set_extesions}{Hash\+Set\+Extesions}}
+\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_main_window}{Main\+Window}}
+\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_point_extensions}{Point\+Extensions}}
+\begin{DoxyCompactList}\small\item\em Class to extend methods as Scale Point Add two Points, Multiply point with int Substract two points and Method point To\+Vector \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_vizualizer_w_p_f_1_1_polybezier_path_maker}{Polybezier\+Path\+Maker}}
+\item 
+struct \mbox{\hyperlink{struct_vizualizer_w_p_f_1_1_vertex}{Vertex}}
+\begin{DoxyCompactList}\small\item\em Struct to store vertices 
+\begin{DoxyParams}{Parameters}
+{\em ellipse} & Drawing of vertex\\
+\hline
+{\em center} & Center of vertex\\
+\hline
+{\em state} & State of vertex\\
+\hline
+\end{DoxyParams}
+Implementing I\+Equality\+Comparer$<$\+Vertex$>$, I\+Equatable$<$\+Vertex$>$ to index Hash\+Set and Dictionary \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdc}{State\+Changing}} \{ \mbox{\hyperlink{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcac7bc717648ffa408133fa6dd65915ed9}{State\+Changing.\+Adding}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcae44b66d27df57c4a36aa02b0f04ba8a2}{State\+Changing.\+Removing}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdca6adf97f83acf6453d4a6a4b1070f3754}{State\+Changing.\+None}}
+ \}
+\begin{DoxyCompactList}\small\item\em Interaction logic for Main\+Window.\+xaml \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87}{State\+Calculation}} \{ \newline
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87ad976713996af68dc9163e7415205ac20}{State\+Calculation.\+Intersections}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a7088f01370e86430d19832b6262946af}{State\+Calculation.\+K\+Edges}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a8d13817b6f2d46d76943c7f6653d7153}{State\+Calculation.\+A\+M\+K\+Edges}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a05d788b2ba306937c16b805de6c01435}{State\+Calculation.\+A\+M\+A\+M\+K\+Edges}}, 
+\newline
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a50378c9b879e675a5d0ed9a345c8c1a4}{State\+Calculation.\+A\+M\+A\+M\+A\+M\+K\+Edges}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum for showing Intersection, K\+Edges, At\+Most\+K\+Edge... \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640}{Vertex\+State}} \{ \mbox{\hyperlink{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640aa06d31c2ee920b4d53e8c9c06d90ba24}{Vertex\+State.\+Intersection}}, 
+\mbox{\hyperlink{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640ad2203cb1237cb6460cbad94564e39345}{Vertex\+State.\+Regular}}
+ \}
+\begin{DoxyCompactList}\small\item\em Enum to recongize state of vertex \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+In this project Syncfusion.\+W\+PF nuget is required because Syncfusion Up\+Down is used Also english version of file system is assumed because decimal dots are used (25.\+4) 
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87}} 
+\index{VizualizerWPF@{VizualizerWPF}!StateCalculation@{StateCalculation}}
+\index{StateCalculation@{StateCalculation}!VizualizerWPF@{VizualizerWPF}}
+\doxysubsubsection{\texorpdfstring{StateCalculation}{StateCalculation}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87}{Vizualizer\+W\+P\+F.\+State\+Calculation}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Enum for showing Intersection, K\+Edges, At\+Most\+K\+Edge... 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Intersections@{Intersections}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!Intersections@{Intersections}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87ad976713996af68dc9163e7415205ac20}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87ad976713996af68dc9163e7415205ac20}} 
+Intersections&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{KEdges@{KEdges}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!KEdges@{KEdges}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a7088f01370e86430d19832b6262946af}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a7088f01370e86430d19832b6262946af}} 
+K\+Edges&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AMKEdges@{AMKEdges}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!AMKEdges@{AMKEdges}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a8d13817b6f2d46d76943c7f6653d7153}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a8d13817b6f2d46d76943c7f6653d7153}} 
+A\+M\+K\+Edges&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AMAMKEdges@{AMAMKEdges}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!AMAMKEdges@{AMAMKEdges}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a05d788b2ba306937c16b805de6c01435}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a05d788b2ba306937c16b805de6c01435}} 
+A\+M\+A\+M\+K\+Edges&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{AMAMAMKEdges@{AMAMAMKEdges}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!AMAMAMKEdges@{AMAMAMKEdges}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a50378c9b879e675a5d0ed9a345c8c1a4}\label{namespace_vizualizer_w_p_f_aa238e230543a89508d90205b26487a87a50378c9b879e675a5d0ed9a345c8c1a4}} 
+A\+M\+A\+M\+A\+M\+K\+Edges&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdc}\label{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdc}} 
+\index{VizualizerWPF@{VizualizerWPF}!StateChanging@{StateChanging}}
+\index{StateChanging@{StateChanging}!VizualizerWPF@{VizualizerWPF}}
+\doxysubsubsection{\texorpdfstring{StateChanging}{StateChanging}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdc}{Vizualizer\+W\+P\+F.\+State\+Changing}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Interaction logic for Main\+Window.\+xaml 
+
+In Main\+Window.\+xaml we have one {\ttfamily main\+Canvas} Also 5 buttons Přidávání -\/ adding mode Mazání -\/ removing mode Průsečíky -\/ vizualizing intersections K hrany -\/ vizualizing counting k edges Další jednoduché nakreslení -\/ generate next good drawing of clique
+
+Also consists of List\+Box to choose which AM edges we want Finally there to Up\+Downs to select which k edges we want and how big clique is chosen
+
+At the bottom there is a legend to know which color describe which number for k edges\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Adding@{Adding}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!Adding@{Adding}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcac7bc717648ffa408133fa6dd65915ed9}\label{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcac7bc717648ffa408133fa6dd65915ed9}} 
+Adding&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Removing@{Removing}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!Removing@{Removing}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcae44b66d27df57c4a36aa02b0f04ba8a2}\label{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdcae44b66d27df57c4a36aa02b0f04ba8a2}} 
+Removing&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{None@{None}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!None@{None}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdca6adf97f83acf6453d4a6a4b1070f3754}\label{namespace_vizualizer_w_p_f_a37105a0b372bc8b780566902cac62bdca6adf97f83acf6453d4a6a4b1070f3754}} 
+None&\\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640}\label{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640}} 
+\index{VizualizerWPF@{VizualizerWPF}!VertexState@{VertexState}}
+\index{VertexState@{VertexState}!VizualizerWPF@{VizualizerWPF}}
+\doxysubsubsection{\texorpdfstring{VertexState}{VertexState}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640}{Vizualizer\+W\+P\+F.\+Vertex\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Enum to recongize state of vertex 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Intersection@{Intersection}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!Intersection@{Intersection}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640aa06d31c2ee920b4d53e8c9c06d90ba24}\label{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640aa06d31c2ee920b4d53e8c9c06d90ba24}} 
+Intersection&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Regular@{Regular}!VizualizerWPF@{VizualizerWPF}}\index{VizualizerWPF@{VizualizerWPF}!Regular@{Regular}}}\mbox{\Hypertarget{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640ad2203cb1237cb6460cbad94564e39345}\label{namespace_vizualizer_w_p_f_aa95aa3e643b222355230511356c6e640ad2203cb1237cb6460cbad94564e39345}} 
+Regular&\\
+\hline
+
+\end{DoxyEnumFields}

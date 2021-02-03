@@ -40,6 +40,10 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "NumericUpDown": {
+              "target": "Package",
+              "version": "[3.0.2, )"
+            },
             "Syncfusion.Shared.WPF": {
               "target": "Package",
               "version": "[18.2.0.57, )"
