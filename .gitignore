@@ -2,11 +2,11 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs
+*/.vs
 /packages
 /x64
-/Debug
-/Release
+*/Debug
+*/Release
 
 /drawing_of_cliques/x64
 /drawing_of_cliques/Debug
@@ -18,5 +18,3 @@
 /VizualizerWPF/obj
 /VizualizerWPF/Triangle.NET
 
-/Debug
-/Release
