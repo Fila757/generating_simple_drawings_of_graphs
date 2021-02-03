@@ -21,6 +21,8 @@
 /VizualizerWPF/.vs
 
 /coordinates_generator/.vs
+/coordinates_generator/Debug
+/coordinates_generator/Release
 
 /Debug
 /Release
