@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj": {}
+    "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj": {}
   },
   "projects": {
-    "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj": {
+    "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+        "projectUniqueName": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
         "projectName": "VizualizerWPF",
-        "projectPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
+        "projectPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\VizualizerWPF.csproj",
         "packagesPath": "C:\\Users\\filip\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\filip\\source\\repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
+        "outputPath": "C:\\Users\\filip\\Source\\Repos\\generating-simple-drawings-of-graphs\\VizualizerWPF\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\filip\\AppData\\Roaming\\NuGet\\NuGet.Config",
