@@ -81,7 +81,7 @@ namespace VizualizerWPF
         double actualHeight = 0;
         double actualWidth = 0;
 
-        int Smoothing => 10;
+        int Smoothing => 15;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -1156,6 +1156,7 @@ namespace VizualizerWPF
             foreach (var p in mainCanvas.Children.OfType<Ellipse>())
                 localCounter++;
             MessageBox.Show(localCounter.ToString());
+
 
         }
 
