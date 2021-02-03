@@ -286,6 +286,8 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	}
 
 	
+	face->edge_ = ab_edge_ptr;
+
 	/*
 	if (outer_face_bool) {
 		cout << "after outer" << endl;
