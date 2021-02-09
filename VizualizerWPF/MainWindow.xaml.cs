@@ -791,8 +791,16 @@ namespace VizualizerWPF
 
             }
 
-            ZeroInvariantEdgesValues();
-            UpdateStats();
+            if (stateChanging == StateChanging.Invariant)
+            {
+                var withoutEdge = FindEdge(line);
+                ReCalculateKEdges(null, withoutEdge);
+            }
+            else
+            {
+                ZeroInvariantEdgesValues();
+                UpdateStats();
+            }
         }
 
         private double Determinant(Vector a, Vector b)
@@ -821,6 +829,16 @@ namespace VizualizerWPF
             return null; // so such edge
         }
 
+        bool CheckIfEdgeIsInTriangle(Vertex from, Vertex to, Vertex third, Vertex firstEdgeVertex, Vertex secondEdgeVertex)
+        {
+            if((from == firstEdgeVertex && third == secondEdgeVertex) || (to == firstEdgeVertex && third == secondEdgeVertex) ||
+                (from == secondEdgeVertex && third == firstEdgeVertex) || (to == secondEdgeVertex && third == firstEdgeVertex))
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Function to recalculate number of k edges
         /// and AM, AMAM, AMAMAM k edges
@@ -831,7 +849,7 @@ namespace VizualizerWPF
         /// 
         int maximalkEdges = 8;
 
-        private void ReCalculateKEdges(Vertex? without = null)
+        private void ReCalculateKEdges(Vertex? without = null, Edge withoutEdge = null)
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
@@ -866,6 +884,21 @@ namespace VizualizerWPF
                 }
             }
 
+            Vertex? firstEdgeVertex = null;
+            Vertex? secondEdgeVertex = null;
+
+            if (withoutEdge != null)
+            {
+                firstEdgeVertex = FindVertex(withoutEdge.points.First());
+                secondEdgeVertex = FindVertex(withoutEdge.points.Last());
+
+                visited[(firstEdgeVertex.Value, secondEdgeVertex.Value)] = true;
+                visited[(secondEdgeVertex.Value, firstEdgeVertex.Value)] = true;
+
+                foreach (var line in withoutEdge.lines)
+                    line.StrokeDashArray = DoubleCollection.Parse("");
+            }
+
             foreach(var (from, value) in graphCoordinates.neighbors)
             {
                 foreach (var e1 in value)
@@ -884,7 +917,18 @@ namespace VizualizerWPF
                         var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
                         var e3 = graphCoordinates.neighbors[from].ContainsEnd(from.center, third.center);
                         if (e3 != null){
-                            if (third == from || third == to || (without.HasValue && without.Value == third)) continue;
+                            if (third == from || third == to
+                                ||
+                                (without.HasValue && without.Value == third)
+                                ||
+                                (firstEdgeVertex.HasValue
+                                &&
+                                secondEdgeVertex.HasValue
+                                &&
+                                CheckIfEdgeIsInTriangle(from, to, third, firstEdgeVertex.Value, secondEdgeVertex.Value))) 
+                            {
+                                continue; 
+                            }
 
                             (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
 
@@ -920,7 +964,7 @@ namespace VizualizerWPF
 
                     bool invariant = false;
 
-                    if (without.HasValue)
+                    if (without.HasValue || withoutEdge != null)
                     {
                         if (edge.kEdge == sum)
                         {
@@ -936,7 +980,7 @@ namespace VizualizerWPF
                     foreach (var line in edge.lines)
                     {
 
-                        if (without.HasValue)
+                        if (without.HasValue || withoutEdge != null)
                         {
                             if (invariant)
                                 line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
@@ -953,7 +997,7 @@ namespace VizualizerWPF
             }
 
 
-            if (!without.HasValue)
+            if (!without.HasValue && withoutEdge == null)
             {
                 CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
 
