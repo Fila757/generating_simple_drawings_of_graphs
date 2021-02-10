@@ -98,6 +98,8 @@
                 <RowDefinition Height= "1*"/>
                 <RowDefinition Height= "1*"/>
                 <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
+                <RowDefinition Height= "1*"/>
             </Grid.RowDefinitions>
 
             <TextBlock x:Name="infoKEdges" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="K-Edges: "/>
@@ -280,8 +282,50 @@
 
             <TextBlock x:Name="infoInvariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
             <TextBlock x:Name="invariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
-                                                                                                                                                                                                                                                             
 
+            
+            <TextBlock x:Name="infoInvariantAmAmKedges" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariantAmAmK-Edges: "/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges0" Grid.Column ="0" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
+            <TextBlock x:Name="invariantAmAmKedges0" Grid.Column ="0" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges1" Grid.Column ="1" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="1: " Foreground="Orange"/>
+            <TextBlock x:Name="invariantAmAmKedges1" Grid.Column ="1" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges2" Grid.Column ="2" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="2: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="invariantAmAmKedges2" Grid.Column ="2" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges3" Grid.Column ="3" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="3: " Foreground="#FF26DF12"/>
+            <TextBlock x:Name="invariantAmAmKedges3" Grid.Column ="3" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges4" Grid.Column ="4" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="4: " Foreground="Green"/>
+            <TextBlock x:Name="invariantAmAmKedges4" Grid.Column ="4" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges5" Grid.Column ="5" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="5: " Foreground="#FF07F6FD"/>
+            <TextBlock x:Name="invariantAmAmKedges5" Grid.Column ="5" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges6" Grid.Column ="6" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="6: " Foreground="#FF280BB6"/>
+            <TextBlock x:Name="invariantAmAmKedges6" Grid.Column ="6" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+
+            <TextBlock x:Name="infoInvariantAmAmKedges7" Grid.Column ="7" Grid.Row= "6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="7: " Foreground="Blue"/>
+            <TextBlock x:Name="invariantAmAmKedges7" Grid.Column ="7" Grid.Row= "6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            <TextBlock x:Name="infoInvariantAmAmKedges8" Grid.Column ="8" Grid.Row= "6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
+            <TextBlock x:Name="invariantAmAmKedges8" Grid.Column ="8" Grid.Row= "6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
+
+            
+            <TextBlock x:Name="infoRemovedEdge" Grid.Column ="0" Grid.Row= "7" Grid.ColumnSpan="5" TextAlignment="Left" Margin="1,1,0,0" Visibility="Visible" Text="Edges (and Vertices) " Foreground="Black"/>
+            
+            <TextBlock x:Name="infoRemovedEdgeFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="k-1: " Foreground="Red"/>
+            <TextBlock x:Name="RemovedEdgeFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+            
+            <TextBlock x:Name="infoRemovedEdgeSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="D-e: " Foreground="Orange"/>
+            <TextBlock x:Name="RemovedEdgeSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
+            <TextBlock x:Name="infoRemovedEdgeThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="e: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="RemovedEdgeThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+            
 
         </Grid>
     </Grid>
