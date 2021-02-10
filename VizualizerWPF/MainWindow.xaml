@@ -317,17 +317,27 @@
             
             <TextBlock x:Name="infoRemovedEdge" Grid.Column ="0" Grid.Row= "7" Grid.ColumnSpan="5" TextAlignment="Left" Margin="1,1,0,0" Visibility="Visible" Text="Edges (and Vertices) " Foreground="Black"/>
 
-            <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="5" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="1"  
+            <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="8" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="1"  
                            MaxValue="8" MinValue="0"/>
-            <TextBlock x:Name="infoRemovedEdgeFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="k-1: " Foreground="Red"/>
-            <TextBlock x:Name="removedEdgeFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
-            
-            <TextBlock x:Name="infoRemovedEdgeSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="D-e: " Foreground="Orange"/>
-            <TextBlock x:Name="removedEdgeSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+            <TextBlock x:Name="infoRemovedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="r: " Foreground="Red"/>
+            <TextBlock x:Name="removedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
 
-            <TextBlock x:Name="infoRemovedEdgeThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="e: " Foreground="#FFFFE500"/>
-            <TextBlock x:Name="removedEdgeThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
-            
+            <TextBlock x:Name="infoRemovedEdgeAMAMAMSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="inv: " Foreground="Orange"/>
+            <TextBlock x:Name="removedEdgeAMAMAMSecond" Grid.Column ="1" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
+            <TextBlock x:Name="infoRemovedEdgeAMAMAMThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="e: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="removedEdgeAMAMAMThird" Grid.Column ="2" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
+
+            <TextBlock x:Name="infoRemovedEdgeAMAMFirst" Grid.Column ="4" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="r: " Foreground="Red"/>
+            <TextBlock x:Name="removedEdgeAMAMFirst" Grid.Column ="4" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
+            <TextBlock x:Name="infoRemovedEdgeAMAMSecond" Grid.Column ="5" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="inv: " Foreground="Orange"/>
+            <TextBlock x:Name="removedEdgeAMAMSecond" Grid.Column ="5" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
+            <TextBlock x:Name="infoRemovedEdgeAMAMThird" Grid.Column ="6" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="e: " Foreground="#FFFFE500"/>
+            <TextBlock x:Name="removedEdgeAMAMThird" Grid.Column ="6" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
+
 
         </Grid>
     </Grid>

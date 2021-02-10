@@ -1038,19 +1038,34 @@ namespace VizualizerWPF
 
                     int second, third;
 
-                    textBlock = removedEdgeSecond;
+                    textBlock = removedEdgeAMAMAMSecond;
                     textBlock.Text = (FindName($"invariantAmAmKedges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text.ToString();
                     second = Int32.Parse(textBlock.Text);
 
 
-                    textBlock = removedEdgeThird;
+                    textBlock = removedEdgeAMAMAMThird;
                     textBlock.Text =
                         (((((int)kWhenRemovingUpDown.Value + 2) - withoutEdge.kEdge)
                         *
                         (((int)kWhenRemovingUpDown.Value + 1) - withoutEdge.kEdge)) / 2).ToString();
                     third = Int32.Parse(textBlock.Text);
 
-                    removedEdgeFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString(); 
+                    removedEdgeAMAMAMFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString();
+
+
+
+                    textBlock = removedEdgeAMAMSecond;
+                    textBlock.Text = (FindName($"invariantAmKedges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text.ToString();
+                    second = Int32.Parse(textBlock.Text);
+
+
+                    textBlock = removedEdgeAMAMThird;
+                    textBlock.Text = (((int)kWhenRemovingUpDown.Value + 1) - withoutEdge.kEdge).ToString();
+                    third = Int32.Parse(textBlock.Text);
+
+                    removedEdgeAMAMFirst.Text = (Int32.Parse((FindName($"amAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString();
+
+
                 }
 
             }
