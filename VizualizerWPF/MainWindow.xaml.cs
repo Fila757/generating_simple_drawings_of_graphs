@@ -1011,16 +1011,48 @@ namespace VizualizerWPF
 
             else
             {
-                int invariantSum = invariantKEdges[0];
+                var invariantAmKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+
+                invariantAmKEdges[0] = invariantKEdges[0];
                 TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
-                textBlock.Text = invariantSum.ToString();
+                textBlock.Text = invariantAmKEdges[0].ToString();
 
                 for (int i = 1; i <= maximalkEdges; i++)
                 {
-                    invariantSum += invariantKEdges[i];
+                    invariantAmKEdges[i] = invariantAmKEdges[i - 1] + invariantKEdges[i];
                     textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
-                    textBlock.Text = invariantSum.ToString();
+                    textBlock.Text = invariantAmKEdges[i].ToString();
                 }
+
+                int amAmInvariant = 0;
+
+                for (int i = 0; i <= maximalkEdges; i++)
+                {
+                    amAmInvariant += invariantAmKEdges[i];
+                    textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
+                    textBlock.Text = amAmInvariant.ToString();
+                }
+
+                if (withoutEdge != null)
+                {
+
+                    int second, third;
+
+                    textBlock = removedEdgeSecond;
+                    textBlock.Text = (FindName($"invariantAmAmKedges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text.ToString();
+                    second = Int32.Parse(textBlock.Text);
+
+
+                    textBlock = removedEdgeThird;
+                    textBlock.Text =
+                        (((((int)kWhenRemovingUpDown.Value + 2) - withoutEdge.kEdge)
+                        *
+                        (((int)kWhenRemovingUpDown.Value + 1) - withoutEdge.kEdge)) / 2).ToString();
+                    third = Int32.Parse(textBlock.Text);
+
+                    removedEdgeFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString(); 
+                }
+
             }
             //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
 
