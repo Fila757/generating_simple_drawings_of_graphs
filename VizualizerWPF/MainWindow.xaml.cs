@@ -81,6 +81,7 @@ namespace VizualizerWPF
         double actualHeight = 0;
         double actualWidth = 0;
 
+        double lambda = 1.1;
         int Smoothing => 15;
 
         List<Vertex> selectedVertices = new List<Vertex>();
@@ -1234,7 +1235,7 @@ namespace VizualizerWPF
             double sizeX = Math.Abs(rightX - leftX);
             double sizeY = Math.Abs(topY - bottomY);
 
-            return (-leftX, -bottomY, actualWidth / sizeX, actualHeight / sizeY); //actual?
+            return (-leftX + 20, -bottomY + 20, actualWidth / (sizeX * lambda), actualHeight / (sizeY * lambda)); //actual?
 
         }
 
