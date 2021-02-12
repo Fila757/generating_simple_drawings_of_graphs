@@ -356,6 +356,13 @@ namespace VizualizerWPF
 
         }
 
+        private void RefferenceFace_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+
+            button.Background = button.Background == Brushes.Red ?
+               (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
+        }
 
         
         /// <summary>
@@ -1196,6 +1203,8 @@ namespace VizualizerWPF
                 return;
 
             Point pos = Mouse.GetPosition(mainCanvas);
+            facePoint = pos;
+
             if(stateChanging == StateChanging.Adding)
             {
                 Ellipse ellipse = new Ellipse
