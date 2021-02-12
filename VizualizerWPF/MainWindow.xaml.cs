@@ -82,6 +82,8 @@ namespace VizualizerWPF
         double actualWidth = 0;
 
         double lambda = 1.1;
+
+        Point facePoint = new Point { X = 10000, Y = 10000 };
         int Smoothing => 15;
 
         List<Vertex> selectedVertices = new List<Vertex>();
@@ -931,9 +933,9 @@ namespace VizualizerWPF
                                 continue; 
                             }
 
-                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
+                            List<Line> allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
 
-                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2) > 0)
+                            if (CollisionDetection.GetOrientation(allLines, facePoint) > 0)
                                 sumRight++;
                             else
                                 sumLeft++;

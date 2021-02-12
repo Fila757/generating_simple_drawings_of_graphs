@@ -277,31 +277,49 @@ namespace VizualizerWPF
             return (leftHalfLine, rightHalfLine);
         }
 
-        public static int GetOrientation(Line mainLine, List<Line> lines)
+
+        public static IEnumerable<HalfLineWithCoeffients> GetRaysGoingFromPoint(Point point)
+        {
+            var directions = new Vector[] { new Vector(10, 0), new Vector(0, 10), new Vector(-10, 0), new Vector(0, -10) };
+
+            foreach(var dir in directions)
+            {
+                Line line = new Line { X1 = point.X, Y1 = point.Y, X2 = point.X + dir.X, Y2 = point.Y + dir.Y };
+                yield return new HalfLineWithCoeffients {
+                    line = line,
+                    border = GetLineWithCoefficients(new Line { X1 = point.X, Y1 = point.Y, X2 = point.X + (-dir.Y), Y2 = point.Y + dir.X }),
+                    direction = 1
+                };
+            }
+
+        }
+
+
+        public static int GetOrientation(List<Line> lines, Point point)
         {
 
-            int[] numberOfIntersections = new int[5] { 0, 0, 0, 0, 0 };
-            for (int i = 0; i < 5; i++)
+            foreach (var halfLine in GetRaysGoingFromPoint(point))
             {
                 try
                 {
-                    (HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
+                    int numberOfIntersections = 0;
+                    //(HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
 
-                    var leftHalfLine = halfLines.Item1;
+                    //var leftHalfLine = halfLines.Item1;
 
                     foreach (var line in lines)
                     {
 
-                        var intersectionOrNull = LineAndHalfLine(line, leftHalfLine);
+                        var intersectionOrNull = LineAndHalfLine(line, halfLine);
 
                         if (intersectionOrNull.HasValue)
                         {
                             Point intersection = intersectionOrNull.Value;
-                            if (leftHalfLine.border.a * intersection.X + leftHalfLine.border.b * intersection.Y + leftHalfLine.border.c > 0)
-                                numberOfIntersections[i]++;
+                            if (halfLine.border.a * intersection.X + halfLine.border.b * intersection.Y + halfLine.border.c > 0)
+                                numberOfIntersections++;
                         }
                     }
-                    return (numberOfIntersections[i] % 2) == 1 ? 1 : -1;
+                    return (numberOfIntersections % 2) == 1 ? 1 : -1;
                 }
                 catch(ArgumentException)
                 {
@@ -313,7 +331,7 @@ namespace VizualizerWPF
             throw new ArgumentException("Line goes always through vertex");
             
 
-        }
+        } 
 
         static Line MakeReversedLine(Line line)
         {
@@ -325,7 +343,7 @@ namespace VizualizerWPF
             return Vertex.Compare(edge.points[0], point) ? edge.points.Last() : edge.points[0];
         }
 
-        public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)
+        public static List<Line> PutLinesTogether(Edge e1, Edge e2, Edge e3)
         {
             var result = new List<Line>();
 
@@ -338,7 +356,7 @@ namespace VizualizerWPF
             foreach (var line in e3.lines)
                 result.Add(line);
 
-            return (e1.lines[0], result);
+            return result;
         }
 
     }
