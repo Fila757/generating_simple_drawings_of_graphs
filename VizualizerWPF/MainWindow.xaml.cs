@@ -150,14 +150,13 @@ namespace VizualizerWPF
 
         private void MakeAllLinesNotSharp()
         {
-            HashSet<Vertex> newVertices = new HashSet<Vertex>();
             foreach(var edge in graphCoordinates.edges)
             {
-                edge.Shorten();
-                newVertices.AddList(graphCoordinates.vertices);
+                var removed = edge.Shorten();
+                foreach (var vertex in removed)
+                    graphCoordinates.vertices.Remove(vertex);
+                
             }
-
-            graphCoordinates.vertices = newVertices;
         }
 
         private void MakeSmoother()

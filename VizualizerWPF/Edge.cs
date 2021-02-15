@@ -46,6 +46,7 @@ namespace VizualizerWPF
 
         private void CreateLinesFromPoints()
         {
+            lines = new List<Line>();
             for (int i = 0; i < points.Count - 1; i++)
             {
                 lines.Add(new Line
@@ -58,8 +59,10 @@ namespace VizualizerWPF
             }
         }
 
-        public void Shorten()
+        public List<Vertex> Shorten()
         {
+            var removed = new List<Vertex>();
+
             var shortenPoints = new List<Point> { points[0], points[1] };
             for (int i = 2; i < points.Count; i++)
             {
@@ -74,12 +77,15 @@ namespace VizualizerWPF
                         }))
                 {
                     shortenPoints.RemoveAt(shortenPoints.Count - 1);
+                    removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
                 }
 
                 shortenPoints.Add(points[i]);
             }
 
             CreateLinesFromPoints();
+
+            return removed;
         }
     }
 
