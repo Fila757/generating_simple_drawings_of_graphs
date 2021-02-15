@@ -148,11 +148,24 @@ namespace VizualizerWPF
             mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth, Y2 = actualHeight });
         }
 
+        private void MakeAllLinesNotSharp()
+        {
+            HashSet<Vertex> newVertices = new HashSet<Vertex>();
+            foreach(var edge in graphCoordinates.edges)
+            {
+                edge.Shorten();
+                newVertices.AddList(graphCoordinates.vertices);
+            }
+
+            graphCoordinates.vertices = newVertices;
+        }
+
         private void MakeSmoother()
         {
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
+                MakeAllLinesNotSharp();
                 //DrawGraph(graphCoordinates, 1, true);
             }
             DrawGraph(graphCoordinates, 1, true);

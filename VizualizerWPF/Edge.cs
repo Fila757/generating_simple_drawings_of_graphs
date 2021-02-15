@@ -60,11 +60,26 @@ namespace VizualizerWPF
 
         public void Shorten()
         {
-            var shortenLines = new List<Point> { points[0], points[1] };
+            var shortenPoints = new List<Point> { points[0], points[1] };
             for (int i = 2; i < points.Count; i++)
             {
-                if(IsSharp(points[]))
+                if(IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
+                    && !CollisionDetection.IntersectsSomeLine(
+                        new Line
+                        {
+                            X1 = shortenPoints[shortenPoints.Count - 2].X,
+                            Y1 = shortenPoints[shortenPoints.Count - 2].Y,
+                            X2 = points[i].X,
+                            Y2 = points[i].Y
+                        }))
+                {
+                    shortenPoints.RemoveAt(shortenPoints.Count - 1);
+                }
+
+                shortenPoints.Add(points[i]);
             }
+
+            CreateLinesFromPoints();
         }
     }
 

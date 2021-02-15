@@ -101,6 +101,36 @@ namespace VizualizerWPF
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return new Point { X = -1, Y = -1 };
         }
+
+        public static bool CheckIfTwoLinesIntersectNotAtTheEnd(Line line1, Line line2)
+        {
+            var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
+
+            var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
+                 line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
+            var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
+                line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
+
+
+            var s = numS / denominator;
+            var t = numT / denominator;
+
+            if (denominator != 0 && (s >= 0.05 && s <= 0.95) && (t >= 0.05 && t <= 0.95)) //5% from ends are not considered
+                return true;
+            return false;
+        }
+
+        public static bool IntersectsSomeLine(Line line)
+        {
+            int numberOfIntersection = 0;
+            foreach(var l in window.mainCanvas.Children.OfType<Line>())
+            {
+                if (CheckIfTwoLinesIntersectNotAtTheEnd(line, l))
+                    numberOfIntersection++;
+            }
+
+            return numberOfIntersection == 1 ? false : true;
+        }
         /// <summary>
         /// Function to detect if end of the <c>line</c> is in given <c>ellipse</c>(circle)
         /// </summary>
