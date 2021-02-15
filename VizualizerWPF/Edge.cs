@@ -44,12 +44,26 @@ namespace VizualizerWPF
             return true;
         }
 
+        private void CreateLinesFromPoints()
+        {
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                lines.Add(new Line
+                {
+                    X1 = points[i].X,
+                    X2 = points[i + 1].X,
+                    Y1 = points[i].Y,
+                    Y2 = points[i + 1].Y,
+                });
+            }
+        }
+
         public void Shorten()
         {
-            var shortenLines = new List<Point>();
-            for (int i = 0, j = 0, k = 0; k < points.Count; i++,j++,k++)
+            var shortenLines = new List<Point> { points[0], points[1] };
+            for (int i = 2; i < points.Count; i++)
             {
-
+                if(IsSharp(points[]))
             }
         }
     }
