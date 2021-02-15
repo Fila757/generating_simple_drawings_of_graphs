@@ -308,15 +308,15 @@ namespace VizualizerWPF
 
         public static int GetOrientation(Line line, List<Line> lines, Point point)
         {
+            bool isInside = false;
+
+            int it = 0;
 
             foreach (var halfLine in GetRaysGoingFromPoint(point))
             {
                 try
                 {
                     int numberOfIntersections = 0;
-                    //(HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
-
-                    //var leftHalfLine = halfLines.Item1;
 
                     foreach (var l in lines)
                     {
@@ -330,22 +330,32 @@ namespace VizualizerWPF
                                 numberOfIntersections++;
                         }
                     }
-                    return (numberOfIntersections % 2) == 1 ? 1 : -1;
+                    isInside = (numberOfIntersections % 2) == 1 ? true : false;
+                    break;
                 }
                 catch(ArgumentException)
                 {
+                    if (it == 3)
+                    {
+                        MessageBox.Show("Line goes always through vertex when rays");
+                        throw new ArgumentException("Line goes always through vertex when rays");
+                    }
                     continue;
                 }
+                finally
+                {
+                    it++;
+                }
             }
+
+            bool isLeft = false;
+            it = 0;
 
             foreach (var halfLine in GetPerpendicularsToAlmostMids(line))
             {
                 try
                 {
                     int numberOfIntersections = 0;
-                    //(HalfLineWithCoeffients, HalfLineWithCoeffients) halfLines = GetPerpendicularToAlmostMid(mainLine, 2 * i + 1, 10 - (2 * i + 1));
-
-                    //var leftHalfLine = halfLines.Item1;
 
                     foreach (var l in lines)
                     {
@@ -359,20 +369,29 @@ namespace VizualizerWPF
                                 numberOfIntersections++;
                         }
                     }
-                    return (numberOfIntersections % 2) == 1 ? 1 : -1;
+
+                    isLeft = (numberOfIntersections % 2) == 1 ? true : false;
+                    break;
+
                 }
                 catch (ArgumentException)
                 {
+                    if (it == 4)
+                    {
+                        MessageBox.Show("Line goes always through vertex");
+                        throw new ArgumentException("Line goes always through vertex");
+                    }
                     continue;
+                }
+                finally
+                {
+                    it++;
                 }
             }
 
-
-
-            MessageBox.Show("Line goes always through vertex");
-            throw new ArgumentException("Line goes always through vertex");
-            
-
+            if(isInside == isLeft)
+                return 1;
+            return -1;
         } 
 
         static Line MakeReversedLine(Line line)
