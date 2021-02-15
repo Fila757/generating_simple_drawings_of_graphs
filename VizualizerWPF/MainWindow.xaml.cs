@@ -56,7 +56,7 @@ namespace VizualizerWPF
     /// <summary>
     /// Enum for showing Intersection, KEdges, AtMostKEdge...
     /// </summary>
-    public enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges}; //AM = AtMost
+    public enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges, ReferenceFace}; //AM = AtMost
 
     public partial class MainWindow : Window
     {
@@ -83,7 +83,9 @@ namespace VizualizerWPF
 
         double lambda = 1.1;
 
-        Point facePoint = new Point { X = 10000, Y = 10000 };
+        static Point farFarAway = new Point { X = 10000, Y = 10000 };
+
+        Point facePoint = farFarAway;
         int Smoothing => 15;
 
         List<Vertex> selectedVertices = new List<Vertex>();
@@ -362,6 +364,8 @@ namespace VizualizerWPF
 
             button.Background = button.Background == Brushes.Red ?
                (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD")) : Brushes.Red;
+
+            statesCalculation[StateCalculation.ReferenceFace] = !statesCalculation[StateCalculation.ReferenceFace];
         }
 
         
@@ -423,6 +427,8 @@ namespace VizualizerWPF
         /// <param name="e"></param>
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
+
+            facePoint = farFarAway; //changing again to the outside one
 
             if (graphGenerator.SizeOfGraph != NextDrawingUpDown.Value)
             {
@@ -1097,7 +1103,15 @@ namespace VizualizerWPF
             {
                 var textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
+
+                textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
+                textBlock.Text = 0.ToString();
+
             }
+
+
+
+            
         }
 
         /// <summary>
@@ -1203,7 +1217,14 @@ namespace VizualizerWPF
                 return;
 
             Point pos = Mouse.GetPosition(mainCanvas);
-            facePoint = pos;
+
+            if (statesCalculation[StateCalculation.ReferenceFace])
+            {
+                facePoint = pos;
+
+                ZeroInvariantEdgesValues();
+                UpdateStats();
+            }
 
             if(stateChanging == StateChanging.Adding)
             {
