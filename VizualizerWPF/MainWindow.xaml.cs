@@ -428,7 +428,7 @@ namespace VizualizerWPF
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
 
-            facePoint = farFarAway; //changing again to the outside one
+            facePoint = farFarAway; //changing again to the outer face
 
             if (graphGenerator.SizeOfGraph != NextDrawingUpDown.Value)
             {
