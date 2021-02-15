@@ -940,9 +940,9 @@ namespace VizualizerWPF
                                 continue; 
                             }
 
-                            List<Line> allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
+                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
 
-                            if (CollisionDetection.GetOrientation(allLines, facePoint) > 0)
+                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2, facePoint) > 0)
                                 sumRight++;
                             else
                                 sumLeft++;
