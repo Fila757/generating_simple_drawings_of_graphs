@@ -161,6 +161,7 @@ namespace VizualizerWPF
 
         private void MakeSmoother()
         {
+            SubDivideEdges(graphCoordinates);
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
@@ -462,7 +463,7 @@ namespace VizualizerWPF
             //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             //DrawGraph(graphCoordinates, 1, true);
 
-            //MakeSmoother();
+            MakeSmoother();
            
         }
 
@@ -1404,9 +1405,12 @@ namespace VizualizerWPF
                 var linesAndPoints = SubDivideLine(line, graphCoordinates);
 
                 tempLines.AddRange(linesAndPoints.Item1);
+                tempPoints.Add(edge.points[index]);
                 tempPoints.AddRange(linesAndPoints.Item2);
                 index++;
             }
+
+            tempPoints.Add(edge.points[index]);
 
             edge.lines = tempLines;
             edge.points = tempPoints;
