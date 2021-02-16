@@ -447,7 +447,7 @@ namespace VizualizerWPF
             foreach (var line in e3.lines)
                 result.Add(line);
 
-            return (result.First(), result);
+            return (e1.lines[0], result);
         }
 
     }

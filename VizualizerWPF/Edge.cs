@@ -16,7 +16,7 @@ namespace VizualizerWPF
         public List<Line> lines;
         //public int direction = 1;
 
-        public static double smallestCosOfAngle = 0.93; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
+        public static double smallestCosOfAngle = 0.5; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
 
         public int kEdge = 0;
         public Edge() { }

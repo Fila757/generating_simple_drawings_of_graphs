@@ -462,7 +462,7 @@ namespace VizualizerWPF
             //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             //DrawGraph(graphCoordinates, 1, true);
 
-            MakeSmoother();
+            //MakeSmoother();
            
         }
 
@@ -1349,11 +1349,26 @@ namespace VizualizerWPF
 
         int divisionConst = 100;
 
+        List<Line> CreateLinesFromPoints(List<Point> points)
+        {
+            var lines = new List<Line>();
+            for (int i = 0; i < points.Count - 1; i++)
+            {
+                lines.Add(new Line
+                {
+                    X1 = points[i].X,
+                    X2 = points[i + 1].X,
+                    Y1 = points[i].Y,
+                    Y2 = points[i + 1].Y,
+                });
+            }
+            return lines;
+        }
+
         (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
         {
             var edgePoints = new List<Point>();
-            var edgeLines = new List<Line>();
-
+          
             int count = (int)Math.Ceiling(CollisionDetection.GetDistance(line) / divisionConst) ;
             double length = CollisionDetection.GetDistance(line) / count;
 
@@ -1365,47 +1380,43 @@ namespace VizualizerWPF
             {
                 edgePoints.Add(new Point(line.X1, line.Y1) + direction * (i * length));
 
-                var ellipse = new Ellipse
-                {
-                    Width = sizeOfVertex,
-                    Height = sizeOfVertex,
-                    Fill = Brushes.Red,
-                    Margin = new Thickness(edgePoints.Last().X - sizeOfVertex / 2, edgePoints.Last().Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = Visibility.Hidden
-
-                };
-
-                ellipse.MouseDown += ellipse_MouseDown;
-                mainCanvas.Children.Add(ellipse);
-
-                Panel.SetZIndex(ellipse, 10);
-
-                graphCoordinates.vertices.Add(new Vertex(ellipse, edgePoints.Last(), VertexState.Middle));
+                graphCoordinates.vertices.Add(new Vertex(new Ellipse(), edgePoints.Last(), VertexState.Middle));
             }
+
             edgePoints.Add(new Point(line.X2, line.Y2));
-
-            for(int i = 1; i < edgePoints.Count; i++)
-            {
-                var l = new Line
-                {
-                    X1 = edgePoints[i - 1].X,
-                    Y1 = edgePoints[i - 1].Y,
-                    X2 = edgePoints[i].X,
-                    Y2 = edgePoints[i].Y,
-                    Stroke = Brushes.Red,
-                    StrokeThickness = sizeOfVertex / 3
-                };
-
-                Panel.SetZIndex(l, 1);
-                l.MouseDown += line_MouseDown;
-                mainCanvas.Children.Add(l);
-
-                edgeLines.Add(l);
-            }
+            var edgeLines = CreateLinesFromPoints(edgePoints);
 
             edgePoints.RemoveAt(0); edgePoints.RemoveAt(edgePoints.Count - 1);
             return (edgeLines, edgePoints);
             
+        }
+
+        void SubDivideEdge(Edge edge, GraphCoordinates graphCoordinates)
+        {
+
+            var tempPoints = new List<Point>();
+
+            int index = 0;
+
+            List<Line> tempLines = new List<Line>();
+            foreach (var line in edge.lines)
+            {
+                var linesAndPoints = SubDivideLine(line, graphCoordinates);
+
+                tempLines.AddRange(linesAndPoints.Item1);
+                tempPoints.AddRange(linesAndPoints.Item2);
+                index++;
+            }
+
+            edge.lines = tempLines;
+            edge.points = tempPoints;
+
+        }
+
+        void SubDivideEdges(GraphCoordinates graphCoordinates)
+        {
+            foreach (var edge in graphCoordinates.edges)
+                SubDivideEdge(edge, graphCoordinates);
         }
         /// <summary>
         /// Function similar to ReDrawGraph function but 
@@ -1476,23 +1487,18 @@ namespace VizualizerWPF
 
             graphCoordinates.vertices = vertices;
 
-            /*Updating edges*/
+
 
             foreach (var edge in graphCoordinates.edges)
             {
 
                 var tempPoints = new List<Point>();
-
-                /*
                 foreach (var point in edge.points)
                 {
                     tempPoints.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY)); //first scale, then add
                 }
 
                 edge.points = tempPoints;
-                */
-
-                int index = 0;
 
                 List<Line> tempLines = new List<Line>();
                 foreach (var line in edge.lines)
@@ -1506,20 +1512,17 @@ namespace VizualizerWPF
                         Stroke = Brushes.Red,
                         StrokeThickness = sizeOfVertex / 3
                     };
+                    Panel.SetZIndex(l, 1);
+                    l.MouseDown += line_MouseDown;
+                    mainCanvas.Children.Add(l);
 
-                    var linesAndPoints = SubDivideLine(l, graphCoordinates);
-
-                    tempLines.AddRange(linesAndPoints.Item1);
-                    tempPoints.Add(edge.points[index].Add(new Point(cx, cy)).Scale(scaleX, scaleY));
-                    tempPoints.AddRange(linesAndPoints.Item2);
-                    index++;
+                    tempLines.Add(l);
                 }
 
-                tempPoints.Add(edge.points[index].Add(new Point(cx, cy)).Scale(scaleX, scaleY));
                 edge.lines = tempLines;
 
-                edge.points = tempPoints;
             }
+
 
 
             /* Updating neighbors */
