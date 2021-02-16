@@ -469,6 +469,7 @@ namespace VizualizerWPF
         
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
+            facePoint = farFarAway;
             int tmpCounter = graphGenerator.counter;
 
             if (tmpCounter == 1)
@@ -1346,7 +1347,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 50;
+        int divisionConst = 100;
 
         (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
         {
