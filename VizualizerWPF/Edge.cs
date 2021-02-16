@@ -16,7 +16,7 @@ namespace VizualizerWPF
         public List<Line> lines;
         //public int direction = 1;
 
-        public static double smallestCosOfAngle = 0.93; //cca 20 \degree we can take only smaller cos
+        public static double smallestCosOfAngle = 0.93; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
 
         public int kEdge = 0;
         public Edge() { }
@@ -66,8 +66,12 @@ namespace VizualizerWPF
             var shortenPoints = new List<Point> { points[0], points[1] };
             for (int i = 2; i < points.Count; i++)
             {
-                if(IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
-                    && !CollisionDetection.IntersectsSomeLine(
+                while(
+                    shortenPoints.Count - 2 >= 0
+                    &&
+                    IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
+                    &&
+                    !CollisionDetection.IntersectsSomeLine(
                         new Line
                         {
                             X1 = shortenPoints[shortenPoints.Count - 2].X,
