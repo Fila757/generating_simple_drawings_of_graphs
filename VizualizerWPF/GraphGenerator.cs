@@ -13,7 +13,7 @@ namespace VizualizerWPF
     /// <param name="edge">List to store edges</param>
     /// <param name="neigbors">Dictionary to store neighbors of all vertices</param>
     /// </summary>
-    class GraphCoordinates
+    public class GraphCoordinates
     {
         
         public HashSet<Vertex> vertices = new HashSet<Vertex>();
@@ -37,6 +37,17 @@ namespace VizualizerWPF
                 neighbors[key] = new List<Edge>();
                 neighbors[key].Add(value);
             }
+        }
+
+        public Vertex FindVertex(Point center)
+        {
+            foreach (var vertex in vertices)
+            {
+                if (Vertex.Compare(vertex.center, center))
+                    return vertex;
+            }
+
+            throw new ArgumentException("There is no such a vertex with that center");
         }
     }
 

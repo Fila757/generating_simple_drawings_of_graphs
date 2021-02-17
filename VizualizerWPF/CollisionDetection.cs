@@ -123,13 +123,13 @@ namespace VizualizerWPF
         public static bool IntersectsSomeLine(Line line)
         {
             int numberOfIntersection = 0;
-            foreach(var l in window.mainCanvas.Children.OfType<Line>())
+            foreach(var l in window.LinesIterator())
             {
                 if (CheckIfTwoLinesIntersectNotAtTheEnd(line, l))
                     numberOfIntersection++;
             }
 
-            return numberOfIntersection == 1 ? false : true;
+            return numberOfIntersection == 0 ? false : true;
         }
         /// <summary>
         /// Function to detect if end of the <c>line</c> is in given <c>ellipse</c>(circle)

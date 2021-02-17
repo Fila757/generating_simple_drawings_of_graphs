@@ -86,12 +86,46 @@ namespace VizualizerWPF
         static Point farFarAway = new Point { X = 10000, Y = 10000 };
 
         Point facePoint = farFarAway;
-        int Smoothing => 15;
+        int Smoothing => 10;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
         GraphCoordinates graphCoordinates = new GraphCoordinates();
+
+        public IEnumerable<Line> LinesIterator()
+        {
+            foreach(var edge in graphCoordinates.edges)
+            {
+                foreach(var line in edge.lines)
+                {
+                    yield return line;
+                }
+            }
+         }
+
+        public List<object> PrintingLines()
+        {
+            List<object> lines = new List<object>();
+            foreach (var edge in graphCoordinates.edges)
+            {
+                foreach (var line in edge.lines)
+                {
+                    lines.Add(new { line.X1, line.Y1, line.X2, line.Y2 });
+                }
+            }
+            return lines;
+        }
+
+        public List<object> PrintingVertices()
+        {
+            List<object> vertices = new List<object>();
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                vertices.Add(new { vertex.center.X, vertex.center.Y });
+            }
+            return vertices;
+        }
 
         Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
             Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
@@ -152,7 +186,7 @@ namespace VizualizerWPF
         {
             foreach(var edge in graphCoordinates.edges)
             {
-                var removed = edge.Shorten();
+                var removed = edge.Shorten(graphCoordinates);
                 foreach (var vertex in removed)
                     graphCoordinates.vertices.Remove(vertex);
                 
@@ -1348,7 +1382,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 100;
+        int divisionConst = 200;
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {

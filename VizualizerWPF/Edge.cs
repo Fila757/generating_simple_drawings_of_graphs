@@ -16,7 +16,7 @@ namespace VizualizerWPF
         public List<Line> lines;
         //public int direction = 1;
 
-        public static double smallestCosOfAngle = 0.5; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
+        public static double smallestCosOfAngle = 0.1; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
 
         public int kEdge = 0;
         public Edge() { }
@@ -59,7 +59,7 @@ namespace VizualizerWPF
             }
         }
 
-        public List<Vertex> Shorten()
+        public List<Vertex> Shorten(in GraphCoordinates graphCoordinates)
         {
             var removed = new List<Vertex>();
 
@@ -71,6 +71,8 @@ namespace VizualizerWPF
                     &&
                     IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
                     &&
+                    graphCoordinates.FindVertex(shortenPoints[shortenPoints.Count - 1]).state == VertexState.Middle
+                    &&
                     !CollisionDetection.IntersectsSomeLine(
                         new Line
                         {
@@ -80,13 +82,14 @@ namespace VizualizerWPF
                             Y2 = points[i].Y
                         }))
                 {
-                    shortenPoints.RemoveAt(shortenPoints.Count - 1);
                     removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
+                    shortenPoints.RemoveAt(shortenPoints.Count - 1);
                 }
 
                 shortenPoints.Add(points[i]);
             }
 
+            points = shortenPoints;
             CreateLinesFromPoints();
 
             return removed;
