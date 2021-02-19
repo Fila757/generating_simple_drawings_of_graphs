@@ -115,7 +115,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.0001 && (s >= 0.0001 && s <= 1 - 0.0001) && (t >= 0.0001 && t <= 1 - 0.0001)) //5% from ends are not considered
+            if (Math.Abs(denominator) > 0.0005 && (s >= 0.0005 && s <= 1 - 0.0005) && (t >= 0.0005 && t <= 1 - 0.0005)) //5% from ends are not considered
                 return true;
             return false;
         }

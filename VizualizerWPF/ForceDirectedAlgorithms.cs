@@ -325,7 +325,7 @@ namespace VizualizerWPF
                     Vector difference = i_v - a;
                     Vector vector = b - a;
                     var coef = difference.Divide(vector);
-                    if (1 > coef && coef > 0)
+                    if (1 - 0.01 > coef && coef > 0.01)
                     {
                         int s = INF;
                         for (int i = 0; i < 8; i++)

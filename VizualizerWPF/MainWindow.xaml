@@ -62,6 +62,8 @@
         <TextBlock x:Name="infoOptimal" Grid.Column ="4" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Optimal:"/>
         <TextBlock x:Name="infoCrossings" Grid.Column ="3" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Crossings:"/>
         <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,38" Visibility="Visible" Text="INFO:" Grid.RowSpan="2" FontWeight="Bold" />
+        <syncfusion:UpDown x:Name="SmoothingUpDown" Value="10" Step="1" Grid.Column="4" Grid.Row="0" Margin="3,3,3,3" NumberDecimalDigits="0"  
+                           MaxValue="1000" MinValue="0" TextAlignment="Center"/>
         <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:" FontWeight="Bold" FontStyle="Normal"/>
         
         <Button x:Name="faceReferenceButton" Grid.Column ="3" Grid.Row= "4" Margin="70,3,0,3" Visibility="Visible" Content="Face" Click="RefferenceFace_Click"/>
@@ -321,7 +323,7 @@
             
             <TextBlock x:Name="infoRemovedEdge" Grid.Column ="0" Grid.Row= "7" Grid.ColumnSpan="5" TextAlignment="Left" Margin="1,1,0,0" Visibility="Visible" Text="Edges (and Vertices) " Foreground="Black"/>
 
-            <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="8" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="1"  
+            <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="8" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="0"  
                            MaxValue="8" MinValue="0"/>
             <TextBlock x:Name="infoRemovedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="r: " Foreground="Red"/>
             <TextBlock x:Name="removedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>

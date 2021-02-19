@@ -86,7 +86,7 @@ namespace VizualizerWPF
         static Point farFarAway = new Point { X = 10000, Y = 10000 };
 
         Point facePoint = farFarAway;
-        int Smoothing => 10;
+        int Smoothing => (int)SmoothingUpDown.Value;
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -199,7 +199,12 @@ namespace VizualizerWPF
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-                MakeAllLinesNotSharp();
+
+                //DrawGraph(graphCoordinates, 1, true);
+                if (i <= Smoothing - 2)
+                {
+                    MakeAllLinesNotSharp();
+                }
                 //DrawGraph(graphCoordinates, 1, true);
             }
             DrawGraph(graphCoordinates, 1, true);
@@ -1382,7 +1387,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 50;
+        int divisionConst = 200;  
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
