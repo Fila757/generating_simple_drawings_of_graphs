@@ -16,7 +16,7 @@ namespace VizualizerWPF
         public List<Line> lines;
         //public int direction = 1;
 
-        public static double smallestCosOfAngle = 0.1; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
+        public static double smallestCosOfAngle = 0.9; //cca 20 \degree we can take only smaller cos, maybe iterated one is needed
 
         public int kEdge = 0;
         public Edge() { }
@@ -39,7 +39,7 @@ namespace VizualizerWPF
             Vector first = point1 - point2;
             Vector second = point3 - point2;
 
-            if ((first * second) / Math.Sqrt((first * first) * (second * second)) < smallestCosOfAngle)
+            if ((first * second) / Math.Sqrt((first * first) * (second * second)) < smallestCosOfAngle) //negative ones are alright
                 return false;
             return true;
         }

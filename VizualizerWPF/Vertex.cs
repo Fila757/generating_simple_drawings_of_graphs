@@ -27,7 +27,7 @@ namespace VizualizerWPF
 
         public static bool Compare(Point a, Point b)
         {
-            if (Math.Abs(a.X - b.X) < 0.1 && Math.Abs(a.Y - b.Y) < 0.1)
+            if (Math.Abs(a.X - b.X) < 0.01 && Math.Abs(a.Y - b.Y) < 0.01)
                 return true;
             return false;
         }

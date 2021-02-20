@@ -69,7 +69,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if((t >= -0.00001 && t <= 0.00001) || (t >= 0.99999 && t <= 1.00001))
+            if((t >= -0.01 && t <= 0.01) || (t >= 0.99 && t <= 1.01))
             {
                 throw new ArgumentException("Intersects point");
             }
@@ -115,7 +115,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.0005 && (s >= 0.0005 && s <= 1 - 0.0005) && (t >= 0.0005 && t <= 1 - 0.0005)) //5% from ends are not considered
+            if (Math.Abs(denominator) > 0.01 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //5% from ends are not considered
                 return true;
             return false;
         }
@@ -310,7 +310,14 @@ namespace VizualizerWPF
 
         public static IEnumerable<HalfLineWithCoeffients> GetRaysGoingFromPoint(Point point)
         {
-            var directions = new Vector[] { new Vector(10, 0), new Vector(0, 10), new Vector(-10, 0), new Vector(0, -10) };
+            var directions = new Vector[] {
+                new Vector(10, 0),
+                new Vector(0, 10),
+                new Vector(10, 10),
+                new Vector(10, -10),
+                new Vector(-10, 0),
+                new Vector(0, -10)
+            };
 
             foreach(var dir in directions)
             {
@@ -365,7 +372,7 @@ namespace VizualizerWPF
                 }
                 catch(ArgumentException)
                 {
-                    if (it == 3)
+                    if (it == 5)
                     {
                         MessageBox.Show("Line goes always through vertex when rays");
                         throw new ArgumentException("Line goes always through vertex when rays");

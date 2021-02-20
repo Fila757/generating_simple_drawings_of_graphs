@@ -133,7 +133,7 @@ namespace VizualizerWPF
             Vector difference = i_v - a;
             Vector vector = b - a;
             var coef = difference.Divide(vector);
-            if ((1 > coef && coef > 0) && Distance(v, i_v) < gamma)
+            if ((1 - 0.01 > coef && coef > 0.01) && Distance(v, i_v) < gamma)
                 return -((gamma - Distance(v, i_v) * (gamma - Distance(v, i_v))) / (Distance(v, i_v))) * (i_v - v);
             else
                 return new Vector(0, 0);

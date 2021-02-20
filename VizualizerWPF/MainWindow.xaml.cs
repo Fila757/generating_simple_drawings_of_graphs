@@ -201,10 +201,9 @@ namespace VizualizerWPF
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
 
                 //DrawGraph(graphCoordinates, 1, true);
-                if (i <= Smoothing - 2)
-                {
-                    MakeAllLinesNotSharp();
-                }
+
+                MakeAllLinesNotSharp();
+                
                 //DrawGraph(graphCoordinates, 1, true);
             }
             DrawGraph(graphCoordinates, 1, true);
@@ -1387,7 +1386,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 200;  
+        int divisionConst = 50;  
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
