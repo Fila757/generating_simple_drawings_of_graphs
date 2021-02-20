@@ -201,11 +201,10 @@ namespace VizualizerWPF
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
 
                 //DrawGraph(graphCoordinates, 1, true);
-
-                MakeAllLinesNotSharp();
                 
                 //DrawGraph(graphCoordinates, 1, true);
             }
+            MakeAllLinesNotSharp();
             DrawGraph(graphCoordinates, 1, true);
         }
 
