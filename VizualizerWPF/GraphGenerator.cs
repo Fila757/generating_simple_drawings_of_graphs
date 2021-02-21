@@ -52,7 +52,9 @@ namespace VizualizerWPF
 
         public void SaveCoordinates()
         {
-            var streamWriter = new StreamWriter("data/savedGraphs", append: true);
+            var streamWriter = new StreamWriter(
+                "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphs.txt",
+                append: true);
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
             foreach (var from in neighbors.Keys)
@@ -78,6 +80,7 @@ namespace VizualizerWPF
             }
 
             streamWriter.WriteLine("#"); // end
+            streamWriter.Close();
         }
 
         void PrintLine(StreamWriter streamWriter, Edge edge)
@@ -85,11 +88,14 @@ namespace VizualizerWPF
             streamWriter.Write("( ");
             for(int i = 0; i < edge.points.Count; i++)
             {
-                streamWriter.Write($"{edge.points[i].X}  {edge.points[i].Y} ");
+                streamWriter.Write($"{edge.points[i].X} {edge.points[i].Y} ");
                 if (FindVertex(edge.points[i]).state == VertexState.Intersection)
+                {
                     streamWriter.Write(") ( ");
+                    streamWriter.Write($"{edge.points[i].X} {edge.points[i].Y} ");
+                }
             }
-            streamWriter.Write(")");
+            streamWriter.WriteLine(")");
         }
 
 
@@ -121,7 +127,7 @@ namespace VizualizerWPF
 
         public GraphGenerator()
         {
-            streamReader = new StreamReader(@"data/savedGraphs.txt");
+            streamReader = new StreamReader("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphs.txt");
         }
 
 
