@@ -50,7 +50,7 @@ namespace VizualizerWPF
 
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
-            if (denominator == 0)
+            if (Math.Abs(denominator) < 0.0001)
             {
 
                 if (Math.Abs(GetLineWithCoefficients(line1).c - GetLineWithCoefficients(line2).c) < 0.00001)
@@ -69,12 +69,12 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if((t >= -0.01 && t <= 0.01) || (t >= 0.99 && t <= 1.01))
+            if((t >= -0.0001 && t <= 0.0001) || (t >= 0.9999 && t <= 1.0001))
             {
                 throw new ArgumentException("Intersects point");
             }
 
-            if(t >= -0.00001 && t <= 1.00001) //line1 is just segments so we need to check limits of s
+            if(t >= -0.0001 && t <= 1.0001) //line1 is just segments so we need to check limits of s
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
@@ -115,7 +115,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.01 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //5% from ends are not considered
+            if (Math.Abs(denominator) > 0.01 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
                 return true;
             return false;
         }
