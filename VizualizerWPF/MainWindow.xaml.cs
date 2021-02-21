@@ -233,18 +233,16 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="graphCoordinates">To store graph topical</param>
         /// <param name="scale">To know if it is maximized or minimized</param>
-        private void RedrawGraph(GraphCoordinates graphCoordinates, double scale)
+        private void RedrawGraph(GraphCoordinates graphCoordinates)
         {
             mainCanvas.Children.Clear();
-
-            double scaleX = scale, scaleY = scale;
 
             (double, double, double, double) coordinatesAndScale = FindClipingSizes(GetAllPoints(graphCoordinates));
 
             cx = coordinatesAndScale.Item1;
             cy = coordinatesAndScale.Item2;
-            scaleX = coordinatesAndScale.Item3;
-            scaleY = coordinatesAndScale.Item4;
+            var scaleX = coordinatesAndScale.Item3;
+            var scaleY = coordinatesAndScale.Item4;
 
 
             /* Updating Vertices */
@@ -252,7 +250,7 @@ namespace VizualizerWPF
             foreach (var vertex in graphCoordinates.vertices)
             {
                 Vertex vertexTemp = vertex;
-                vertexTemp.center = vertexTemp.center.Scale(scaleX, scaleY);
+                vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
 
                 vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0);
 
@@ -271,10 +269,10 @@ namespace VizualizerWPF
             {
                 foreach (var line in edge.lines)
                 {
-                    line.X1 *= scaleX;
-                    line.Y1 *= scaleY;
-                    line.X2 *= scaleX;
-                    line.Y2 *= scaleY;
+                    line.X1 = (line.X1 + cx) * scaleX;
+                    line.Y1 = (line.Y1 + cy) * scaleY;
+                    line.X2 = (line.X2 + cx) * scaleX;
+                    line.Y2 = (line.Y2 + cy) * scaleY;
                     line.StrokeThickness *= 1;// scale;
 
                     mainCanvas.Children.Add(line);
@@ -283,7 +281,7 @@ namespace VizualizerWPF
                 var pointsTemp = new List<Point>();
                 foreach(var point in edge.points)
                 {
-                    pointsTemp.Add(point.Scale(scaleX, scaleY));
+                    pointsTemp.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY));
                 }
 
                 edge.points = pointsTemp; 
@@ -294,7 +292,7 @@ namespace VizualizerWPF
             foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
                 Vertex vertexTemp = vertex;
-                vertexTemp.center = vertexTemp.center.Scale(scaleX, scaleY);
+                vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
 
@@ -313,21 +311,7 @@ namespace VizualizerWPF
         {
             Canvas_Loaded(sender, new RoutedEventArgs());
 
-            if(WindowState == WindowState.Normal)
-            {
-                RedrawGraph(graphCoordinates, 1 / scale);
-                cx = cx / scale; cy = cy / scale; sizeOfVertex = sizeOfVertex; // scale;
-                selectedVertices.Clear();
-
-            }
-
-            if (WindowState == WindowState.Maximized)
-            {
-                RedrawGraph(graphCoordinates, scale);
-                cx = cx * scale; cy = cy * scale; sizeOfVertex = sizeOfVertex; //* scale;
-                selectedVertices.Clear();
-
-            }
+            RedrawGraph(graphCoordinates);
 
         }
 
@@ -1387,6 +1371,8 @@ namespace VizualizerWPF
             HashSet<Point> result = new HashSet<Point>();
             foreach (var vertex in graphCoordinates.vertices)
                 result.Add(vertex.center);
+
+            /*
             foreach (var edge in graphCoordinates.edges)
             {
                 foreach(var point in edge.points)
@@ -1394,6 +1380,7 @@ namespace VizualizerWPF
                     result.Add(point);
                 }
             }
+            */
 
             return result;
         }
