@@ -62,6 +62,7 @@
         <TextBlock x:Name="infoOptimal" Grid.Column ="4" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Optimal:"/>
         <TextBlock x:Name="infoCrossings" Grid.Column ="3" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Crossings:"/>
         <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,38" Visibility="Visible" Text="INFO:" Grid.RowSpan="2" FontWeight="Bold" />
+        <Button x:Name="SaveDrawing" Grid.Column="3" Grid.Row="0" Visibility="Visible" Margin="70, 3,3,3" Content="Save" Click="SaveDrawing_Click"/>
         <TextBlock x:Name="infoSmoothing" Grid.Column="4" Grid.Row="0" Margin="0,8,0,3" Text="Smooth:" TextAlignment="Left" FontWeight="Bold"/>
         <syncfusion:UpDown x:Name="SmoothingUpDown" Value="10" Step="1" Grid.Column="4" Grid.Row="0" Margin="50,3,3,3" NumberDecimalDigits="0"  
                            MaxValue="1000" MinValue="0" TextAlignment="Center"/>

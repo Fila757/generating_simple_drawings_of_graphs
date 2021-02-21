@@ -470,6 +470,10 @@ namespace VizualizerWPF
 
         }
 
+        private void SaveDrawing_Click(object sender, RoutedEventArgs e)
+        {
+            graphCoordinates.SaveCoordinates();
+        }
 
         /// <summary>
         /// Function to generate new drawing of clique from data
