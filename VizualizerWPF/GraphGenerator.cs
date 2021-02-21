@@ -49,6 +49,50 @@ namespace VizualizerWPF
 
             throw new ArgumentException("There is no such a vertex with that center");
         }
+
+        public void SaveCoordinates()
+        {
+            var streamWriter = new StreamWriter("data/savedGraphs", append: true);
+
+            Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
+            foreach (var from in neighbors.Keys)
+            {
+                foreach (var to in neighbors.Keys)
+                {
+                    visited[(from, to)] = false;
+                }
+            }
+
+            foreach (var v in neighbors.Keys)
+            {
+                foreach(var e in neighbors[v])
+                {
+                    var oppositeVertex = FindVertex(CollisionDetection.ChooseOppositeOne(e, v.center));
+                    if (visited[(v, oppositeVertex)])
+                        continue;
+                    visited[(v, oppositeVertex)] = true; visited[(oppositeVertex, v)] = true;
+
+                    PrintLine(streamWriter, e);
+
+                }
+            }
+
+            streamWriter.WriteLine("#"); // end
+        }
+
+        void PrintLine(StreamWriter streamWriter, Edge edge)
+        {
+            streamWriter.Write("( ");
+            for(int i = 0; i < edge.points.Count; i++)
+            {
+                streamWriter.Write($"{edge.points[i].X}  {edge.points[i].Y} ");
+                if (FindVertex(edge.points[i]).state == VertexState.Intersection)
+                    streamWriter.Write(") ( ");
+            }
+            streamWriter.Write(")");
+        }
+
+
     }
 
     /// <summary>
@@ -72,9 +116,14 @@ namespace VizualizerWPF
         public GraphGenerator(int n)
         {
             SizeOfGraph = n;
-            streamReader = new StreamReader(
-                @"data/graph" + SizeOfGraph + ".txt");
+            streamReader = new StreamReader(@"data/graph" + SizeOfGraph + ".txt");
         }
+
+        public GraphGenerator()
+        {
+            streamReader = new StreamReader(@"data/savedGraphs.txt");
+        }
+
 
         public void CloseFile()
         {

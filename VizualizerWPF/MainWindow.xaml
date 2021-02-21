@@ -45,7 +45,7 @@
         <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
         <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="PreviousDrawing_Click"/>
         <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
-                           MaxValue="7" MinValue="3"/>
+                           MaxValue="7" MinValue="3" RenderTransformOrigin="0.5,0.471"/>
 
         <!--Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/-->
 
@@ -65,10 +65,10 @@
         <syncfusion:UpDown x:Name="SmoothingUpDown" Value="10" Step="1" Grid.Column="4" Grid.Row="0" Margin="3,3,3,3" NumberDecimalDigits="0"  
                            MaxValue="1000" MinValue="0" TextAlignment="Center"/>
         <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:" FontWeight="Bold" FontStyle="Normal"/>
-        
+
         <Button x:Name="faceReferenceButton" Grid.Column ="3" Grid.Row= "4" Margin="70,3,0,3" Visibility="Visible" Content="Face" Click="RefferenceFace_Click"/>
-        
-        
+
+
 
 
         <Grid Grid.Row="6" Grid.RowSpan ="1" Grid.Column="4" Visibility="Visible" Margin="0,0,0,0">
@@ -259,7 +259,7 @@
 
             <!--Rectangle Grid.Column ="8" Grid.Row= "3"  Margin="0,20,0,20" Visibility="Visible" Stroke="Black"/-->
 
-            
+
             <TextBlock x:Name="infoInvariantAmKedges" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariantAmK-Edges: "/>
 
             <TextBlock x:Name="infoInvariantAmKedges0" Grid.Column ="0" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
@@ -289,7 +289,7 @@
             <TextBlock x:Name="infoInvariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
             <TextBlock x:Name="invariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
-            
+
             <TextBlock x:Name="infoInvariantAmAmKedges" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariantAmAmK-Edges: "/>
 
             <TextBlock x:Name="infoInvariantAmAmKedges0" Grid.Column ="0" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
@@ -320,7 +320,7 @@
             <TextBlock x:Name="infoInvariantAmAmKedges8" Grid.Column ="8" Grid.Row= "6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
             <TextBlock x:Name="invariantAmAmKedges8" Grid.Column ="8" Grid.Row= "6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
-            
+
             <TextBlock x:Name="infoRemovedEdge" Grid.Column ="0" Grid.Row= "7" Grid.ColumnSpan="5" TextAlignment="Left" Margin="1,1,0,0" Visibility="Visible" Text="Edges (and Vertices) " Foreground="Black"/>
 
             <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="8" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="0"  
@@ -346,5 +346,6 @@
 
 
         </Grid>
+        <CheckBox x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True" RenderTransformOrigin="0.471,0.55"/>
     </Grid>
 </Window>

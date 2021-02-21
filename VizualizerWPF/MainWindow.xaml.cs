@@ -85,6 +85,8 @@ namespace VizualizerWPF
 
         static Point farFarAway = new Point { X = 10000, Y = 10000 };
 
+        bool savedGraphs = false;
+
         Point facePoint = farFarAway;
         int Smoothing => (int)SmoothingUpDown.Value;
 
@@ -480,19 +482,26 @@ namespace VizualizerWPF
 
             facePoint = farFarAway; //changing again to the outer face
 
-            if (graphGenerator.SizeOfGraph != NextDrawingUpDown.Value)
+            if ((bool)savedGraphsChechBox.IsChecked && !savedGraphs)
             {
                 graphGenerator.CloseFile();
+                savedGraphs = true;
+                graphGenerator = new GraphGenerator();
+            }
+
+            else if (
+                (!(bool)savedGraphsChechBox.IsChecked && graphGenerator.SizeOfGraph != NextDrawingUpDown.Value) 
+                || 
+                (savedGraphs && !(bool)savedGraphsChechBox.IsChecked)
+                )
+            {
+                graphGenerator.CloseFile();
+                savedGraphs = false;
                 graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             }
                 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
-
-            if(graphGenerator.counter == 10516)
-            {
-                Console.WriteLine(5);
-            }
 
             mainCanvas.Children.Clear();
             DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
@@ -517,7 +526,7 @@ namespace VizualizerWPF
             }
 
             graphGenerator.CloseFile();
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+            graphGenerator = !(bool)savedGraphsChechBox.IsChecked ? new GraphGenerator((int)NextDrawingUpDown.Value) : new GraphGenerator();
             graphGenerator.counter = tmpCounter;
 
             graphCoordinates = graphGenerator.GeneratePreviousDrawing();
