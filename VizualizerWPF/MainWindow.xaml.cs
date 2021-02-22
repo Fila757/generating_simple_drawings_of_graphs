@@ -1391,7 +1391,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 500;  
+        int divisionConst = 50;  
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
