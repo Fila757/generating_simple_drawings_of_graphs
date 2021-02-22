@@ -78,6 +78,10 @@ namespace VizualizerWPF
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
+
+
+
+
         /// <summary>
         /// Detect intersection of two line segment
         /// </summary>
@@ -97,10 +101,29 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
-            if (denominator != 0 && (s >= -0.001 && s <= 1.001) && (t >= -0.001 && t <= 1.001))
+            if (Math.Abs(denominator) > 0.001 && (s >= -0.001 && s <= 1.001) && (t >= -0.001 && t <= 1.001))
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return new Point { X = -1, Y = -1 };
         }
+
+        public static Point TwoLinesIntersectNotAtTheEnd(Line line1, Line line2)
+        {
+            var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
+
+            var numT = -line1.X1 * (line2.Y2 - line2.Y1) + line1.Y1 * (line2.X2 - line2.X1) +
+                 line2.X1 * (line2.Y2 - line2.Y1) - line2.Y1 * (line2.X2 - line2.X1);
+            var numS = -line1.X1 * (line1.Y2 - line1.Y1) + line1.Y1 * (line1.X2 - line1.X1) +
+                line2.X1 * (line1.Y2 - line1.Y1) - line2.Y1 * (line1.X2 - line1.X1);
+
+
+            var s = numS / denominator;
+            var t = numT / denominator;
+
+            if (Math.Abs(denominator) > 0.001 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
+                return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t }; ;
+            return new Point { X = -1, Y = -1 };
+        }
+
 
         public static bool CheckIfTwoLinesIntersectNotAtTheEnd(Line line1, Line line2)
         {
@@ -115,7 +138,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.01 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
+            if (Math.Abs(denominator) > 0.001 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
                 return true;
             return false;
         }

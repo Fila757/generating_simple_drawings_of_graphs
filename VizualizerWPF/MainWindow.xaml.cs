@@ -97,14 +97,15 @@ namespace VizualizerWPF
 
         public IEnumerable<Line> LinesIterator()
         {
-            foreach(var edge in graphCoordinates.edges)
+            foreach (var edge in graphCoordinates.edges)
             {
-                foreach(var line in edge.lines)
+                foreach (var line in edge.lines)
                 {
                     yield return line;
                 }
             }
-         }
+        }
+
 
         public List<object> PrintingLines()
         {
@@ -162,12 +163,12 @@ namespace VizualizerWPF
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
-            DrawGraph(graphCoordinates, 1);
+            //DrawGraph(graphCoordinates, 1);
 
             //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             //DrawGraph(graphCoordinates, 1, true);
 
-            MakeSmoother();
+            MakeSmootherAndDraw();
 
             //MessageBox.Show("Testing");
 
@@ -195,7 +196,7 @@ namespace VizualizerWPF
             }
         }
 
-        private void MakeSmoother()
+        private void MakeSmootherAndDraw()
         {
             SubDivideEdges(graphCoordinates);
             for (int i = 0; i < Smoothing; i++)
@@ -207,7 +208,7 @@ namespace VizualizerWPF
                 //DrawGraph(graphCoordinates, 1, true);
             }
             MakeAllLinesNotSharp();
-            DrawGraph(graphCoordinates, 1, true);
+            DrawGraph(graphCoordinates, 1);
         }
 
         private int optimalCrossingNumber() {
@@ -426,21 +427,21 @@ namespace VizualizerWPF
             if (!statesCalculation[StateCalculation.Intersections])
             {
                 //textblock.Text = 
-                foreach (var vertex in mainCanvas.Children.OfType<Ellipse>())
+                foreach (var vertex in graphCoordinates.vertices)
                 {
-                    if (FindVertex(vertex).state == VertexState.Intersection)
+                    if (vertex.state == VertexState.Intersection)
                     {
-                        vertex.Visibility = Visibility.Hidden;
+                        vertex.ellipse.Visibility = Visibility.Hidden;
                     }
                 }
             }
             else
             {
-                foreach(var vertex in mainCanvas.Children.OfType<Ellipse>())
+                foreach(var vertex in graphCoordinates.vertices)
                 {
-                    if (FindVertex(vertex).state == VertexState.Intersection)
+                    if (vertex.state == VertexState.Intersection)
                     {
-                        vertex.Visibility = Visibility.Visible;
+                        vertex.ellipse.Visibility = Visibility.Visible;
                         numberOfIntersections++;
                     }
                 }
@@ -492,12 +493,12 @@ namespace VizualizerWPF
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             mainCanvas.Children.Clear();
-            DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
+            //DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
             //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
             //DrawGraph(graphCoordinates, 1, true);
 
-            MakeSmoother();
+            MakeSmootherAndDraw();
            
         }
 
@@ -521,9 +522,9 @@ namespace VizualizerWPF
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             mainCanvas.Children.Clear();
-            DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
+            //DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
-            MakeSmoother();
+            MakeSmootherAndDraw();
 
         }
 
@@ -583,6 +584,58 @@ namespace VizualizerWPF
             var second = FindVertex(edge.points.Last());
 
             return (first, second);
+        }
+
+        private void AddIntersectionsWithLines(List<Line> lines)
+        {
+            HashSet<Vertex> intersections = new HashSet<Vertex>( );
+            foreach (var line in lines)
+            {
+                foreach (var l in mainCanvas.Children.OfType<Line>())
+                {
+                    //if (l == line) continue;
+
+                    var intersection = CollisionDetection.TwoLinesIntersectNotAtTheEnd(line, l);
+                    if (!(intersection.X == -1 && intersection.Y == -1))
+                    {
+                        var ellipse2 = new Ellipse
+                        {
+                            Width = sizeOfVertex,
+                            Height = sizeOfVertex,
+                            Fill = Brushes.Green,
+                            Margin = new Thickness(intersection.X - sizeOfVertex / 2, intersection.Y - sizeOfVertex / 2, 0, 0),
+                            Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
+                        };
+                        ellipse2.MouseDown += ellipse_MouseDown;
+                        Panel.SetZIndex(ellipse2, 10);
+                        //intersections.Add(ellipse2);
+
+                        intersections.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
+
+                        //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
+                    }
+                }
+            }
+
+            foreach (var el in intersections)
+            {
+                bool collision = false;
+                foreach (var vertex in graphCoordinates.vertices)
+                {
+                    if (vertex.state == VertexState.Regular && CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
+                    {
+                        collision = true;
+                        break;
+                    }
+                }
+
+                if (!collision)
+                {
+                    graphCoordinates.vertices.Add(el);
+                    mainCanvas.Children.Add(el.ellipse);
+                }
+            }
+
         }
 
         /// <summary>
@@ -671,54 +724,7 @@ namespace VizualizerWPF
                     selectedVertices.Clear();
                     selectedCanvasPlaces.Clear();
 
-                    List<Vertex> intersections = new List<Vertex>();
-                    foreach (var line in lines)
-                    {
-                        foreach (var l in mainCanvas.Children.OfType<Line>())
-                        {
-                            //if (l == line) continue;
-
-                            var intersection = CollisionDetection.TwoLines(line, l);
-                            if (!(intersection.X == -1 && intersection.Y == -1))
-                            {
-                                var ellipse2 = new Ellipse
-                                {
-                                    Width = sizeOfVertex,
-                                    Height = sizeOfVertex,
-                                    Fill = Brushes.Green,
-                                    Margin = new Thickness(intersection.X - sizeOfVertex / 2, intersection.Y - sizeOfVertex / 2, 0, 0),
-                                    Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
-                                };
-                                ellipse2.MouseDown += ellipse_MouseDown;
-                                Panel.SetZIndex(ellipse2, 10);
-                                //intersections.Add(ellipse2);
-
-                                intersections.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
-
-                                //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
-                            }
-                        }
-                    }
-
-                    foreach (var el in intersections)
-                    {
-                        bool collision = false;
-                        foreach (var vertex in graphCoordinates.vertices)
-                        {
-                            if (vertex.state == VertexState.Regular && CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
-                            {
-                                collision = true;
-                                break;
-                            }
-                        }
-
-                        if (!collision)
-                        {
-                            graphCoordinates.vertices.Add(el);
-                            mainCanvas.Children.Add(el.ellipse);
-                        }
-                    }
-
+                    AddIntersectionsWithLines(lines);
 
                     /* adding after to not make problems with intersecting with others line segments of these new edge */
                     foreach (var line in lines)
@@ -733,7 +739,7 @@ namespace VizualizerWPF
 
                 /* finding edges which intersected */
                 List<Line> intersectedLines = new List<Line>();
-                foreach (var line in mainCanvas.Children.OfType<Line>())
+                foreach (var line in LinesIterator())
                 {
                     if (CollisionDetection.CenterOfEllipseOnLine(line, ellipse)) // colision at the end can be used if it would not work
                         intersectedLines.Add(line);
@@ -762,7 +768,7 @@ namespace VizualizerWPF
                 }
 
                 /* removing vertex */
-                if (ellipse.Fill == Brushes.Blue) //intersection is not in vertices and in neigbours
+                if (ellipse.Fill == Brushes.Blue) //intersection are already deleted
                 {
                     mainCanvas.Children.Remove(ellipse);
                     graphCoordinates.neighbors.Remove(FindVertex(ellipse));
@@ -1385,7 +1391,7 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 50;  
+        int divisionConst = 500;  
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
@@ -1467,7 +1473,7 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="graphCoordinates">Class to store graph</param>
         /// <param name="scale"></param>
-        void DrawGraph(GraphCoordinates graphCoordinates, double scale, bool skipShift = false)
+        void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
 
             mainCanvas.Children.Clear();
@@ -1580,6 +1586,8 @@ namespace VizualizerWPF
 
             }
             graphCoordinates.neighbors = neighborsTemp;
+
+            AddIntersectionsWithLines(LinesIterator().ToList());
 
             ZeroInvariantEdgesValues();
             UpdateStats();

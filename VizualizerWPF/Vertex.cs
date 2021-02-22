@@ -60,27 +60,27 @@ namespace VizualizerWPF
 
         public override int GetHashCode()
         {
-            return center.GetHashCode();
+            return new Point { X = Math.Round(center.X, 5), Y = Math.Round(center.Y, 5) }.GetHashCode();
         }
 
         public override string ToString()
         {
-            return base.ToString();
-        }
-
-        public bool Equals(Vertex x, Vertex y)
-        {
-            return x == y;
-        }
-
-        public int GetHashCode(Vertex obj)
-        {
-            return obj.GetHashCode();
+            return center.ToString();
         }
 
         public bool Equals(Vertex other)
         {
-            return this == other;
+            return Compare(this.center, other.center);
+        }
+
+        public bool Equals(Vertex x,Vertex y)
+        {
+            return Compare(x.center, y.center);
+        }
+
+        public int GetHashCode(Vertex obj)
+        {
+            return new Point { X = Math.Round(obj.center.X, 5), Y = Math.Round(obj.center.Y, 5) }.GetHashCode();
         }
     }
 
