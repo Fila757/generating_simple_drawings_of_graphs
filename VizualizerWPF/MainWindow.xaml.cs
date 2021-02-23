@@ -777,7 +777,6 @@ namespace VizualizerWPF
             }
 
             ZeroInvariantEdgesValues();
-            UpdateStats();
 
             if (stateChanging == StateChanging.Invariant)
             {
@@ -786,6 +785,10 @@ namespace VizualizerWPF
 
                 if(vertex.state == VertexState.Regular)
                     ReCalculateKEdges(vertex);
+            }
+            else
+            {
+                UpdateStats();
             }
 
         }
@@ -862,12 +865,15 @@ namespace VizualizerWPF
             }
 
             ZeroInvariantEdgesValues();
-            UpdateStats();
-
+         
             if (stateChanging == StateChanging.Invariant)
             {
                 var withoutEdge = FindEdge(line);
                 ReCalculateKEdges(null, withoutEdge);
+            }
+            else
+            {
+                UpdateStats();
             }
 
         }
