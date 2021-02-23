@@ -198,7 +198,7 @@ namespace VizualizerWPF
 
         private void MakeSmootherAndDraw()
         {
-            SubDivideEdges(graphCoordinates);
+            //SubDivideEdges(graphCoordinates);
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
@@ -776,18 +776,18 @@ namespace VizualizerWPF
                 }
             }
 
+            ZeroInvariantEdgesValues();
+            UpdateStats();
+
             if (stateChanging == StateChanging.Invariant)
             {
+
                 var vertex = FindVertex(ellipse);
 
                 if(vertex.state == VertexState.Regular)
                     ReCalculateKEdges(vertex);
             }
-            else
-            {
-                ZeroInvariantEdgesValues();
-                UpdateStats();
-            }
+
         }
 
         /// <summary>
@@ -861,16 +861,15 @@ namespace VizualizerWPF
 
             }
 
+            ZeroInvariantEdgesValues();
+            UpdateStats();
+
             if (stateChanging == StateChanging.Invariant)
             {
                 var withoutEdge = FindEdge(line);
                 ReCalculateKEdges(null, withoutEdge);
             }
-            else
-            {
-                ZeroInvariantEdgesValues();
-                UpdateStats();
-            }
+
         }
 
         private double Determinant(Vector a, Vector b)
@@ -944,13 +943,13 @@ namespace VizualizerWPF
                     visited[(vertexWithout, v)] = true;
                     visited[(v, vertexWithout)] = true;
 
-                    var tempEdge = FindEdgeFromVertices(vertexWithout, v);
+                    //var tempEdge = FindEdgeFromVertices(vertexWithout, v);
 
-                    if (tempEdge == null) // it doesnt have to be clique
-                        continue;
+                    //if (tempEdge == null) // it doesnt have to be clique
+                        //continue;
 
-                    foreach(var line in tempEdge.lines)
-                        line.StrokeDashArray = DoubleCollection.Parse("");
+                    //foreach(var line in tempEdge.lines)
+                        //line.StrokeDashArray = DoubleCollection.Parse("");
                 }
             }
 
@@ -1253,6 +1252,12 @@ namespace VizualizerWPF
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
+            if (optimal.Text == "YES")
+            {
+                MessageBox.Show("OPT");
+                stateAutoMoving = StateAutoMoving.None;
+            }
+
             crossings.Text = numberOfIntersections.ToString();
 
             ReCalculateKEdges();

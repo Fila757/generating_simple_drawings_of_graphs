@@ -47,6 +47,9 @@ namespace VizualizerWPF
                     return vertex;
             }
 
+
+            MessageBox.Show("BUG");
+            return new Vertex();
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
