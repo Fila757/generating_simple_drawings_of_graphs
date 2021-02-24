@@ -48,8 +48,8 @@ namespace VizualizerWPF
             }
 
 
-            MessageBox.Show("BUG");
-            return new Vertex();
+            //MessageBox.Show("BUG");
+            //return new Vertex();
             throw new ArgumentException("There is no such a vertex with that center");
         }
 

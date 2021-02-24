@@ -106,6 +106,17 @@ namespace VizualizerWPF
             }
         }
 
+        public IEnumerable<Point> PointsIterator()
+        {
+            foreach (var edge in graphCoordinates.edges)
+            {
+                foreach(var point in edge.points)
+                {
+                    yield return point;
+                }
+            }
+        }
+
 
         public List<object> PrintingLines()
         {
@@ -189,16 +200,31 @@ namespace VizualizerWPF
         {
             foreach(var edge in graphCoordinates.edges)
             {
-                var removed = edge.Shorten(graphCoordinates);
-                foreach (var vertex in removed)
-                    graphCoordinates.vertices.Remove(vertex);
-                
+                edge.Shorten(graphCoordinates);
+                /*
+                 * foreach (var vertex in removed)
+                 *   graphCoordinates.vertices.Remove(vertex);
+                */
             }
+            CreateVerticesFromLines(graphCoordinates);
+        }
+
+        private void CreateVerticesFromLines(GraphCoordinates graphCoordinates)
+        {
+            var allPoints = new HashSet<Point>(PointsIterator());
+            var newVertices = new HashSet<Vertex>();
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                if (allPoints.Contains(vertex.center))
+                    newVertices.Add(vertex);
+            }
+
+            graphCoordinates.vertices = newVertices;
         }
 
         private void MakeSmootherAndDraw()
         {
-            //SubDivideEdges(graphCoordinates);
+            SubDivideEdges(graphCoordinates);
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);

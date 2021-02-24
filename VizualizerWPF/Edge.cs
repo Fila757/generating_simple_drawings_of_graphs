@@ -59,9 +59,9 @@ namespace VizualizerWPF
             }
         }
 
-        public List<Vertex> Shorten(in GraphCoordinates graphCoordinates)
+        public void Shorten(in GraphCoordinates graphCoordinates)
         {
-            var removed = new List<Vertex>();
+            //var removed = new List<Vertex>();
 
             var shortenPoints = new List<Point> { points[0], points[1] };
             for (int i = 2; i < points.Count; i++)
@@ -82,7 +82,7 @@ namespace VizualizerWPF
                             Y2 = points[i].Y
                         }))
                 {
-                    removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
+                    //removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
                     shortenPoints.RemoveAt(shortenPoints.Count - 1);
                 }
 
@@ -92,7 +92,7 @@ namespace VizualizerWPF
             points = shortenPoints;
             CreateLinesFromPoints();
 
-            return removed;
+            //return removed;
         }
     }
 
