@@ -1305,11 +1305,13 @@ namespace VizualizerWPF
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
+            /*
             if (optimal.Text == "YES")
             {
                 MessageBox.Show("OPT");
                 stateAutoMoving = StateAutoMoving.None;
             }
+            */
 
             crossings.Text = numberOfIntersections.ToString();
 
@@ -1645,7 +1647,8 @@ namespace VizualizerWPF
             }
             graphCoordinates.neighbors = neighborsTemp;
 
-            AddIntersectionsWithLines(LinesIterator().ToList());
+            if((bool)savedGraphsChechBox.IsChecked)
+                AddIntersectionsWithLines(LinesIterator().ToList());
 
             ZeroInvariantEdgesValues();
             UpdateStats();
