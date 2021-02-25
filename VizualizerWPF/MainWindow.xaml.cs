@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -486,6 +487,23 @@ namespace VizualizerWPF
             graphCoordinates.SaveCoordinates();
         }
 
+        private void FlushFromBackUpToNormal()
+        {
+            using (var sr = new StreamReader("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphsBackUp.txt"))
+            {
+                using (var sw = new StreamWriter("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphs.txt", append: true))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+                        sw.WriteLine(line);
+                    }
+                }
+            }
+
+            File.WriteAllText("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphsBackUp.txt", string.Empty);
+        }
+
         /// <summary>
         /// Function to generate new drawing of clique from data
         /// If value on UpDown counter is changed then new data file is loaded
@@ -512,6 +530,9 @@ namespace VizualizerWPF
             {
                 graphGenerator.CloseFile();
                 savedGraphs = false;
+
+                FlushFromBackUpToNormal();
+
                 graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             }
                 
