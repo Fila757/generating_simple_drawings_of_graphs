@@ -155,6 +155,8 @@ namespace VizualizerWPF
 
             InitializeComponent();
 
+            FlushFromBackUpToNormal(); // at the beggining get everything I draw last time
+
             //StateChanged += ResizeWindowEvent;
             //SizeChanged += Canvas_Loaded;
             SizeChanged += ResizeWindowEvent;
