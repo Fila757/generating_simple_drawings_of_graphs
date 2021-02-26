@@ -856,8 +856,16 @@ namespace VizualizerWPF
 
                 if (vertex.state == VertexState.Regular)
                 {
-                    ellipse.Fill = Brushes.Purple;
-                    invariantWithRescpectTo.Add(vertex);
+                    if (ellipse.Fill == Brushes.Purple)
+                    {
+                        invariantWithRescpectTo.Remove(vertex);
+                        ellipse.Fill = Brushes.Blue;
+                    }
+                    else
+                    {
+                        invariantWithRescpectTo.Add(vertex);
+                        ellipse.Fill = Brushes.Purple;
+                    }
                     ReCalculateKEdges(invariantWithRescpectTo);
                 }
             }
