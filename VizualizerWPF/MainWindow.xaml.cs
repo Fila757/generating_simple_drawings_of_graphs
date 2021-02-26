@@ -841,7 +841,7 @@ namespace VizualizerWPF
                 var vertex = FindVertex(ellipse);
 
                 if(vertex.state == VertexState.Regular)
-                    ReCalculateKEdges(vertex);
+                    ReCalculateKEdges(new List<Vertex> { vertex });
             }
             else
             {
@@ -995,7 +995,7 @@ namespace VizualizerWPF
         /// 
         int maximalkEdges = 8;
 
-        private void ReCalculateKEdges(Vertex? without = null, Edge withoutEdge = null)
+        private void ReCalculateKEdges(List<Vertex> withouts = null, Edge withoutEdge = null)
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
@@ -1012,21 +1012,23 @@ namespace VizualizerWPF
                 }
             }
 
-            if(without.HasValue)
+            if(withouts != null)
             {
-                var vertexWithout = without.Value;
-                foreach(var v in graphCoordinates.neighbors.Keys)
+                foreach (var vertex in withouts)
                 {
-                    visited[(vertexWithout, v)] = true;
-                    visited[(v, vertexWithout)] = true;
+                    foreach (var v in graphCoordinates.neighbors.Keys)
+                    {
+                        visited[(vertex, v)] = true;
+                        visited[(v, vertex)] = true;
 
-                    //var tempEdge = FindEdgeFromVertices(vertexWithout, v);
+                        //var tempEdge = FindEdgeFromVertices(vertexWithout, v);
 
-                    //if (tempEdge == null) // it doesnt have to be clique
+                        //if (tempEdge == null) // it doesnt have to be clique
                         //continue;
 
-                    //foreach(var line in tempEdge.lines)
+                        //foreach(var line in tempEdge.lines)
                         //line.StrokeDashArray = DoubleCollection.Parse("");
+                    }
                 }
             }
 
@@ -1065,7 +1067,7 @@ namespace VizualizerWPF
                         if (e3 != null){
                             if (third == from || third == to
                                 ||
-                                (without.HasValue && without.Value == third)
+                                (withouts != null && withouts.Contains(third))
                                 ||
                                 (firstEdgeVertex.HasValue
                                 &&
@@ -1110,7 +1112,7 @@ namespace VizualizerWPF
 
                     bool invariant = false;
 
-                    if (without.HasValue || withoutEdge != null)
+                    if (withouts != null || withoutEdge != null)
                     {
                         if (edge.kEdge == sum)
                         {
@@ -1126,7 +1128,7 @@ namespace VizualizerWPF
                     foreach (var line in edge.lines)
                     {
 
-                        if (without.HasValue || withoutEdge != null)
+                        if (withouts != null || withoutEdge != null)
                         {
                             if (invariant)
                                 line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
@@ -1143,7 +1145,7 @@ namespace VizualizerWPF
             }
 
 
-            if (!without.HasValue && withoutEdge == null)
+            if (withouts == null && withoutEdge == null)
             {
                 CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
 
