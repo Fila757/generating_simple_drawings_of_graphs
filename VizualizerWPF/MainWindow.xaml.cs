@@ -616,7 +616,20 @@ namespace VizualizerWPF
                     return vertex;
             }
 
+            //return new Vertex();
             throw new ArgumentException("There is no such a vertex with that center");
+        }
+
+        public Vertex? FindVertexSave(Point center)
+        {
+            foreach (var vertex in graphCoordinates.vertices)
+            {
+                if (Compare(vertex.center, center))
+                    return vertex;
+            }
+
+            return null;
+            
         }
 
         /// <summary>
@@ -805,11 +818,7 @@ namespace VizualizerWPF
                     DeleteEdgeFromDictionary(start, tempEdge);
                     DeleteEdgeFromDictionary(end, tempEdge);
 
-                    foreach (var l in tempEdge.lines)
-                    {
-                        RemoveIntersectionsAndMiddleOnes(l);
-                        mainCanvas.Children.Remove(l);
-                    }
+                    RemoveIntersectionsAndMiddleOnes(tempEdge);
 
                     graphCoordinates.edges.Remove(tempEdge);
                 }
@@ -863,13 +872,13 @@ namespace VizualizerWPF
         /// Function to remove all intersection with <c>line</c> from canvas 
         /// </summary>
         /// <param name="line"></param>
-        private void RemoveIntersectionsAndMiddleOnes(Line line)
+        private void RemoveIntersections(Line line)
         {
             var removedIntersections = new List<Ellipse>();
             foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
             {
                 if (CollisionDetection.LineAndEllipse(line, ellipse)
-                    && (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red))
+                    && (ellipse.Fill == Brushes.Green))
                     removedIntersections.Add(ellipse);
 
             }
@@ -878,6 +887,25 @@ namespace VizualizerWPF
             {
                 mainCanvas.Children.Remove(ellipse);
                 graphCoordinates.vertices.Remove(FindVertex(ellipse));
+            }
+        }
+
+        void RemoveIntersectionsAndMiddleOnes(Edge edge)
+        {
+            foreach (var l in edge.lines)
+            {
+                RemoveIntersections(l); //only intersections, middle ones remove from edge
+                mainCanvas.Children.Remove(l);
+            }
+
+            foreach (var p in edge.points)
+            {
+                var vertexOrNull = FindVertexSave(p);
+                if (vertexOrNull.HasValue && vertexOrNull.Value.state != VertexState.Regular)
+                {
+                    graphCoordinates.vertices.Remove(vertexOrNull.Value);
+                    mainCanvas.Children.Remove(p);
+                }
             }
         }
 
@@ -900,12 +928,7 @@ namespace VizualizerWPF
                 DeleteEdgeFromDictionary(start, tempEdge);
                 DeleteEdgeFromDictionary(end, tempEdge);
 
-                foreach (var l in tempEdge.lines)
-                {
-                    RemoveIntersectionsAndMiddleOnes(l);
-
-                    mainCanvas.Children.Remove(l);
-                }
+                RemoveIntersectionsAndMiddleOnes(tempEdge);
 
                 graphCoordinates.edges.Remove(tempEdge);
 
