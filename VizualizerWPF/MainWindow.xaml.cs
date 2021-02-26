@@ -808,7 +808,6 @@ namespace VizualizerWPF
                 /* removing edges */
                 foreach (var line in intersectedLines)
                 {
-
                     var tempEdge = FindEdge(line);
                     if (tempEdge is null)
                         continue;
@@ -904,7 +903,7 @@ namespace VizualizerWPF
                 if (vertexOrNull.HasValue && vertexOrNull.Value.state != VertexState.Regular)
                 {
                     graphCoordinates.vertices.Remove(vertexOrNull.Value);
-                    mainCanvas.Children.Remove(p);
+                    mainCanvas.Children.Remove(vertexOrNull.Value.ellipse);
                 }
             }
         }
