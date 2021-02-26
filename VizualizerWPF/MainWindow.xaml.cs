@@ -89,6 +89,8 @@ namespace VizualizerWPF
         bool savedGraphs = false;
 
         Point facePoint = farFarAway;
+
+        List<Vertex> invariantWithRescpectTo = new List<Vertex>();
         int Smoothing => (int)SmoothingUpDown.Value;
 
         List<Vertex> selectedVertices = new List<Vertex>();
@@ -421,7 +423,19 @@ namespace VizualizerWPF
             AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFDDDDDD"));
 
             stateChanging = stateChanging == StateChanging.Invariant ? StateChanging.None : StateChanging.Invariant;
+            if (stateChanging != StateChanging.Invariant)
+            {
+                MakeAllVerticesBlue();
+                invariantWithRescpectTo = new List<Vertex>();
+            }
 
+
+        }
+
+        private void MakeAllVerticesBlue()
+        {
+            foreach (var vertex in graphCoordinates.neighbors.Keys)
+                vertex.ellipse.Fill = Brushes.Blue;
         }
 
         private void RefferenceFace_Click(object sender, RoutedEventArgs e)
@@ -840,8 +854,12 @@ namespace VizualizerWPF
 
                 var vertex = FindVertex(ellipse);
 
-                if(vertex.state == VertexState.Regular)
-                    ReCalculateKEdges(new List<Vertex> { vertex });
+                if (vertex.state == VertexState.Regular)
+                {
+                    ellipse.Fill = Brushes.Purple;
+                    invariantWithRescpectTo.Add(vertex);
+                    ReCalculateKEdges(invariantWithRescpectTo);
+                }
             }
             else
             {
