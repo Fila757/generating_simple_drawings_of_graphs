@@ -427,6 +427,7 @@ namespace VizualizerWPF
             {
                 MakeAllVerticesBlue();
                 invariantWithRescpectTo = new List<Vertex>();
+                ZeroInvariantEdgesValues();
             }
 
 
