@@ -1022,6 +1022,8 @@ namespace VizualizerWPF
         /// 
         int maximalkEdges = 8;
 
+        enum Difference { Zero, One, Two };
+
         private void ReCalculateKEdges(List<Vertex> withouts = null, Edge withoutEdge = null)
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
@@ -1137,14 +1139,18 @@ namespace VizualizerWPF
                     //if (edge == null) 
                     //    continue;
 
-                    bool invariant = false;
+                    Difference invariant = Difference.One;
 
                     if (withouts != null || withoutEdge != null)
                     {
                         if (edge.kEdge == sum)
                         {
-                            invariant = true;
+                            invariant = Difference.Zero;
                             invariantKEdges[sum]++;
+                        }
+                        else if(edge.kEdge - sum == 2)
+                        {
+                            invariant = Difference.Two;
                         }
                     }
                     else
@@ -1157,8 +1163,10 @@ namespace VizualizerWPF
 
                         if (withouts != null || withoutEdge != null)
                         {
-                            if (invariant)
+                            if (invariant == Difference.Zero)
                                 line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+                            else if (invariant == Difference.Two)
+                                line.StrokeDashArray = DoubleCollection.Parse("1 1");
                             else
                             {
                                 line.StrokeDashArray = DoubleCollection.Parse("");
@@ -1391,6 +1399,10 @@ namespace VizualizerWPF
 
                 ZeroInvariantEdgesValues();
                 UpdateStats();
+
+
+                if (invariantWithRescpectTo.Count != 0)
+                    ReCalculateKEdges(invariantWithRescpectTo);
             }
 
             if(stateChanging == StateChanging.Adding)
