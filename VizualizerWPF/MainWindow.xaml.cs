@@ -506,9 +506,9 @@ namespace VizualizerWPF
 
         private void FlushFromBackUpToNormal()
         {
-            using (var sr = new StreamReader("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphsBackUp.txt"))
+            using (var sr = new StreamReader(@"../../../data/savedGraphsBackUp.txt"))
             {
-                using (var sw = new StreamWriter("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphs.txt", append: true))
+                using (var sw = new StreamWriter(@"../../../data/savedGraphs.txt", append: true))
                 {
                     while (!sr.EndOfStream)
                     {
@@ -518,7 +518,7 @@ namespace VizualizerWPF
                 }
             }
 
-            File.WriteAllText("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphsBackUp.txt", string.Empty);
+            File.WriteAllText(@"../../../data/savedGraphsBackUp.txt", string.Empty);
         }
 
         /// <summary>
@@ -530,7 +530,10 @@ namespace VizualizerWPF
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
 
-            facePoint = farFarAway; //changing again to the outer face
+            if (!(bool)faceCheckBox.IsChecked)
+            {
+                facePoint = farFarAway; //changing again to the outer face
+            }
 
             if ((bool)savedGraphsChechBox.IsChecked && !savedGraphs)
             {
@@ -569,7 +572,9 @@ namespace VizualizerWPF
         
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
-            facePoint = farFarAway;
+            if(!(bool)faceCheckBox.IsChecked)
+                facePoint = farFarAway;
+
             int tmpCounter = graphGenerator.counter;
 
             if (tmpCounter == 1)

@@ -56,7 +56,7 @@ namespace VizualizerWPF
         public void SaveCoordinates()
         {
             var streamWriter = new StreamWriter(
-                "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphsBackUp.txt",
+                @"../../../data/savedGraphsBackUp.txt",
                 append: true);
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();

@@ -348,6 +348,7 @@
 
 
         </Grid>
-        <CheckBox x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True" RenderTransformOrigin="0.471,0.55"/>
+        <CheckBox x:Name="faceCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="55,0,0,0" Grid.Row="4" VerticalAlignment="Top" IsThreeState="True"/>
+        <CheckBox x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True"/>
     </Grid>
 </Window>
