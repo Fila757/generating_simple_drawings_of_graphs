@@ -139,7 +139,7 @@
             <TextBlock x:Name="infokEdges8" Grid.Column ="8" Grid.Row= "0" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
             <TextBlock x:Name="kEdges8" Grid.Column ="8" Grid.Row= "0" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
-            <TextBlock x:Name="infoAmKEdges" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="cum K-Edges: "/>
+            <TextBlock x:Name="infoAmKEdges" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoamKEdges0" Grid.Column ="0" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="amKEdges0" Grid.Column ="0" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
@@ -168,7 +168,7 @@
             <TextBlock x:Name="infoamKEdges8" Grid.Column ="8" Grid.Row= "1" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
             <TextBlock x:Name="amKEdges8" Grid.Column ="8" Grid.Row= "1" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
-            <TextBlock x:Name="infoAMAMKEdges" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Margin="1, 0, 0, 0" Visibility="Visible" Text="double-cum K-Edges: "/>
+            <TextBlock x:Name="infoAMAMKEdges" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="double-cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoamAmKEdges0" Grid.Column ="0" Grid.Row= "2" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="amAmKEdges0" Grid.Column ="0" Grid.Row= "2" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
@@ -199,7 +199,7 @@
 
 
 
-            <TextBlock x:Name="infoAmAmAmKEdges" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5" Margin="1, 0, 0, 0" Visibility="Visible" Text="triple-cum K-Edges: "/>
+            <TextBlock x:Name="infoAmAmAmKEdges" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="triple-cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoamAmAmKEdges0" Grid.Column ="0" Grid.Row= "3" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="amAmAmKEdges0" Grid.Column ="0" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
@@ -229,7 +229,7 @@
             <TextBlock x:Name="amAmAmKEdges8" Grid.Column ="8" Grid.Row= "3" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
 
-            <TextBlock x:Name="infoTheoremAmAmAmKEdges" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="theorem triple-cum K-Edges: "/>
+            <TextBlock x:Name="infoTheoremAmAmAmKEdges" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="theorem triple-cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoTheoremamAmAmKEdges0" Grid.Column ="0" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="theoremAmAmAmKEdges0" Grid.Column ="0" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
@@ -262,7 +262,7 @@
             <!--Rectangle Grid.Column ="8" Grid.Row= "3"  Margin="0,20,0,20" Visibility="Visible" Stroke="Black"/-->
 
 
-            <TextBlock x:Name="infoInvariantAmKedges" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariant cum K-Edges: "/>
+            <TextBlock x:Name="infoInvariantAmKedges" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariant cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoInvariantAmKedges0" Grid.Column ="0" Grid.Row= "5" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="invariantAmKedges0" Grid.Column ="0" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
@@ -292,7 +292,7 @@
             <TextBlock x:Name="invariantAmKedges8" Grid.Column ="8" Grid.Row= "5" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
 
 
-            <TextBlock x:Name="infoInvariantAmAmKedges" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="6" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariant double-cum K-Edges: "/>
+            <TextBlock x:Name="infoInvariantAmAmKedges" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariant double-cumulated K-Edges: "/>
 
             <TextBlock x:Name="infoInvariantAmAmKedges0" Grid.Column ="0" Grid.Row="6" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="0: " Foreground="Red"/>
             <TextBlock x:Name="invariantAmAmKedges0" Grid.Column ="0" Grid.Row="6" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
