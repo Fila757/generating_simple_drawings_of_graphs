@@ -173,6 +173,8 @@ namespace VizualizerWPF
             CollisionDetection.Init(this);
             ForceDirectedAlgorithms.Init(this);
 
+            InitializeRightValuesOfKedges();
+
 
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
@@ -189,6 +191,42 @@ namespace VizualizerWPF
             //MessageBox.Show("Testing");
 
 
+        }
+
+        private int CombCoeff(int n, int k)
+        {
+            int res = 1;
+            for(int i = 1; i <= k; i++)
+            {
+                res *= (n - (k - i));
+                res /= i;
+            }
+            return res;
+        }
+
+        private void InitializeRightValuesOfKedges()
+        {
+            string atMost = "kEdges";
+            for(int i = 1;i <= 4; i++)
+            {
+                for(int k = 0; k <= 8; k++)
+                {
+                    TextBlock textBlock = FindName($"{atMost}{k}RightValue") as TextBlock;
+                    textBlock.Text = (3 * CombCoeff(k + i, i)).ToString();
+                }
+                switch (i)
+                {
+                    case 1:
+                        atMost = "amKEdges";
+                        break;
+                    case 2:
+                        atMost = "amAmKEdges";
+                        break;
+                    case 3:
+                        atMost = "amAmAmKEdges";
+                        break;
+                }
+            }
         }
 
 
