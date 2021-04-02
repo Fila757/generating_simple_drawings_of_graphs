@@ -130,7 +130,7 @@ namespace VizualizerWPF
 
         public GraphGenerator()
         {
-            streamReader = new StreamReader("C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/savedGraphs.txt");
+            streamReader = new StreamReader(@"../../../data/savedGraphs.txt");
         }
 
 
