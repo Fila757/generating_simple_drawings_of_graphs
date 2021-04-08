@@ -176,6 +176,9 @@ namespace VizualizerWPF
             InitializeRightValuesOfKedges();
 
 
+            //proving claim with testing
+            TryAllDrawings();
+
 
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
@@ -247,11 +250,13 @@ namespace VizualizerWPF
             {
                 graphGenerator = new GraphGenerator(i);
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
+                MakeSmootherAndDraw();
                 TryAllReferenceFaces();
 
                 while (graphCoordinates.vertices.Count() != 0)
                 {
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
+                    MakeSmootherAndDraw();
                     TryAllReferenceFaces();
                 }
             }
