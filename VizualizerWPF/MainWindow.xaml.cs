@@ -221,22 +221,10 @@ namespace VizualizerWPF
                     res *= (minLength / 2);
 
 
-                    try
-                    {
-                        facePoint = vertex.center + res;
-                        TryFace();
-                    }
-                    catch(Exception e)
-                    {
-                        MessageBox.Show("wrong face");
-                        mainCanvas.Children.Add(new Ellipse
-                        {
-                            Width = sizeOfVertex,
-                            Height = sizeOfVertex,
-                            Fill = Brushes.Purple,
-                            Margin = new Thickness((vertex.center + res).X - sizeOfVertex / 2, (vertex.center + res).Y - sizeOfVertex / 2, 0, 0)
-                        };
-                    }
+                
+                facePoint = vertex.center + res;
+                TryFace();
+                   
                 }
                         
             }
@@ -1432,7 +1420,19 @@ namespace VizualizerWPF
                 }
 
                 if (textBlock.Text == "F")
+                {
+                    mainCanvas.Children.Add(new Ellipse
+                    {
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Purple,
+                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+
+                    });
                     MessageBox.Show("HEUREKA WRONG");
+                    //MessageBox.Show("wrong face");
+                   
+                }
             }
  
 
