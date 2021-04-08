@@ -177,6 +177,7 @@ namespace VizualizerWPF
 
 
 
+
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
@@ -219,11 +220,21 @@ namespace VizualizerWPF
                     Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
                     res.Normalize();
                     res *= (minLength / 2);
-
-
                 
-                facePoint = vertex.center + res;
-                TryFace();
+                    facePoint = vertex.center + res;
+
+                    mainCanvas.Children.Add(new Ellipse
+                    {
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Purple,
+                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+
+                    });
+                    MessageBox.Show("Point");
+                    mainCanvas.Children.RemoveAt(mainCanvas.Children.Count() - 1);
+
+                    TryFace();
                    
                 }
                         
