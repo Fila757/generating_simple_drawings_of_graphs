@@ -464,6 +464,14 @@ namespace VizualizerWPF
             return Vertex.Compare(edge.points[0], point) ? edge.points.Last() : edge.points[0];
         }
 
+        public static Line ChooseTheLineBy(Vertex v, Edge e)
+        {
+            Line l = Vertex.Compare(e.points[0], v.center) ? e.lines[0] : e.lines.Last();
+            if (Vertex.Compare(new Point(l.X1, l.Y1), v.center))
+                return l;
+            return new Line { X1 = l.X2, Y1 = l.Y2, X2 = l.X1, Y2 = l.Y1 }; //swapping the orientation
+        }
+
         public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)
         {
             var result = new List<Line>();

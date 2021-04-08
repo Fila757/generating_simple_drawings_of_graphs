@@ -193,6 +193,20 @@ namespace VizualizerWPF
 
         }
 
+      
+
+        private void TryAllReferenceFaces()
+        {
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                List<Line> firstLines = new List<Line>();
+                foreach (var edge in graphCoordinates.neighbors[vertex]) {
+                    firstLines.Add(CollisionDetection.ChooseTheLineBy(vertex, edge));
+                }
+                        
+            }
+        }
+
         private int CombCoeff(int n, int k)
         {
             int res = 1;
