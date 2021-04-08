@@ -230,6 +230,22 @@ namespace VizualizerWPF
             }
         }
 
+        private void TryAllDrawings()
+        {
+            for (int i = (int)NextDrawingUpDown.MinValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
+            {
+                graphGenerator = new GraphGenerator(i);
+                graphCoordinates = graphGenerator.GenerateNextDrawing();
+                TryAllReferenceFaces();
+
+                while (graphCoordinates.vertices.Count() != 0)
+                {
+                    graphCoordinates = graphGenerator.GenerateNextDrawing();
+                    TryAllReferenceFaces();
+                }
+            }
+        }
+
         private int CombCoeff(int n, int k)
         {
             int res = 1;

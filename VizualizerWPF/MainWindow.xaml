@@ -45,7 +45,7 @@
         <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
         <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="PreviousDrawing_Click"/>
         <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
-                           MaxValue="7" MinValue="3" RenderTransformOrigin="0.5,0.471"/>
+                           MaxValue="7" MinValue="4" RenderTransformOrigin="0.5,0.471"/>
 
         <!--Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/-->
 
