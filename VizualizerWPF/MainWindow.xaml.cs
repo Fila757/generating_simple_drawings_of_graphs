@@ -193,15 +193,50 @@ namespace VizualizerWPF
 
         }
 
-      
+        private int CompareLinesByAngle(Vector v1, Vector v2)
+        {
+            return Determinant(v1, v2) > 0 ? 1 : -1;
+        }
+
+        private void TryFace()
+        {
+            ReCalculateKEdges();
+        }
 
         private void TryAllReferenceFaces()
         {
             foreach(var vertex in graphCoordinates.vertices)
             {
-                List<Line> firstLines = new List<Line>();
+                List<Vector> firstLines = new List<Vector>();
                 foreach (var edge in graphCoordinates.neighbors[vertex]) {
-                    firstLines.Add(CollisionDetection.ChooseTheLineBy(vertex, edge));
+                    var l = CollisionDetection.ChooseTheLineBy(vertex, edge);
+                    firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
+                }
+                firstLines.Sort(delegate (Vector l1, Vector l2) { return CompareLinesByAngle(l1, l2);});
+                for(int i = 0; i < firstLines.Count; i++)
+                {
+                    double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
+                    Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
+                    res.Normalize();
+                    res *= (minLength / 2);
+
+
+                    try
+                    {
+                        facePoint = vertex.center + res;
+                        TryFace();
+                    }
+                    catch(Exception e)
+                    {
+                        MessageBox.Show("wrong face");
+                        mainCanvas.Children.Add(new Ellipse
+                        {
+                            Width = sizeOfVertex,
+                            Height = sizeOfVertex,
+                            Fill = Brushes.Purple,
+                            Margin = new Thickness((vertex.center + res).X - sizeOfVertex / 2, (vertex.center + res).Y - sizeOfVertex / 2, 0, 0)
+                        };
+                    }
                 }
                         
             }
