@@ -32,6 +32,8 @@ namespace VizualizerWPF
         /// </summary>
         static MainWindow window;
 
+        static bool debug = false;
+
         public static void Init(MainWindow window)
         {
             CollisionDetection.window = window;
@@ -50,7 +52,7 @@ namespace VizualizerWPF
 
             var denominator = (line2.Y2 - line2.Y1) * (line1.X2 - line1.X1) - (line2.X2 - line2.X1) * (line1.Y2 - line1.Y1);
 
-            if (Math.Abs(denominator) < 0.0001)
+            if (Math.Abs(denominator) < 0.00001)
             {
 
                 if (Math.Abs(GetLineWithCoefficients(line1).c - GetLineWithCoefficients(line2).c) < 0.00001)
@@ -69,12 +71,28 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             
-            if((t >= -0.0001 && t <= 0.0001) || (t >= 0.9999 && t <= 1.0001))
+            if((t >= -0.00001 && t <= 0.00001) || (t >= 0.99999 && t <= 1.00001))
             {
                 throw new ArgumentException("Intersects point");
             }
 
-            if(t >= -0.0001 && t <= 1.0001) //line1 is just segments so we need to check limits of s
+            /*
+            if (debug)
+            {
+                window.mainCanvas.Children.Add(new Ellipse
+                {
+                    Width = window.sizeOfVertex,
+                    Height = window.sizeOfVertex,
+                    Fill = Brushes.Lime,
+                    Margin = new Thickness(
+                        new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t }.X - window.sizeOfVertex / 2,
+                        new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t }.Y - window.sizeOfVertex / 2, 0, 0)
+
+                });
+            }
+            */
+
+            if (t >= -0.00001 && t <= 1.00001) //line1 is just segments so we need to check limits of s
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return null;
         }
@@ -101,7 +119,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
             //MessageBox.Show(denominator.ToString() + " " +  numT.ToString() + " " + numS.ToString());
-            if (Math.Abs(denominator) > 0.001 && (s >= -0.001 && s <= 1.001) && (t >= -0.001 && t <= 1.001))
+            if (Math.Abs(denominator) > 0.00001 && (s >= -0.00001 && s <= 1.00001) && (t >= -0.00001 && t <= 1.00001))
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t };
             return new Point { X = -1, Y = -1 };
         }
@@ -119,7 +137,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.001 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
+            if (Math.Abs(denominator) > 0.00001 && (s >= 0.00001 && s <= 1 - 0.00001) && (t >= 0.00001 && t <= 1 - 0.00001)) //1% from ends are not considered
                 return new Point { X = line1.X1 + (line1.X2 - line1.X1) * t, Y = line1.Y1 + (line1.Y2 - line1.Y1) * t }; ;
             return new Point { X = -1, Y = -1 };
         }
@@ -138,7 +156,7 @@ namespace VizualizerWPF
             var s = numS / denominator;
             var t = numT / denominator;
 
-            if (Math.Abs(denominator) > 0.001 && (s >= 0.01 && s <= 1 - 0.01) && (t >= 0.01 && t <= 1 - 0.01)) //1% from ends are not considered
+            if (Math.Abs(denominator) > 0.00001 && (s >= 0.00001 && s <= 1 - 0.00001) && (t >= 0.00001 && t <= 1 - 0.00001)) //1% from ends are not considered
                 return true;
             return false;
         }
@@ -398,7 +416,8 @@ namespace VizualizerWPF
                 {
                     int numberOfIntersections = 0;
 
-                    foreach (var l in lines)
+                    var allLines = new List<Line>(lines); allLines.Add(line);
+                    foreach (var l in allLines)
                     {
 
                         var intersectionOrNull = LineAndHalfLine(l, halfLine);
@@ -406,6 +425,7 @@ namespace VizualizerWPF
                         if (intersectionOrNull.HasValue)
                         {
                             Point intersection = intersectionOrNull.Value;
+
                             if (halfLine.border.a * intersection.X + halfLine.border.b * intersection.Y + halfLine.border.c > 0)
                                 numberOfIntersections++;
                         }

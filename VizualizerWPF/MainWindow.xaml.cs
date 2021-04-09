@@ -134,6 +134,16 @@ namespace VizualizerWPF
             return lines;
         }
 
+        public List<object> PrintingLines(List<Line> listLines)
+        {
+            List<object> lines = new List<object>();
+            foreach (var line in listLines)
+            {
+                lines.Add(new { line.X1, line.Y1, line.X2, line.Y2 });
+            }
+            return lines;
+        }
+
         public List<object> PrintingVertices()
         {
             List<object> vertices = new List<object>();
@@ -177,7 +187,7 @@ namespace VizualizerWPF
 
 
             //proving claim with testing
-            //TryAllDrawings();
+            TryAllDrawings();
 
 
 
@@ -198,7 +208,8 @@ namespace VizualizerWPF
 
         private int CompareLinesByAngle(Vector v1, Vector v2)
         {
-            return Determinant(v1, v2) > 0 ? 1 : -1;
+            var basicVector = new Vector(10, 0);
+            return Vector.AngleBetween(v1, basicVector) > Vector.AngleBetween(v2, basicVector) ? 1 : -1;
         }
 
         private void TryFace()
@@ -216,6 +227,24 @@ namespace VizualizerWPF
                     firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
                 }
                 firstLines.Sort(delegate (Vector l1, Vector l2) { return CompareLinesByAngle(l1, l2);});
+
+                /*
+                foreach(var v in firstLines)
+                {
+                    mainCanvas.Children.Add(new Ellipse
+                    {
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Red,
+                        Margin = new Thickness((v + vertex.center).X - sizeOfVertex / 2, (v + vertex.center).Y - sizeOfVertex / 2, 0, 0)
+
+                    });
+                    TryFace();
+
+                    MessageBox.Show("Sorted");
+                }
+                */
+
                 for(int i = 0; i < firstLines.Count; i++)
                 {
                     double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
@@ -230,7 +259,7 @@ namespace VizualizerWPF
                 
                     facePoint = vertex.center + res;
 
-                    
+                    /*
                     mainCanvas.Children.Add(new Ellipse
                     {
                         Width = sizeOfVertex,
@@ -238,17 +267,16 @@ namespace VizualizerWPF
                         Fill = Brushes.Purple,
                         Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
 
-                    });
-
-                    MessageBox.Show("Point");
-                    
+                    });*/
                     //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
                     
 
                     TryFace();
-                   
+
+                    //MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
+
                 }
-                        
+
             }
         }
 
@@ -687,7 +715,7 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
-            TryAllReferenceFaces();
+            //TryAllReferenceFaces();
 
         }
 
