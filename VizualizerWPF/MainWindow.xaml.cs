@@ -177,7 +177,7 @@ namespace VizualizerWPF
 
 
             //proving claim with testing
-            TryAllDrawings();
+            //TryAllDrawings();
 
 
 
@@ -191,7 +191,6 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
-
             //MessageBox.Show("Testing");
 
 
@@ -209,7 +208,7 @@ namespace VizualizerWPF
 
         private void TryAllReferenceFaces()
         {
-            foreach(var vertex in graphCoordinates.vertices)
+            foreach(var vertex in graphCoordinates.neighbors.Keys)
             {
                 List<Vector> firstLines = new List<Vector>();
                 foreach (var edge in graphCoordinates.neighbors[vertex]) {
@@ -223,9 +222,15 @@ namespace VizualizerWPF
                     Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
                     res.Normalize();
                     res *= (minLength / 2);
+
+                    if (Determinant(firstLines[i], firstLines[(i + 1) % firstLines.Count]) > 0)
+                    {
+                        res *= -1;res.Normalize();res *= 10;
+                    }
                 
                     facePoint = vertex.center + res;
 
+                    
                     mainCanvas.Children.Add(new Ellipse
                     {
                         Width = sizeOfVertex,
@@ -234,8 +239,11 @@ namespace VizualizerWPF
                         Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
 
                     });
+
                     MessageBox.Show("Point");
-                    mainCanvas.Children.RemoveAt(mainCanvas.Children.Count() - 1);
+                    
+                    //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
+                    
 
                     TryFace();
                    
@@ -246,19 +254,25 @@ namespace VizualizerWPF
 
         private void TryAllDrawings()
         {
+            
             for (int i = (int)NextDrawingUpDown.MinValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
             {
+                int counter = 0;
+                //Console.WriteLine(counter++);
                 graphGenerator = new GraphGenerator(i);
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
                 MakeSmootherAndDraw();
                 TryAllReferenceFaces();
 
-                while (graphCoordinates.vertices.Count() != 0)
+                while (graphCoordinates.vertices.Count != 0)
                 {
+                    Console.WriteLine(counter++);
+                    //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
                     MakeSmootherAndDraw();
                     TryAllReferenceFaces();
                 }
+                
             }
         }
 
@@ -673,7 +687,8 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
-           
+            TryAllReferenceFaces();
+
         }
 
         
@@ -780,7 +795,7 @@ namespace VizualizerWPF
             HashSet<Vertex> intersections = new HashSet<Vertex>( );
             foreach (var line in lines)
             {
-                foreach (var l in mainCanvas.Children.OfType<Line>())
+                foreach (var l in LinesIterator())
                 {
                     //if (l == line) continue;
 
@@ -1103,9 +1118,9 @@ namespace VizualizerWPF
         {
             foreach(var edge in graphCoordinates.edges)
             {
-                if ((CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], a.ellipse) || CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), a.ellipse)) 
+                if ((CollisionDetection.CenterOfVertexOnLine(edge.lines[0], a) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), a)) 
                     &&
-                    (CollisionDetection.CenterOfEllipseOnLine(edge.lines[0], b.ellipse) || CollisionDetection.CenterOfEllipseOnLine(edge.lines.Last(), b.ellipse)))
+                    (CollisionDetection.CenterOfVertexOnLine(edge.lines[0], b) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), b)))
                 {
                     return edge;
                 }
@@ -1113,6 +1128,7 @@ namespace VizualizerWPF
 
             return null; // so such edge
         }
+
 
         bool CheckIfEdgeIsInTriangle(Vertex from, Vertex to, Vertex third, Vertex firstEdgeVertex, Vertex secondEdgeVertex)
         {
