@@ -225,16 +225,22 @@ namespace VizualizerWPF
             }
         }
 
-        private IEnumerable<Edge> GetEdges(Vertex vertex)
+        private IEnumerable<Line> GetLines(Vertex vertex)
         {
            
             if(vertex.state == VertexState.Regular)
             {
-                return graphCoordinates.neighbors[vertex];
+                foreach(var edge in graphCoordinates.neighbors[vertex])
+                {
+                    yield return CollisionDetection.ChooseTheLineBy(vertex, edge); //choose the line by the vertex v (of this edge)
+                }
             }
             else if(vertex.state == VertexState.Intersection)
             {
-                return CollisionDetection.GetEdges(vertex, graphCoordinates);
+                foreach(var line in CollisionDetection.GetEdges(vertex, graphCoordinates))
+                {
+                    yield return CollisionDetection.OrientLineProperly(vertex, line); //orient the edge if the intersection is on the opposite side of the line
+                }
             }
             throw new ArgumentException("Vertex must be regualr or intersection.");
             
@@ -245,8 +251,7 @@ namespace VizualizerWPF
             foreach(var vertex in GetVerticesAndIntersections())
             {
                 List<Vector> firstLines = new List<Vector>();
-                foreach (var edge in GetEdges(vertex)) {
-                    var l = CollisionDetection.ChooseTheLineBy(vertex, edge);
+                foreach (var l in GetLines(vertex)) {
                     firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
                 }
                 firstLines.Sort(delegate (Vector l1, Vector l2) { return CompareLinesByAngle(l1, l2);});
