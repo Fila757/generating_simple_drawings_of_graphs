@@ -187,8 +187,7 @@ namespace VizualizerWPF
 
 
             //proving claim with testing
-            TryAllDrawings();
-
+            //TryAllDrawings();
 
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
@@ -266,7 +265,7 @@ namespace VizualizerWPF
                 
                     facePoint = vertex.center + res;
 
-                    /*
+                    
                     mainCanvas.Children.Add(new Ellipse
                     {
                         Width = sizeOfVertex,
@@ -274,13 +273,13 @@ namespace VizualizerWPF
                         Fill = Brushes.Purple,
                         Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
 
-                    });*/
+                    });
                     //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
                     
 
                     TryFace();
 
-                    //MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
+                    MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
 
                 }
 
@@ -722,7 +721,7 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
-            //TryAllReferenceFaces();
+            TryAllReferenceFaces();
 
         }
 

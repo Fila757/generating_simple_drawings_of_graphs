@@ -512,6 +512,14 @@ namespace VizualizerWPF
             return new Line { X1 = l.X2, Y1 = l.Y2, X2 = l.X1, Y2 = l.Y1 }; //swapping the orientation
         }
 
+        public static Line OrientLineProperly(Vertex v, Line l)
+        {
+            if (Vertex.Compare(new Point(l.X1, l.Y1), v.center))
+                return l;
+            return new Line { X1 = l.X2, Y1 = l.Y2, X2 = l.X1, Y2 = l.Y1 }; //swapping the orientation
+        }
+        
+
         public static (Line, List<Line>) PutLinesTogether(Edge e1, Edge e2, Edge e3)
         {
             var result = new List<Line>();
@@ -528,7 +536,7 @@ namespace VizualizerWPF
             return (e1.lines[0], result);
         }
 
-        public static IEnumerable<Edge> GetEdges(Vertex v, GraphCoordinates graphCoordinates)
+        public static IEnumerable<Line> GetEdges(Vertex v, GraphCoordinates graphCoordinates)
         {
             foreach(var edge in graphCoordinates.edges)
             {
@@ -536,8 +544,7 @@ namespace VizualizerWPF
                 {
                     if(CenterOfVertexOnLine(line, v))
                     {
-                        yield return edge;
-                        break;
+                        yield return line;
                     }
                 }
             }
