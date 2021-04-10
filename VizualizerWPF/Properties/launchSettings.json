@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VizualizerWPF": {
+      "commandName": "Project",
+      "commandLineArgs": "> debug.txt"
+    }
+  }
+}

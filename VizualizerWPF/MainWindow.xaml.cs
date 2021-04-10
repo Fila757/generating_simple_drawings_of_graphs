@@ -187,7 +187,7 @@ namespace VizualizerWPF
 
 
             //proving claim with testing
-            //TryAllDrawings();
+            TryAllDrawings();
 
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
@@ -273,21 +273,21 @@ namespace VizualizerWPF
                 
                     facePoint = vertex.center + res;
 
-                    
-                    mainCanvas.Children.Add(new Ellipse
-                    {
-                        Width = sizeOfVertex,
-                        Height = sizeOfVertex,
-                        Fill = Brushes.Purple,
-                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
-
-                    });
-                    //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
-                    
-
                     TryFace();
 
-                    MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
+                    /*
+                   mainCanvas.Children.Add(new Ellipse
+                   {
+                       Width = sizeOfVertex,
+                       Height = sizeOfVertex,
+                       Fill = Brushes.Purple,
+                       Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+
+                   });
+                   //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
+                   */
+
+                    //MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
 
                 }
 
@@ -300,10 +300,10 @@ namespace VizualizerWPF
             for (int i = (int)NextDrawingUpDown.MinValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
             {
                 int counter = 0;
-                //Console.WriteLine(counter++);
+                Console.WriteLine(counter++);
                 graphGenerator = new GraphGenerator(i);
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
-                MakeSmootherAndDraw();
+                //MakeSmootherAndDraw();
                 TryAllReferenceFaces();
 
                 while (graphCoordinates.vertices.Count != 0)
@@ -311,7 +311,7 @@ namespace VizualizerWPF
                     Console.WriteLine(counter++);
                     //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    MakeSmootherAndDraw();
+                    //MakeSmootherAndDraw();
                     TryAllReferenceFaces();
                 }
                 
