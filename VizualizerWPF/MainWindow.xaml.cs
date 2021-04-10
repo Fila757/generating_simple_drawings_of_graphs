@@ -226,12 +226,27 @@ namespace VizualizerWPF
             }
         }
 
+        private IEnumerable<Edge> GetEdges(Vertex vertex)
+        {
+           
+            if(vertex.state == VertexState.Regular)
+            {
+                return graphCoordinates.neighbors[vertex];
+            }
+            else if(vertex.state == VertexState.Intersection)
+            {
+                return CollisionDetection.GetEdges(vertex, graphCoordinates);
+            }
+            throw new ArgumentException("Vertex must be regualr or intersection.");
+            
+        }
+
         private void TryAllReferenceFaces()
         {
             foreach(var vertex in GetVerticesAndIntersections())
             {
                 List<Vector> firstLines = new List<Vector>();
-                foreach (var edge in graphCoordinates.neighbors[vertex]) {
+                foreach (var edge in GetEdges(vertex)) {
                     var l = CollisionDetection.ChooseTheLineBy(vertex, edge);
                     firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
                 }

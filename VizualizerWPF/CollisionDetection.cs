@@ -42,7 +42,7 @@ namespace VizualizerWPF
         /// <summary>
         /// Error
         /// </summary>
-        static double epsilon = 0.1;
+        static double epsilon = 0.00001;
 
 
 
@@ -526,6 +526,21 @@ namespace VizualizerWPF
                 result.Add(line);
 
             return (e1.lines[0], result);
+        }
+
+        public static IEnumerable<Edge> GetEdges(Vertex v, GraphCoordinates graphCoordinates)
+        {
+            foreach(var edge in graphCoordinates.edges)
+            {
+                foreach(var line in edge.lines)
+                {
+                    if(CenterOfVertexOnLine(line, v))
+                    {
+                        yield return edge;
+                        break;
+                    }
+                }
+            }
         }
 
     }
