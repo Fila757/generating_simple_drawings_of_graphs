@@ -234,6 +234,7 @@ namespace VizualizerWPF
                 {
                     yield return CollisionDetection.ChooseTheLineBy(vertex, edge); //choose the line by the vertex v (of this edge)
                 }
+                yield break;
             }
             else if(vertex.state == VertexState.Intersection)
             {
@@ -241,8 +242,10 @@ namespace VizualizerWPF
                 {
                     yield return CollisionDetection.OrientLineProperly(vertex, line); //orient the edge if the intersection is on the opposite side of the line
                 }
+                yield break;
             }
-            throw new ArgumentException("Vertex must be regualr or intersection.");
+         
+            throw new ArgumentException("Vertex must be regular or intersection.");
             
         }
 
