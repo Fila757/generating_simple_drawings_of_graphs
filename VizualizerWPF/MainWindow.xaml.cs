@@ -217,9 +217,18 @@ namespace VizualizerWPF
             ReCalculateKEdges();
         }
 
+        private IEnumerable<Vertex> GetVerticesAndIntersections()
+        {
+            foreach(var vertex in graphCoordinates.vertices)
+            {
+                if (vertex.state == VertexState.Regular || vertex.state == VertexState.Intersection)
+                    yield return vertex;
+            }
+        }
+
         private void TryAllReferenceFaces()
         {
-            foreach(var vertex in graphCoordinates.neighbors.Keys)
+            foreach(var vertex in GetVerticesAndIntersections())
             {
                 List<Vector> firstLines = new List<Vector>();
                 foreach (var edge in graphCoordinates.neighbors[vertex]) {
@@ -228,29 +237,12 @@ namespace VizualizerWPF
                 }
                 firstLines.Sort(delegate (Vector l1, Vector l2) { return CompareLinesByAngle(l1, l2);});
 
-                /*
-                foreach(var v in firstLines)
-                {
-                    mainCanvas.Children.Add(new Ellipse
-                    {
-                        Width = sizeOfVertex,
-                        Height = sizeOfVertex,
-                        Fill = Brushes.Red,
-                        Margin = new Thickness((v + vertex.center).X - sizeOfVertex / 2, (v + vertex.center).Y - sizeOfVertex / 2, 0, 0)
-
-                    });
-                    TryFace();
-
-                    MessageBox.Show("Sorted");
-                }
-                */
-
                 for(int i = 0; i < firstLines.Count; i++)
                 {
                     double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
                     Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
                     res.Normalize();
-                    res *= (minLength / 2);
+                    res *= (minLength / 4);
 
                     if (Determinant(firstLines[i], firstLines[(i + 1) % firstLines.Count]) > 0)
                     {
