@@ -186,9 +186,6 @@ namespace VizualizerWPF
             InitializeRightValuesOfKedges();
 
 
-            //proving claim with testing
-            TryAllDrawings();
-
 
             graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
@@ -261,6 +258,10 @@ namespace VizualizerWPF
 
                 for(int i = 0; i < firstLines.Count; i++)
                 {
+
+                    if (firstLines[i] / firstLines[i].Length == -firstLines[(i + 1) % firstLines.Count] / firstLines[(i + 1) % firstLines.Count].Length) //when there are opposite ones, the res can be NaN after normalizarion, because res can be zero in that case and we do not care, because there is another vertex on this face (angle 180 can be considered as this vertex is not on the face)
+                        continue;
+
                     double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
                     Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
                     res.Normalize();
@@ -271,9 +272,32 @@ namespace VizualizerWPF
                         res *= -1;res.Normalize();res *= 10;
                     }
                 
+                  
                     facePoint = vertex.center + res;
 
                     TryFace();
+
+                    /*
+                    Console.WriteLine($"{facePoint.X} {facePoint.Y}");
+                    if (Double.IsNaN(facePoint.X))
+                    {
+                        Console.WriteLine($"{facePoint.X} {facePoint.Y}");
+                        MessageBox.Show($"{facePoint.X} {facePoint.Y}");
+                        
+                        MessageBox.Show("drawn");
+                    }
+
+                    //debug
+                    mainCanvas.Children.Add(new Ellipse
+                    {
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Purple,
+                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+
+                    });
+                    */
+
 
                     /*
                    mainCanvas.Children.Add(new Ellipse
@@ -287,7 +311,6 @@ namespace VizualizerWPF
                    //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
                    */
 
-                    //MessageBox.Show($"{firstLines[i].X} {firstLines[i].Y}, {firstLines[(i + 1) % firstLines.Count].X} {firstLines[(i + 1) % firstLines.Count].Y}");
 
                 }
 
@@ -303,7 +326,7 @@ namespace VizualizerWPF
                 Console.WriteLine(counter++);
                 graphGenerator = new GraphGenerator(i);
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
-                //MakeSmootherAndDraw();
+                //DrawGraph(graphCoordinates, 1);
                 TryAllReferenceFaces();
 
                 while (graphCoordinates.vertices.Count != 0)
@@ -311,7 +334,7 @@ namespace VizualizerWPF
                     Console.WriteLine(counter++);
                     //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    //MakeSmootherAndDraw();
+                    DrawGraph(graphCoordinates, 1);
                     TryAllReferenceFaces();
                 }
                 
@@ -693,6 +716,9 @@ namespace VizualizerWPF
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
 
+            //proving claim with testing
+            TryAllDrawings();
+
             if (!(bool)faceCheckBox.IsChecked)
             {
                 facePoint = farFarAway; //changing again to the outer face
@@ -729,6 +755,7 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
+            //DrawGraph(graphCoordinates, 1);
             TryAllReferenceFaces();
 
         }
