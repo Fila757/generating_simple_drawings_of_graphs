@@ -334,7 +334,7 @@ namespace VizualizerWPF
                     Console.WriteLine(counter++);
                     //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    DrawGraph(graphCoordinates, 1);
+                    //DrawGraph(graphCoordinates, 1);
                     TryAllReferenceFaces();
                 }
                 
@@ -716,7 +716,7 @@ namespace VizualizerWPF
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
 
-            //proving claim with testing
+            //proving claim for all faces with testing
             TryAllDrawings();
 
             if (!(bool)faceCheckBox.IsChecked)
