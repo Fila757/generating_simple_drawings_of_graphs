@@ -461,6 +461,23 @@ inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> ve
 
 }
 
+inline double get_value(int a, int b, int c, pair<double, double> point) {
+	return a * point.x + b * point.y + c;
+}
+
+inline bool is_on_right_side_of(pair<double, double> asked_point, pair<double, double> point, pair<double, double> vect, pair<double, double> on_right_side) {
+	pair<double, double> first_point = point;
+	pair<double, double> second_point = point + vect;
+
+	double a = first_point.y - second_point.y;
+	double b = second_point.x - first_point.x;
+	double c = (first_point.x - second_point.x) * first_point.y + (second_point.y - first_point.y) * first_point.x;
+
+	if (get_value(a, b, c, asked_point) * get_value(a, b, c, on_right_side) > 0)
+		return true;
+	return false;
+}
+
 
 inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b,
 	shared_ptr<Face> face, int a_index, int b_index,
