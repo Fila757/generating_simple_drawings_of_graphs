@@ -461,18 +461,16 @@ inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> ve
 
 }
 
-inline double get_value(int a, int b, int c, pair<double, double> point) {
-	return a * point.x + b * point.y + c;
+inline double get_value(int a, int b, int c, shared_ptr<Vertex> point) {
+	return a * point->x_ + b * point->y_ + c;
 }
 
-inline bool is_on_right_side_of(pair<double, double> asked_point, pair<double, double> point, pair<double, double> vect, pair<double, double> on_right_side) {
-	pair<double, double> first_point = point;
-	pair<double, double> second_point = point + vect;
-
-	double a = first_point.y - second_point.y;
-	double b = second_point.x - first_point.x;
-	double c = (first_point.x - second_point.x) * first_point.y + (second_point.y - first_point.y) * first_point.x;
-
+inline bool is_on_right_side_of(shared_ptr<Vertex>asked_point, shared_ptr<Vertex> point, pair<double, double> vect, shared_ptr<Vertex> on_right_side) {
+	
+	double a = vect.x;
+	double b = vect.y;
+	double c = -(a * point->x_ + b * point->y_);
+	
 	if (get_value(a, b, c, asked_point) * get_value(a, b, c, on_right_side) > 0)
 		return true;
 	return false;
@@ -532,7 +530,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 			}
 		}
 
-		rotate(faces_vertices.begin(), faces_vertices.begin() + mn_index, faces_vertices.end());
+		std::rotate(faces_vertices.begin(), faces_vertices.begin() + mn_index, faces_vertices.end());
 
 		//if (*start->vertices_[0] == Vertex(0, 0))
 		//	rotate(faces_vertices.begin(), faces_vertices.begin() + 1, faces_vertices.end());
@@ -595,7 +593,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				}
 			}
 
-			rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
+			std::rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
 
 
 			for (int i = 0; i < outer_vertices.size(); i++) {
@@ -800,28 +798,17 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		next_vertex->x_ = b->x_ + shift_next.x;//(second_outer_face_bool ? shift_next.x : -shift_next.x);
 		next_vertex->y_ = b->y_ + shift_next.y;//(second_outer_face_bool ? shift_next.y : -shift_next.y);
-		
-		mn = INF; mn_index = -1;
+
 		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
-			if (abs(INF - distances[1][0]) > 1) {
-				mn = distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(a->x_, a->y_)); // coordinates_of_special_vertices[b_index - 1]
-				mn_index = 0;
+			if (!is_on_right_side_of(a, b, shift_next, next_vertex)) {
+				distances[1][0] = INF;
+				distances[0][1] = INF;
 			}
 			for (int i = 2; i < distances.size(); i++) {
-				if (abs(INF - distances[1][i]) > 1 && mn > distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) { // coordinates_of_special_vertices[b_index - 1]
-					mn_index = i;
-					mn = distance(make_pair(next_vertex->x_, next_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
+				if (!is_on_right_side_of(mids[i - 2], b, shift_next, next_vertex)) { // coordinates_of_special_vertices[b_index - 1]
+					distances[1][i] = INF;
+					distances[i][1] = INF;
 				}
-			}
-		}
-
-
-		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
-			distances[1][0] = 0 == mn_index ? distances[1][0] : INF;
-			distances[0][1] = 0 == mn_index ? distances[0][1] : INF;
-			for (int i = 2; i < distances.size(); i++) {
-				distances[1][i] = i == mn_index ? distances[1][i] : INF;
-				distances[i][1] = i == mn_index ? distances[i][1] : INF;
 			}
 		}
 
@@ -832,27 +819,16 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		previous_vertex->x_ = a->x_ + shift_previous.x;//(second_outer_face_bool ? shift_previous.x : -shift_previous.x);
 		previous_vertex->y_ = a->y_ + shift_previous.y;//(second_outer_face_bool ? shift_previous.y : -shift_previous.y);
 
-		mn = INF; mn_index = -1;
 		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
-			if (abs(INF - distances[0][1]) > 1) {
-				mn = distance(make_pair(previous_vertex->x_, previous_vertex->y_), make_pair(b->x_, b->y_)); // coordinates_of_special_vertices[b_index - 1]
-				mn_index = 1;
+			if (!is_on_right_side_of(b, a, shift_previous, previous_vertex)) {
+				distances[0][1] = INF;
+				distances[1][0] = INF;
 			}
 			for (int i = 2; i < distances.size(); i++) {
-				if (abs(INF - distances[0][i]) > 1 && mn > distance(make_pair(previous_vertex->x_, previous_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_))) { // coordinates_of_special_vertices[b_index - 1]
-					mn_index = i;
-					mn = distance(make_pair(previous_vertex->x_, previous_vertex->y_), make_pair(mids[i - 2]->x_, mids[i - 2]->y_));// b -1 because origin is not in coordinates of special vertices
+				if (!is_on_right_side_of(mids[i-2], a, shift_previous, previous_vertex)) {
+					distances[0][i] = INF;
+					distances[i][0] = INF;
 				}
-			}
-		}
-
-
-		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
-			distances[0][1] = 1 == mn_index ? distances[0][1] : INF;
-			distances[1][0] = 1 == mn_index ? distances[1][0] : INF;
-			for (int i = 2; i < distances.size(); i++) {
-				distances[0][i] = i == mn_index ? distances[0][i] : INF;
-				distances[i][0] = i == mn_index ? distances[i][0] : INF;
 			}
 		}
 
@@ -1411,11 +1387,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 130) {//146) { // 143
+	if (counter == 0) {//146) { // 143
 		cout << "HEU" << endl;
-		//print_bool = true;
+		print_bool = true;
 	}
-	if (counter == 3173) { //3183
+	if (counter == 11) { //3183
 		cout << "HEU2" << endl;
 	}
 	counter++;
