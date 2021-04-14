@@ -181,9 +181,8 @@ struct graph {
 			}
 		}
 
-
 		auto output_path = "../VizualizerWPF/data/graph"
-			+ to_string(n) + "_0" + to_string(index) + ".txt";
+			+ to_string(n) + ".txt";
 		output_file.open(output_path);
 	}
 
@@ -721,6 +720,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		for (int i = 0; i < indices.size(); i += 3){ 
 			
 			vector<int> triangle_indices;
+			bool contains_a = false;
+			bool contains_b = false;
 
 			for (int j = 0; j < 3; j++) {
 				auto vertex = make_shared<Vertex>((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
@@ -748,13 +749,18 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					}
 
 					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(a->x_, a->y_)) < 1){
-						distances[0][triangle_indices.back() + 2] = distance(a, vertex);
-						distances[triangle_indices.back() + 2][0] = distance(vertex, a);
+
+						contains_a = true;
+						//distances[0][triangle_indices.back() + 2] = distance(a, vertex);
+						//distances[triangle_indices.back() + 2][0] = distance(vertex, a);
 					}
 
 					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(b->x_, b->y_)) < 1){
-						distances[1][triangle_indices.back() + 2] = distance(b, vertex);
-						distances[triangle_indices.back() + 2][1] = distance(vertex, b);
+						
+						contains_b = true;
+						
+						//distances[1][triangle_indices.back() + 2] = distance(b, vertex);
+						//distances[triangle_indices.back() + 2][1] = distance(vertex, b);
 					}
 				}	
 			}
@@ -763,6 +769,17 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				for(int v = u + 1;v < triangle_indices.size();v++){
 					distances[triangle_indices[u]+2][triangle_indices[v]+2] = distance(mids[triangle_indices[u]], mids[triangle_indices[v]]);
 					distances[triangle_indices[v]+2][triangle_indices[u]+2] = distance(mids[triangle_indices[v]], mids[triangle_indices[u]]);
+				}
+			}
+
+			for (int u = 0; u < triangle_indices.size(); u++) {
+				if (contains_a) {
+					distances[triangle_indices[u] + 2][0] = distance(mids[triangle_indices[u]], a);
+					distances[0][triangle_indices[u] + 2] = distance(a, mids[triangle_indices[u]]);
+				}
+				if(contains_b) {
+					distances[triangle_indices[u] + 2][1] = distance(mids[triangle_indices[u]], b);
+					distances[1][triangle_indices[u] + 2] = distance(b, mids[triangle_indices[u]]);
 				}
 			}
 
@@ -777,8 +794,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					&&
 					((b->x_ == coords[indices[i + ((j + 1) % 3)]].x) && (b->y_ == coords[indices[i + ((j + 1) % 3)]].y))
 					) {
-					distances[0][1] = distance(a, b);
-					distances[1][0] = distance(b, a);
+					distances[0][1] = distance(a, b) - EPSILON; //substracting epsilon in order to choose a -- b instead of a -- mid -- b which is also possible
+					distances[1][0] = distance(b, a) - EPSILON;
 				}
 			}
 		}
@@ -790,8 +807,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					&&
 					((a->x_ == coords[indices[i + ((j + 1) % 3)]].x) && (a->y_ == coords[indices[i + ((j + 1) % 3)]].y))
 					) {
-					distances[0][1] = distance(a, b);
-					distances[1][0] = distance(b, a);
+					distances[0][1] = distance(a, b) - EPSILON;
+					distances[1][0] = distance(b, a) - EPSILON;
 				}
 			}
 		}
@@ -1326,7 +1343,7 @@ struct fingerprints {
 	fingerprints(int n, int index) {
 	
 		auto input_path = "data/graph" 
-			+ to_string(n) + "_0" + to_string(index) + ".txt";
+			+ to_string(n) + ".txt";
 		input_file.open(input_path);
 
 		
@@ -1353,11 +1370,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 218) {//146) { // 143
+	if (counter == 329) {//146) { // 143
 		cout << "HEU" << endl;
-		//print_bool = true;
+		print_bool = true;
 	}
-	if (counter == 217) { //3183
+	if (counter == 1355) { //3183
 		cout << "HEU2" << endl;
 	}
 	counter++;
@@ -1421,16 +1438,14 @@ inline void graph::create_all_possible_drawings() {
 		//cout << counter << endl;
 		
 		
-		//if (counter < 215) {
-		//	done = true;
-		//}
+		if (counter < 330) {
+			done = true;
+		}
 		
 
-		//else {
-
-		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
-		
-		//}
+		else {
+			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		}
 
 		if (done) {
 			cout << "yes" << endl;

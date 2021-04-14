@@ -433,7 +433,7 @@ namespace VizualizerWPF
                 
                 //DrawGraph(graphCoordinates, 1, true);
             }
-            MakeAllLinesNotSharp();
+            //MakeAllLinesNotSharp();
             DrawGraph(graphCoordinates, 1);
         }
 
