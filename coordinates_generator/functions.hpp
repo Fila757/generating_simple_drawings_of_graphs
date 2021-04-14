@@ -16,10 +16,10 @@
 #include <queue>
 #include <unordered_set>
 
-
 #include <boost/geometry.hpp>
 #include <boost/geometry/geometries/polygon.hpp>
 #include <boost/geometry/geometries/adapted/boost_tuple.hpp>
+#include <boost/geometry/algorithms/assign.hpp>
 
 BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 
@@ -150,11 +150,15 @@ struct graph {
 
 	vector<pair<double, double> > coordinates_of_special_vertices;
 
+	int index;
+
 	void close_files() {
 		output_file.close();
 	}
 
-	graph(int n) {
+	graph(int n, int ii) {
+		index = ii;
+
 		number_of_vertices = n;
 		outer_face = make_shared<Face>();
 
@@ -178,8 +182,8 @@ struct graph {
 		}
 
 
-		auto output_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/VizualizerWPF/data/graph"
-			+ to_string(n) + ".txt";
+		auto output_path = "../VizualizerWPF/data/graph"
+			+ to_string(n) + "_0" + to_string(index) + ".txt";
 		output_file.open(output_path);
 	}
 
@@ -367,11 +371,15 @@ inline vector<pair<double, double> > create_circle(double radius, double cx, dou
 }
 
 inline double distance(pair<double, double> a) {
-	return (a.x ) * (a.x) + (a.y) * (a.y );
+	return sqrt((a.x ) * (a.x) + (a.y) * (a.y ));
 }
 
 inline double distance(pair<double, double> a, pair<double, double> b) {
-	return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+	return sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+}
+
+inline double distance(shared_ptr<Vertex> a, shared_ptr<Vertex> b) {
+	return sqrt((a->x_ - b->x_) * (a->x_ - b->x_) + (a->y_ - b->y_) * (a->y_ - b->y_));
 }
 
 
@@ -381,6 +389,18 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 
 	polygon poly;
 
+	
+	vector<point> points;
+	
+	for(int i = 0; i < vertices.size();i++){
+		points.push_back(
+			boost::make_tuple<double, double>(vertices[i].x, vertices[i].y));
+	}
+
+	boost::geometry::assign_points(poly, points);
+	
+	/*
+	
 	string poly_string = "polygon((";
 	for (int i = 0; i < vertices.size();i++) {
 		poly_string += to_string(vertices[i].x);
@@ -392,6 +412,8 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 	}
 	poly_string += "))";
 	boost::geometry::read_wkt(poly_string, poly);
+	*/
+	
 
 	polygon hull;
 	boost::geometry::convex_hull(poly, hull);
@@ -457,14 +479,14 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> vertex, pair<double, double> vect) {
 
 	auto shift = get_shift(vertex, vect);
-	return make_pair(100 * (shift.x / sqrt(distance(shift))), 100 * ((shift.y / sqrt(distance(shift)))));
+	return make_pair(100 * (shift.x / distance(shift)), 100 * ((shift.y / distance(shift))));
 
 }
+
 
 inline double get_value(int a, int b, int c, shared_ptr<Vertex> point) {
 	return a * point->x_ + b * point->y_ + c;
 }
-
 inline bool is_on_right_side_of(shared_ptr<Vertex>asked_point, shared_ptr<Vertex> point, pair<double, double> vect, shared_ptr<Vertex> on_right_side) {
 	
 	double a = vect.x;
@@ -476,6 +498,24 @@ inline bool is_on_right_side_of(shared_ptr<Vertex>asked_point, shared_ptr<Vertex
 	return false;
 }
 
+
+
+/*
+inline bool check_if_its_line_between_inner_and_outer_part(int size, int index1, int index2) {
+	vector<pair<int, int> > indices_between{ make_pair(0, size - 5), make_pair(0, size - 1), make_pair(size - 6, size - 5), make_pair(size - 6, size - 1) };
+
+	if (index1 > index2)
+		swap(index1, index2);
+		
+	pair<int, int> indices = make_pair(index1, index2);
+
+	for (int i = 0; i < indices_between.size(); i++) {
+		if (indices_between[i] == indices)
+			return true;
+	}
+	return false;
+}
+*/
 
 inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b,
 	shared_ptr<Face> face, int a_index, int b_index,
@@ -530,7 +570,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 			}
 		}
 
-		std::rotate(faces_vertices.begin(), faces_vertices.begin() + mn_index, faces_vertices.end());
+		rotate(faces_vertices.begin(), faces_vertices.begin() + mn_index, faces_vertices.end());
 
 		//if (*start->vertices_[0] == Vertex(0, 0))
 		//	rotate(faces_vertices.begin(), faces_vertices.begin() + 1, faces_vertices.end());
@@ -569,6 +609,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					local_most_away[j] = true;
 				}
 			}
+
 		}
 
 		for (int j = 0; j < most_away.size(); j++) {
@@ -593,7 +634,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				}
 			}
 
-			std::rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
+			rotate(outer_vertices.begin(), outer_vertices.begin() + index_min, outer_vertices.end());
 
 
 			for (int i = 0; i < outer_vertices.size(); i++) {
@@ -608,45 +649,42 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		vector<vector<pair<double, double> > > polygon{ indices_coords };
 
 		std::vector<int> indices = mapbox::earcut<int>(polygon);
+		
+
+		// rename duplicate vertices if neededs
+		if (second_outer_face_bool) {
+			int size = coords.size();
+			for (int i = 0; i < indices.size(); i++) {
+				indices[i] = indices[i] == size - 5 ? size - 1 : indices[i];
+				indices[i] = indices[i] == size - 6 ? 0 : indices[i];
+			}
+		}
 
 		set<pair<double, double> > visited_vertices;
 
-		if (counter >= 11443) {
-			cout << "BLEEE2" << endl;
-		}
-
-		//duplicits
-		vector<vector<vector<int> > > pair_indices;
-		pair_indices.resize(coords.size());
-		for (int i = 0; i < pair_indices.size(); i++)
-			pair_indices[i].resize(pair_indices.size());
-
 		auto mids = vector<shared_ptr<Vertex> >();
-		for (int i = 0; i < indices.size(); i += 3) {
+		for (int i = 0; i < indices.size(); i += 3){
+
 			for (int j = 0; j < 3; j++) {
 				auto vertex = make_shared<Vertex>((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
 				if (!visited_vertices.count(make_pair(vertex->x_, vertex->y_)) //should be first one there
 					&&
-					((second_outer_face_bool && (
-						(indices[i + j] == coords.size() - 1 && indices[i + ((j + 1) % 3)] == coords.size() - 2) // line going from inner to upper boundary
-						||
-						(indices[i + j] == coords.size() - 2 && indices[i + ((j + 1) % 3)] == coords.size() - 1))) 
-						||
-						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)) //no one on boundary, except the one one the outer face going from inner to outer boundary
+					!(second_outer_face_bool && 
+						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == 0) 
+							&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 7)))
 					&&
-					((second_outer_face_bool && (
-						(indices[i + j] == 0 && indices[i + ((j + 1) % 3)] == coords.size() - 2) //considering also 0 as possible number of "zero" vertex
-						||
-						(indices[i + j] == coords.size() - 2 && indices[i + ((j + 1) % 3)] == 0)))
-						||
+					!(second_outer_face_bool &&
+						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 4)
+						&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 1)))
+					&&
+					((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
+						&& 
 						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != coords.size() - 2))
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
-				}
-				pair_indices[std::min(indices[i + j], indices[i + ((j + 1) % 3)])]
-					[max(indices[i + j], indices[i + ((j + 1) % 3)])].push_back(indices[i + ((j + 2) % 3)]);
+				}	
 			}
 		}
 
@@ -654,29 +692,6 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		all_vertices.push_back(b);
 		all_vertices.insert(all_vertices.end(), mids.begin(), mids.end());
 
-		/*
-		int a_index_coords = -1;
-		int b_index_coords = -1;
-
-		for (int i = 0; i < indices.size();i += 3) {
-			for (int j = 0; j < 3;j++) {
-				if (a->x_ == coords[indices[i + j]].x && a->y_ == coords[indices[i + j]].y) {
-					a_index_coords = indices[i + j];
-					break;
-				}
-			}
-		}
-
-
-		for (int i = 0; i < indices.size();i += 3) {
-			for (int j = 0; j < 3;j++) {
-				if (b->x_ == coords[indices[i + j]].x && b->y_ == coords[indices[i + j]].y) {
-					b_index_coords = indices[i + j];
-					break;
-				}
-			}
-		}
-		*/
 
 		vector<vector<double> > distances;
 		distances.resize(all_vertices.size());
@@ -686,6 +701,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 			}
 		}
 
+		/*
 		vector<vector<double> > real_distances;
 		real_distances.resize(all_vertices.size());
 		for (int i = 0; i < all_vertices.size(); i++) {
@@ -693,74 +709,65 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		}
 
 		create_coordinates(all_vertices, real_distances);
+		*/
 
-		for (int i = 0; i < indices.size(); i += 3) {
-			//vector<pair<double, double> > one_triangle;
+		//visited_vertices.clear();
+
+		auto cmp = [](pair<pair<double, double>, int> a, pair<pair<double, double>, int> b) {return a.first < b.first; };
+		set<pair<pair<double, double>, int>, decltype(cmp)> visited_vertices2(cmp);
+
+		int mid_index = 0;
+
+		for (int i = 0; i < indices.size(); i += 3){ 
+			
+			vector<int> triangle_indices;
+
 			for (int j = 0; j < 3; j++) {
-
-				auto temp_pair = make_pair((coords[indices[i + ((j + 1) % 3)]].x + coords[indices[i + ((j + 2) % 3)]].x) / 2,
-					(coords[indices[i + ((j + 1) % 3)]].y + coords[indices[i + ((j + 2) % 3)]].y) / 2);
-				auto temp_it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_pair.first, temp_pair.second); });
-
-				if (temp_it == mids.end())
-					continue;
-
-				auto temp_index = temp_it - mids.begin();
-
-				if (distance(coords[indices[i + j]], make_pair(a->x_, a->y_)) < 1) {
-					distances[0][temp_index + 2] = real_distances[0][temp_index + 2];
-					distances[temp_index + 2][0] = real_distances[temp_index + 2][0];
-				}
-
-
-				if (distance(coords[indices[i + j]], make_pair(b->x_, b->y_)) < 1) {
-					distances[1][temp_index + 2] = real_distances[1][temp_index + 2];
-					distances[temp_index + 2][1] = real_distances[temp_index + 2][1];
-				}
-
-				auto temp_coords = make_pair((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
+				auto vertex = make_shared<Vertex>((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,
 					(coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);
+				if (!(second_outer_face_bool &&
+						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == 0)
+							&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 7)))
+					&&
+					!(second_outer_face_bool &&
+						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 4)
+							&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 1)))
+					&&
+					((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
+						&&
+						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != coords.size() - 2))
+					) {
 
-				auto temp_index_it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords.first, temp_coords.second); });
-				int index = temp_index_it - mids.begin();
+					if (visited_vertices2.count(make_pair(make_pair(vertex->x_, vertex->y_), -1))) {
+						triangle_indices.push_back(visited_vertices2.find(make_pair(make_pair(vertex->x_, vertex->y_), -1))->second);
+					}
+					else {
+						visited_vertices2.insert(make_pair(make_pair(vertex->x_, vertex->y_), mid_index));
+						triangle_indices.push_back(mid_index);
+						mid_index++;
+					}
 
-				if (temp_index_it == mids.end())
-					continue;
+					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(a->x_, a->y_)) < 1){
+						distances[0][triangle_indices.back() + 2] = distance(a, vertex);
+						distances[triangle_indices.back() + 2][0] = distance(vertex, a);
+					}
 
-				auto triangles = pair_indices[std::min(indices[i + j], indices[i + ((j + 1) % 3)])]
-					[max(indices[i + j], indices[i + ((j + 1) % 3)])];
-
-				for (int k = 0; k < triangles.size(); k++) {
-					auto temp_coords1 = make_pair((coords[triangles[k]].x + coords[indices[i + j]].x) / 2,
-						(coords[triangles[k]].y + coords[indices[i + j]].y) / 2);
-					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second); });
-
-					if (it == mids.end())
-						continue;
-
-					auto index_second = it - mids.begin();
-
-					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
-					distances[index_second + 2][index + 2] = real_distances[index_second + 2][index + 2];
-
-				}
-
-				for (int k = 0; k < triangles.size(); k++) {
-					auto temp_coords1 = make_pair((coords[triangles[k]].x + coords[indices[i + (j + 1) % 3]].x) / 2,
-						(coords[triangles[k]].y + coords[indices[i + (j + 1) % 3]].y) / 2);
-					auto it = find_if(mids.begin(), mids.end(), [&](shared_ptr<Vertex> const& t) {return *t == Vertex(temp_coords1.first, temp_coords1.second); });
-
-					if (it == mids.end())
-						continue;
-
-					auto index_second = it - mids.begin();
-
-					distances[index + 2][index_second + 2] = real_distances[index + 2][index_second + 2];
-					distances[index_second + 2][index + 2] = real_distances[index_second + 2][index + 2];
-				}
-
+					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(b->x_, b->y_)) < 1){
+						distances[1][triangle_indices.back() + 2] = distance(b, vertex);
+						distances[triangle_indices.back() + 2][1] = distance(vertex, b);
+					}
+				}	
 			}
+
+			for(int u = 0;u < triangle_indices.size();u++){
+				for(int v = u + 1;v < triangle_indices.size();v++){
+					distances[triangle_indices[u]+2][triangle_indices[v]+2] = distance(mids[triangle_indices[u]], mids[triangle_indices[v]]);
+					distances[triangle_indices[v]+2][triangle_indices[u]+2] = distance(mids[triangle_indices[v]], mids[triangle_indices[u]]);
+				}
+			}
+
 		}
+
 
 		/*finding if points can be connected with line*/
 
@@ -770,8 +777,8 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					&&
 					((b->x_ == coords[indices[i + ((j + 1) % 3)]].x) && (b->y_ == coords[indices[i + ((j + 1) % 3)]].y))
 					) {
-					distances[0][1] = real_distances[0][1];
-					distances[1][0] = real_distances[1][0];
+					distances[0][1] = distance(a, b);
+					distances[1][0] = distance(b, a);
 				}
 			}
 		}
@@ -783,22 +790,18 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 					&&
 					((a->x_ == coords[indices[i + ((j + 1) % 3)]].x) && (a->y_ == coords[indices[i + ((j + 1) % 3)]].y))
 					) {
-					distances[0][1] = real_distances[0][1];
-					distances[1][0] = real_distances[1][0];
+					distances[0][1] = distance(a, b);
+					distances[1][0] = distance(b, a);
 				}
 			}
 		}
 
-		if (counter >= 11443) {
-			cout << "BLEEE2" << endl;
-		}
-
 		/*choosing the most in the one direction one*/
+		
 		auto next_vertex = make_shared<Vertex>();
 
 		next_vertex->x_ = b->x_ + shift_next.x;//(second_outer_face_bool ? shift_next.x : -shift_next.x);
 		next_vertex->y_ = b->y_ + shift_next.y;//(second_outer_face_bool ? shift_next.y : -shift_next.y);
-
 		if (b->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			if (!is_on_right_side_of(a, b, shift_next, next_vertex)) {
 				distances[1][0] = INF;
@@ -811,14 +814,11 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				}
 			}
 		}
-
 		// a also wants right direction
 
 		auto previous_vertex = make_shared<Vertex>();
-
 		previous_vertex->x_ = a->x_ + shift_previous.x;//(second_outer_face_bool ? shift_previous.x : -shift_previous.x);
 		previous_vertex->y_ = a->y_ + shift_previous.y;//(second_outer_face_bool ? shift_previous.y : -shift_previous.y);
-
 		if (a->index_ == -1) { // (b->shift_epsilon.x != 0 || b->shift_epsilon.y != 0) instead of b->index_ == -1
 			if (!is_on_right_side_of(b, a, shift_previous, previous_vertex)) {
 				distances[0][1] = INF;
@@ -843,21 +843,16 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		vertices = temp_uniques;
 
 		/*resolve knots */
-	
 		
 		for (int i = 3; i < vertices.size(); i++) {
 			if (if_two_segmetns_intersects(make_pair(vertices[i - 3], vertices[i - 2]), make_pair(vertices[i - 1], vertices[i])))
 				swap(vertices[i - 2], vertices[i - 1]);
 		}
-		
-
-		if (vertices.size() == 0) {
-			cout << "WTF20" << endl;
-		}
 
 		return vertices;
 
 		//print_graph(this);
+		
 
 	}
 	else {
@@ -878,9 +873,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	fromb = tob->next_;
 	
 	auto vertices = find_path_through_triangulation(a, b, face, a_index, b_index, shift_previous, shift_next, outer_face_bool);
-
-	if (vertices.size() == 0)
-		cout << "WTF3" << endl;
 
 	for (int i = 1; i < vertices.size() - 1; i++) {
 		vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
@@ -954,10 +946,6 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	b_half.push_back(new_vertex);
 	rotate(b_half.rbegin(), b_half.rbegin() + 1, b_half.rend());
 
-	if (a_half.size() == 0 || b_half.size() == 0) {
-		cout << "WHY" << endl;
-	}
-
 	return new_vertex;
 }
 
@@ -969,9 +957,6 @@ inline void graph::add_vertex(Edge* edge) {
 	vector<shared_ptr<Vertex> > b_half;
 
 	tearup_lines_in_half(edge, a_half, b_half);
-
-	if (a_half.size() == 0 || b_half.size() == 0)
-		cout << "WTF2" << endl;
 
 	edges.push_back(Edge(edge->next_, edge, opposite, b_half, edge->face_, edge->index_)); //new vertex to b, part of normal edge
 	auto tob = &edges.back();
@@ -1185,26 +1170,6 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (seg == segments[t_index]) {
 
-			//if (realized == 0) {
-				//print_bool = true;
-				//write_coordinates();
-			//}
-
-			/*
-			auto vertices = find_path_through_triangulation(
-				segments[s_index]->vertices_[0],
-				segments[t_index]->vertices_[0],
-				segments[s_index]->face_,
-				a,
-				b,
-				make_shared<Vertex>(coordinates_of_special_vertices[b - 1].x, coordinates_of_special_vertices[b - 1].y)
-			);
-
-			redirect_previous_segment(a, b, vertices[vertices.size() - 2]); //segments[t_index]->vertices_[0]
-			*/
-			if (counter >= 11443) {
-				cout << "Blee" << endl;
-			}
 			auto shift_previous = find_vertex_in_right_direction(segments[s_index]->vertices_[0],
 				make_pair(segments[segments.size() - 3]->vertices_[1]->x_ - segments[segments.size() - 3]->vertices_[0]->x_, 
 					segments[segments.size() - 3]->vertices_[1]->y_ - segments[segments.size() - 3]->vertices_[0]->y_
@@ -1358,11 +1323,12 @@ struct fingerprints {
 
 	ifstream input_file;
 
-	fingerprints(int n) {
+	fingerprints(int n, int index) {
 	
-		auto input_path = "C:/Users/filip/source/repos/generating-simple-drawings-of-graphs/drawing_of_cliques/data/graph"
-			+ to_string(n) + ".txt";
+		auto input_path = "data/graph" 
+			+ to_string(n) + "_0" + to_string(index) + ".txt";
 		input_file.open(input_path);
+
 		
 		if (!getline(input_file, rotation_system))
 			done = true;
@@ -1387,11 +1353,11 @@ struct fingerprints {
 
 inline void graph::write_coordinates() {
 
-	if (counter == 0) {//146) { // 143
+	if (counter == 218) {//146) { // 143
 		cout << "HEU" << endl;
 		//print_bool = true;
 	}
-	if (counter == 11) { //3183
+	if (counter == 217) { //3183
 		cout << "HEU2" << endl;
 	}
 	counter++;
@@ -1413,9 +1379,6 @@ inline void graph::write_coordinates() {
 			for (int k = 0; k < drawing_edges[i][j].size();k++) {
 				output_file << "( ";
 				for (int l = 0; l < drawing_edges[i][j][k].vertices_.size();l++) {
-					if (drawing_edges[i][j][k].vertices_[0]->x_ == drawing_edges[i][j][k].vertices_[1]->x_ && drawing_edges[i][j][k].vertices_[0]->y_ == drawing_edges[i][j][k].vertices_[1]->y_) {
-						cout << "same" << endl;
-					}
 					output_file
 						<< drawing_edges[i][j][k].vertices_[l]->x_ << " "
 						<< drawing_edges[i][j][k].vertices_[l]->y_ << " ";
@@ -1445,7 +1408,7 @@ inline void graph::create_all_possible_drawings() {
 		}
 	}
 
-	auto generator_of_fingerprints = fingerprints(number_of_vertices);
+	auto generator_of_fingerprints = fingerprints(number_of_vertices, index);
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		
@@ -1458,7 +1421,7 @@ inline void graph::create_all_possible_drawings() {
 		//cout << counter << endl;
 		
 		
-		//if (counter < 130) {
+		//if (counter < 215) {
 		//	done = true;
 		//}
 		

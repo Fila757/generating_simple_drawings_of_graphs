@@ -3,118 +3,41 @@
 
 #include <iostream>
 #include "functions.hpp"
+#include <thread>
 
 using namespace std;
 
 int main()
 {
-    auto g = graph(4);
+    int n = 8;
 
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340423014301240321") << endl;
+    cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401240123") << endl;
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013401420132") << endl;
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340234013404120312") << endl;
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340234014301240132") << endl;
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340243013401420312") << endl;
-    //cout << "minimal: " << g.find_canonic_fingerprint("12340342014302410321") << endl;
+    int number_of_threads = 10;
 
-    /*
-    vector<vector<double> >distances{ 
-        {0, 1.4142, 2, 1.4142},
-        {1.4142, 0, 1.4142, 2},
-        {2, 1.4142, 0, 1.4142},
-        {1.4142, 2, 1.4142, 0}
-    };
-
-    vector<shared_ptr<Vertex> > points{ make_shared<Vertex>(1, 0), make_shared<Vertex>(0, 1), make_shared<Vertex>(-1, 0), make_shared<Vertex>(0, -1) };
-    vector<int> parents; parents.resize(4);
-
-    for (int i = 0; i < distances.size();i++) {
-        for (int j = 0; j < distances[i].size();j++) {
-            cout << distances[i][j] << " ";
-        }
-        cout << endl;
-    }
-
-    create_coordinates(points, distances);
+    vector<graph> graphs;
+   // shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();
+     
+    system(("split --numeric-suffixes=1 --additional-suffix=.txt -l" +to_string( 5370725 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n) + ".txt data/graph" + to_string(n) + "_").data());
     
-    for (int i = 0; i < distances.size();i++) {
-        for (int j = 0; j < distances[i].size();j++) {
-            cout << distances[i][j] << " ";
-        }
-        cout << endl;
+    for(int i = 0; i < number_of_threads - 1;i++){
+    	graphs.push_back(graph(n, i+1));
     }
-
-    dijsktra(points, distances, parents);
-    */
-
-    g.create_all_possible_drawings();
+    cout << "graphs created" << endl;
     
-    // testing relabeling because we have found 6 realizable RS written 
-
-    //string basic_string = "01234";
-
-    // with three intersectiona are not izomorfic
-
-    // with 5 intersection 1 and 3 no, 1 and 2 no, 2 and 3 no
-
-    /*
-    do {
-        set<string> first_set = { "0213", "0214", "0314", "1423", "0423"};
-        set<string> second_set = { "0213", "0214", "1324", "0413", "0423" };
-
-        if (basic_string == "21043") {
-            cout << basic_string << endl;
-        }
-
-        //cout << first_set.size() << endl;
-        //cout << basic_string << endl;
-        set<string> tmp;
-        for (auto it = first_set.begin(); it != first_set.end();it++) {
-            string elem = *it;
-            for (int i = 0; i < elem.size();i++) {
-                elem[i] = basic_string[elem[i] - '0'];
-            }
-
-            string f = elem.substr(0, 2);
-            string s = elem.substr(2, 2);
-
-            f = find_lexical_min_rotation(f);
-            s = find_lexical_min_rotation(s);
-
-            if (f > s) swap(f, s);
-            tmp.insert(f + s);
-        }
-
-        first_set = tmp;
-        tmp.clear();
-
-        bool bad = false;
-
-        
-        cout << "second set" << endl;
-        for (auto it = second_set.begin(); it != second_set.end();it++) {
-            cout << *it << " ";
-        }
-        cout << endl;
-        
-        for (auto it = first_set.begin(); it != first_set.end();it++) {
-            cout << *it << endl;
-            if (!second_set.count(*it)) {
-                bad = true;
-                break;
-            }
-        }
-
-        if (!bad) {
-            cout << "HEEEEEEEEUREEKA" << endl;
-            cout << basic_string << endl;
-            break;
-        }
-
-    } while (next_permutation(basic_string.begin(), basic_string.end()));
-    */
-    //print_graph(&g);
+    vector<thread> threads;
+    for(int i = 0; i < number_of_threads - 1;i++){
+    	threads.push_back(thread(&graph::create_all_possible_drawings, &graphs[i]));
+    }
+    
+    cout << "after run" << endl;
+    for(int i = 0; i < number_of_threads - 1;i++)
+       threads[i].join();
+    
+    system(("cat ../VizualizerWPF/data/graph" + to_string(n) + "_* > ../VizualizerWPF/data/graph" + to_string(n) + ".txt").data());
+                                                                         
+    system("rm data/*_*");
+    system("rm ../VizualizerWPF/data/*_*");
+     
 }
 
