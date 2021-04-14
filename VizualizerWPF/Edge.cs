@@ -69,8 +69,8 @@ namespace VizualizerWPF
                 while(
                     shortenPoints.Count - 2 >= 0
                     &&
-                    IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
-                    &&
+                    //IsSharp(shortenPoints[shortenPoints.Count - 2], shortenPoints[shortenPoints.Count - 1], points[i])
+                    //&&
                     graphCoordinates.FindVertex(shortenPoints[shortenPoints.Count - 1]).state == VertexState.Middle
                     &&
                     !CollisionDetection.IntersectsSomeLine(

@@ -394,15 +394,19 @@ namespace VizualizerWPF
 
         private void MakeAllLinesNotSharp()
         {
-            foreach(var edge in graphCoordinates.edges)
+            for (int i = 0; i < 2; i++)
             {
-                edge.Shorten(graphCoordinates);
-                /*
-                 * foreach (var vertex in removed)
-                 *   graphCoordinates.vertices.Remove(vertex);
-                */
+                foreach (var edge in graphCoordinates.edges)
+                {
+                    edge.Shorten(graphCoordinates);
+                    /*
+                     * foreach (var vertex in removed)
+                     *   graphCoordinates.vertices.Remove(vertex);
+                    */
+                }
+                CreateVerticesFromLines(graphCoordinates);
             }
-            CreateVerticesFromLines(graphCoordinates);
+            
         }
 
         private void CreateVerticesFromLines(GraphCoordinates graphCoordinates)
