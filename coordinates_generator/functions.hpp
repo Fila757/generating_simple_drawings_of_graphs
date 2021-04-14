@@ -1389,7 +1389,7 @@ inline void graph::write_coordinates() {
 
 	if (counter == 0) {//146) { // 143
 		cout << "HEU" << endl;
-		print_bool = true;
+		//print_bool = true;
 	}
 	if (counter == 11) { //3183
 		cout << "HEU2" << endl;

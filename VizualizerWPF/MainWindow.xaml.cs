@@ -262,6 +262,9 @@ namespace VizualizerWPF
                     if (firstLines[i] / firstLines[i].Length == -firstLines[(i + 1) % firstLines.Count] / firstLines[(i + 1) % firstLines.Count].Length) //when there are opposite ones, the res can be NaN after normalizarion, because res can be zero in that case and we do not care, because there is another vertex on this face (angle 180 can be considered as this vertex is not on the face)
                         continue;
 
+                    if (firstLines[i] / firstLines[i].Length == firstLines[(i + 1) % firstLines.Count] / firstLines[(i + 1) % firstLines.Count].Length) //when two lines are same direction, the face between them is empty and it is bad corner case
+                        continue;
+
                     double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
                     Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
                     res.Normalize();
@@ -274,6 +277,15 @@ namespace VizualizerWPF
                 
                   
                     facePoint = vertex.center + res;
+
+                    mainCanvas.Children.Add(new Ellipse
+                    {
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Purple,
+                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+
+                    });
 
                     TryFace();
 
@@ -288,14 +300,7 @@ namespace VizualizerWPF
                     }
 
                     //debug
-                    mainCanvas.Children.Add(new Ellipse
-                    {
-                        Width = sizeOfVertex,
-                        Height = sizeOfVertex,
-                        Fill = Brushes.Purple,
-                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
-
-                    });
+                    
                     */
 
 
@@ -326,7 +331,7 @@ namespace VizualizerWPF
                 Console.WriteLine(counter++);
                 graphGenerator = new GraphGenerator(i);
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
-                //DrawGraph(graphCoordinates, 1);
+                MakeSmootherAndDraw();
                 TryAllReferenceFaces();
 
                 while (graphCoordinates.vertices.Count != 0)
@@ -334,7 +339,7 @@ namespace VizualizerWPF
                     Console.WriteLine(counter++);
                     //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    //DrawGraph(graphCoordinates, 1);
+                    MakeSmootherAndDraw();
                     TryAllReferenceFaces();
                 }
                 
@@ -717,7 +722,7 @@ namespace VizualizerWPF
         {
 
             //proving claim for all faces with testing
-            TryAllDrawings();
+            //TryAllDrawings();
 
             if (!(bool)faceCheckBox.IsChecked)
             {
@@ -756,7 +761,7 @@ namespace VizualizerWPF
 
             MakeSmootherAndDraw();
             //DrawGraph(graphCoordinates, 1);
-            TryAllReferenceFaces();
+            //TryAllReferenceFaces();
 
         }
 
@@ -1538,16 +1543,18 @@ namespace VizualizerWPF
 
                 if (textBlock.Text == "F")
                 {
+                    //DrawGraph(graphCoordinates, 1);
                     mainCanvas.Children.Add(new Ellipse
                     {
                         Width = sizeOfVertex,
                         Height = sizeOfVertex,
-                        Fill = Brushes.Purple,
+                        Fill = Brushes.Turquoise,
                         Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
 
                     });
                     MessageBox.Show("HEUREKA WRONG");
-                    //MessageBox.Show("wrong face");
+                    //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
+                    MessageBox.Show("wrong face");
                    
                 }
             }
