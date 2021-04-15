@@ -34,7 +34,7 @@ using namespace std;
 #endif // !INF
 
 #ifndef EPSILON
-#define EPSILON 0.001
+#define EPSILON 0.0001
 #endif
 
 #define x first
@@ -131,7 +131,7 @@ struct graph {
 	/*normal part*/
 	int number_of_vertices = 0; //just real vertices
 
-	vector<Vertex> outer_vertices{Vertex(250, 250), Vertex(250, -250), Vertex(-250, -250), Vertex(-250, 250)}; 
+	vector<Vertex> outer_vertices{Vertex(336, 341), Vertex(310, -337), Vertex(-329, -283), Vertex(-302, 297)}; 
 
 	int realized = 0;
 	bool done = false;
@@ -263,7 +263,7 @@ inline bool if_two_segmetns_intersects(pair<shared_ptr<Vertex>, shared_ptr<Verte
 	auto s = numS / denominator;
 	auto t = numT / denominator;
 
-	if (denominator != 0 && (s >= 0 && s <= 1) && (t >= 0 && t <= 1))
+	if (abs(denominator) < EPSILON && (s >= -EPSILON && s <= 1 + EPSILON) && (t >= -EPSILON && t <= 1 + EPSILON))
 		return true;
 	return false;
 }
@@ -604,7 +604,7 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				coords.push_back(make_pair(faces_vertices[i]->x_, faces_vertices[i]->y_));
 			}
 			for (int j = 0; j < most_away.size(); j++) {
-				if (abs(faces_vertices[i]->x_ - most_away[j].x) < 1 && abs(faces_vertices[i]->y_ - most_away[j].y) < 1) {
+				if (abs(faces_vertices[i]->x_ - most_away[j].x) < EPSILON && abs(faces_vertices[i]->y_ - most_away[j].y) < EPSILON) {
 					local_most_away[j] = true;
 				}
 			}
@@ -658,6 +658,15 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 				indices[i] = indices[i] == size - 6 ? 0 : indices[i];
 			}
 		}
+		/*
+		else {
+			int size = coords.size();
+			for (int i = 0; i < indices.size(); i++) {
+				indices[i] = indices[i] == size - 1 ? 0 : indices[i];
+			}
+		}
+		*/
+		
 
 		set<pair<double, double> > visited_vertices;
 
@@ -677,9 +686,9 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 4)
 						&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 1)))
 					&&
-					((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
-						&& 
-						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != coords.size() - 2))
+					!(!second_outer_face_bool && (abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == coords.size() - 2))
+					&&
+					(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
 					) {
 					visited_vertices.insert(make_pair(vertex->x_, vertex->y_));
 					mids.push_back(vertex);
@@ -734,9 +743,9 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 						((min(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 4)
 							&& (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 1)))
 					&&
-					((abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
-						&&
-						(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != coords.size() - 2))
+					!(!second_outer_face_bool && (abs(indices[i + j] - indices[i + ((j + 1) % 3)]) == coords.size() - 2))
+					&&
+					(abs(indices[i + j] - indices[i + ((j + 1) % 3)]) != 1)
 					) {
 
 					if (visited_vertices2.count(make_pair(make_pair(vertex->x_, vertex->y_), -1))) {
@@ -747,22 +756,14 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 						triangle_indices.push_back(mid_index);
 						mid_index++;
 					}
+				}
+				if (distance(coords[indices[i + (j % 3)]], make_pair(a->x_, a->y_)) < EPSILON) {
+					contains_a = true;
+				}
 
-					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(a->x_, a->y_)) < 1){
-
-						contains_a = true;
-						//distances[0][triangle_indices.back() + 2] = distance(a, vertex);
-						//distances[triangle_indices.back() + 2][0] = distance(vertex, a);
-					}
-
-					if(distance(coords[indices[i + ((j+2) % 3)]], make_pair(b->x_, b->y_)) < 1){
-						
-						contains_b = true;
-						
-						//distances[1][triangle_indices.back() + 2] = distance(b, vertex);
-						//distances[triangle_indices.back() + 2][1] = distance(vertex, b);
-					}
-				}	
+				if (distance(coords[indices[i + (j % 3)]], make_pair(b->x_, b->y_)) < EPSILON) {
+					contains_b = true;
+				}
 			}
 
 			for(int u = 0;u < triangle_indices.size();u++){
@@ -1372,9 +1373,9 @@ inline void graph::write_coordinates() {
 
 	if (counter == 329) {//146) { // 143
 		cout << "HEU" << endl;
-		print_bool = true;
+		//print_bool = true;
 	}
-	if (counter == 1355) { //3183
+	if (counter == 2499) { //3183
 		cout << "HEU2" << endl;
 	}
 	counter++;
@@ -1438,14 +1439,14 @@ inline void graph::create_all_possible_drawings() {
 		//cout << counter << endl;
 		
 		
-		if (counter < 330) {
-			done = true;
-		}
+		//if (counter < 330) {
+		//	done = true;
+		//}
 		
 
-		else {
-			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
-		}
+		//else {
+		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		//}
 
 		if (done) {
 			cout << "yes" << endl;
