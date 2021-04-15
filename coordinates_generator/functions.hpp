@@ -30,7 +30,7 @@ using namespace std;
 #endif
 
 #ifndef INF
-#define INF 10000000
+#define INF 100000000
 #endif // !INF
 
 #ifndef EPSILON
