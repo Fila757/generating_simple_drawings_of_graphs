@@ -324,22 +324,26 @@ namespace VizualizerWPF
 
         private void TryAllDrawings()
         {
-            
-            for (int i = (int)NextDrawingUpDown.MinValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
+           
+            for (int i = (int)NextDrawingUpDown.MaxValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
             {
-                int counter = 0;
-                Console.WriteLine(counter++);
+                
                 graphGenerator = new GraphGenerator(i);
+
+                graphGenerator.counter = 6690;
+                graphCoordinates = graphGenerator.GeneratePreviousDrawing();
+
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
-                MakeSmootherAndDraw();
+                Console.WriteLine(graphGenerator.counter);
+                //MakeSmootherAndDraw();
                 TryAllReferenceFaces();
 
                 while (graphCoordinates.vertices.Count != 0)
                 {
-                    Console.WriteLine(counter++);
+                    Console.WriteLine(graphGenerator.counter);
                     //MessageBox.Show(counter.ToString());
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    MakeSmootherAndDraw();
+                    //MakeSmootherAndDraw();
                     TryAllReferenceFaces();
                 }
                 
@@ -765,7 +769,7 @@ namespace VizualizerWPF
 
             MakeSmootherAndDraw();
             //DrawGraph(graphCoordinates, 1);
-            //TryAllReferenceFaces();
+            TryAllReferenceFaces();
 
         }
 
