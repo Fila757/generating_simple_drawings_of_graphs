@@ -59,6 +59,8 @@ namespace VizualizerWPF
             }
         }
 
+
+
         public void Shorten(in GraphCoordinates graphCoordinates)
         {
             //var removed = new List<Vertex>();
@@ -73,6 +75,8 @@ namespace VizualizerWPF
                     //&&
                     graphCoordinates.FindVertex(shortenPoints[shortenPoints.Count - 1]).state == VertexState.Middle
                     &&
+                    IsShortEnough(points[shortenPoints.Count - 2], points[shortenPoints.Count - 1], points[i])
+                    &&
                     !CollisionDetection.IntersectsSomeLine(
                         new Line
                         {
@@ -80,7 +84,9 @@ namespace VizualizerWPF
                             Y1 = shortenPoints[shortenPoints.Count - 2].Y,
                             X2 = points[i].X,
                             Y2 = points[i].Y
-                        }))
+                        })
+                    )
+                    
                 {
                     //removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
                     shortenPoints.RemoveAt(shortenPoints.Count - 1);
@@ -93,6 +99,14 @@ namespace VizualizerWPF
             CreateLinesFromPoints();
 
             //return removed;
+        }
+
+        private bool IsShortEnough(Point point1, Point point2, Point point3)
+        {
+            // 20 is delta in forces
+            if((point1 - point2).Length < 50 && (point2 - point3).Length < 50)
+                return true;
+            return false;
         }
     }
 

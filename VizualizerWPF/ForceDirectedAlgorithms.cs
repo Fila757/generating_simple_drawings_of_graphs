@@ -19,8 +19,8 @@ namespace VizualizerWPF
 
     static class ForceDirectedAlgorithms
     {
-        static double gamma = 1;
-        static double delta = 1000;
+        static double gamma = 3;
+        static double delta = 20;
 
         static int INF = 1000;
 
@@ -109,7 +109,7 @@ namespace VizualizerWPF
 
         static public Vector CountAttractionForce(Point a, Point b)
         {
-            return (Distance(a, b) / delta) * (b - a);
+            return (Distance(a, b) / delta) *  (a - b);
         }
 
         static public Vector CountRepulsionForce(Point a, Point b)
@@ -133,7 +133,7 @@ namespace VizualizerWPF
             Vector difference = i_v - a;
             Vector vector = b - a;
             var coef = difference.Divide(vector);
-            if ((1 - 0.01 > coef && coef > 0.01) && Distance(v, i_v) < gamma)
+            if ((1 - 0.0001 > coef && coef > 0.0001) && Distance(v, i_v) < gamma)
                 return -((gamma - Distance(v, i_v) * (gamma - Distance(v, i_v))) / (Distance(v, i_v))) * (i_v - v);
             else
                 return new Vector(0, 0);
@@ -172,7 +172,7 @@ namespace VizualizerWPF
             {
                 foreach (var neigh in neighbors)
                 {
-                    finalForce += CountRepulsionEdgeForce(vertex, v, neigh);
+                    finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
                     if (Double.IsNaN(finalForce.X))
                     {
                         Console.WriteLine("NaN");
@@ -325,7 +325,7 @@ namespace VizualizerWPF
                     Vector difference = i_v - a;
                     Vector vector = b - a;
                     var coef = difference.Divide(vector);
-                    if (1 - 0.01 > coef && coef > 0.01)
+                    if (1 - 0.0001 > coef && coef > 0.0001)
                     {
                         int s = INF;
                         for (int i = 0; i < 8; i++)

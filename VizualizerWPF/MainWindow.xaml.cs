@@ -398,18 +398,17 @@ namespace VizualizerWPF
 
         private void MakeAllLinesNotSharp()
         {
-            for (int i = 0; i < 2; i++)
+            
+            foreach (var edge in graphCoordinates.edges)
             {
-                foreach (var edge in graphCoordinates.edges)
-                {
-                    edge.Shorten(graphCoordinates);
-                    /*
-                     * foreach (var vertex in removed)
-                     *   graphCoordinates.vertices.Remove(vertex);
-                    */
-                }
-                CreateVerticesFromLines(graphCoordinates);
+                edge.Shorten(graphCoordinates);
+                /*
+                    * foreach (var vertex in removed)
+                    *   graphCoordinates.vertices.Remove(vertex);
+                */
             }
+            CreateVerticesFromLines(graphCoordinates);
+            
             
         }
 
@@ -437,7 +436,7 @@ namespace VizualizerWPF
                 
                 //DrawGraph(graphCoordinates, 1, true);
             }
-            //MakeAllLinesNotSharp();
+            MakeAllLinesNotSharp();
             DrawGraph(graphCoordinates, 1);
         }
 
@@ -769,7 +768,7 @@ namespace VizualizerWPF
 
             MakeSmootherAndDraw();
             //DrawGraph(graphCoordinates, 1);
-            TryAllReferenceFaces();
+            //TryAllReferenceFaces();
 
         }
 
