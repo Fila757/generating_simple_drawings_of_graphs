@@ -51,7 +51,7 @@ struct Face;
 struct Vertex {
 	Edge* to_;
 
-	int index_;
+	int index_ = 0;
 
 	double x_, y_;
 
@@ -204,8 +204,7 @@ struct graph {
 	shared_ptr<Vertex> tearup_lines_in_half(
 		Edge* edge,
 		vector<shared_ptr<Vertex> >& a_half,
-		vector<shared_ptr<Vertex> >& b_half,
-		bool just_get_vertex = false
+		vector<shared_ptr<Vertex> >& b_half
 	);
 
 	vector<shared_ptr<Vertex> > find_path_through_triangulation(
@@ -432,7 +431,7 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 }
 
 inline bool compare(pair<double, double> a, pair<double, double> b) {
-	if (abs(a.x - b.x) < 0.1 && abs(a.y - b.y) < 0.1)
+	if (abs(a.x - b.x) < EPSILON && abs(a.y - b.y) < EPSILON)
 		return true;
 	return false;
 }
@@ -468,10 +467,10 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 	
 
 	if (det(vect, first_neg_vect) < 0) { //negative der is to the right
-		return make_pair(EPSILON * first_neg_vect.x, EPSILON * first_neg_vect.y);
+		return make_pair(10 * EPSILON * first_neg_vect.x, 10 * EPSILON * first_neg_vect.y); // 10* EPSILON to be recognizable
 	}
 	else {
-		return make_pair(EPSILON * second_neg_vect.x, EPSILON * second_neg_vect.y);
+		return make_pair(10 * EPSILON * second_neg_vect.x, 10 * EPSILON * second_neg_vect.y);
 	}
 }
 
@@ -862,11 +861,21 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 		/*resolve knots */
 		
+		/*
 		for (int i = 3; i < vertices.size(); i++) {
 			if (if_two_segmetns_intersects(make_pair(vertices[i - 3], vertices[i - 2]), make_pair(vertices[i - 1], vertices[i])))
 				swap(vertices[i - 2], vertices[i - 1]);
 		}
+		*/
 
+		/*remove collinear ones*/
+
+		vector<shared_ptr<Vertex> > non_colinear; 
+		non_colinear.push_back(vertices[0]); non_colinear.push_back(vertices[1]); //there are always at least two vertices
+		for (int i = 2; i < vertices.size(); i++) {
+
+		}
+		
 		return vertices;
 
 		//print_graph(this);
@@ -880,6 +889,25 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 }
 
+inline bool collinear(shared_ptr<Vertex> v1, shared_ptr<Vertex> v2, shared_ptr<Vertex> v3) {
+
+	/* Calculation the area of
+	triangle.We have skipped
+	multiplication with 0.5 to
+	avoid floating point computations */
+
+	double a = v1->x_ * (v2->y_ - v3->y_) + v2->x_ * (v3->y_ - v1->y_) + v3->x_ * (v1->y_ - v2->y_);
+
+	// b = (y2 - y1) / (x2 - x1)
+	// c = (y3 - y2) / (x3 - x2)
+	// b == c
+
+	if (abs(a) < EPSILON)
+		return true;
+	return false;
+}
+
+
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, pair<double, double> shift_previous, pair<double, double> shift_next, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
@@ -891,6 +919,9 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	fromb = tob->next_;
 	
 	auto vertices = find_path_through_triangulation(a, b, face, a_index, b_index, shift_previous, shift_next, outer_face_bool);
+	if (vertices.size() == 1) {
+		cout << "HEEEEEEEEEEEEEEELP" << endl;
+	}
 
 	for (int i = 1; i < vertices.size() - 1; i++) {
 		vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
@@ -937,7 +968,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	face->edge_ = ab_edge_ptr;
 }
 
-inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half, bool just_get_vertex) {
+inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half) {
 
 	a_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
 	b_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin() + edge->vertices_.size() / 2, edge->vertices_.end());
@@ -946,12 +977,12 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	auto a = a_half.back();
 	auto b = b_half[0];
 
+	if (a_half.size() == 0 || b_half.size() == 0)
+		cout << "HEEEELLLP" << endl;
+
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = ((edge->index_ / 100 == 0) || (edge->index_ % 100 == 0)) ? -1 : -2;
 	new_vertex->x_ = (a->x_ + b->x_) / 2; new_vertex->y_ = (a->y_ + b->y_) / 2;
-
-	if (just_get_vertex) //before vertices adding
-		return new_vertex;
 
 	new_vertex->shift_first = make_pair(new_vertex->x_ - a->x_, new_vertex->y_ - a->y_);
 	new_vertex->shift_second = make_pair(new_vertex->x_ - b->x_, new_vertex->y_ - b->y_);
@@ -963,6 +994,8 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 
 	b_half.push_back(new_vertex);
 	rotate(b_half.rbegin(), b_half.rbegin() + 1, b_half.rend());
+
+	
 
 	return new_vertex;
 }
@@ -1369,16 +1402,36 @@ struct fingerprints {
 	}
 };
 
+inline bool are_there_ends(Edge* edge, int a, int b) {
+	if (a > b) swap(a, b);
+	if ((min(edge->index_ % 100, edge->index_ / 100) == a) && (max(edge->index_ % 100, edge->index_ / 100) == b))
+		return true;
+	return false;
+}
+
+bool debug_bool = false;
+
 inline void graph::write_coordinates() {
 
-	if (counter == 329) {//146) { // 143
+	//1384132){//1384295
+	if (counter >= 1237990 && are_there_ends(segments[segments.size() - 1], 1, 4) && are_there_ends(segments[segments.size() - 3], 0, 6)) {
+		debug_bool = true;
+		cout << "TADY " << counter <<endl;
+	}
+	
+	if (!debug_bool) {
+		print_bool = true;
+		counter++;
+		//cout << counter++ << endl;
+		return;
+	}
+
+	if (counter == 1386926) {
 		cout << "HEU" << endl;
-		//print_bool = true;
 	}
-	if (counter == 2499) { //3183
-		cout << "HEU2" << endl;
-	}
-	counter++;
+	
+	//counter++;
+	cout << counter++ << " after" << endl;
 
 	vector<vector<vector<Edge> > > drawing_edges;
 	drawing_edges.resize(number_of_vertices);
@@ -1395,6 +1448,8 @@ inline void graph::write_coordinates() {
 	for (int i = 0; i < number_of_vertices;i++) {
 		for (int j = i + 1;j < number_of_vertices;j++) {
 			for (int k = 0; k < drawing_edges[i][j].size();k++) {
+				if (drawing_edges[i][j][k].vertices_.size() == 1)
+					cout << "HELP" << endl;
 				output_file << "( ";
 				for (int l = 0; l < drawing_edges[i][j][k].vertices_.size();l++) {
 					output_file
@@ -1439,14 +1494,14 @@ inline void graph::create_all_possible_drawings() {
 		//cout << counter << endl;
 		
 		
-		//if (counter < 330) {
-		//	done = true;
-		//}
+		if (counter <= 600) {
+			done = true;
+		}
 		
 
-		//else {
-		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
-		//}
+		else {
+			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		}
 
 		if (done) {
 			cout << "yes" << endl;

@@ -9,7 +9,7 @@ using namespace std;
 
 int main()
 {
-    int n = 7;
+    int n = 8;
 
     //cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
