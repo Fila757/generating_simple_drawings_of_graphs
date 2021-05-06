@@ -181,8 +181,9 @@ struct graph {
 			}
 		}
 
+		string string_index = index < 10 ? "0" + to_string(index) : to_string(index);
 		auto output_path = "../VizualizerWPF/data/graph"
-			+ to_string(n) + ".txt";
+			+ to_string(n) + "_" + string_index + ".txt";
 		output_file.open(output_path);
 	}
 
@@ -1383,8 +1384,10 @@ struct fingerprints {
 
 	fingerprints(int n, int index) {
 	
-		auto input_path = "data/graph" 
-			+ to_string(n) + ".txt";
+		string string_index = index < 10 ? "0" + to_string(index) : to_string(index);
+		auto input_path = "data/graph"
+			+ to_string(n) + "_" + string_index + ".txt";
+		cout << input_path << endl;
 		input_file.open(input_path);
 
 		
