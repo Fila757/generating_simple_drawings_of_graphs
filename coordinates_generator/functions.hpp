@@ -515,6 +515,24 @@ inline bool check_if_its_line_between_inner_and_outer_part(int size, int index1,
 }
 */
 
+inline bool are_collinear(shared_ptr<Vertex> v1, shared_ptr<Vertex> v2, shared_ptr<Vertex> v3) {
+
+	/* Calculation the area of
+	triangle.We have skipped
+	multiplication with 0.5 to
+	avoid floating point computations */
+
+	double a = v1->x_ * (v2->y_ - v3->y_) + v2->x_ * (v3->y_ - v1->y_) + v3->x_ * (v1->y_ - v2->y_);
+
+	// b = (y2 - y1) / (x2 - x1)
+	// c = (y3 - y2) / (x3 - x2)
+	// b == c
+
+	if (abs(a) < EPSILON)
+		return true;
+	return false;
+}
+
 inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b,
 	shared_ptr<Face> face, int a_index, int b_index,
 	pair<double, double> shift_previous,
@@ -869,12 +887,19 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 		*/
 
 		/*remove collinear ones*/
-
+			
+		
 		vector<shared_ptr<Vertex> > non_colinear; 
 		non_colinear.push_back(vertices[0]); non_colinear.push_back(vertices[1]); //there are always at least two vertices
 		for (int i = 2; i < vertices.size(); i++) {
-
+			if (are_collinear(non_colinear[non_colinear.size()-2], non_colinear[non_colinear.size()-1], vertices[i])) {
+				non_colinear.pop_back(); non_colinear.push_back(vertices[i]); //skip when collinear
+			}
+			else {
+				non_colinear.push_back(vertices[i]);
+			}
 		}
+		vertices = non_colinear;
 		
 		return vertices;
 
@@ -887,24 +912,6 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 	}
 
 
-}
-
-inline bool collinear(shared_ptr<Vertex> v1, shared_ptr<Vertex> v2, shared_ptr<Vertex> v3) {
-
-	/* Calculation the area of
-	triangle.We have skipped
-	multiplication with 0.5 to
-	avoid floating point computations */
-
-	double a = v1->x_ * (v2->y_ - v3->y_) + v2->x_ * (v3->y_ - v1->y_) + v3->x_ * (v1->y_ - v2->y_);
-
-	// b = (y2 - y1) / (x2 - x1)
-	// c = (y3 - y2) / (x3 - x2)
-	// b == c
-
-	if (abs(a) < EPSILON)
-		return true;
-	return false;
 }
 
 
@@ -1414,6 +1421,7 @@ bool debug_bool = false;
 inline void graph::write_coordinates() {
 
 	//1384132){//1384295
+	/*
 	if (counter >= 1237990 && are_there_ends(segments[segments.size() - 1], 1, 4) && are_there_ends(segments[segments.size() - 3], 0, 6)) {
 		debug_bool = true;
 		cout << "TADY " << counter <<endl;
@@ -1421,17 +1429,18 @@ inline void graph::write_coordinates() {
 	
 	if (!debug_bool) {
 		print_bool = true;
-		counter++;
-		//cout << counter++ << endl;
+		//counter++;
+		cout << counter++ << endl;
 		return;
 	}
-
+	*/
+	/*
 	if (counter == 1386926) {
 		cout << "HEU" << endl;
 	}
-	
+	**/
 	//counter++;
-	cout << counter++ << " after" << endl;
+	cout << counter++ << endl;
 
 	vector<vector<vector<Edge> > > drawing_edges;
 	drawing_edges.resize(number_of_vertices);
@@ -1493,15 +1502,15 @@ inline void graph::create_all_possible_drawings() {
 
 		//cout << counter << endl;
 		
-		
+		/*
 		if (counter <= 600) {
 			done = true;
 		}
-		
+		*/
 
-		else {
-			find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
-		}
+		//else {
+		find_the_way_to_intersect(starts[1][2], starts[2][1], 1, 2);
+		//}
 
 		if (done) {
 			cout << "yes" << endl;
