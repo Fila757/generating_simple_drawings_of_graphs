@@ -1840,6 +1840,7 @@ namespace VizualizerWPF
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
+
         /// <summary>
         /// Function similar to ReDrawGraph function but 
         /// there is only rescaling needed
