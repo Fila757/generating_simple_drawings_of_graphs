@@ -11,11 +11,27 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Height="768" Width="1366" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized">
+        Height="768" Width="1366" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
 
 
     <Grid>
-        <Grid>
+        <Grid Height="30" VerticalAlignment="Top" Background="#FF299FDD" >
+            <TextBlock Text="Graph drawing tool" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"></TextBlock>
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal" >
+                <materialDesign:PopupBox HorizontalAlignment="Left" Margin="0" PlacementMode="BottomAndAlignLeftEdges" StaysOpen="True">
+                    <StackPanel Width="100">
+                        <TextBox Text="10"></TextBox>
+                        <TextBox Text="1.0"></TextBox>
+                    </StackPanel>
+                </materialDesign:PopupBox>
+                <materialDesign:PackIcon Kind="WindowClose" VerticalAlignment="Center"/>
+                <Separator></Separator>
+                <materialDesign:PackIcon Kind="WindowMaximize" VerticalAlignment="Center"/>
+                <Separator></Separator>
+                <materialDesign:PackIcon Kind="WindowMinimize" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="0, 30, 0, 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width= "79*"/>
                 <ColumnDefinition Width= "79*"/>
@@ -40,7 +56,7 @@
 
             <Rectangle Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="0" Grid.RowSpan="12" Fill="#FF299FDD">
             </Rectangle>
-            <Button x:Name="AddingPolyline" Content="Adding Polyline" Grid.Column= "3" Grid.Row= "5" Margin="105,14,195,13" Click="AddingPolyline_Click" Grid.ColumnSpan="2"/>
+            <Button x:Name="AddingPolyline" Content="Polyline" Grid.Column= "3" Grid.Row= "5" Margin="98,14,3,13" Click="AddingPolyline_Click"/>
             <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,14,104,13" Click="Adding_Click"/>
             <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
             <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Invariant_Click"/>
