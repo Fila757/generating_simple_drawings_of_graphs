@@ -93,7 +93,7 @@ namespace VizualizerWPF
         Point facePoint = farFarAway;
 
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
-        int Smoothing => (int)SmoothingUpDown.Value;
+        int Smoothing => (int)Double.Parse(SmoothingTextBox.Text);
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -194,7 +194,7 @@ namespace VizualizerWPF
 
 
 
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+            graphGenerator = new GraphGenerator((int)Double.Parse(VerticesTextBox.Text));
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
@@ -332,7 +332,7 @@ namespace VizualizerWPF
         private void TryAllDrawings()
         {
            
-            for (int i = (int)NextDrawingUpDown.MaxValue; i <= (int)NextDrawingUpDown.MaxValue; i++)
+            for (int i = 4; i <= 7; i++)
             {
                 
                 graphGenerator = new GraphGenerator(i);
@@ -460,7 +460,8 @@ namespace VizualizerWPF
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            dispatcherTimer.Interval = TimeSpan.FromSeconds(1 / (double)AutoMovingUpDown.Value);
+            double frequence = Double.TryParse(AutoTextBox.Text, out frequence) ? frequence : 1;
+            dispatcherTimer.Interval = TimeSpan.FromSeconds(1 / frequence);
             if(stateAutoMoving == StateAutoMoving.Auto)
                 NextDrawing_Click(sender, new RoutedEventArgs());
         }
@@ -751,7 +752,7 @@ namespace VizualizerWPF
             }
 
             else if (
-                (!(bool)savedGraphsChechBox.IsChecked && graphGenerator.SizeOfGraph != NextDrawingUpDown.Value) 
+                (!(bool)savedGraphsChechBox.IsChecked && graphGenerator.SizeOfGraph != Int32.Parse(VerticesTextBox.Text)) 
                 || 
                 (savedGraphs && !(bool)savedGraphsChechBox.IsChecked)
                 )
@@ -761,7 +762,7 @@ namespace VizualizerWPF
 
                 FlushFromBackUpToNormal();
 
-                graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
+                graphGenerator = new GraphGenerator((int)Double.Parse(VerticesTextBox.Text));
             }
                 
             graphCoordinates = graphGenerator.GenerateNextDrawing();
@@ -794,7 +795,7 @@ namespace VizualizerWPF
             }
 
             graphGenerator.CloseFile();
-            graphGenerator = !(bool)savedGraphsChechBox.IsChecked ? new GraphGenerator((int)NextDrawingUpDown.Value) : new GraphGenerator();
+            graphGenerator = !(bool)savedGraphsChechBox.IsChecked ? new GraphGenerator((int)Double.Parse(VerticesTextBox.Text)) : new GraphGenerator();
             graphGenerator.counter = tmpCounter;
 
             graphCoordinates = graphGenerator.GeneratePreviousDrawing();
