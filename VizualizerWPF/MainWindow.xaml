@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Height="600" Width="1080" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow">
+        Height="768" Width="1366" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" WindowState="Maximized">
 
 
     <Grid>
@@ -40,8 +40,8 @@
 
             <Rectangle Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="0" Grid.RowSpan="12" Fill="#FF299FDD">
             </Rectangle>
-            <Button x:Name="AddingPolyline" Content="Adding Polyline" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="AddingPolyline_Click"/>
-            <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,3,3,3" Click="Adding_Click"/>
+            <Button x:Name="AddingPolyline" Content="Adding Polyline" Grid.Column= "3" Grid.Row= "5" Margin="105,14,195,13" Click="AddingPolyline_Click" Grid.ColumnSpan="2"/>
+            <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,14,104,13" Click="Adding_Click"/>
             <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
             <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Invariant_Click"/>
             <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
@@ -474,7 +474,7 @@
 
             </Grid>
             <CheckBox x:Name="faceCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="55,0,0,0" Grid.Row="4" VerticalAlignment="Top" IsThreeState="True"/>
-            <CheckBox x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True"/>
+            <ToggleButton x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True"/>
         </Grid>
     </Grid>
 </Window>
