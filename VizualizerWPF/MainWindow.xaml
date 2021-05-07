@@ -11,7 +11,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Height="768" Width="1366" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
+        Height="1080" Width="1920" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
 
 
     <Grid>
@@ -20,15 +20,13 @@
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" >
                 <materialDesign:PopupBox HorizontalAlignment="Left" Margin="0" PlacementMode="BottomAndAlignLeftEdges" StaysOpen="True">
                     <StackPanel Width="100">
-                        <TextBox Text="10"></TextBox>
-                        <TextBox Text="1.0"></TextBox>
+                        <TextBox Text="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                        <TextBox Text="1.0" PreviewTextInput="NumberValidationTextBox"></TextBox>
                     </StackPanel>
                 </materialDesign:PopupBox>
-                <materialDesign:PackIcon Kind="WindowClose" VerticalAlignment="Center"/>
-                <Separator></Separator>
-                <materialDesign:PackIcon Kind="WindowMaximize" VerticalAlignment="Center"/>
-                <Separator></Separator>
-                <materialDesign:PackIcon Kind="WindowMinimize" VerticalAlignment="Center"/>
+                <Button Name="CloseButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowClose}" Click="CloseButton_Click" ToolTip="Icon"/>
+                <Button Name="MinimizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowMinimize}" ToolTip="Icon" Click="MinimizeButton_Click"/>
+                <Button Name="MaximizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowRestore}" ToolTip="Icon" Click="RestoreButton_Click"/>
             </StackPanel>
         </Grid>
         <Grid Margin="0, 30, 0, 0">
@@ -56,8 +54,19 @@
 
             <Rectangle Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="0" Grid.RowSpan="12" Fill="#FF299FDD">
             </Rectangle>
-            <Button x:Name="AddingPolyline" Content="Polyline" Grid.Column= "3" Grid.Row= "5" Margin="98,14,3,13" Click="AddingPolyline_Click"/>
-            <Button x:Name="Adding" Content="Adding" Grid.Column= "3" Grid.Row= "5" Margin="3,14,104,13" Click="Adding_Click"/>
+            <Grid Grid.Row="5" Grid.Column="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "1*"/>
+                    <ColumnDefinition Width= "1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height= "1*"/>
+                </Grid.RowDefinitions>
+            <Button x:Name="AddingPolyline" Content="Polyline" Grid.Column= "1" Grid.Row="0" Margin="0,3,3,3" Click="AddingPolyline_Click"/>
+            <Button x:Name="Adding" Content="Adding" Grid.Column= "0" Grid.Row="0" Margin="3,3,0,3" Click="Adding_Click"/>
+            </Grid>
+
+
             <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
             <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Invariant_Click"/>
             <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
