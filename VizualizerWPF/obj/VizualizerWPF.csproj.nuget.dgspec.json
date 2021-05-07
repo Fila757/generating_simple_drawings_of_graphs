@@ -40,9 +40,17 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "NumericUpDown": {
               "target": "Package",
               "version": "[3.0.2, )"
+            },
+            "ShowMeTheXAML": {
+              "target": "Package",
+              "version": "[2.0.0, )"
             },
             "Syncfusion.Shared.WPF": {
               "target": "Package",
