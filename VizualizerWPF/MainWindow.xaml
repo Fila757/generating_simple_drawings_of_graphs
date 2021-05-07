@@ -9,7 +9,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
+        TextElement.FontSize="12"
         FontFamily="{materialDesign:MaterialDesignFont}"
         Height="1080" Width="1920" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
 
@@ -18,10 +18,16 @@
         <Grid Height="30" VerticalAlignment="Top" Background="#FF299FDD" >
             <TextBlock Text="Graph drawing tool" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"></TextBlock>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" >
-                <materialDesign:PopupBox HorizontalAlignment="Left" Margin="0" PlacementMode="BottomAndAlignLeftEdges" StaysOpen="True">
-                    <StackPanel Width="100">
-                        <TextBox Text="10" PreviewTextInput="NumberValidationTextBox"></TextBox>
-                        <TextBox Text="1.0" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                <materialDesign:PopupBox Margin="0" StaysOpen="True">
+                    <StackPanel>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="Smoothing: "></TextBlock>
+                            <TextBox x:Name="SmoothingTextBox" Width ="50" Text="10" VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text ="AutoConstant: "></TextBlock>
+                            <TextBox x:Name="AutoTextBox" Width="50" Text="1.0" PreviewTextInput="NumberValidationTextBox" VerticalAlignment="Center"></TextBox>
+                        </StackPanel>
                     </StackPanel>
                 </materialDesign:PopupBox>
                 <Button Name="CloseButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowClose}" Click="CloseButton_Click" ToolTip="Icon"/>
@@ -38,23 +44,25 @@
                 <ColumnDefinition Width= "111*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height= "33*"/>
-                <RowDefinition Height= "38*"/>
-                <RowDefinition Height= "26*"/>
-                <RowDefinition Height= "28*"/>
-                <RowDefinition Height= "29*"/>
-                <RowDefinition Height= "40*"/>
-                <RowDefinition Height= "48*"/>
-                <RowDefinition Height= "115*"/>
-                <RowDefinition Height= "62*"/>
-                <RowDefinition Height= "33*"/>
+                <RowDefinition Height= "67*"/>
+                <RowDefinition Height= "77*"/>
+                <RowDefinition Height= "59*"/>
                 <RowDefinition Height= "57*"/>
-                <RowDefinition Height= "7*"/>
+                <RowDefinition Height= "53*"/>
+                <RowDefinition Height= "64*"/>
+                <RowDefinition Height= "115*"/>
+                <RowDefinition Height= "234*"/>
+                <RowDefinition Height= "126*"/>
+                <RowDefinition Height= "67*"/>
+                <RowDefinition Height= "116*"/>
             </Grid.RowDefinitions>
 
             <Rectangle Grid.Column="3" Grid.ColumnSpan="2"  Grid.Row="0" Grid.RowSpan="12" Fill="#FF299FDD">
             </Rectangle>
-            <Grid Grid.Row="5" Grid.Column="3">
+
+            <TextBlock Text="Data" FontWeight="ExtraBlack" FontSize="14" TextAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Grid.Column="3" Grid.ColumnSpan="2"></TextBlock>
+
+            <Grid Grid.Row="2" Grid.Column="3" Margin="0,59,0,0" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width= "1*"/>
                     <ColumnDefinition Width= "1*"/>
@@ -62,67 +70,90 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height= "1*"/>
                 </Grid.RowDefinitions>
-            <Button x:Name="AddingPolyline" Content="Polyline" Grid.Column= "1" Grid.Row="0" Margin="0,3,3,3" Click="AddingPolyline_Click"/>
-            <Button x:Name="Adding" Content="Adding" Grid.Column= "0" Grid.Row="0" Margin="3,3,0,3" Click="Adding_Click"/>
+                <Button x:Name="AddingPolyline" Content="Polyline" Grid.Column= "1" Grid.Row="0" Click="AddingPolyline_Click"/>
+                <Button x:Name="Adding" Content="Adding" Grid.Column= "0" Grid.Row="0" Click="Adding_Click"/>
             </Grid>
 
 
-            <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Removing_Click"/>
-            <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "6" Margin="3,3,3,3" Click="Invariant_Click"/>
-            <!--<Button x:Name="Intersections" Content="Průsečíky" Grid.Column= "4" Grid.Row= "4" Margin="3,3,3,3" Click="Intersections_Click"/>-->
-            <!--<Button x:Name="Kedges" Content="K-hrany" Grid.Column= "4" Grid.Row= "5" Margin="3,3,3,3" Click="Kedges_Click"/>-->
-            <!--<ListBox x:Name="KedgesListBox" Grid.Column="4" Grid.Row="6" Margin="3,3,3,3" SelectionChanged="KedgesListBox_SelectionChanged">
-            <ListBoxItem Content="theoremAmk-hrany" FontSize="10" FontWeight="Bold"/>
-            <ListBoxItem Content="2AMk-hrany" FontSize="10" FontWeight="Bold"/>
-            <ListBoxItem Content="3AMk-hrany" FontSize="10" FontWeight="Bold"/>
-        </ListBox>-->
-            <!--<syncfusion:UpDown x:Name="KhranyUpDown" Value = "0" Step="1" Grid.Column="4" Grid.Row="7" Margin="3,3,3,3" NumberDecimalDigits="0"/>-->
-            <Button x:Name="NextDrawing" Content="Next" Margin="3,3,3,3" Grid.Column="4" Grid.Row="2" Click="NextDrawing_Click"/>
-            <Button x:Name="PreviousDrawing" Content="Previous" Margin="3,3,3,3" Grid.Column="3" Grid.Row="2" Click="PreviousDrawing_Click"/>
-            <syncfusion:UpDown x:Name="NextDrawingUpDown" Value = "4" Step="1" Grid.Column="3" Grid.Row="1" Margin="50,0,0,5" NumberDecimalDigits="0" 
-                           MaxValue="8" MinValue="4" RenderTransformOrigin="0.5,0.471"/>
+            <Button x:Name="Removing" Content="Removing" Grid.Column= "4" Grid.Row= "3" Click="Removing_Click"/>
+            <Button x:Name="Invariant" Content="Invariant" Grid.Column= "3" Grid.Row= "4" Click="Invariant_Click"  />
+            <Button x:Name="AutoMoving" Content="Automatic moving" Grid.Column="4" Grid.Row ="4"  Click="AutoButton_Click"/>
+
+
+            <TextBlock Text="Drawings:" Grid.Column="3" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="14" FontWeight="ExtraBlack" Grid.Row="1"/>
+
+            <TextBlock Text="Operations" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" TextAlignment="Center" FontSize="14" FontWeight="ExtraBlack"></TextBlock>
+            <Button x:Name="NextDrawing" Content="Next" Grid.Column="4" Grid.Row="1" Click="NextDrawing_Click"/>
+            <Button x:Name="PreviousDrawing" Content="Previous" Grid.Column="3" Grid.Row="1" Click="PreviousDrawing_Click"/>
 
             <!--Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/-->
 
-            <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="3"  Grid.Row ="0" Grid.RowSpan="11" MouseDown="canvas_MouseDown" Background="Transparent" Loaded="Canvas_Loaded"/>
+            <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="3"  Grid.Row ="0" Grid.RowSpan="12" MouseDown="canvas_MouseDown" Background="Transparent" Loaded="Canvas_Loaded"/>
 
             <!--TextBlock x:Name="textBlockKEdges" Grid.Column ="3" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
             <!--TextBlock x:Name="textBlockAMKEdges" Grid.Column ="0" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
 
-            <TextBlock x:Name="numberOfDrawing" Grid.Column ="4" Grid.Row= "1" TextAlignment="center" Visibility="Visible" Margin="0,8,0,26" Grid.RowSpan="2"/>
-            <TextBlock x:Name="optimal" Grid.Column ="4" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="0,8,0,3" Text="NO"/>
-            <TextBlock x:Name="crossings" Grid.Column ="3" Grid.Row= "3" TextAlignment="center" Visibility="Visible" Margin="15,8,0,3" Text="1"/>
-            <TextBlock x:Name="infoVertices" Grid.Column ="3" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Vertices:"/>
-            <TextBlock x:Name="infoDrawings" Grid.Column ="4" Grid.Row="1" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Drawings:"/>
-            <TextBlock x:Name="infoOptimal" Grid.Column ="4" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Optimal:"/>
-            <TextBlock x:Name="infoCrossings" Grid.Column ="3" Grid.Row="3" TextAlignment="Left"  Visibility="Visible" Margin="0,8,3,3" Text="Crossings:"/>
-            <TextBlock x:Name="infoTop" Grid.Column ="3" Grid.Row= "0" TextAlignment="Left" Margin="0,8,0,38" Visibility="Visible" Text="INFO:" Grid.RowSpan="2" FontWeight="Bold" />
-            <Button x:Name="SaveDrawing" Grid.Column="3" Grid.Row="0" Visibility="Visible" Margin="70, 3,3,3" Content="Save" Click="SaveDrawing_Click"/>
-            <TextBlock x:Name="infoSmoothing" Grid.Column="4" Grid.Row="0" Margin="0,8,0,3" Text="Smooth:" TextAlignment="Left" FontWeight="Bold"/>
-            <syncfusion:UpDown x:Name="SmoothingUpDown" Value="10" Step="1" Grid.Column="4" Grid.Row="0" Margin="50,3,3,3" NumberDecimalDigits="0"  
-                           MaxValue="1000" MinValue="0" TextAlignment="Center"/>
-            <TextBlock x:Name="infoNodes" Grid.Column ="3" Grid.Row= "4" TextAlignment="Left" Margin="0,8,0,6" Visibility="Visible" Text="NODES:" FontWeight="Bold" FontStyle="Normal"/>
-
-            <Button x:Name="faceReferenceButton" Grid.Column ="3" Grid.Row= "4" Margin="70,3,0,3" Visibility="Visible" Content="Face" Click="RefferenceFace_Click"/>
-
-
-
-
-            <Grid Grid.Row="6" Grid.RowSpan ="1" Grid.Column="4" Visibility="Visible" Margin="0,0,0,0">
+            <Grid Grid.Column ="4" Grid.Row= "1" >
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "1*"/>
+                    <ColumnDefinition Width= "1*"/>
                     <ColumnDefinition Width= "1*"/>
                     <ColumnDefinition Width= "1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height= "1*"/>
                 </Grid.RowDefinitions>
-
-                <Button x:Name="AutoMoving" Content="Auto" Grid.Column="0" Margin="3,3,3,3" Grid.Row ="0"  Click="AutoButton_Click"/>
-                <syncfusion:UpDown x:Name="AutoMovingUpDown" Value="1" Step="0.1" Grid.Column="1" Grid.Row="0" Margin="3,3,3,3" NumberDecimalDigits="1"  
-                           MaxValue="1000" MinValue="0.1"/>
-
+                <TextBlock x:Name="numberOfDrawing" FontWeight="ExtraBlack" FontSize="14" Text="0" TextAlignment="center" VerticalAlignment="Top"  Visibility="Visible"/>
             </Grid>
-            <Grid Grid.Row="7" Grid.RowSpan ="4" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible">
+            <TextBlock x:Name="infoVertices" Grid.Column ="3" TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible" Text="Vertices:"/>
+            <TextBox x:Name="VerticesTextBox" Grid.Column="3" Text="4" VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox"/>
+
+
+            <Grid Grid.Row="0" Grid.Column="4">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Row="1" Grid.Column="0">
+                    <TextBlock x:Name="infoOptimal"  VerticalAlignment="Center" TextAlignment="Left"  Visibility="Visible"  Text="Optimal:"/>
+                    <TextBlock x:Name="optimal"  VerticalAlignment="Center" TextAlignment="center" Visibility="Visible"  Text="NO"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <TextBlock x:Name="infoCrossings" TextAlignment="Left"  VerticalAlignment="Bottom" Visibility="Visible" Text="Crossings:"/>
+                    <TextBlock x:Name="crossings"  TextAlignment="center" Visibility="Visible" VerticalAlignment="Bottom"  Text="1"/>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "3*"/>
+                    <ColumnDefinition Width= "1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="faceReferenceButton" Grid.Column ="0" Grid.Row= "0" Visibility="Visible" Content="Face" Click="RefferenceFace_Click"/>
+                <TextBlock Text="Changing" VerticalAlignment="Top" Grid.Column="1" HorizontalAlignment="Center"></TextBlock>
+                <ToggleButton x:Name="faceCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Center" Margin="0,0,0,0" Grid.Row="0" VerticalAlignment="Center" IsThreeState="True"/>
+            </Grid>
+
+
+            <TextBlock Text="File work" VerticalAlignment="Center" TextAlignment="Center" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="3" FontSize="14" FontWeight="ExtraBlack" Grid.RowSpan="2"></TextBlock>
+            <TextBlock Text="CustomFile" Grid.Column="3" Grid.Row="5" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.RowSpan="1"></TextBlock>
+            <ToggleButton x:Name="savedGraphsChechBox" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Grid Grid.Row="5" Grid.Column="4" Visibility="Visible">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height= "1*"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="SaveDrawing" Grid.Column="0" Grid.Row="1" Visibility="Visible" Content="Save" Click="SaveDrawing_Click"/>
+            </Grid>
+            <Grid Grid.Row="7" Grid.RowSpan ="5" Grid.Column="3" Grid.ColumnSpan="2" Visibility="Visible" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width= "1*"/>
                     <ColumnDefinition Width= "1*"/>
@@ -498,8 +529,6 @@
 
 
             </Grid>
-            <CheckBox x:Name="faceCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="55,0,0,0" Grid.Row="4" VerticalAlignment="Top" IsThreeState="True"/>
-            <ToggleButton x:Name="savedGraphsChechBox" Content="" Grid.Column="3" HorizontalAlignment="Left" Margin="35,0,0,0" Grid.Row="1" VerticalAlignment="Top" IsThreeState="True"/>
         </Grid>
     </Grid>
 </Window>
