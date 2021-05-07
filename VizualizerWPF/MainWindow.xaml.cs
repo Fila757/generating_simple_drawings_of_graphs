@@ -19,6 +19,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
+using System.Text.RegularExpressions;
+
 
 /// <summary>
 /// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
@@ -157,6 +159,11 @@ namespace VizualizerWPF
         Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
             Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
 
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^0-9\.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
         public MainWindow()
         {
@@ -187,7 +194,7 @@ namespace VizualizerWPF
 
 
 
-            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value); 
+            graphGenerator = new GraphGenerator((int)NextDrawingUpDown.Value);
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
@@ -1813,6 +1820,25 @@ namespace VizualizerWPF
             foreach (var edge in graphCoordinates.edges)
                 SubDivideEdge(edge, graphCoordinates);
         }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void RestoreButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+                WindowState = WindowState.Normal;
+            else if(WindowState == WindowState.Normal)
+                WindowState = WindowState.Maximized;
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
         /// <summary>
         /// Function similar to ReDrawGraph function but 
         /// there is only rescaling needed
