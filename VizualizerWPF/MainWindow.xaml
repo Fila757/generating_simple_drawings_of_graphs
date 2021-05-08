@@ -12,8 +12,30 @@
         TextElement.FontSize="12"
         FontFamily="{materialDesign:MaterialDesignFont}"
         Height="1080" Width="1920" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"></EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"></EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"></EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"></EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
 
-
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"></BeginStoryboard>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"></BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    
     <Grid>
         <Grid Height="30" VerticalAlignment="Top" Background="#FF299FDD" >
             <TextBlock Text="Graph drawing tool" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"></TextBlock>
@@ -34,12 +56,49 @@
                 <Button Name="MinimizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowMinimize}" ToolTip="Icon" Click="MinimizeButton_Click"/>
                 <Button Name="MaximizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowRestore}" ToolTip="Icon" Click="RestoreButton_Click"/>
             </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width= "0*"/>
+                    <ColumnDefinition Width= "0*"/>
+                    <ColumnDefinition Width= "560*"/>
+                    <ColumnDefinition Width= "114*"/>
+                    <ColumnDefinition Width= "111*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="3" HorizontalAlignment="Left">
+                    <Grid>
+                        <Button Name="CloseMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon ArrowCollapseRight}" ToolTip="Icon"/>
+                        <Button Name="OpenMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon Menu}" ToolTip="Icon" Visibility="Collapsed"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
         </Grid>
         <Grid Margin="0, 30, 0, 0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width= "79*"/>
-                <ColumnDefinition Width= "79*"/>
-                <ColumnDefinition Width= "381*"/>
+                <ColumnDefinition Width= "0*"/>
+                <ColumnDefinition Width= "0*"/>
+                <ColumnDefinition Width= "560*"/>
+                <ColumnDefinition Width= "114*"/>
+                <ColumnDefinition Width= "111*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height= "67*"/>
+                <RowDefinition Height= "77*"/>
+                <RowDefinition Height= "59*"/>
+                <RowDefinition Height= "57*"/>
+                <RowDefinition Height= "53*"/>
+                <RowDefinition Height= "64*"/>
+                <RowDefinition Height= "234*"/>
+                <RowDefinition Height= "126*"/>
+                <RowDefinition Height= "67*"/>
+                <RowDefinition Height= "116*"/>
+            </Grid.RowDefinitions>
+            <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="3"  Grid.Row ="0" Grid.RowSpan="12" MouseDown="canvas_MouseDown" Background="Transparent" Loaded="Canvas_Loaded"/>
+        </Grid>
+        <Grid x:Name ="GridMenu" Margin="0, 30, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width= "0*"/>
+                <ColumnDefinition Width= "0*"/>
+                <ColumnDefinition Width= "560*"/>
                 <ColumnDefinition Width= "114*"/>
                 <ColumnDefinition Width= "111*"/>
             </Grid.ColumnDefinitions>
@@ -86,8 +145,6 @@
             <Button x:Name="PreviousDrawing" Content="Previous" Grid.Column="3" Grid.Row="1" Click="PreviousDrawing_Click"/>
 
             <!--Image Name="legend" Grid.Column="2" Grid.ColumnSpan ="1" Grid.Row="9" Source="/re_numbered_legend.png" Stretch="Uniform" Margin="0,33,0,0" Grid.RowSpan="2"/-->
-
-            <Canvas x:Name="mainCanvas" Grid.ColumnSpan ="3"  Grid.Row ="0" Grid.RowSpan="12" MouseDown="canvas_MouseDown" Background="Transparent" Loaded="Canvas_Loaded"/>
 
             <!--TextBlock x:Name="textBlockKEdges" Grid.Column ="3" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
             <!--TextBlock x:Name="textBlockAMKEdges" Grid.Column ="0" Grid.Row= "8" TextAlignment="right" Visibility="Hidden" Margin="0,61,0,0" Grid.RowSpan="2"/-->
