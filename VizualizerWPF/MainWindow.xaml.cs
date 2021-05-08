@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
 using System.Text.RegularExpressions;
-
+using System.ComponentModel;
 
 /// <summary>
 /// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
@@ -61,7 +61,7 @@ namespace VizualizerWPF
     /// </summary>
     public enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges, ReferenceFace}; //AM = AtMost
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
         /// <param name="cx">Shift from 0,0 origin</param>
@@ -94,6 +94,50 @@ namespace VizualizerWPF
 
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
         int Smoothing => (int)Double.Parse(SmoothingTextBox.Text);
+
+        double operatorGridWidth;
+        double canvasWidth;
+
+        private void RecalculateCanvasWidth()
+        {
+            CanvasWidth = ActualWidth - operatorGridWidth;
+        }
+
+
+        public double CanvasWidth
+        {
+            get
+            {
+                return this.canvasWidth;
+            }
+
+            set
+            {
+                if (value != this.canvasWidth)
+                {
+                    this.canvasWidth = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public double OperatorGridWidth
+        {
+            get
+            {
+                return this.operatorGridWidth;
+            }
+
+            set
+            {
+                if (value != this.operatorGridWidth)
+                {
+                    this.operatorGridWidth = value;
+                    RecalculateCanvasWidth();
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
@@ -173,6 +217,7 @@ namespace VizualizerWPF
             statesCalculation[StateCalculation.Intersections] = true;
 
             InitializeComponent();
+            DataContext = this;
 
             FlushFromBackUpToNormal(); // at the beggining get everything I draw last time
 
@@ -393,7 +438,12 @@ namespace VizualizerWPF
             }
         }
 
-
+        
+        private void MenuGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            operatorGridWidth = SecondColumn.ActualWidth;
+        }
+        
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
             actualWidth = mainCanvas.ActualWidth;
@@ -1649,6 +1699,7 @@ namespace VizualizerWPF
                 ellipse.MouseDown += ellipse_MouseDown;
                 mainCanvas.Children.Add(ellipse);
 
+                //MessageBox.Show((new { X = pos.X, Y = pos.Y }).ToString());
                 var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular);
                 graphCoordinates.vertices.Add(vertex);
                 graphCoordinates.neighbors.Add(vertex, new List<Edge>());
@@ -1747,7 +1798,17 @@ namespace VizualizerWPF
             return result;
         }
 
-        int divisionConst = 50;  
+        int divisionConst = 50;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
 
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
@@ -1839,6 +1900,25 @@ namespace VizualizerWPF
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
+
+
+        private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
+        {
+            OpenMenuButton.Visibility = Visibility.Collapsed;
+            CloseMenuButton.Visibility = Visibility.Visible;   
+        }
+
+        private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
+        {
+            OpenMenuButton.Visibility = Visibility.Visible;
+            CloseMenuButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void SecondColumn_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
 
 
         /// <summary>
