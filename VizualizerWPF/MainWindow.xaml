@@ -27,7 +27,7 @@
                     <StackPanel>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" Text="Smoothing: "></TextBlock>
-                            <TextBox x:Name="SmoothingTextBox" Width ="50" Text="10" VerticalAlignment="Center" PreviewTextInput="MinMaxValueEdgeChecker"></TextBox>
+                            <TextBox x:Name="SmoothingTextBox" Width ="50" Text="10" VerticalAlignment="Center" PreviewTextInput="SmoothingChecker"></TextBox>
                         </StackPanel>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" Text ="AutoConstant: "></TextBlock>

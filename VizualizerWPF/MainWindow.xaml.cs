@@ -206,16 +206,35 @@ namespace VizualizerWPF
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void MinMaxValueEdgeChecker(object sender, TextCompositionEventArgs e)
+        private void SmoothingChecker(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex(@"[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        private void MinMaxValueEdgeChecker(object sender, TextCompositionEventArgs e)
+        {
+            if ((sender as TextBox).Text.Length != 0)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = (!e.Text.Any(x => (Char.IsDigit(x))) || !e.Text.Any(x => x - '0' >= 0 && 8 >= x - '0'));
+            }
+            
+        }
+
         private void MinMaxValueVertexChecker(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex(@".{2,}|[^4-8]");
-            e.Handled = regex.IsMatch(e.Text);
+            if ((sender as TextBox).Text.Length != 0)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = (!e.Text.Any(x => (Char.IsDigit(x))) || !e.Text.Any(x => x - '0' >= 4 && 8 >= x - '0'));
+            }
         }
 
         public MainWindow()
