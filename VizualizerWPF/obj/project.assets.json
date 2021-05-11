@@ -26,15 +26,6 @@
           "build/MaterialDesignThemes.targets": {}
         }
       },
-      "NumericUpDown/3.0.2": {
-        "type": "package",
-        "compile": {
-          "lib/NumericUpDown.dll": {}
-        },
-        "runtime": {
-          "lib/NumericUpDown.dll": {}
-        }
-      },
       "ShowMeTheXAML/2.0.0": {
         "type": "package",
         "compile": {
@@ -46,27 +37,6 @@
         "frameworkReferences": [
           "Microsoft.WindowsDesktop.App.WPF"
         ]
-      },
-      "Syncfusion.Licensing/18.2.0.57": {
-        "type": "package",
-        "compile": {
-          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/Syncfusion.Licensing.dll": {}
-        }
-      },
-      "Syncfusion.Shared.WPF/18.2.0.57": {
-        "type": "package",
-        "dependencies": {
-          "Syncfusion.Licensing": "18.2.0.57"
-        },
-        "compile": {
-          "lib/netcoreapp3.1/Syncfusion.Shared.WPF.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/Syncfusion.Shared.WPF.dll": {}
-        }
       }
     }
   },
@@ -126,18 +96,6 @@
         "tools/VisualStudioToolsManifest.xml"
       ]
     },
-    "NumericUpDown/3.0.2": {
-      "sha512": "qh6KgNrVvzFtG3EAS3bxqgA27RMm1R2HpJ0n998lYqIz3zwxQN9DlZs8rTRtcEziJbV5TEZBPvySPbTyeIWqGQ==",
-      "type": "package",
-      "path": "numericupdown/3.0.2",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/NumericUpDown.dll",
-        "numericupdown.3.0.2.nupkg.sha512",
-        "numericupdown.nuspec"
-      ]
-    },
     "ShowMeTheXAML/2.0.0": {
       "sha512": "ljDrkSyGhx3EKIq73c9317m7NsvTjCKVdO0vnqzjwdWAgFkpdfrEd3Nn6uF/Mc+QUTSUfFfjmONJDfYSPwCB3g==",
       "type": "package",
@@ -157,96 +115,12 @@
         "showmethexaml.2.0.0.nupkg.sha512",
         "showmethexaml.nuspec"
       ]
-    },
-    "Syncfusion.Licensing/18.2.0.57": {
-      "sha512": "FLNvydR2jg9DtxgEhaLJaI/9lW7Be14HGr6X9el5GbUUqnUcQyxWERRx6RSeLesOl/hBXsnaMuI6fcQYczQ6lw==",
-      "type": "package",
-      "path": "syncfusion.licensing/18.2.0.57",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/MonoAndroid10/Syncfusion.Licensing.dll",
-        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
-        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
-        "lib/net20/Syncfusion.Licensing.dll",
-        "lib/net35/Syncfusion.Licensing.dll",
-        "lib/net40/Syncfusion.Licensing.dll",
-        "lib/net45/Syncfusion.Licensing.dll",
-        "lib/net451/Syncfusion.Licensing.dll",
-        "lib/net46/Syncfusion.Licensing.dll",
-        "lib/netcoreapp3.1/Syncfusion.Licensing.dll",
-        "lib/netcoreapp5.0/Syncfusion.Licensing.dll",
-        "lib/netstandard1.0/Syncfusion.Licensing.dll",
-        "lib/netstandard1.2/Syncfusion.Licensing.dll",
-        "lib/netstandard1.4/Syncfusion.Licensing.dll",
-        "lib/netstandard2.0/Syncfusion.Licensing.dll",
-        "lib/portable-win+net45+wp80+win81+wpa81/Syncfusion.Licensing.dll",
-        "lib/uap10.0/Syncfusion.Licensing.dll",
-        "syncfusion.licensing.18.2.0.57.nupkg.sha512",
-        "syncfusion.licensing.nuspec"
-      ]
-    },
-    "Syncfusion.Shared.WPF/18.2.0.57": {
-      "sha512": "3w/TZkMHaMUUcxZY3V2rJZ/VFAUcN2OAI/0nNnagjO3IJMTorxTHkJR3eGhFdr7d4dC2J3KpE7EvXLBe7dcBCw==",
-      "type": "package",
-      "path": "syncfusion.shared.wpf/18.2.0.57",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net35/Design/Syncfusion.Design.Wpf.dll",
-        "lib/net35/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/net35/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
-        "lib/net35/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
-        "lib/net35/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
-        "lib/net35/Syncfusion.Shared.WPF.dll",
-        "lib/net35/Syncfusion.Shared.WPF.xml",
-        "lib/net40/Design/Syncfusion.Design.Wpf.dll",
-        "lib/net40/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/net40/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
-        "lib/net40/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
-        "lib/net40/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
-        "lib/net40/Syncfusion.Shared.WPF.dll",
-        "lib/net40/Syncfusion.Shared.WPF.xml",
-        "lib/net45/Design/Syncfusion.Design.Wpf.dll",
-        "lib/net45/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/net45/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
-        "lib/net45/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
-        "lib/net45/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
-        "lib/net45/Syncfusion.Shared.WPF.dll",
-        "lib/net45/Syncfusion.Shared.WPF.xml",
-        "lib/net451/Design/Syncfusion.Design.Wpf.dll",
-        "lib/net451/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/net451/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
-        "lib/net451/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
-        "lib/net451/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
-        "lib/net451/Syncfusion.Shared.WPF.dll",
-        "lib/net451/Syncfusion.Shared.WPF.xml",
-        "lib/net46/Design/Syncfusion.Design.Wpf.dll",
-        "lib/net46/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/net46/Design/Syncfusion.Shared.Wpf.Expression.Design.dll",
-        "lib/net46/Design/Syncfusion.Shared.Wpf.VisualStudio.Design.dll",
-        "lib/net46/Design/Syncfusion.Shared.Wpf.dll.Design.dll",
-        "lib/net46/Syncfusion.Shared.WPF.dll",
-        "lib/net46/Syncfusion.Shared.WPF.xml",
-        "lib/netcoreapp3.1/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/netcoreapp3.1/Syncfusion.Shared.WPF.dll",
-        "lib/netcoreapp3.1/Syncfusion.Shared.WPF.xml",
-        "lib/netcoreapp5.0/Design/Syncfusion.Shared.WPF.DesignTools.dll",
-        "lib/netcoreapp5.0/Syncfusion.Shared.WPF.dll",
-        "lib/netcoreapp5.0/Syncfusion.Shared.WPF.xml",
-        "syncfusion.shared.wpf.18.2.0.57.nupkg.sha512",
-        "syncfusion.shared.wpf.nuspec",
-        "tools/VisualStudioToolsManifest.xml"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "MaterialDesignThemes >= 4.0.0",
-      "NumericUpDown >= 3.0.2",
-      "ShowMeTheXAML >= 2.0.0",
-      "Syncfusion.Shared.WPF >= 18.2.0.57"
+      "ShowMeTheXAML >= 2.0.0"
     ]
   },
   "packageFolders": {
@@ -292,17 +166,9 @@
             "target": "Package",
             "version": "[4.0.0, )"
           },
-          "NumericUpDown": {
-            "target": "Package",
-            "version": "[3.0.2, )"
-          },
           "ShowMeTheXAML": {
             "target": "Package",
             "version": "[2.0.0, )"
-          },
-          "Syncfusion.Shared.WPF": {
-            "target": "Package",
-            "version": "[18.2.0.57, )"
           }
         },
         "imports": [
@@ -326,17 +192,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'NumericUpDown 3.0.2' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "NumericUpDown",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }
