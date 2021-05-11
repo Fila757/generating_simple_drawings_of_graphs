@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VizualizerWPF"
         xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:System="clr-namespace:System;assembly=mscorlib"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
@@ -13,31 +13,15 @@
         FontFamily="{materialDesign:MaterialDesignFont}"
         Height="1080" Width="1920" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
     <Window.Resources>
-        <Storyboard x:Key="MenuOpen">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="70"></EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="{Binding ElementName=SecondColumn, Path=ActualWidth}"></EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="MenuClose">
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="{Binding ElementName=SecondColumn, Path=ActualWidth}"></EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"></EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+       
     </Window.Resources>
 
     <Window.Triggers>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"></BeginStoryboard>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
-            <BeginStoryboard Storyboard="{StaticResource MenuClose}"></BeginStoryboard>
-        </EventTrigger>
+     
     </Window.Triggers>
 
-    <Grid>
-        <Grid Height="30" VerticalAlignment="Top" Background="#FF299FDD" >
+    <Grid x:Name="GeneralGrid">
+        <Grid x:Name ="TopGrid" Height="30" VerticalAlignment="Top" Background="#FF299FDD" >
             <TextBlock Text="Graph drawing tool" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"></TextBlock>
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" >
                 <materialDesign:PopupBox Margin="0" StaysOpen="True">
@@ -56,28 +40,94 @@
                 <Button Name="MinimizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowMinimize}" ToolTip="Icon" Click="MinimizeButton_Click"/>
                 <Button Name="MaximizeButton" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon WindowRestore}" ToolTip="Icon" Click="RestoreButton_Click"/>
             </StackPanel>
-            <Grid>
+            <Grid x:Name="ButtonsGrid1" Loaded="HeaderLine_Loaded">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width= "5*"/>
-                    <ColumnDefinition Width= "2*"/>
+                    <ColumnDefinition Width= "5*" />
+                    <ColumnDefinition Width= "2*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Left">
-                    <Grid>
-                        <Button Name="CloseMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon ArrowCollapseRight}" ToolTip="Icon" Click="ButtonCloseMenu_Click"/>
-                        <Button Name="OpenMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon Menu}" ToolTip="Icon" Visibility="Collapsed"  Click="ButtonOpenMenu_Click"/>
-                    </Grid>
-                </StackPanel>
+
+                <Grid x:Name="ButtonsGrid2" Grid.Column="1" HorizontalAlignment="Left">
+                    <Button Name="CloseMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon ArrowCollapseRight}" ToolTip="Icon" Click="ButtonCloseMenu_Click"/>
+                    <Button Name="OpenMenuButton" VerticalAlignment="Center" Style="{DynamicResource MaterialDesignFlatButton}"  Content="{materialDesign:PackIcon Menu}" ToolTip="Icon" Visibility="Collapsed"  Click="ButtonOpenMenu_Click"/>
+                </Grid>
             </Grid>
         </Grid>
         <Grid x:Name="BottomGrid" Margin="0, 30, 0, 0" >
+            <Grid.Resources>
+                <Storyboard x:Key="MenuOpen">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>2</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.Column)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="mainCanvas" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <!--DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="2"></EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"></EasingDoubleKeyFrame-->
+
+                </Storyboard>
+                <Storyboard x:Key="MenuClose">
+                    <!--DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"></EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="2"></EasingDoubleKeyFrame-->
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.Column)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>2</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="mainCanvas" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
+            </Grid.Resources>
+
+            <!--Grid.Triggers>
+                <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
+                    <BeginStoryboard Storyboard="{StaticResource MenuOpen}"></BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
+                    <BeginStoryboard Storyboard="{StaticResource MenuClose}"></BeginStoryboard>
+                </EventTrigger>
+            </-->
+
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width= "5*"/>
-                <ColumnDefinition x:Name="SecondColumn" Width= "2*"/>
+                <ColumnDefinition Width= "5*" x:Name="FirstColumn"/>
+                <ColumnDefinition Width= "1.5*" x:Name="SecondColumn"/>
+                <ColumnDefinition Width= "0.5*" x:Name="ThirdColumn"/>
             </Grid.ColumnDefinitions>
-            <Grid  Grid.Column="0">
-                <Canvas x:Name="mainCanvas" Width="{Binding ElementName=_this, Path=CanvasWidth}" MouseDown="canvas_MouseDown" Background="REd" Loaded="Canvas_Loaded"/>
-            </Grid>
-            <Grid x:Name ="GridMenu" Width="{Binding ElementName=_this, Path=OperatorGridWidth}" HorizontalAlignment="Right" Grid.Column="1" Loaded="MenuGrid_Loaded">
+            <!-- Grid.Column="{Binding GridColumn}" Grid.ColumnSpan="{Binding GridColumnSpan}"-->
+            <Canvas x:Name="mainCanvas" MouseDown="canvas_MouseDown" Grid.Column="0" Grid.ColumnSpan="1" Background="Transparent"  Loaded="Canvas_Loaded"/>
+            <Grid x:Name ="GridMenu" Grid.Column="1" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0*"/>
                     <ColumnDefinition Width="0*"/>

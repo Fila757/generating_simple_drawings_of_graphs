@@ -21,6 +21,7 @@ using System.Windows.Threading;
 using Path = System.Windows.Shapes.Path;
 using System.Text.RegularExpressions;
 using System.ComponentModel;
+using System.Windows.Media.Animation;
 
 /// <summary>
 /// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
@@ -81,8 +82,8 @@ namespace VizualizerWPF
         public double sizeOfVertex;
         public double scale;
 
-        double actualHeight = 0;
-        double actualWidth = 0;
+        double actualHeight = 500;
+        double actualWidth = 1000;
 
         double lambda = 1.1;
 
@@ -95,8 +96,8 @@ namespace VizualizerWPF
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
         int Smoothing => (int)Double.Parse(SmoothingTextBox.Text);
 
-        double operatorGridWidth;
-        double canvasWidth;
+        double operatorGridWidth = 300;
+        double canvasWidth = 1000;
 
         private void RecalculateCanvasWidth()
         {
@@ -439,15 +440,16 @@ namespace VizualizerWPF
         }
 
         
-        private void MenuGrid_Loaded(object sender, RoutedEventArgs e)
+        private void HeaderLine_Loaded(object sender, RoutedEventArgs e)
         {
-            operatorGridWidth = SecondColumn.ActualWidth;
+            OperatorGridWidth = SecondColumn.ActualWidth;
+            CanvasWidth = FirstColumn.ActualWidth;
         }
         
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
-            actualWidth = mainCanvas.ActualWidth;
-            actualHeight = mainCanvas.ActualHeight;
+            actualWidth = (ActualWidth * 5) / 7;
+            actualHeight = ActualHeight - 30;
 
             mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = 0, X2 = actualWidth, Y2 = 0 });
             mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth, Y2 = actualHeight });
@@ -1668,6 +1670,8 @@ namespace VizualizerWPF
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
+            MessageBox.Show((mainCanvas.ActualWidth).ToString());
+
            //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
@@ -1901,17 +1905,49 @@ namespace VizualizerWPF
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
+        private void UpdateCanvasWidthWhenClose()
+        {
+            actualWidth = FirstColumn.ActualWidth;
+        }
+
+        private void UpdateCanvasWidthWhenOpen()
+        {
+            actualWidth = FirstColumn.ActualWidth + SecondColumn.ActualWidth;
+        }
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
         {
             OpenMenuButton.Visibility = Visibility.Collapsed;
-            CloseMenuButton.Visibility = Visibility.Visible;   
+            CloseMenuButton.Visibility = Visibility.Visible;
+
+            var sb = (Storyboard)BottomGrid.FindResource("MenuOpen");
+            sb.Begin();
+
+            UpdateCanvasWidthWhenClose();
+            RedrawGraph(graphCoordinates);
+
         }
+
+        /*
+        private void storyboard_RedrawGraph(object sender, EventArgs e)
+        {
+            UpdateCanvasSizes();
+            RedrawGraph(graphCoordinates);
+            var sb = (Storyboard)BottomGrid.FindResource("MenuClose");
+            sb.Completed -= new EventHandler(storyboard_RedrawGraph);
+        }
+        */
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
             OpenMenuButton.Visibility = Visibility.Visible;
             CloseMenuButton.Visibility = Visibility.Collapsed;
+
+            var sb = (Storyboard)BottomGrid.FindResource("MenuClose");
+            sb.Begin();
+
+            UpdateCanvasWidthWhenOpen();
+            RedrawGraph(graphCoordinates);
         }
 
         private void SecondColumn_Loaded(object sender, RoutedEventArgs e)
