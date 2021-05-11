@@ -23,10 +23,6 @@ using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
 
-/// <summary>
-/// In this project Syncfusion.WPF nuget is required because Syncfusion UpDown is used
-/// Also english version of file system is assumed because decimal dots are used (25.4)
-/// </summary>
 
 namespace VizualizerWPF
 {
@@ -207,6 +203,18 @@ namespace VizualizerWPF
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex(@"[^0-9\.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void MinMaxValueEdgeChecker(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void MinMaxValueVertexChecker(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@".{2,}|[^4-8]");
             e.Handled = regex.IsMatch(e.Text);
         }
 
@@ -439,7 +447,13 @@ namespace VizualizerWPF
             }
         }
 
-        
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            // Begin dragging the window
+            this.DragMove();
+        }
         private void HeaderLine_Loaded(object sender, RoutedEventArgs e)
         {
             OperatorGridWidth = SecondColumn.ActualWidth;
@@ -1490,31 +1504,31 @@ namespace VizualizerWPF
                     int second, third;
 
                     textBlock = removedEdgeAMAMAMSecond;
-                    textBlock.Text = (FindName($"invariantAmAmKedges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text.ToString();
+                    textBlock.Text = (FindName($"invariantAmAmKedges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text.ToString();
                     second = Int32.Parse(textBlock.Text);
 
 
                     textBlock = removedEdgeAMAMAMThird;
                     textBlock.Text =
-                        (((((int)kWhenRemovingUpDown.Value + 2) - withoutEdge.kEdge)
+                        ((((Int32.Parse(kWhenRemovingUpDown.Text) + 2) - withoutEdge.kEdge)
                         *
-                        (((int)kWhenRemovingUpDown.Value + 1) - withoutEdge.kEdge)) / 2).ToString();
+                        ((Int32.Parse(kWhenRemovingUpDown.Text) + 1) - withoutEdge.kEdge)) / 2).ToString();
                     third = Int32.Parse(textBlock.Text);
 
-                    removedEdgeAMAMAMFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString();
+                    removedEdgeAMAMAMFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) - second - third).ToString();
 
 
 
                     textBlock = removedEdgeAMAMSecond;
-                    textBlock.Text = (FindName($"invariantAmKedges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text.ToString();
+                    textBlock.Text = (FindName($"invariantAmKedges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text.ToString();
                     second = Int32.Parse(textBlock.Text);
 
 
                     textBlock = removedEdgeAMAMThird;
-                    textBlock.Text = (((int)kWhenRemovingUpDown.Value + 1) - withoutEdge.kEdge).ToString();
+                    textBlock.Text = ((Int32.Parse(kWhenRemovingUpDown.Text) + 1) - withoutEdge.kEdge).ToString();
                     third = Int32.Parse(textBlock.Text);
 
-                    removedEdgeAMAMFirst.Text = (Int32.Parse((FindName($"amAmKEdges{(int)kWhenRemovingUpDown.Value}") as TextBlock).Text) - second - third).ToString();
+                    removedEdgeAMAMFirst.Text = (Int32.Parse((FindName($"amAmKEdges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) - second - third).ToString();
 
 
                 }

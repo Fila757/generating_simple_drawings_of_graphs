@@ -4,14 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VizualizerWPF"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:System="clr-namespace:System;assembly=mscorlib"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
         TextElement.FontSize="12"
         FontFamily="{materialDesign:MaterialDesignFont}"
-        Height="1080" Width="1920" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
+        Height="500" Width="888" ResizeMode="CanResize" WindowStartupLocation="CenterScreen" WindowStyle="None" WindowState="Maximized">
     <Window.Resources>
        
     </Window.Resources>
@@ -28,7 +27,7 @@
                     <StackPanel>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" Text="Smoothing: "></TextBlock>
-                            <TextBox x:Name="SmoothingTextBox" Width ="50" Text="10" VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox"></TextBox>
+                            <TextBox x:Name="SmoothingTextBox" Width ="50" Text="10" VerticalAlignment="Center" PreviewTextInput="MinMaxValueEdgeChecker"></TextBox>
                         </StackPanel>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock VerticalAlignment="Center" Text ="AutoConstant: "></TextBlock>
@@ -199,7 +198,7 @@
                     <TextBlock x:Name="numberOfDrawing" Grid.Column="1" FontWeight="ExtraBlack" FontSize="14" Text="0" TextAlignment="center" VerticalAlignment="Top"  Visibility="Visible"/>
                 </Grid>
                 <TextBlock x:Name="infoVertices" Grid.Column ="3" TextAlignment="Left" VerticalAlignment="Center" Visibility="Visible" Text="Vertices:"/>
-                <TextBox x:Name="VerticesTextBox" Grid.Column="3" Text="4" VerticalAlignment="Center" PreviewTextInput="NumberValidationTextBox" Width="50"/>
+                <TextBox x:Name="VerticesTextBox" Grid.Column="3" Text="4" VerticalAlignment="Center" PreviewTextInput="MinMaxValueVertexChecker" Width="50"/>
 
 
                 <Grid Grid.Row="0" Grid.Column="4">
@@ -599,8 +598,7 @@
 
                     <TextBlock x:Name="infoRemovedEdge" Grid.Column ="0" Grid.Row= "7" Grid.ColumnSpan="5" TextAlignment="Left" Margin="1,1,0,0" Visibility="Visible" Text="Edges (and Vertices) " Foreground="Black"/>
 
-                    <syncfusion:UpDown x:Name="kWhenRemovingUpDown" Value="1" Step="1" Grid.Column="8" Grid.Row="7" Margin="0,0,0,0" NumberDecimalDigits="0"  
-                           MaxValue="8" MinValue="0"/>
+                    <TextBox x:Name="kWhenRemovingUpDown" Text="1" Grid.Column="8" Grid.Row="7" VerticalAlignment="Center" Width="50" PreviewTextInput="MinMaxValueEdgeChecker"/>
                     <TextBlock x:Name="infoRemovedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="r: " Foreground="Red"/>
                     <TextBlock x:Name="removedEdgeAMAMAMFirst" Grid.Column ="0" Grid.Row= "7" TextAlignment="Center" Margin="1,25,0,0" Visibility="Visible" Text="-" Foreground="Black"/>
 
