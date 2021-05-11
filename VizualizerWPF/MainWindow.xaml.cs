@@ -1670,13 +1670,14 @@ namespace VizualizerWPF
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
 
-            MessageBox.Show((mainCanvas.ActualWidth).ToString());
 
            //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
 
             Point pos = Mouse.GetPosition(mainCanvas);
+            //MessageBox.Show((mainCanvas.ActualWidth).ToString() + " " + pos.ToString());
+
 
             if (statesCalculation[StateCalculation.ReferenceFace])
             {
