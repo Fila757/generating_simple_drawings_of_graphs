@@ -104,7 +104,7 @@
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="mainCanvas" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                         <DiscreteObjectKeyFrame KeyTime="0">
                             <DiscreteObjectKeyFrame.Value>
-                                <System:Int32>1</System:Int32>
+                                <System:Int32>2</System:Int32>
                             </DiscreteObjectKeyFrame.Value>
                         </DiscreteObjectKeyFrame>
                     </ObjectAnimationUsingKeyFrames>
