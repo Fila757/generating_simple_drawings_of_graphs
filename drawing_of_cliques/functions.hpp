@@ -566,7 +566,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				if (done) return;
 			}
 			else if ((b == number_of_vertices - 2) && (a == number_of_vertices - 3)) {
-				find_the_way_to_intersect(starts[0][b + 1], starts[b + 1][0], 0, b + 1);
+				find_the_way_to_intersect(starts[1][b + 1], starts[b + 1][1], 1, b + 1);
 
 				if (done) return;
 			}
