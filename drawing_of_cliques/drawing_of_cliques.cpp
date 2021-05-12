@@ -37,11 +37,15 @@ int main()
     vector<graph> graphs;
     shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();
  
-    system(("split --numeric-suffixes=1 --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
+    system(("split -d --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
+
 
     for(int i = 0; i < number_of_threads - 1;i++){
-        graphs.push_back(graph(n, i+1, shared_wraper));
+        graphs.push_back(graph(n, i, shared_wraper));
     }
+
+    
+    
 
     //cout << "graphs created" << endl;
     vector<thread> threads;
