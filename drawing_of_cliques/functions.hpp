@@ -21,7 +21,7 @@ using namespace std;
 #endif
 
 #ifndef SIZE_OF_ARRAY
-#define SIZE_OF_ARRAY 7
+#define SIZE_OF_ARRAY 10
 #endif 
 
 
@@ -30,9 +30,9 @@ using namespace std;
 
 using array_4D = vector<vector<vector<vector<bool> > > >;
 
-long long fact[SIZE_OF_ARRAY + 5];
+inline long long fact[SIZE_OF_ARRAY + 5];
 
-void precount_factorials(){
+inline void precount_factorials(){
 	fact[0] = 1;
 	for(int i = 1; i < SIZE_OF_ARRAY + 5;i++)
 		fact[i] = i * fact[i-1];
@@ -143,6 +143,8 @@ struct graph {
 	bool is_face_incorrect(shared_ptr<Face> face);
 	//bool is_face_incorrect_slower(shared_ptr<Face> face);
 
+	void print_counters(Face* f);
+
 
 };
 
@@ -162,7 +164,7 @@ struct Face {
 	Edge* edge_;
 
 	Face() {
-		for (int i = 0; i < SIZE_OF_ARRAY - 1;i++)
+		for (int i = 0; i < SIZE_OF_ARRAY + 5;i++)
 			counter_of_same_last_edges[i] = 0;	
 		}
 
@@ -170,7 +172,7 @@ struct Face {
 
 
 	//int counter_of_last_edges = 0;
-	int counter_of_same_last_edges[SIZE_OF_ARRAY - 1];
+	int counter_of_same_last_edges[SIZE_OF_ARRAY + 5];
 };
 
 struct Edge {
@@ -212,8 +214,8 @@ inline void print_graph(graph* g) {
 }
 
 
-inline void print_counters(Face* f) {
-	for (int i = 0; i < SIZE_OF_ARRAY - 1;i++)
+inline void graph::print_counters(Face* f) {
+	for (int i = 0; i < number_of_vertices - 1;i++)
 		cout << f->counter_of_same_last_edges[i] << " ";
 	cout << endl;
 }
@@ -272,7 +274,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 			cur_edge = cur_edge->next_;
 		}
 
-		for (int i = 0; i < SIZE_OF_ARRAY-1;i++) {
+		for (int i = 0; i < number_of_vertices - 1;i++) {
 			face->counter_of_same_last_edges[i] -= new_face->counter_of_same_last_edges[i];
 		}
 
@@ -550,14 +552,24 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_, a, b);
 
-			if (b < number_of_vertices - 1) {
+			if (b < number_of_vertices - 2) { //the last vertex is out due to heuristics
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
 
 				if (done) return;
 
 			}
-			else if (a < number_of_vertices - 2) {
+			else if (a < number_of_vertices - 3) {
 				find_the_way_to_intersect(starts[a + 1][a + 2], starts[a + 2][a + 1], a + 1, a + 2);
+
+				if (done) return;
+			}
+			else if (b == number_of_vertices - 2 && a == number_of_vertices - 3) {
+				find_the_way_to_intersect(starts[0][b + 1], starts[b + 1][0], 0, b + 1);
+
+				if (done) return;
+			}
+			else if (b == number_of_vertices - 1) {
+				find_the_way_to_intersect(starts[a + 1][b], starts[b][a + 1], a + 1, b);
 
 				if (done) return;
 			}
@@ -673,7 +685,7 @@ inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
 
 inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
 	int sum = 0;
- 	for(int i = 0; i < SIZE_OF_ARRAY - 1;i++){
+ 	for(int i = 0; i < number_of_vertices - 1;i++){
 		if (face->counter_of_same_last_edges[i] >= 2) //treshold by article
 			return true;
 		//cout << face->counter_of_same_last_edges[i] << " ";
