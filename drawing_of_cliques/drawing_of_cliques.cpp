@@ -32,7 +32,7 @@ int main()
 
     cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
-    int number_of_threads = std::thread::hardware_concurrency();
+    int number_of_threads = 2;//std::thread::hardware_concurrency();
 
     vector<graph> graphs;
     shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();

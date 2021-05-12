@@ -540,6 +540,7 @@ inline void graph::create_all_special_vertices() {
 
 inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, int b) {
 	
+	//cout << a << " " << b << endl;
 	auto seg = segments[s_index]->next_;
 	
 	//print_graph(this);
@@ -552,23 +553,24 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 			add_edge(segments[s_index]->from_, segments[t_index]->from_, segments[s_index]->face_, a, b);
 
+			
 			if (b < number_of_vertices - 2) { //the last vertex is out due to heuristics
 				find_the_way_to_intersect(starts[a][b + 1], starts[b + 1][a], a, b + 1);
 
 				if (done) return;
 
 			}
-			else if (a < number_of_vertices - 3) {
+			else if ((b == number_of_vertices - 2) && (a < number_of_vertices - 3)) {
 				find_the_way_to_intersect(starts[a + 1][a + 2], starts[a + 2][a + 1], a + 1, a + 2);
 
 				if (done) return;
 			}
-			else if (b == number_of_vertices - 2 && a == number_of_vertices - 3) {
+			else if ((b == number_of_vertices - 2) && (a == number_of_vertices - 3)) {
 				find_the_way_to_intersect(starts[0][b + 1], starts[b + 1][0], 0, b + 1);
 
 				if (done) return;
 			}
-			else if (b == number_of_vertices - 1) {
+			else if ((b == number_of_vertices - 1) && (a < number_of_vertices - 2)) {
 				find_the_way_to_intersect(starts[a + 1][b], starts[b][a + 1], a + 1, b);
 
 				if (done) return;
@@ -728,7 +730,7 @@ struct fingerprints {
 		//cout << "input " << input_path << endl;
 		input_file.open(input_path);
 
-		//cout << "opened also " << input_path << endl;
+		cout << "opened also " << input_path << endl;
 
 		string rotation_system;
 		if (!getline(input_file, rotation_system)) {
