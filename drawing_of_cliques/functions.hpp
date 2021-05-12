@@ -95,9 +95,9 @@ struct graph {
 		}
 
 
-		
+		string string_index = index < 10 ? "0" + to_string(index) : to_string(index);
 		auto output_path = "data/graph"
-			+ to_string(n) + "_0" + to_string(index) + ".txt";
+			+ to_string(n) + "_" + string_index + ".txt";
 		output_file.open(output_path);
 
 		cout << "opened " << output_path << endl;
@@ -721,8 +721,9 @@ struct fingerprints {
 	fingerprints(int n, int index) {
 		treshold = n; //its length is n-1 and -1 because 0 is on fixed position
 
+		string string_index = index < 10 ? "0" + to_string(index) : to_string(index);
 		auto input_path = "data/graph"
-			+ to_string(n - 1) + "_0" + to_string(index) + ".txt";
+			+ to_string(n - 1) + "_" + string_index + ".txt";
 
 		//cout << "input " << input_path << endl;
 		input_file.open(input_path);
