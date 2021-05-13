@@ -613,6 +613,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 					return;
 				}
 			}
+			//cout << a << " " << b << endl;
 		
 			//segments[edges.size() - 3]->from_->to_ = segments[edges.size() - 3];
 
@@ -649,6 +650,7 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 	*/
 
 	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_)){
+		//cout << "face incorrect" << endl;
 		return true;
 	}
 	return false;

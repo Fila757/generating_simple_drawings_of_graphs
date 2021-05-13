@@ -32,12 +32,12 @@ int main()
 
     cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
-    int number_of_threads = 2;//std::thread::hardware_concurrency();
+    int number_of_threads = std::thread::hardware_concurrency();
 
     vector<graph> graphs;
     shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();
  
-    //system(("split -d --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
+    system(("split -d --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
 
 
     for(int i = 0; i < number_of_threads - 1;i++){
