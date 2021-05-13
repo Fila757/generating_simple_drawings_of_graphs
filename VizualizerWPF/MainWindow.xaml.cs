@@ -92,8 +92,8 @@ namespace VizualizerWPF
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
         int Smoothing => SmoothingTextBox.Text.Length == 0 ? 0 : (int)Double.Parse(SmoothingTextBox.Text);
 
-        double operatorGridWidth = 300;
-        double canvasWidth = 1000;
+        //double operatorGridWidth = 300;
+        //double canvasWidth = 1000;
 
         //private void RecalculateCanvasWidth()
         //{
