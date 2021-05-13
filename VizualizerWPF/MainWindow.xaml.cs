@@ -90,17 +90,18 @@ namespace VizualizerWPF
         Point facePoint = farFarAway;
 
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
-        int Smoothing => (int)Double.Parse(SmoothingTextBox.Text);
+        int Smoothing => SmoothingTextBox.Text.Length == 0 ? 0 : (int)Double.Parse(SmoothingTextBox.Text);
 
         double operatorGridWidth = 300;
         double canvasWidth = 1000;
 
-        private void RecalculateCanvasWidth()
-        {
-            CanvasWidth = ActualWidth - operatorGridWidth;
-        }
+        //private void RecalculateCanvasWidth()
+        //{
+        //    CanvasWidth = ActualWidth - operatorGridWidth;
+        //}
 
 
+        /*
         public double CanvasWidth
         {
             get
@@ -135,7 +136,7 @@ namespace VizualizerWPF
                 }
             }
         }
-
+        */
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
@@ -473,12 +474,15 @@ namespace VizualizerWPF
             // Begin dragging the window
             this.DragMove();
         }
+
+        /*
         private void HeaderLine_Loaded(object sender, RoutedEventArgs e)
         {
             OperatorGridWidth = SecondColumn.ActualWidth;
             CanvasWidth = FirstColumn.ActualWidth;
         }
-        
+        */
+
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
             actualWidth = (ActualWidth * 5) / 7;
