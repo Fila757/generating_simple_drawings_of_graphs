@@ -104,7 +104,7 @@ namespace VizualizerWPF
         private bool IsShortEnough(Point point1, Point point2, Point point3)
         {
             // 20 is delta in forces
-            if((point1 - point2).Length < 50 && (point2 - point3).Length < 50)
+            if((point1 - point2).Length < 100 && (point2 - point3).Length < 100)
                 return true;
             return false;
         }
