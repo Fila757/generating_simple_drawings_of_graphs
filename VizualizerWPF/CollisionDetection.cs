@@ -636,5 +636,16 @@ namespace VizualizerWPF
             return a.X * b.Y - a.Y * b.X;
         }
 
+
+        public static bool CheckIfEdgeIsInTriangle(Vertex from, Vertex to, Vertex third, Vertex firstEdgeVertex, Vertex secondEdgeVertex)
+        {
+            if ((from == firstEdgeVertex && third == secondEdgeVertex) || (to == firstEdgeVertex && third == secondEdgeVertex) ||
+                (from == secondEdgeVertex && third == firstEdgeVertex) || (to == secondEdgeVertex && third == firstEdgeVertex))
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

@@ -1,0 +1,352 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Shapes;
+
+namespace VizualizerWPF
+{
+    /// <summary>
+    /// Class to store graph to know what to draw on canvas
+    /// <param name="vertices">Hashset to store vertices</param>
+    /// <param name="edge">List to store edges</param>
+    /// <param name="neigbors">Dictionary to store neighbors of all vertices</param>
+    /// </summary>
+    public class GraphCoordinates
+    {
+        
+        public HashSet<Vertex> vertices = new HashSet<Vertex>();
+        public List<Edge> edges = new List<Edge>();
+        public Dictionary<Vertex, List<Edge>> neighbors = new Dictionary<Vertex, List<Edge>>();
+
+
+        public static Point farFarAway = new Point { X = 10000, Y = 10000 };
+
+        public static Point facePoint = farFarAway;
+
+        static Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
+            Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
+
+
+        /// <summary>
+        /// Safe version of adding to dictionary 
+        /// if value is not present, new list is created
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        public void AddToDictionary(Vertex key, Edge value)
+        {
+            if (neighbors.ContainsKey(key))
+            {
+                neighbors[key].Add(value);
+            }
+            else
+            {
+                neighbors[key] = new List<Edge>();
+                neighbors[key].Add(value);
+            }
+        }
+
+        public Vertex FindVertex(Point center)
+        {
+            foreach (var vertex in vertices)
+            {
+                if (Vertex.Compare(vertex.center, center))
+                    return vertex;
+            }
+
+
+            MessageBox.Show("BUG");
+            return new Vertex();
+            throw new ArgumentException("There is no such a vertex with that center");
+        }
+        /// <summary>
+        /// Function to save coordinates to file.
+        /// </summary>
+        public void SaveCoordinates()
+        {
+            var streamWriter = new StreamWriter(
+                @"../../../data/savedGraphsBackUp.txt",
+                append: true);
+
+            Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
+            foreach (var from in neighbors.Keys)
+            {
+                foreach (var to in neighbors.Keys)
+                {
+                    visited[(from, to)] = false;
+                }
+            }
+
+            foreach (var v in neighbors.Keys)
+            {
+                foreach(var e in neighbors[v])
+                {
+                    var oppositeVertex = FindVertex(CollisionDetection.ChooseOppositeOne(e, v.center));
+                    if (visited[(v, oppositeVertex)])
+                        continue;
+                    visited[(v, oppositeVertex)] = true; visited[(oppositeVertex, v)] = true;
+
+                    PrintLine(streamWriter, e);
+
+                }
+            }
+
+            streamWriter.WriteLine("#"); // end
+            streamWriter.Close();
+        }
+        /// <summary>
+        /// Function to print given <c>edge</c>, meaning all its line segment
+        /// </summary>
+        /// <param name="streamWriter"></param>
+        /// <param name="edge"></param>
+        void PrintLine(StreamWriter streamWriter, Edge edge)
+        {
+            streamWriter.Write("( ");
+            for(int i = 0; i < edge.points.Count; i++)
+            {
+                streamWriter.Write($"{edge.points[i].X} {edge.points[i].Y} ");
+                if (FindVertex(edge.points[i]).state == VertexState.Intersection)
+                {
+                    streamWriter.Write(") ( ");
+                    streamWriter.Write($"{edge.points[i].X} {edge.points[i].Y} ");
+                }
+            }
+            streamWriter.WriteLine(")");
+        }
+
+        public bool ChechkTripleCumulatedEdgesConjecture(int[,] AMKEdgesArray, int size)
+        {
+            for (int i = 0; i <= size; i++)
+            {
+                if (edges.Count >= (((2 * i + 3) * (2 * i + 2)) / 2))
+                {
+                    if (AMKEdgesArray[2, i] < (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24)))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+     
+        
+        }
+
+
+        /// <summary>
+        /// Get all lines incident to <c>vertex</c> so that first end is <c>vertex</c>
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
+        public IEnumerable<Line> GetLines(Vertex vertex)
+        {
+
+            if (vertex.state == VertexState.Regular)
+            {
+                foreach (var edge in neighbors[vertex])
+                {
+                    yield return CollisionDetection.ChooseTheLineBy(vertex, edge); //choose the line by the vertex v (of this edge)
+                }
+                yield break;
+            }
+            else if (vertex.state == VertexState.Intersection)
+            {
+                foreach (var line in CollisionDetection.GetEdges(vertex, this))
+                {
+                    yield return CollisionDetection.OrientLineProperly(vertex, line); //orient the edge if the intersection is on the opposite side of the line
+                }
+                yield break;
+            }
+
+            throw new ArgumentException("Vertex must be regular or intersection.");
+
+        }
+
+        /// <summary>
+        /// Get all vertices and intersection contained in <c>graphCoordinates</c>
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Vertex> GetVerticesAndIntersections()
+        {
+            foreach (var vertex in vertices)
+            {
+                if (vertex.state == VertexState.Regular || vertex.state == VertexState.Intersection)
+                    yield return vertex;
+            }
+        }
+
+        /// <summary>
+        /// Function to recalculate number of k edges
+        /// and AM, AMAM, AMAMAM k edges
+        /// It is done by finding all triangles upon all edges
+        /// and counting <c>k</c> for every edge
+        /// Then summing function for AM, AMAM, AMAMAM k edges is called
+        /// </summary>
+        /// 
+        int maximalkEdges = 8;
+
+        enum Difference { Zero, One, Two };
+
+        public (int [], int []) ReCalculateKEdges(List<Vertex> withouts = null, Edge withoutEdge = null)
+        {
+            //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
+
+            var kEdgesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+            var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+
+            Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
+
+            foreach (var from in neighbors.Keys)
+            {
+                foreach (var to in neighbors.Keys)
+                {
+                    visited[(from, to)] = false;
+                }
+            }
+
+            if (withouts != null)
+            {
+                foreach (var vertex in withouts)
+                {
+                    foreach (var v in neighbors.Keys)
+                    {
+                        visited[(vertex, v)] = true;
+                        visited[(v, vertex)] = true;
+                    }
+                }
+            }
+
+            Vertex? firstEdgeVertex = null;
+            Vertex? secondEdgeVertex = null;
+
+            if (withoutEdge != null)
+            {
+                firstEdgeVertex = FindVertex(withoutEdge.points.First());
+                secondEdgeVertex = FindVertex(withoutEdge.points.Last());
+
+                visited[(firstEdgeVertex.Value, secondEdgeVertex.Value)] = true;
+                visited[(secondEdgeVertex.Value, firstEdgeVertex.Value)] = true;
+
+                foreach (var line in withoutEdge.lines)
+                    line.StrokeDashArray = DoubleCollection.Parse("");
+            }
+
+            foreach (var (from, value) in neighbors)
+            {
+                foreach (var e1 in value)
+                {
+
+                    var to = FindVertex(CollisionDetection.ChooseOppositeOne(e1, from.center));
+
+                    if (visited[(from, to)]) continue;
+                    visited[(from, to)] = true;
+                    visited[(to, from)] = true;
+
+                    int sumRight = 0;
+                    int sumLeft = 0;
+                    foreach (var e2 in neighbors[to])
+                    {
+                        var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
+                        var e3 = neighbors[from].ContainsEnd(from.center, third.center);
+                        if (e3 != null)
+                        {
+                            if (third == from || third == to
+                                ||
+                                (withouts != null && withouts.Contains(third))
+                                ||
+                                (firstEdgeVertex.HasValue
+                                &&
+                                secondEdgeVertex.HasValue
+                                &&
+                                CollisionDetection.CheckIfEdgeIsInTriangle(from, to, third, firstEdgeVertex.Value, secondEdgeVertex.Value)))
+                            {
+                                continue;
+                            }
+
+                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
+
+                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2, GraphCoordinates.facePoint) > 0)
+                                sumRight++;
+                            else
+                                sumLeft++;
+                        }
+                    }
+
+                    int sum = sumRight < sumLeft ? sumRight : sumLeft;
+
+
+                    kEdgesValues[sum]++;
+
+                    var edge = FindEdgeFromVertices(from, to);
+
+                    //if (edge == null) 
+                    //    continue;
+
+                    Difference invariant = Difference.One;
+
+                    if (withouts != null || withoutEdge != null)
+                    {
+                        if (edge.kEdge == sum)
+                        {
+                            invariant = Difference.Zero;
+                            invariantKEdges[sum]++;
+                        }
+                        else if (edge.kEdge - sum == 2)
+                        {
+                            invariant = Difference.Two;
+                        }
+                    }
+                    else
+                    {
+                        edge.kEdge = sum;
+                    }
+
+                    foreach (var line in edge.lines)
+                    {
+
+                        if (withouts != null || withoutEdge != null)
+                        {
+                            if (invariant == Difference.Zero)
+                                line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
+                            else if (invariant == Difference.Two)
+                                line.StrokeDashArray = DoubleCollection.Parse("1 1");
+                            else
+                            {
+                                line.StrokeDashArray = DoubleCollection.Parse("");
+                            }
+                        }
+
+                        else
+                            line.Stroke = colors[sum];
+                    }
+                }
+            }
+
+            return (kEdgesValues, invariantKEdges);
+
+        }
+
+        /// <summary>
+        /// Function to find edge between two vertices 
+        /// </summary>
+        /// <param name="a">First vertex</param>
+        /// <param name="b">Second vertex</param>
+        /// <returns>Found edge</returns>
+        public Edge FindEdgeFromVertices(Vertex a, Vertex b)
+        {
+            foreach (var edge in edges)
+            {
+                if ((CollisionDetection.CenterOfVertexOnLine(edge.lines[0], a) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), a))
+                    &&
+                    (CollisionDetection.CenterOfVertexOnLine(edge.lines[0], b) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), b)))
+                {
+                    return edge;
+                }
+            }
+
+            return null; // so such edge
+        }
+    }
+}
