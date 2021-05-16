@@ -49,19 +49,6 @@ namespace VizualizerWPF
             }
         }
 
-        public Vertex FindVertex(Point center)
-        {
-            foreach (var vertex in vertices)
-            {
-                if (Vertex.Compare(vertex.center, center))
-                    return vertex;
-            }
-
-
-            MessageBox.Show("BUG");
-            return new Vertex();
-            throw new ArgumentException("There is no such a vertex with that center");
-        }
         /// <summary>
         /// Function to save coordinates to file.
         /// </summary>
@@ -117,6 +104,12 @@ namespace VizualizerWPF
             streamWriter.WriteLine(")");
         }
 
+        /// <summary>
+        /// Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
+        /// </summary>
+        /// <param name="AMKEdgesArray"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public bool Chech3AMKConjecture(int[,] AMKEdgesArray, int size)
         {
             for (int i = 0; i <= size; i++)
@@ -133,6 +126,13 @@ namespace VizualizerWPF
          
         }
 
+
+        /// <summary>
+        /// Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
+        /// </summary>
+        /// <param name="AMKEdgesArray"></param>
+        /// <param name="size"></param>
+        /// <returns></returns>
         public bool Chech2AMKConjecture(int[,] AMKEdgesArray, int size)
         {
             for (int i = 0; i <= size; i++)
@@ -203,11 +203,10 @@ namespace VizualizerWPF
         /// Function to recalculate number of k edges
         /// and AM, AMAM, AMAMAM k edges
         /// It is done by finding all triangles upon all edges
-        /// and counting <c>k</c> for every edge
-        /// Then summing function for AM, AMAM, AMAMAM k edges is called
+        /// and counting <c>k</c> for every edge (also invariant counting is done)
         /// </summary>
         /// 
-        int maximalkEdges = 8;
+        public static int maximalKEdges = 8;
 
         enum Difference { Zero, One, Two };
 
@@ -215,8 +214,8 @@ namespace VizualizerWPF
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
-            var kEdgesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
-            var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+            var kEdgesValues = Enumerable.Repeat(0, maximalKEdges + 1).ToArray();
+            var invariantKEdges = Enumerable.Repeat(0, maximalKEdges + 1).ToArray();
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
 
@@ -370,5 +369,51 @@ namespace VizualizerWPF
 
             return null; // so such edge
         }
+
+        /// <summary>
+        /// Function to find vertex with center equal to <c>center</c>.
+        /// </summary>
+        /// <param name="center"></param>
+        /// <returns></returns>
+        public Vertex FindVertex(Point center)
+        {
+            foreach (var vertex in vertices)
+            {
+                if (Vertex.Compare(vertex.center, center))
+                    return vertex;
+            }
+
+            //return new Vertex();
+            throw new ArgumentException("There is no such a vertex with that center");
+        }
+
+        /// <summary>
+        /// Function to find vertex containg <c>ellipse</c>
+        /// </summary>
+        /// <param name="ellipse"></param>
+        /// <returns></returns>
+        public Vertex FindVertex(Ellipse ellipse, double sizeOfVertex)
+        {
+
+            return FindVertex(new Point(ellipse.Margin.Left + sizeOfVertex / 2, ellipse.Margin.Top + sizeOfVertex / 2));
+
+            throw new ArgumentException("There is no such a vertex, containing ellipse");
+        }
+
+
+        /// <summary>
+        /// Function to get all points from vertices
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
+        /// <returns></returns>
+        public HashSet<Point> GetAllPoints()
+        {
+            HashSet<Point> result = new HashSet<Point>();
+            foreach (var vertex in vertices)
+                result.Add(vertex.center);
+
+            return result;
+        }
+
     }
 }
