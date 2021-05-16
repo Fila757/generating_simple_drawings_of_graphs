@@ -47,7 +47,7 @@ namespace VizualizerWPF
     /// </summary>
     public enum StateCalculation { Intersections, ReferenceFace}; //AM = AtMost
 
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window//, INotifyPropertyChanged
     {
        
  
@@ -251,7 +251,9 @@ namespace VizualizerWPF
 
 
       
-
+        /// <summary>
+        /// Function to initialize wanted values
+        /// </summary>
         private void InitializeRightValuesOfKedges()
         {
             string atMost = "kEdges";
@@ -285,14 +287,11 @@ namespace VizualizerWPF
             this.DragMove();
         }
 
-        /*
-        private void HeaderLine_Loaded(object sender, RoutedEventArgs e)
-        {
-            OperatorGridWidth = SecondColumn.ActualWidth;
-            CanvasWidth = FirstColumn.ActualWidth;
-        }
-        */
-
+        /// <summary>
+        /// Function to set width and height of canvas due to dynamic setting (at the beggining, it is 0) 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
             actualWidth = (ActualWidth * 5) / 7;
@@ -302,22 +301,27 @@ namespace VizualizerWPF
             mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth, Y2 = actualHeight });
         }
 
+
+        /// <summary>
+        /// Shortening all edges to redraw uselessly long edges after force-directed algorithm
+        /// </summary>
         private void MakeAllLinesNotSharp()
         {
             
             foreach (var edge in graphCoordinates.edges)
             {
                 edge.Shorten(graphCoordinates);
-                /*
-                    * foreach (var vertex in removed)
-                    *   graphCoordinates.vertices.Remove(vertex);
-                */
+
             }
             CreateVerticesFromPoints(graphCoordinates);
             
             
         }
 
+        /// <summary>
+        /// Update the vertices to contains only the points after shortening
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
         private void CreateVerticesFromPoints(GraphCoordinates graphCoordinates)
         {
             var allPoints = new HashSet<Point>(PointsIterator());
@@ -330,22 +334,26 @@ namespace VizualizerWPF
 
             graphCoordinates.vertices = newVertices;
         }
+        
 
+        /// <summary>
+        /// Subdivide edges, apply force-directed algorithm Smoothing-times, shorten the edges and then draw on canvas
+        /// </summary>
         private void MakeSmootherAndDraw()
         {
             SubDivideEdges(graphCoordinates);
             for (int i = 0; i < Smoothing; i++)
             {
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-
-                //DrawGraph(graphCoordinates, 1, true);
-                
-                //DrawGraph(graphCoordinates, 1, true);
             }
             MakeAllLinesNotSharp();
             DrawGraph(graphCoordinates, 1);
         }
 
+        /// <summary>
+        /// Get the value of Z(n)
+        /// </summary>
+        /// <returns></returns>
         private int optimalCrossingNumber() {
 
             int numberOfVertices = 0;
@@ -366,7 +374,7 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// 
+        /// Function to redraw the drawing (when canvas resize)
         /// </summary>
         /// <param name="graphCoordinates">To store graph topical</param>
         /// <param name="scale">To know if it is maximized or minimized</param>
@@ -374,7 +382,7 @@ namespace VizualizerWPF
         {
             mainCanvas.Children.Clear();
 
-            (double, double, double, double) coordinatesAndScale = FindClipingSizes(GetAllPoints(graphCoordinates));
+            (double, double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
 
             cx = coordinatesAndScale.Item1;
             cy = coordinatesAndScale.Item2;
@@ -451,6 +459,11 @@ namespace VizualizerWPF
             RedrawGraph(graphCoordinates);
 
         }
+        /// <summary>
+        /// Function to change the state of Automoving Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
 
         private void AutoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -463,7 +476,7 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to change the state to Adding
+        /// Function to change the state of Adding Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -482,7 +495,7 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to change the state to Removing
+        /// Function to change the state of Removing Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -501,6 +514,11 @@ namespace VizualizerWPF
 
         }
 
+        /// <summary>
+        /// Function to change the state of AddingPolyline Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddingPolyline_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -516,6 +534,11 @@ namespace VizualizerWPF
 
         }
 
+        /// <summary>
+        /// Function to change the state of Invariant Button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Invariant_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -538,12 +561,18 @@ namespace VizualizerWPF
 
         }
 
+
         private void MakeAllVerticesBlue()
         {
             foreach (var vertex in graphCoordinates.neighbors.Keys)
                 vertex.ellipse.Fill = Brushes.Blue;
         }
 
+        /// <summary>
+        /// Function to change the state of Face button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefferenceFace_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -597,18 +626,23 @@ namespace VizualizerWPF
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
-            if(optimal.Text == "YES")
-            {
-                MessageBox.Show("Optimal");
-            }
+
 
         }
 
+        /// <summary>
+        /// Function to save the current drawing when we click on Save Button 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveDrawing_Click(object sender, RoutedEventArgs e)
         {
             graphCoordinates.SaveCoordinates();
         }
 
+        /// <summary>
+        /// Function to flush the data when we change to custom file working
+        /// </summary>
         private void FlushFromBackUpToNormal()
         {
             using (var sr = new StreamReader(@"../../../data/savedGraphsBackUp.txt"))
@@ -636,7 +670,7 @@ namespace VizualizerWPF
         {
 
 
-            if (!(bool)faceCheckBox.IsChecked)
+            if ((bool)faceCheckBox.IsChecked)
             {
                 GraphCoordinates.facePoint = GraphCoordinates.farFarAway; //changing again to the outer face
             }
@@ -673,7 +707,11 @@ namespace VizualizerWPF
 
         }
 
-        
+        /// <summary>
+        /// Function to generate previous drawing of clique from data
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
             if(!(bool)faceCheckBox.IsChecked)
@@ -702,50 +740,12 @@ namespace VizualizerWPF
         }
 
 
-        /// <summary>
-        /// Function to find vertex containg <c>ellipse</c>
-        /// </summary>
-        /// <param name="ellipse"></param>
-        /// <returns></returns>
-        private Vertex FindVertex(Ellipse ellipse)
-        {
-
-            return FindVertex(new Point(ellipse.Margin.Left + sizeOfVertex / 2, ellipse.Margin.Top + sizeOfVertex / 2));
-            /*
-            foreach(var vertex in graphCoordinates.vertices)
-            {
-                if (vertex.ellipse == ellipse)
-                    return vertex;
-            }
-            */
-            throw new ArgumentException("There is no such a vertex, containing ellipse");
-        }
-
-
-        public bool Compare(Point a, Point b)
-        {
-            if (Math.Abs(a.X - b.X) < 0.1 && Math.Abs(a.Y - b.Y) < 0.1)
-                return true;
-            return false;
-        }
-
-        public Vertex FindVertex(Point center)
-        {
-            foreach (var vertex in graphCoordinates.vertices)
-            {
-                if (Compare(vertex.center, center))
-                    return vertex;
-            }
-
-            //return new Vertex();
-            throw new ArgumentException("There is no such a vertex with that center");
-        }
 
         public Vertex? FindVertexSave(Point center)
         {
             foreach (var vertex in graphCoordinates.vertices)
             {
-                if (Compare(vertex.center, center))
+                if (Vertex.Compare(vertex.center, center))
                     return vertex;
             }
 
@@ -761,8 +761,8 @@ namespace VizualizerWPF
         private (Vertex, Vertex) FindEdgeEnds(Edge edge)
         {
 
-            var first = FindVertex(edge.points[0]);
-            var second = FindVertex(edge.points.Last());
+            var first = graphCoordinates.FindVertex(edge.points[0]);
+            var second = graphCoordinates.FindVertex(edge.points.Last());
 
             return (first, second);
         }
@@ -947,8 +947,8 @@ namespace VizualizerWPF
                 if (ellipse.Fill == Brushes.Blue) //intersection are already deleted
                 {
                     mainCanvas.Children.Remove(ellipse);
-                    graphCoordinates.neighbors.Remove(FindVertex(ellipse));
-                    graphCoordinates.vertices.Remove(FindVertex(ellipse));
+                    graphCoordinates.neighbors.Remove(graphCoordinates.FindVertex(ellipse, sizeOfVertex));
+                    graphCoordinates.vertices.Remove(graphCoordinates.FindVertex(ellipse, sizeOfVertex));
                 }
             }
 
@@ -957,7 +957,7 @@ namespace VizualizerWPF
             if (stateChanging == StateChanging.Invariant)
             {
 
-                var vertex = FindVertex(ellipse);
+                var vertex = graphCoordinates.FindVertex(ellipse, sizeOfVertex);
 
                 if (vertex.state == VertexState.Regular)
                 {
@@ -1001,7 +1001,7 @@ namespace VizualizerWPF
             return null; //it is possible it could be deleted yet
         }
         /// <summary>
-        /// Function to remove all intersection with <c>line</c> from canvas 
+        /// Function to remove all intersection with <c>line</c> from canvas and coordinates
         /// </summary>
         /// <param name="line"></param>
         private void RemoveIntersections(Line line)
@@ -1018,15 +1018,16 @@ namespace VizualizerWPF
             foreach (var ellipse in removedIntersections)
             {
                 mainCanvas.Children.Remove(ellipse);
-                graphCoordinates.vertices.Remove(FindVertex(ellipse));
+                graphCoordinates.vertices.Remove(graphCoordinates.FindVertex(ellipse, sizeOfVertex));
             }
         }
+
 
         void RemoveIntersectionsAndMiddleOnes(Edge edge)
         {
             foreach (var l in edge.lines)
             {
-                RemoveIntersections(l); //only intersections, middle ones remove from edge
+                RemoveIntersections(l); //only intersections, middle ones remove later
                 mainCanvas.Children.Remove(l);
             }
 
@@ -1043,6 +1044,8 @@ namespace VizualizerWPF
 
         /// <summary>
         /// Function to remove line if clicked on
+        /// If remove button activated then the edge is removed
+        /// If Invariant button is activated then invariant edges are counted for this edge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1082,8 +1085,8 @@ namespace VizualizerWPF
 
 
 
-   
- 
+        
+        
         void RecalculateKEdgesAndUpdateButtonTexts(List<Vertex> withouts = null, Edge withoutEdge = null)  
         {
 
@@ -1091,16 +1094,23 @@ namespace VizualizerWPF
             UpdateButtonTexts(withouts, withoutEdge, kEdgesValues, invariantKEdges);
         }
 
-
+        /// <summary>
+        /// Function to update buttons values by <c>kEdgesValues</c> and <c>invariantKEdges</c> values 
+        /// depending on invariant state
+        /// </summary>
+        /// <param name="withouts"></param>
+        /// <param name="withoutEdge"></param>
+        /// <param name="kEdgesValues"></param>
+        /// <param name="invariantKEdges"></param>
         void UpdateButtonTexts(List<Vertex> withouts, Edge withoutEdge, int [] kEdgesValues, int [] invariantKEdges)
         {
             if (withouts == null && withoutEdge == null)
             {
-                var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesValues);
+                var AMKEdgesArray = CustomMath.CalculateAmEdges(GraphCoordinates.maximalKEdges, kEdgesValues);
 
-                PrintAMKEdges(maximalKEdges, AMKEdgesArray);
+                PrintAMKEdges(GraphCoordinates.maximalKEdges, AMKEdgesArray);
 
-                for (int i = 0; i <= maximalKEdges; i++)
+                for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
                 {
                     TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
                     textBlock.Text = kEdgesValues[i].ToString();
@@ -1109,13 +1119,13 @@ namespace VizualizerWPF
 
             else
             {
-                var invariantAmKEdges = Enumerable.Repeat(0, maximalKEdges + 1).ToArray();
+                var invariantAmKEdges = Enumerable.Repeat(0, GraphCoordinates.maximalKEdges + 1).ToArray();
 
                 invariantAmKEdges[0] = invariantKEdges[0];
                 TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
                 textBlock.Text = invariantAmKEdges[0].ToString();
 
-                for (int i = 1; i <= maximalKEdges; i++)
+                for (int i = 1; i <= GraphCoordinates.maximalKEdges; i++)
                 {
                     invariantAmKEdges[i] = invariantAmKEdges[i - 1] + invariantKEdges[i];
                     textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
@@ -1124,7 +1134,7 @@ namespace VizualizerWPF
 
                 int amAmInvariant = 0;
 
-                for (int i = 0; i <= maximalKEdges; i++)
+                for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
                 {
                     amAmInvariant += invariantAmKEdges[i];
                     textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
@@ -1170,7 +1180,9 @@ namespace VizualizerWPF
         }
 
      
-
+        /// <summary>
+        /// Function to restore values of invariant textblock to zeroes and redraw all lines to non-dashed
+        /// </summary>
         void ZeroInvariantEdgesValues()
         {
 
@@ -1180,7 +1192,7 @@ namespace VizualizerWPF
                     line.StrokeDashArray = DoubleCollection.Parse("");
             }
 
-            for (int i = 0; i <= maximalKEdges; i++)
+            for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
             {
                 var textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
@@ -1188,20 +1200,17 @@ namespace VizualizerWPF
                 textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
 
-            }
-
-
-
-            
+            }            
         }
 
   
 
         /// <summary>
-        /// Summing function to find wanted values
+        /// Function to Print values of <c>AMKEdgesArray</c> to respective textblocks 
+        /// Checking also the 3AMK theorem (a messagebox shows up when something wrong)
         /// </summary>
-        /// <param name="kEdgesArray">array with how many k edges are for every k</param>
-        /// <param name="size">for which k we want to count</param>
+        /// <param name="size"></param>
+        /// <param name="AMKEdgesArray"></param>
         private void PrintAMKEdges(int size, int[,] AMKEdgesArray)
         {
 
@@ -1253,6 +1262,9 @@ namespace VizualizerWPF
  
         }
 
+        /// <summary>
+        /// Function to coun intersections and to update all other stats regading $k$-edges
+        /// </summary>
         private void UpdateStats()
         {
             int numberOfIntersections = 0;
@@ -1265,13 +1277,6 @@ namespace VizualizerWPF
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
-            /*
-            if (optimal.Text == "YES")
-            {
-                MessageBox.Show("OPT");
-                stateAutoMoving = StateAutoMoving.None;
-            }
-            */
 
             crossings.Text = numberOfIntersections.ToString();
 
@@ -1279,7 +1284,7 @@ namespace VizualizerWPF
         }
         
         /// <summary>
-        /// Function to add vertex when the place is empty
+        /// Function to add vertex when the place is empty and to detect a change of a reference face 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1356,15 +1361,11 @@ namespace VizualizerWPF
            
         }
 
-        void PrintNumberOfEllipses()
-        {
-            int localCounter = 0;
-            foreach (var p in mainCanvas.Children.OfType<Ellipse>())
-                localCounter++;
-            MessageBox.Show(localCounter.ToString());
-
-
-        }
+        /// <summary>
+        /// Function to find appropriate shift and rescaling so all the <c>points</c> fit into the canvas
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
 
         (double, double, double, double) FindClipingSizes(HashSet<Point> points)
         {
@@ -1400,27 +1401,10 @@ namespace VizualizerWPF
 
         }
 
-        HashSet<Point> GetAllPoints(GraphCoordinates graphCoordinates)
-        {
-            HashSet<Point> result = new HashSet<Point>();
-            foreach (var vertex in graphCoordinates.vertices)
-                result.Add(vertex.center);
-
-            /*
-            foreach (var edge in graphCoordinates.edges)
-            {
-                foreach(var point in edge.points)
-                {
-                    result.Add(point);
-                }
-            }
-            */
-
-            return result;
-        }
 
         int divisionConst = 50;
 
+        /*
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -1429,8 +1413,13 @@ namespace VizualizerWPF
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        */
 
-
+        /// <summary>
+        /// Function to connect consecutive points and get the line segments
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
         List<Line> CreateLinesFromPoints(List<Point> points)
         {
             var lines = new List<Line>();
@@ -1447,6 +1436,13 @@ namespace VizualizerWPF
             return lines;
         }
 
+        /// <summary>
+        /// Function to subdivide line depending on the divisionConstant 
+        /// (line is divided so that every line segment is now shorter than that divisionConstant)
+        /// </summary>
+        /// <param name="line"></param>
+        /// <param name="graphCoordinates"></param>
+        /// <returns></returns>
         (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
         {
             var edgePoints = new List<Point>();
@@ -1473,6 +1469,11 @@ namespace VizualizerWPF
             
         }
 
+        /// <summary>
+        /// Function to subdivide all lines contained in the <c>edge</c>
+        /// </summary>
+        /// <param name="edge"></param>
+        /// <param name="graphCoordinates"></param>
         void SubDivideEdge(Edge edge, GraphCoordinates graphCoordinates)
         {
 
@@ -1498,6 +1499,10 @@ namespace VizualizerWPF
 
         }
 
+        /// <summary>
+        /// Function to subdivide all the edges in <c>graphCoordinates</c>
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
         void SubDivideEdges(GraphCoordinates graphCoordinates)
         {
             foreach (var edge in graphCoordinates.edges)
@@ -1545,15 +1550,6 @@ namespace VizualizerWPF
 
         }
 
-        /*
-        private void storyboard_RedrawGraph(object sender, EventArgs e)
-        {
-            UpdateCanvasSizes();
-            RedrawGraph(graphCoordinates);
-            var sb = (Storyboard)BottomGrid.FindResource("MenuClose");
-            sb.Completed -= new EventHandler(storyboard_RedrawGraph);
-        }
-        */
 
         private void ButtonCloseMenu_Click(object sender, RoutedEventArgs e)
         {
@@ -1565,11 +1561,6 @@ namespace VizualizerWPF
 
             UpdateCanvasWidthWhenOpen();
             RedrawGraph(graphCoordinates);
-        }
-
-        private void SecondColumn_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
 
 
@@ -1592,7 +1583,7 @@ namespace VizualizerWPF
             if (!(actualWidth == 0 && actualHeight == 0))
             {
 
-                (double, double, double, double) coordinatesAndScale = FindClipingSizes(GetAllPoints(graphCoordinates));
+                (double, double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
 
                 cx = coordinatesAndScale.Item1;
                 cy = coordinatesAndScale.Item2;
@@ -1600,14 +1591,6 @@ namespace VizualizerWPF
                 scaleY = coordinatesAndScale.Item4;
             }
             
-
-            //if (skipShift)
-            //{
-            //    double copyCx = cx; double copyCy = cy;
-
-            //    cx = 0;
-            //    cy = 0;
-            //}
                 
             /*Updating vertices*/
             var vertices = new HashSet<Vertex>();

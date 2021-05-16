@@ -16,9 +16,8 @@ namespace VizualizerWPF
 
         private static ConjectureChecker instance = new ConjectureChecker();
 
-        int maximalKEdges = 8;
         /// <summary>
-        /// Function to check if all faces satisfy our conjecture
+        /// Iterator to get all faces (points) to check the conjectures
         /// </summary>
         private static IEnumerable<Point> GetAllReferenceFaces(GraphCoordinates graphCoordinates)
         {
@@ -57,21 +56,32 @@ namespace VizualizerWPF
             }
         }
 
-
+        /// <summary>
+        /// Function to check if the the conjecture holds for currently set face
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
+        /// <returns></returns>
         private bool TryFace3AMK(GraphCoordinates graphCoordinates)
         {
             (var kEdgesArray, _) = graphCoordinates.ReCalculateKEdges();
-            var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesArray);
-            return graphCoordinates.Chech3AMKConjecture(AMKEdgesArray, maximalKEdges);
+            var AMKEdgesArray = CustomMath.CalculateAmEdges(GraphCoordinates.maximalKEdges, kEdgesArray);
+            return graphCoordinates.Chech3AMKConjecture(AMKEdgesArray, GraphCoordinates.maximalKEdges);
         }
 
+        /// <summary>
+        /// Function to check if the the conjecture holds for currently set face
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
+        /// <returns></returns>
         private bool TryFace2AMK(GraphCoordinates graphCoordinates)
         {
             (var kEdgesArray, _) = graphCoordinates.ReCalculateKEdges();
-            var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesArray);
-            return graphCoordinates.Chech2AMKConjecture(AMKEdgesArray, maximalKEdges);
+            var AMKEdgesArray = CustomMath.CalculateAmEdges(GraphCoordinates.maximalKEdges, kEdgesArray);
+            return graphCoordinates.Chech2AMKConjecture(AMKEdgesArray, GraphCoordinates.maximalKEdges);
         }
-
+        /// <summary>
+        /// Checking conjecture for all alredy generated drawings drawings
+        /// </summary>
         void Check3AMKConjecture() {
             GraphCoordinates graphCoordinates;
 
@@ -96,6 +106,9 @@ namespace VizualizerWPF
             }
         }
 
+        /// <summary>
+        /// Checking conjecture for all alredy generated drawings drawings
+        /// </summary>
         void Check2AMKConjecture()
         {
             GraphCoordinates graphCoordinates;
@@ -126,13 +139,14 @@ namespace VizualizerWPF
             }
         }
 
+        /*
         static void Main(string[] args)
         {
 
             Instance.Check3AMKConjecture();
             Instance.Check2AMKConjecture();
         }
-
+        */
 
 
 

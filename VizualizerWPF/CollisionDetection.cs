@@ -647,5 +647,7 @@ namespace VizualizerWPF
             return false;
         }
 
+        
+
     }
 }
