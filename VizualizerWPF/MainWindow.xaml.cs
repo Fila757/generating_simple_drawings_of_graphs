@@ -1082,10 +1082,8 @@ namespace VizualizerWPF
 
 
 
-    
-
-
-        int maximalKEdges = 8;
+   
+ 
         void RecalculateKEdgesAndUpdateButtonTexts(List<Vertex> withouts = null, Edge withoutEdge = null)  
         {
 

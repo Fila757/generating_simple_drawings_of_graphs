@@ -8,10 +8,19 @@ namespace VizualizerWPF
 {
     class ConjectureChecker
     {
+
+        public static ConjectureChecker Instance
+        {
+            get { return instance; }
+        }
+
+        private static ConjectureChecker instance = new ConjectureChecker();
+
+        int maximalKEdges = 8;
         /// <summary>
         /// Function to check if all faces satisfy our conjecture
         /// </summary>
-        private static void TryAllReferenceFaces(GraphCoordinates graphCoordinates)
+        private static IEnumerable<Point> GetAllReferenceFaces(GraphCoordinates graphCoordinates)
         {
             foreach (var vertex in graphCoordinates.GetVerticesAndIntersections())
             {
@@ -42,39 +51,86 @@ namespace VizualizerWPF
                     }
 
 
-                    GraphCoordinates.facePoint = vertex.center + res;
-
-                    TryFace(graphCoordinates);
-
+                    yield return (vertex.center + res);
                 }
 
             }
         }
 
 
-        private static void TryFace(GraphCoordinates graphCoordinates)
+        private bool TryFace3AMK(GraphCoordinates graphCoordinates)
         {
-            graphCoordinates.ReCalculateKEdges();
-
+            (var kEdgesArray, _) = graphCoordinates.ReCalculateKEdges();
+            var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesArray);
+            return graphCoordinates.Chech3AMKConjecture(AMKEdgesArray, maximalKEdges);
         }
 
-        void Check3AMKConjecture(GraphCoordinates graphCoordinates) {
-            for (int i = 4; i <= 7; i++)
+        private bool TryFace2AMK(GraphCoordinates graphCoordinates)
+        {
+            (var kEdgesArray, _) = graphCoordinates.ReCalculateKEdges();
+            var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesArray);
+            return graphCoordinates.Chech2AMKConjecture(AMKEdgesArray, maximalKEdges);
+        }
+
+        void Check3AMKConjecture() {
+            GraphCoordinates graphCoordinates;
+
+            for (int i = 4; i <= 8; i++)
             {
                 var graphGenerator = new GraphGenerator(i);
 
-                graphCoordinates = graphGenerator.GenerateNextDrawing();
-                Console.WriteLine(graphGenerator.counter);
-                TryAllReferenceFaces(graphCoordinates);
 
-                while (graphCoordinates.vertices.Count != 0)
+                while ((graphCoordinates = graphGenerator.GenerateNextDrawing()).vertices.Count != 0)
                 {
                     Console.WriteLine(graphGenerator.counter);
-                    graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    TryAllReferenceFaces(graphCoordinates);
+                    foreach(Point facePoint in GetAllReferenceFaces(graphCoordinates))
+                    {
+                        GraphCoordinates.facePoint = facePoint;
+                        if (!TryFace3AMK(graphCoordinates))
+                        {
+                            Console.WriteLine("HEUREKA WRONG 3AMK", i, graphGenerator.counter);
+                        }
+                    }
                 }
 
             }
+        }
+
+        void Check2AMKConjecture()
+        {
+            GraphCoordinates graphCoordinates;
+
+            for (int i = 4; i <= 8; i++)
+            {
+                var graphGenerator = new GraphGenerator(i);
+
+
+                while ((graphCoordinates = graphGenerator.GenerateNextDrawing()).vertices.Count != 0)
+                {
+                    bool goodFace = false;
+                    Console.WriteLine(graphGenerator.counter);
+                    foreach (Point facePoint in GetAllReferenceFaces(graphCoordinates))
+                    {
+                        GraphCoordinates.facePoint = facePoint;
+                        if (TryFace2AMK(graphCoordinates))
+                        {
+                            goodFace = true;
+                        }
+                    }
+                    if (!goodFace)
+                    {
+                        Console.WriteLine("HEUREKA WRONG 2AMK", i, graphGenerator.counter);
+                    }
+                }
+
+            }
+        }
+
+        static void Main(string[] args)
+        {
+
+            Instance.Check3AMKConjecture();
+            Instance.Check2AMKConjecture();
         }
 
 
