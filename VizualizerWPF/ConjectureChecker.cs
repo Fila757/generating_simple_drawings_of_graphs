@@ -51,12 +51,16 @@ namespace VizualizerWPF
             }
         }
 
-        private static void TryAllDrawings(GraphCoordinates graphCoordinates)
-        {
 
+        private static void TryFace(GraphCoordinates graphCoordinates)
+        {
+            graphCoordinates.ReCalculateKEdges();
+
+        }
+
+        void Check3AMKConjecture(GraphCoordinates graphCoordinates) {
             for (int i = 4; i <= 7; i++)
             {
-
                 var graphGenerator = new GraphGenerator(i);
 
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
@@ -71,11 +75,6 @@ namespace VizualizerWPF
                 }
 
             }
-        }
-
-        private static void TryFace(GraphCoordinates graphCoordinates)
-        {
-            graphCoordinates.ReCalculateKEdges();
         }
 
 
