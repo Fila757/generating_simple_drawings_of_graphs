@@ -39,6 +39,10 @@ inline void precount_factorials(){
 	//cout << fact[SIZE_OF_ARRAY -1] << endl;
 }
 
+
+/// <summary>
+/// Wraper for comunicating through threads
+/// </summary>
 struct canonic_wraper{
 	unordered_map<string, bool> canonic_fingerprints;
     mutex shared_mutex;
@@ -48,6 +52,9 @@ struct Vertex;
 struct Edge;
 struct Face;
 
+/// <summary>
+/// Main class to store all the information about graph, edges, vertices, ...
+/// </summary>
 struct graph {
 
 	/*normal part*/
@@ -115,16 +122,22 @@ struct graph {
 	/*finger print part*/
 
 	//number of edges indexer
+	
+	/// <summary>
+	/// Vector to store (pointers on) edges. 
+	/// </summary>
 	vector<Edge*> segments; 
+
+	/// <summary>
+	/// 4D array to check which edges already intersect
+	/// </summary>
 	array_4D blocked; 
 
-	// edge from i to j, starting indeces on the the special vertex 
-	// when j to i get the opposite edge index so on point ont the opposite special vertex 
+	/// <summary>
+	/// Array which for given pair of vertice i, j return the index in vector <c>segments</c>
+	///  so the "dummy" edge ("dummy" vertex) where to start (end) 
+	/// </summary>
 	vector<vector<int> > starts;
-
-	// to store canonic fingerprints
-	//unordered_map<string, bool> canonic_fingerprints;
-	//mutex fingerprints_lock;
 
 	shared_ptr<canonic_wraper> canonic_fingerprints_wraper;
 
@@ -141,13 +154,15 @@ struct graph {
 
 	bool is_some_of_faces_incorrect(Edge* edge);
 	bool is_face_incorrect(shared_ptr<Face> face);
-	//bool is_face_incorrect_slower(shared_ptr<Face> face);
 
 	void print_counters(Face* f);
 
 
 };
 
+/// <summary>
+/// Class to store vertex, containing information about edge <c>to_</c> going into it
+/// </summary>
 struct Vertex {
 	Edge* to_;
 
@@ -160,6 +175,9 @@ struct Vertex {
 	Vertex(Edge* to) : to_(to) {}
 };
 
+/// <summary>
+/// Structure to store a face containing about one edge incident to it
+/// </summary>
 struct Face {
 	Edge* edge_;
 
@@ -175,6 +193,9 @@ struct Face {
 	int counter_of_same_last_edges[SIZE_OF_ARRAY + 5];
 };
 
+/// <summary>
+/// Structure to store the edge containing information about <c>next_</c>, <c>prev_</c>, <c>opposite_</c> edges and vertices and face incident to it.
+/// </summary>
 struct Edge {
 	int index_ = 0;
 
@@ -220,13 +241,16 @@ inline void graph::print_counters(Face* f) {
 	cout << endl;
 }
 
-
+/// <summary>
+/// Function to add new (part of) edge between vertices <c>a</c> and <c>b</c> through the <c>face</c> 
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="face"></param>
+/// <param name="a_index"></param>
+/// <param name="b_index"></param>
+/// <param name="outer_face_bool"></param>
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, bool outer_face_bool) {
-	
-	/*
-	cout << "before" << endl;
-	print_counters(face.get());
-	*/	
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
 
@@ -280,8 +304,7 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 
 	}
 	
-	//cout << ab_edge_ptr->index_ << endl;
-	//cout << "number_of_vertices -1 " << number_of_vertices -1 << endl;
+
 	if (((ab_edge_ptr->index_ / 100) == (number_of_vertices -1)) != ((ab_edge_ptr->index_ % 100) == (number_of_vertices - 1))) {
 		new_face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
 		face->counter_of_same_last_edges[min(ab_edge_ptr->index_ / 100, ab_edge_ptr->index_ % 100)]++;
@@ -290,29 +313,18 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	
 	face->edge_ = ab_edge_ptr;
 
-	/*
-	if (outer_face_bool) {
-		cout << "after outer" << endl;
-		print_counters(outer_face.get());
-	}
-	else {
-		cout << "after" << endl;
-		print_counters(face.get());
-		print_counters(new_face.get());
-	}
-	*/	
 	
 }
+
+/// <summary>
+/// Creating new vertec on the <c>edge</c> as a new intersection.
+/// </summary>
+/// <param name="edge"></param>
 inline void graph::add_vertex(Edge* edge) {
 
 
 	auto opposite = edge->opposite_;
 
-	/*
-	cout << "before adding vertex" << endl;
-	print_counters(edge->face_.get());
-	print_counters(opposite->face_.get());
-	*/
 
 	auto a = edge->from_;
 	auto b = edge->to_;
@@ -341,29 +353,17 @@ inline void graph::add_vertex(Edge* edge) {
 		opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
 	}
 
-	/*
-	cout << "after adding vertex" << endl;
-	print_counters(edge->face_.get());
-	print_counters(opposite->face_.get());
-	*/
+
 }
 
+/// <summary>
+/// Deleting the last added edge.
+/// </summary>
+/// <param name="outer_face_bool"></param>
 inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	auto edge = edges.back();
 	auto opposite = *edge.opposite_;
-
-	/*
-	if (outer_face_bool) {
-		cout << "before del edge outer" << endl;
-		print_counters(outer_face.get());
-	}
-	else {
-		cout << "before del edge" << endl;
-		print_counters(edge.face_.get());
-		print_counters(opposite.face_.get());
-	}
-	*/
 
 	auto a = edge.from_;
 	auto b = edge.to_;
@@ -388,7 +388,6 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 		}
 	}
 
-	//print_graph(this);
 
 	/*recconect edges*/
 	froma->prev_ = toa;
@@ -413,19 +412,11 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 	segments.pop_back();segments.pop_back();
 	edges.pop_back();edges.pop_back();
 
-	/*
-	if (outer_face_bool) {
-		cout << "after del edge outer" << endl;
-		print_counters(outer_face.get());
-	}
-	else {
-		cout << "after del edge" << endl; 
-		print_counters(face.get());
-	}
-	*/
-
-	//number_of_edges -= 2;
 }
+/// <summary>
+/// Deleting given intersection <c>vertex</c>.
+/// </summary>
+/// <param name="vertex"></param>
 inline void graph::delete_vertex(Vertex* vertex) {
 
 	// getting the right variables
@@ -434,18 +425,6 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	auto toa = edge->opposite_;
 	auto tob = edge->next_;
 	auto edge_opposite = tob->opposite_;
-
-	/*
-	cout << "before deleting vertex" << endl;
-	print_counters(edge->face_.get());
-	print_counters(edge_opposite->face_.get());
-	*/
-
-	/*
-	if (edge->face_ == edge_opposite->face_) {
-		cout << "saamee" << endl;
-	}
-	*/
 
 	auto a = toa->to_;
 	auto b = tob->to_;
@@ -477,13 +456,12 @@ inline void graph::delete_vertex(Vertex* vertex) {
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
 
-	/*
-	cout << "after deleting vertex" << endl;
-	print_counters(edge->face_.get());
-	print_counters(edge_opposite->face_.get());
-	*/
 }
 
+/// <summary>
+/// Creating the "dummy" vertex (circle) representing real vertex.
+/// </summary>
+/// <param name="index"></param>
 inline void graph::create_special_vertex(int index) {
 
 	vector<shared_ptr<Vertex> > special_vertices;
@@ -516,6 +494,10 @@ inline void graph::create_special_vertex(int index) {
 
 }
 
+/// <summary>
+/// Setting values of array <c>starts</c> to values of given fingerprint.
+/// </summary>
+/// <param name="fingerprint"></param>
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
 
 	for(int i = 0; i < number_of_vertices;i++){
@@ -525,12 +507,18 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 	}
 }
 
+/// <summary>
+/// Function to create all edges incident to vertex 0.
+/// </summary>
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
 		add_edge(segments[starts[0][i]]->from_, segments[starts[i][0]]->from_, outer_face, 0, i, true); //from vertex is that in rotation
 	}
 }
 
+/// <summary>
+/// Function to create all "dummy" vertices
+/// </summary>
 inline void graph::create_all_special_vertices() {
 
 	for (int i = 0; i < number_of_vertices;i++) { //the rest of a star
@@ -538,6 +526,15 @@ inline void graph::create_all_special_vertices() {
 	}
 }
 
+/// <summary>
+/// Main algorithm described in psedocode in thesis.
+/// It recursively tries all the possible ways
+/// how to pull the edges.
+/// </summary>
+/// <param name="s_index"></param>
+/// <param name="t_index"></param>
+/// <param name="a"></param>
+/// <param name="b"></param>
 inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, int b) {
 	
 	//cout << a << " " << b << endl;
@@ -626,28 +623,16 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 	}
 }
 
+
+/// <summary>
+/// Function to check if current operation of adding edge
+/// did not cause violation of one theorems providing us heuristics to fasten the code
+/// </summary>
+/// <param name="edge"></param>
+/// <returns></returns>
 inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 	auto opposite = edge->opposite_;
 
-	/*
-	if (edge->face_ == outer_face || opposite->face_ == outer_face) {
-		cout << "outer_face" << endl;
-		print_graph(this);
-	}
-	*/
-
-	//cout << "##############SOME_FACES################" << endl;
-
-	/*
-	if (is_face_incorrect(edge->face_) != is_face_incorrect_slower(edge->face_)) {
-		cout << "normal edges wrong" << endl;
-		is_face_incorrect_slower(edge->face_);
-	}
-
-	if (is_face_incorrect(opposite->face_) != is_face_incorrect_slower(opposite->face_)) {
-		cout << "opposite edges wrong" << endl;
-	}
-	*/
 
 	if(is_face_incorrect(edge->face_) || is_face_incorrect(opposite->face_)){
 		//cout << "face incorrect" << endl;
@@ -657,36 +642,11 @@ inline bool graph::is_some_of_faces_incorrect(Edge* edge){
 }
 
 
-/*
-inline bool graph::is_face_incorrect_slower(shared_ptr<Face> face){
-
-	auto edge = face->edge_;
-	int counter = 0;
-
-	//cout << "##############xONE_FACEx############" << endl;
-
-	auto cur = edge;
-	do{
-
-		int first = cur->index_ / 100;
-		int second = cur->index_ % 100;
-
-		if ((first == number_of_vertices - 1 != second == number_of_vertices - 1)) //xor?
-			counter++;
-
-		//cout << first << ":f s:" << second << endl;
-	
-		cur = cur->next_;
-	} while (cur != edge);
-
-
-	if(counter >= 3) //treshold by article
-		return true;
-	return false;
-
-}
-*/
-
+/// <summary>
+/// Function to check whether the <c>face</c> do not violate the (heuristic) theorems conditions.
+/// </summary>
+/// <param name="face"></param>
+/// <returns></returns>
 inline bool graph::is_face_incorrect(shared_ptr<Face> face) {
 	int sum = 0;
  	for(int i = 0; i < number_of_vertices - 1;i++){
@@ -712,6 +672,9 @@ inline long long factorial(int n) {
 /// </summary>
 
 
+/// <summary>
+/// Structure for generating all fingerprints iteratively.
+/// </summary>
 struct fingerprints {
 	vector<int> states;
 	long long treshold;
@@ -757,7 +720,7 @@ struct fingerprints {
 	}
 
 	///<summary>
-	// Return state and then move to the next one until it is posible
+	// Get new fingerprint and then move to the next one until it is possible.
 	///</summary>
 	string get_next() {
 		string res;
@@ -817,6 +780,16 @@ struct fingerprints {
 	}
 };
 
+
+/// <summary>
+/// Function to try all possible drawings, 
+/// First getting all the fingerprints 
+/// then checking if all K4's are alright
+/// followed by finding canonic fingerprint
+/// and checking whether it has not been seen.
+/// Finally try all the pullings of edges
+/// until end or some realization.
+/// </summary>
 inline void graph::create_all_possible_drawings() {
 
 	for (int i = 0; i < number_of_vertices;i++) {
@@ -835,29 +808,19 @@ inline void graph::create_all_possible_drawings() {
 
 	auto generator_of_fingerprints = fingerprints(number_of_vertices, index);
 
-	//cout << "finger print created" << endl;
 	while (!generator_of_fingerprints.done) {
 		auto fingerprint = generator_of_fingerprints.get_next();
-		//cout << cur << endl;
-
-		//testing
-		//fingerprint = "123450235401345051240152303412";
-		//generator_of_fingerprints.done = true;
 
 		//check the fingerprint 
 		if (!is_correct_fingerprint(fingerprint)) continue;
 
-		//cout << "is correct " << endl;
 
 		//checking labeling
 		fingerprint = find_canonic_fingerprint(fingerprint);
 
-		//cout << "finding canonics " << fingerprint << endl;
 
 		{
-			//cout << "inside" << endl;
 			lock_guard<mutex> canonic_lock(canonic_fingerprints_wraper->shared_mutex);
-			//cout << "lock created " << endl;
 			if (canonic_fingerprints_wraper->canonic_fingerprints[fingerprint]) continue;
 			canonic_fingerprints_wraper->canonic_fingerprints[fingerprint] = true;
 		}
@@ -888,6 +851,18 @@ inline void graph::create_all_possible_drawings() {
 	cout << "realized " << realized << endl;
 }
 
+/// <summary>
+/// Structure to go through only needed fingerprints.
+/// First try all rellabilings of rotation producing "12345" and then all producing "15432".
+/// Then move the another vertex.
+/// 
+/// This is equivalent to first try all posible relabeling to get "12345" 
+/// and then the same for inverse. 
+/// Altough we want inverse rotation,
+/// in <c>find_canonic_fingerprint</c> we try inverse, therefore from relabeling
+/// "15432" we get also "12345". 
+///
+/// </summary>
 struct smart_permutations {
 
 	string fingerprint;
@@ -966,11 +941,12 @@ struct smart_permutations {
 	}
 };
 
+/// <summary>
+/// Function to find canonic fingerprint through all needed rellabelings of itself (and inversion)
+/// </summary>
+/// <param name="fingerprint"></param>
+/// <returns></returns>
 inline string graph::find_canonic_fingerprint(const string& fingerprint) {
-
-	//string permutation_holder;
-	//for (int i = 0; i < number_of_vertices;i++) 
-	//	permutation_holder += (i + '0');
 
 	auto permutations = smart_permutations(fingerprint, number_of_vertices);
 
@@ -978,9 +954,7 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 	auto cur_fingerprint = fingerprint;
 	auto new_fingerprint = fingerprint;
 
-	//string minimal_permutation;
-
-	do { //can be changes just to while because first doesnt any change
+	do {
 		auto permutation_holder = permutations.next();
 
 		cur_fingerprint = fingerprint;
@@ -1007,7 +981,6 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 		
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
-		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 		for (int i = 0; i < number_of_vertices;i++) {
 			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
@@ -1016,7 +989,6 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 		}
 
 		min_fingerprint = min(min_fingerprint, new_fingerprint);
-		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
 
 	} while (!permutations.done);
 
@@ -1025,35 +997,6 @@ inline string graph::find_canonic_fingerprint(const string& fingerprint) {
 
 }
 
-/*
-inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
-	
-	//The realizable rotation systems of K4 with respect to (strong) isomorhism
-	int order_of_K4[3][3][3] = {
-		{{2, 3, 0},{3, 0, 1},{0, 1, 2}},
-		{{2, 3, 0},{0, 3, 1},{0, 2, 1}},
-		{{3, 2, 0},{1, 3, 0},{0, 2, 1}}
-	};
-
-	for (int u = 0; u < 3;u++) {
-		int number_of_right_ones = 1;
-		for (int i = 1;i < 4;i++) {
-			auto copied = orders[i];
-			copied.insert(copied.end(), orders[i].begin(), orders[i].end()); //copy it twice so we can easily find the pattern even if it has different rotation than mention in order_of_K4
-
-			for (int j = 0; j < copied.size();j++) {
-				int temp = 0;
-				for (int k = 0; k < 3 && j + k < copied.size();k++) {
-					if (copied[j + k] == a[order_of_K4[u][i - 1][k]]) temp++;
-				}
-				if (temp == 3) { number_of_right_ones++; break; }
-			}
-		}
-		if (number_of_right_ones == 4) return true;
-	}
-	return false;
-}
-*/
 
 inline string find_lexical_min_rotation(string str)
 {
@@ -1073,6 +1016,11 @@ inline string find_lexical_min_rotation(string str)
 	return min;
 }
 
+/// <summary>
+/// Check if given rotations of K4 form a realizable K4.
+/// </summary>
+/// <param name="orders"></param>
+/// <returns></returns>
 inline bool is_correct_K4(vector<int> orders[4]) {
 	int number_of_positive_rotation = 0;
 
@@ -1092,6 +1040,11 @@ inline bool is_correct_K4(vector<int> orders[4]) {
 
 }
 
+/// <summary>
+/// Function to check whether the <c>fingerprint</c> consists only of realizable K4's.
+/// </summary>
+/// <param name="fingerprint"></param>
+/// <returns></returns>
 inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
 
 	int i[4];
@@ -1114,9 +1067,6 @@ inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checkin
 							}
 						}
 					}
-					// for slower version
-					//int temp[4];
-					//temp[0] = i[0]; temp[1] = order[0][0];temp[2] = order[0][1];temp[3] = order[0][2];
 
 					if (!is_correct_K4(order)) return false;
 				}
