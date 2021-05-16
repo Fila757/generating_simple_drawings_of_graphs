@@ -23,120 +23,89 @@ using System.Text.RegularExpressions;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
 
+/// <summary>
+/// In MainWindow.xaml we have one <c>mainCanvas</c>, topbar for setting constant and resizing/closing the window
+/// There are also some information about a drawing. To operate with the drawing, there are some buttons to help us, adding, removing, ...
+/// Then values we want to consider are shown, for more see User's guide
+/// </summary>
 
 namespace VizualizerWPF
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    /// 
-
-    /// <summary>
-    /// In MainWindow.xaml we have one <c>mainCanvas</c>
-    /// Also 5 buttons
-    /// Přidávání - adding mode 
-    /// Mazání - removing mode
-    /// Průsečíky - vizualizing intersections
-    /// K hrany - vizualizing counting k edges
-    /// Další jednoduché nakreslení - generate next good drawing of clique
-    /// 
-    /// Also consists of ListBox to choose which AM edges we want
-    /// Finally there to UpDowns to select which k edges we want
-    /// and how big clique is chosen
-    /// 
-    /// At the bottom there is a legend to know
-    /// which color describe which number for k edges
-    /// </summary>
 
 
+
+   
     enum StateAutoMoving { Auto, None };
 
+    /// <summary>
+    /// States to operate with a drawings
+    /// </summary>
     enum StateChanging { AddingPolyline, Adding, Removing, Invariant, None };
 
     /// <summary>
-    /// Enum for showing Intersection, KEdges, AtMostKEdge...
+    /// Enum for showing Intersections or changing reference face
     /// </summary>
-    public enum StateCalculation { Intersections, KEdges, AMKEdges, AMAMKEdges, AMAMAMKEdges, ReferenceFace}; //AM = AtMost
+    public enum StateCalculation { Intersections, ReferenceFace}; //AM = AtMost
 
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        /// <summary>
-        /// <param name="cx">Shift from 0,0 origin</param>
-        /// <param name="cy">Shift from 0,0 origin</param>
-        /// <param name="stateChanging">For recognizing in which state we are</param>
-        /// <param name="graphGenerator">It is class for generating all drawings</param>
-        /// </summary>
+       
+ 
         StateChanging stateChanging = StateChanging.None;
         public Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
 
         StateAutoMoving stateAutoMoving = StateAutoMoving.None;
         System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-
+        /// <summary>
+        /// It is class for generating all drawings
+        /// </summary>
         GraphGenerator graphGenerator;
 
+        /// <summary>
+        /// Shift from 0,0 origin
+        /// Shift from 0,0 origin
+        /// </summary>
         double cx = 81.25, cy = 219.75; 
         public double sizeOfVertex;
         public double scale;
 
+        /// <summary>
+        /// Actual Height and Actual Width of canvas due to initialization set manually
+        /// </summary>
         double actualHeight = 500;
         double actualWidth = 1000;
-
+        /// <summary>
+        /// Resizing paramater to get a drawing little bit from borders
+        /// </summary>
         double lambda = 1.1;
+
+        /// <summary>
+        /// Default point determining outer face</param>
+        /// </summary>
 
         static Point farFarAway = new Point { X = 10000, Y = 10000 };
 
+        /// <summary>
+        /// Whether we use custom files at moment.
+        /// </summary>
         bool savedGraphs = false;
 
         Point facePoint = farFarAway;
 
+        /// <summary>
+        /// Set of vertices for which we count invariant edges
+        /// </summary>
+
         List<Vertex> invariantWithRescpectTo = new List<Vertex>();
+
+        /// <summary>
+        /// Smoothing constant determining the number of iterations of force-directed algorithm
+        /// </summary>
         int Smoothing => SmoothingTextBox.Text.Length == 0 ? 0 : (int)Double.Parse(SmoothingTextBox.Text);
 
-        //double operatorGridWidth = 300;
-        //double canvasWidth = 1000;
-
-        //private void RecalculateCanvasWidth()
-        //{
-        //    CanvasWidth = ActualWidth - operatorGridWidth;
-        //}
-
-
-        /*
-        public double CanvasWidth
-        {
-            get
-            {
-                return this.canvasWidth;
-            }
-
-            set
-            {
-                if (value != this.canvasWidth)
-                {
-                    this.canvasWidth = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        public double OperatorGridWidth
-        {
-            get
-            {
-                return this.operatorGridWidth;
-            }
-
-            set
-            {
-                if (value != this.operatorGridWidth)
-                {
-                    this.operatorGridWidth = value;
-                    RecalculateCanvasWidth();
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-        */
+        /// <summary>
+        /// List of vertices forming new edge
+        /// </summary>
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
@@ -272,28 +241,18 @@ namespace VizualizerWPF
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
-            //DrawGraph(graphCoordinates, 1);
-
-            //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            //DrawGraph(graphCoordinates, 1, true);
-
             MakeSmootherAndDraw();
-            //MessageBox.Show("Testing");
 
 
         }
 
-        private int CompareLinesByAngle(Vector v1, Vector v2)
-        {
-            var basicVector = new Vector(10, 0);
-            return Vector.AngleBetween(v1, basicVector) > Vector.AngleBetween(v2, basicVector) ? 1 : -1;
-        }
 
-        private void TryFace()
-        {
-            ReCalculateKEdges();
-        }
+      
 
+        /// <summary>
+        /// Get all vertices and intersection contained in <c>graphCoordinates</c>
+        /// </summary>
+        /// <returns></returns>
         private IEnumerable<Vertex> GetVerticesAndIntersections()
         {
             foreach(var vertex in graphCoordinates.vertices)
@@ -303,6 +262,11 @@ namespace VizualizerWPF
             }
         }
 
+        /// <summary>
+        /// Get all lines incident to <c>vertex</c> so that first end is <c>vertex</c>
+        /// </summary>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
         private IEnumerable<Line> GetLines(Vertex vertex)
         {
            
@@ -326,121 +290,11 @@ namespace VizualizerWPF
             throw new ArgumentException("Vertex must be regular or intersection.");
             
         }
+        /// <summary>
+        /// Function to check whether a drawing satisfy our conjecture for all reference faces.
+        /// </summary>
 
-        private void TryAllReferenceFaces()
-        {
-            foreach(var vertex in GetVerticesAndIntersections())
-            {
-                List<Vector> firstLines = new List<Vector>();
-                foreach (var l in GetLines(vertex)) {
-                    firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
-                }
-                firstLines.Sort(delegate (Vector l1, Vector l2) { return CompareLinesByAngle(l1, l2);});
-
-                for(int i = 0; i < firstLines.Count; i++)
-                {
-
-                    if (firstLines[i] / firstLines[i].Length == -firstLines[(i + 1) % firstLines.Count] / firstLines[(i + 1) % firstLines.Count].Length) //when there are opposite ones, the res can be NaN after normalizarion, because res can be zero in that case and we do not care, because there is another vertex on this face (angle 180 can be considered as this vertex is not on the face)
-                        continue;
-
-                    if (firstLines[i] / firstLines[i].Length == firstLines[(i + 1) % firstLines.Count] / firstLines[(i + 1) % firstLines.Count].Length) //when two lines are same direction, the face between them is empty and it is bad corner case
-                        continue;
-
-                    double minLength = Math.Min(firstLines[i].Length, firstLines[(i + 1) % firstLines.Count].Length);
-                    Vector res = firstLines[i] + firstLines[(i + 1) % firstLines.Count];
-                    res.Normalize();
-                    res *= (minLength / 4);
-
-                    if (Determinant(firstLines[i], firstLines[(i + 1) % firstLines.Count]) > 0)
-                    {
-                        res *= -1;res.Normalize();res *= 10;
-                    }
-                
-                  
-                    facePoint = vertex.center + res;
-
-                    mainCanvas.Children.Add(new Ellipse
-                    {
-                        Width = sizeOfVertex,
-                        Height = sizeOfVertex,
-                        Fill = Brushes.Purple,
-                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
-
-                    });
-
-                    TryFace();
-
-                    /*
-                    Console.WriteLine($"{facePoint.X} {facePoint.Y}");
-                    if (Double.IsNaN(facePoint.X))
-                    {
-                        Console.WriteLine($"{facePoint.X} {facePoint.Y}");
-                        MessageBox.Show($"{facePoint.X} {facePoint.Y}");
-                        
-                        MessageBox.Show("drawn");
-                    }
-
-                    //debug
-                    
-                    */
-
-
-                    /*
-                   mainCanvas.Children.Add(new Ellipse
-                   {
-                       Width = sizeOfVertex,
-                       Height = sizeOfVertex,
-                       Fill = Brushes.Purple,
-                       Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
-
-                   });
-                   //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
-                   */
-
-
-                }
-
-            }
-        }
-
-        private void TryAllDrawings()
-        {
-           
-            for (int i = 4; i <= 7; i++)
-            {
-                
-                graphGenerator = new GraphGenerator(i);
-
-                graphGenerator.counter = 6690;
-                graphCoordinates = graphGenerator.GeneratePreviousDrawing();
-
-                graphCoordinates = graphGenerator.GenerateNextDrawing();
-                Console.WriteLine(graphGenerator.counter);
-                //MakeSmootherAndDraw();
-                TryAllReferenceFaces();
-
-                while (graphCoordinates.vertices.Count != 0)
-                {
-                    Console.WriteLine(graphGenerator.counter);
-                    //MessageBox.Show(counter.ToString());
-                    graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    //MakeSmootherAndDraw();
-                    TryAllReferenceFaces();
-                }
-                
-            }
-        }
-
-        private int CombCoeff(int n, int k)
-        {
-            int res = 1;
-            for(int i = 1; i <= k; i++)
-            {
-                res *= (n - (k - i));
-                res /= i;
-            }
-            return res;
-        }
+      
 
         private void InitializeRightValuesOfKedges()
         {
@@ -450,7 +304,7 @@ namespace VizualizerWPF
                 for(int k = 0; k <= 8; k++)
                 {
                     TextBlock textBlock = FindName($"{atMost}{k}RightValue") as TextBlock;
-                    textBlock.Text = (3 * CombCoeff(k + i, i)).ToString();
+                    textBlock.Text = (3 * CustomMath.CombCoeff(k + i, i)).ToString();
                 }
                 switch (i)
                 {
@@ -503,12 +357,12 @@ namespace VizualizerWPF
                     *   graphCoordinates.vertices.Remove(vertex);
                 */
             }
-            CreateVerticesFromLines(graphCoordinates);
+            CreateVerticesFromPoints(graphCoordinates);
             
             
         }
 
-        private void CreateVerticesFromLines(GraphCoordinates graphCoordinates)
+        private void CreateVerticesFromPoints(GraphCoordinates graphCoordinates)
         {
             var allPoints = new HashSet<Point>(PointsIterator());
             var newVertices = new HashSet<Vertex>();
@@ -1281,10 +1135,6 @@ namespace VizualizerWPF
 
         }
 
-        private double Determinant(Vector a, Vector b)
-        {
-            return a.X * b.Y - a.Y * b.X;
-        }
 
         /// <summary>
         /// Function to find edge between two vertices 
@@ -1334,7 +1184,7 @@ namespace VizualizerWPF
         {
             //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
 
-            var kEdgdesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+            var kEdgesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
             var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
 
             Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
@@ -1355,14 +1205,6 @@ namespace VizualizerWPF
                     {
                         visited[(vertex, v)] = true;
                         visited[(v, vertex)] = true;
-
-                        //var tempEdge = FindEdgeFromVertices(vertexWithout, v);
-
-                        //if (tempEdge == null) // it doesnt have to be clique
-                        //continue;
-
-                        //foreach(var line in tempEdge.lines)
-                        //line.StrokeDashArray = DoubleCollection.Parse("");
                     }
                 }
             }
@@ -1424,21 +1266,8 @@ namespace VizualizerWPF
 
                     int sum = sumRight < sumLeft ? sumRight : sumLeft; 
 
-                    /*
-                    int inter;
-                    if (sum > (inter =
-                        graphCoordinates.neighbors[from].GetEnds(from.center)
-                        .Intersect(graphCoordinates.neighbors[to].GetEnds(to.center)).Count()) / 2)
-                        sum = inter - sum; //pick smaller
-                    */
-                    /*
-                    if (sum < 0)
-                        throw new ArgumentException("You cannot add edge between already connected vertices");
-                    */
-                    /*
-                    if (sum <= kEdgesPicked) // only needed this ones */
 
-                    kEdgdesValues[sum]++;
+                    kEdgesValues[sum]++;
                     
                     var edge = FindEdgeFromVertices(from, to);
 
@@ -1488,12 +1317,14 @@ namespace VizualizerWPF
 
             if (withouts == null && withoutEdge == null)
             {
-                CalculateAMEdgesAndPrint(kEdgdesValues, maximalkEdges);
+                var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalkEdges, kEdgesValues);
+
+                PrintAMKEdges(maximalkEdges, AMKEdgesArray);
 
                 for (int i = 0; i <= maximalkEdges; i++)
                 {
                     TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
-                    textBlock.Text = kEdgdesValues[i].ToString();
+                    textBlock.Text = kEdgesValues[i].ToString();
                 }
             }
 
@@ -1587,33 +1418,15 @@ namespace VizualizerWPF
             
         }
 
+  
+
         /// <summary>
         /// Summing function to find wanted values
         /// </summary>
         /// <param name="kEdgesArray">array with how many k edges are for every k</param>
         /// <param name="size">for which k we want to count</param>
-        private void CalculateAMEdgesAndPrint(int[] kEdgesArray, int size)
+        private void PrintAMKEdges(int size, int[,] AMKEdgesArray)
         {
-            int[,] AMKEdgesArray = new int[3, size + 1];
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j <= size; j++)
-                    AMKEdgesArray[i, j] = 0;
-
-            //Enumerable.Repeat(0, size + 1).ToArray();
-            AMKEdgesArray[0, 0] = kEdgesArray[0];
-            for (int i = 1; i <= size; i++)
-            {
-                AMKEdgesArray[0, i] = AMKEdgesArray[0, i - 1] + kEdgesArray[i];
-            }
-
-            for (int k = 1; k < 3; k++)
-            {
-                AMKEdgesArray[k, 0] = AMKEdgesArray[k - 1, 0];
-                for (int i = 1; i <= size; i++)
-                {
-                    AMKEdgesArray[k, i] = AMKEdgesArray[k, i - 1] + AMKEdgesArray[k - 1, i];
-                }
-            }
 
             for(int i = 0; i <= size; i++)
             {
@@ -1647,7 +1460,6 @@ namespace VizualizerWPF
 
                 if (textBlock.Text == "F")
                 {
-                    //DrawGraph(graphCoordinates, 1);
                     mainCanvas.Children.Add(new Ellipse
                     {
                         Width = sizeOfVertex,
@@ -1657,21 +1469,11 @@ namespace VizualizerWPF
 
                     });
                     MessageBox.Show("HEUREKA WRONG");
-                    //mainCanvas.Children.RemoveAt(mainCanvas.Children.Count - 1);
-                    MessageBox.Show("wrong face");
+
                    
                 }
             }
  
-
-            /*
-            if (statesCalculation[StateCalculation.AMKEdges])
-                textBlockAMKEdges.Text = $"AM K hran velikost {size} je {AMKEdgesArray[0, size]}";
-            else if (statesCalculation[StateCalculation.AMAMKEdges])
-                textBlockAMKEdges.Text = $"AMAM K hran velikost {size} je {AMKEdgesArray[1, size]}";
-            else if (statesCalculation[StateCalculation.AMAMAMKEdges])
-                textBlockAMKEdges.Text = $"AMAMAM K hran velikost {size} je {AMKEdgesArray[2, size]}";
-            */
         }
 
         private void UpdateStats()

@@ -624,5 +624,17 @@ namespace VizualizerWPF
             }
         }
 
+        public static int CompareLinesByAngle(Vector v1, Vector v2)
+        {
+            var basicVector = new Vector(10, 0);
+            return Vector.AngleBetween(v1, basicVector) > Vector.AngleBetween(v2, basicVector) ? 1 : -1;
+        }
+
+
+        public static double Determinant(Vector a, Vector b)
+        {
+            return a.X * b.Y - a.Y * b.X;
+        }
+
     }
 }
