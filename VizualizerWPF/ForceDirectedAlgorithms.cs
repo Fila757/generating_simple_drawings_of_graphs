@@ -16,12 +16,20 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
-
+    /// <summary>
+    /// Class to apply (iteratively) force-directed algorithm. 
+    /// </summary>
     static class ForceDirectedAlgorithms
     {
-        static double gamma = 3;
-        static double delta = 20;
 
+        static double gamma = 3;
+        /// <summary>
+        /// The desider length of all edges
+        /// </summary>
+        static double delta = 20;
+        /// <summary>
+        /// Maximal force we want to apply
+        /// </summary>
         static int INF = 1000;
 
         static Point origin = new Point(0, 0);
@@ -33,6 +41,9 @@ namespace VizualizerWPF
             mainWindow = mainWindow2;
         }
 
+        /// <summary>
+        /// Vectors of borders of zones 
+        /// </summary>
         static Vector[] RegionVectors = new Vector[] {
             new Vector(10, 0),
             new Vector(10, 10),
@@ -43,6 +54,7 @@ namespace VizualizerWPF
             new Vector(0, -10),
             new Vector(10, -10)
          };
+
 
         static Vertex FindVertex(GraphCoordinates graphCoordinates, Point center)
         {
@@ -55,6 +67,12 @@ namespace VizualizerWPF
             throw new ArgumentException("There is no such a vertex with that center");
         }
 
+        /// <summary>
+        /// Get all opposite point to <c>vertex</c> in <c>graphCoordinates</c> 
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
+        /// <param name="vertex"></param>
+        /// <returns></returns>
         static HashSet<Point> FindNeighbors(GraphCoordinates graphCoordinates, Vertex vertex)
         {
             HashSet<Point> neighbors = new HashSet<Point>();
@@ -82,6 +100,12 @@ namespace VizualizerWPF
             return neighbors;
         }
 
+        /// <summary>
+        /// Function to get smaller vector.
+        /// </summary>
+        /// <param name="vector1"></param>
+        /// <param name="vector2"></param>
+        /// <returns></returns>
         static public Vector Min(Vector vector1, Vector vector2)
         {
             return Distance(vector1.ToPoint(), origin) < Distance(vector2.ToPoint(), origin) ? vector1 : vector2;
@@ -97,6 +121,13 @@ namespace VizualizerWPF
             return (first.X * second.X + first.Y * second.Y) > 0;
         }
 
+        /// <summary>
+        /// Function to detect if the <c>midlle</c> vector is between (the smaller part) determined by <c>first</c> and <c>second</c>.
+        /// </summary>
+        /// <param name="first"></param>
+        /// <param name="second"></param>
+        /// <param name="middle"></param>
+        /// <returns></returns>
         static bool IsBetween(Vector first, Vector second, Vector middle)
         {
             return (Determinant(first, middle) * Determinant(second, middle) <= 0) && (IsAcute(first, middle) && IsAcute(second, middle));
@@ -107,16 +138,35 @@ namespace VizualizerWPF
             return Math.Sqrt((a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y));
         }
 
+        /// <summary>
+        /// Get attraction force of <c>b</c> when <c>a</c> is fixed. 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static public Vector CountAttractionForce(Point a, Point b)
         {
             return (Distance(a, b) / delta) *  (a - b);
         }
 
+        /// <summary>
+        /// Get repulsion force of <c>b</c> when <c>a</c> is fixed. 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static public Vector CountRepulsionForce(Point a, Point b)
         {
             return ((-delta * delta) / (Distance(a, b) * Distance(a, b))) * (b - a);
         }
 
+        /// <summary>
+        /// Get projection of <c>v</c> on the line determined by <c>a</c> and <c>b</c>.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static Point Projection(Point v, Point a, Point b)
         {
             Vector av = v - a;
@@ -127,6 +177,13 @@ namespace VizualizerWPF
             return Distance((cosOfAngle * av).ToPoint(), origin) * ab + a;
         }
 
+        /// <summary>
+        /// Get repulsion force of <v>c</v> with edge determined by <c>a</c> and <c>b</c> fixed.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static public Vector CountRepulsionEdgeForce(Point v, Point a, Point b)
         {
             Point i_v = Projection(v, a, b);
@@ -139,12 +196,17 @@ namespace VizualizerWPF
                 return new Vector(0, 0);
         }
 
+        /// <summary>
+        /// Function to count and add forces to vertex <c>v</c>.
+        /// </summary>
+        /// <param name="v"></param>
+        /// <param name="neighbors"></param>
+        /// <param name="vertices"></param>
+        /// <param name="edges"></param>
+        /// <param name="Rs"></param>
+        /// <returns></returns>
         static public Point CountForceInnerVertex(Point v, HashSet<Point> neighbors, HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
-            if(v.X == 393 && v.Y == 74)
-            {
-                Console.WriteLine("rr");
-            }
 
             Vector finalForce = origin.ToVector();
 
@@ -161,11 +223,7 @@ namespace VizualizerWPF
             foreach (var edge in edges)
             {
                 finalForce += CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
-                if (Double.IsNaN(finalForce.X))
-                {
-                    Console.WriteLine("NaN");
-                    CountRepulsionEdgeForce(v, edge.points[0], edge.points[1]);
-                }
+     
             }
 
             foreach (var vertex in vertices)
@@ -173,11 +231,7 @@ namespace VizualizerWPF
                 foreach (var neigh in neighbors)
                 {
                     finalForce -= CountRepulsionEdgeForce(vertex, v, neigh);
-                    if (Double.IsNaN(finalForce.X))
-                    {
-                        Console.WriteLine("NaN");
-                        CountRepulsionEdgeForce(vertex, v, neigh);
-                    }
+
                 }
             }
 
@@ -206,6 +260,11 @@ namespace VizualizerWPF
             throw new ArgumentException("It is not in any region");
         }
 
+        /// <summary>
+        /// Apply force-directed algorithm to all vertices on canvas.
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
+        /// <returns></returns>
         static public GraphCoordinates CountAndMoveByForces(GraphCoordinates graphCoordinates)
         {
             mainWindow.mainCanvas.Children.Clear();
@@ -229,21 +288,7 @@ namespace VizualizerWPF
             }
 
             Dictionary<Point, double[]> Rs = new Dictionary<Point, double[]>();
-            CountRadiuses(vertices, edges, Rs);
-
-            /*
-            foreach(var (point, arr) in Rs)
-            {
-                //Rs[point] = new double[] { 1, 1, 1, 1, 1, 1, 1, 1 };
-
-                string debugger = point.X + " " + point.Y;
-                for (int i = 0; i < 8; i++)
-                    debugger += " " + arr[i];
-
-
-                MessageBox.Show(debugger);
-            }
-            */
+            CountRadii(vertices, edges, Rs);
 
             foreach(var vertex in graphCoordinates.vertices)
             {
@@ -288,13 +333,6 @@ namespace VizualizerWPF
 
                 Vertex actualZero = FindVertex(newGraphCoordinates, convertor[edge.points[0]]);
                 Vertex actualLast = FindVertex(newGraphCoordinates, convertor[edge.points.Last()]);
-                
-                /*
-                if (newGraphCoordinates.vertices.Contains(actualZero))
-                    newGraphCoordinates.vertices.TryGetValue(actualZero, out actualZero);
-                if (newGraphCoordinates.vertices.Contains(actualLast))
-                    newGraphCoordinates.vertices.TryGetValue(actualLast, out actualLast);
-                */
 
                 newGraphCoordinates.AddToDictionary(actualZero, newEdge);
                 newGraphCoordinates.AddToDictionary(actualLast, newEdge);
@@ -303,7 +341,13 @@ namespace VizualizerWPF
             return newGraphCoordinates;
         }
 
-        static void CountRadiuses(HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
+        /// <summary>
+        /// Function to count the radii of zones to preserve the crossing properties. 
+        /// </summary>
+        /// <param name="vertices"></param>
+        /// <param name="edges"></param>
+        /// <param name="Rs"></param>
+        static void CountRadii(HashSet<Point> vertices, List<Edge> edges, Dictionary<Point, double[]> Rs)
         {
             foreach(var vertex in vertices)
             {
