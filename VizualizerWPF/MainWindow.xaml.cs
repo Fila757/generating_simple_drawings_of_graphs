@@ -1566,10 +1566,9 @@ namespace VizualizerWPF
 
 
         /// <summary>
-        /// Function similar to ReDrawGraph function but 
-        /// there is only rescaling needed
-        /// Here we need to add also shift from origin
-        /// and set indices and so on
+        /// Function to draw a graph even when the canvas is not loaded yet
+        /// The main difference to ReDraw the graph that here we first create ellipses, lines and so on, because
+        /// graphCoordinates consists only of Vertices and Edges only containing points after generating
         /// </summary>
         /// <param name="graphCoordinates">Class to store graph</param>
         /// <param name="scale"></param>
