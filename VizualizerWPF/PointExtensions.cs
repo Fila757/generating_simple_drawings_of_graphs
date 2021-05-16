@@ -54,6 +54,12 @@ namespace VizualizerWPF
         {
             return (Point)vector;
         }
+        /// <summary>
+        /// Get the ratio of two parralel vectors
+        /// </summary>
+        /// <param name="vector1"></param>
+        /// <param name="vector2"></param>
+        /// <returns></returns>
 
         public static double Divide(this Vector vector1, Vector vector2)
         {

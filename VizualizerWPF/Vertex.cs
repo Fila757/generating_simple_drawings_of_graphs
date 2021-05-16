@@ -25,9 +25,15 @@ namespace VizualizerWPF
         public Point center ;
         public VertexState state;
 
+        /// <summary>
+        /// Compare points in both coordinates and consider the same if there both coordinates are the same except for small error 0.0001
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static bool Compare(Point a, Point b)
         {
-            if (Math.Abs(a.X - b.X) < 0.01 && Math.Abs(a.Y - b.Y) < 0.01)
+            if (Math.Abs(a.X - b.X) < 0.0001 && Math.Abs(a.Y - b.Y) < 0.0001)
                 return true;
             return false;
         }
@@ -57,7 +63,10 @@ namespace VizualizerWPF
             var vertex = (Vertex)obj;
             return Compare(center, vertex.center);
         }
-
+        /// <summary>
+        /// GetHashCode by rounding the coordinates to avoid numerical errors
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return new Point { X = Math.Round(center.X, 5), Y = Math.Round(center.Y, 5) }.GetHashCode();
