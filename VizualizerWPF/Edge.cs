@@ -27,13 +27,13 @@ namespace VizualizerWPF
             this.lines = lines;
         }
 
-        /*
-        public bool Equals(Edge other)
-        {
-            return lines == other.lines && points == other.points;
-        }
-        */
-
+        /// <summary>
+        /// Function to detect, whether consectuive points <c>point1</c>, <c>point2</c>, <c>point3</c> are at angle less then cca 30°
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <param name="point3"></param>
+        /// <returns></returns>
         private bool IsSharp(Point point1, Point point2, Point point3)
         {
             Vector first = point1 - point2;
@@ -44,6 +44,9 @@ namespace VizualizerWPF
             return true;
         }
 
+        /// <summary>
+        /// Function to connect points to create line segment between them.
+        /// </summary>
         private void CreateLinesFromPoints()
         {
             lines = new List<Line>();
@@ -60,7 +63,10 @@ namespace VizualizerWPF
         }
 
 
-
+        /// <summary>
+        /// Function to go through the Edge and shorten if it is wanted.
+        /// </summary>
+        /// <param name="graphCoordinates"></param>
         public void Shorten(in GraphCoordinates graphCoordinates)
         {
             //var removed = new List<Vertex>();
@@ -88,7 +94,6 @@ namespace VizualizerWPF
                     )
                     
                 {
-                    //removed.Add(new Vertex { ellipse = new Ellipse(), center = shortenPoints[shortenPoints.Count - 1], state = VertexState.Middle });
                     shortenPoints.RemoveAt(shortenPoints.Count - 1);
                 }
 
@@ -100,6 +105,13 @@ namespace VizualizerWPF
 
             //return removed;
         }
+        /// <summary>
+        /// This function is called by <c>Shorten</c> to shorten only small enough lines
+        /// </summary>
+        /// <param name="point1"></param>
+        /// <param name="point2"></param>
+        /// <param name="point3"></param>
+        /// <returns></returns>
 
         private bool IsShortEnough(Point point1, Point point2, Point point3)
         {
