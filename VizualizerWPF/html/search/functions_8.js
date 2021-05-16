@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['line_5fmousedown_150',['line_MouseDown',['../class_vizualizer_w_p_f_1_1_main_window.html#af4f835b41464c8c6529f244ec97df30f',1,'VizualizerWPF::MainWindow']]],
-  ['lineandellipse_151',['LineAndEllipse',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a13a4cce23e14581363f3eeee34635167',1,'VizualizerWPF::CollisionDetection']]],
-  ['lineandellipseatend_152',['LineAndEllipseAtEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a31a5285512bfb2e022cdb0076f5d070a',1,'VizualizerWPF::CollisionDetection']]]
+  ['mainwindow_200',['MainWindow',['../class_vizualizer_w_p_f_1_1_main_window.html#a8bab6c1f95f3e5ebc9106b9346a3b58b',1,'VizualizerWPF::MainWindow']]],
+  ['makecurve_201',['MakeCurve',['../class_vizualizer_w_p_f_1_1_polybezier_path_maker.html#a6b44830e97771a615cec3a7eb61a6c41',1,'VizualizerWPF::PolybezierPathMaker']]]
 ];

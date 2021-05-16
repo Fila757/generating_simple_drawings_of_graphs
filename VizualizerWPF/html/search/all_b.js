@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['neighbors_61',['neighbors',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a5d29126f7ee674afea5b21a078eee871',1,'VizualizerWPF::GraphCoordinates']]],
-  ['nextdrawing_5fclick_62',['NextDrawing_Click',['../class_vizualizer_w_p_f_1_1_main_window.html#ae067ff6ed31958e8734154f6a4f48cc6',1,'VizualizerWPF::MainWindow']]],
-  ['none_63',['None',['../namespace_vizualizer_w_p_f.html#a37105a0b372bc8b780566902cac62bdca6adf97f83acf6453d4a6a4b1070f3754',1,'VizualizerWPF']]]
+  ['mainwindow_86',['MainWindow',['../class_vizualizer_w_p_f_1_1_main_window.html#a8bab6c1f95f3e5ebc9106b9346a3b58b',1,'VizualizerWPF.MainWindow.MainWindow()'],['../class_vizualizer_w_p_f_1_1_main_window.html',1,'VizualizerWPF.MainWindow']]],
+  ['mainwindow_2examl_2ecs_87',['MainWindow.xaml.cs',['../_main_window_8xaml_8cs.html',1,'']]],
+  ['makecurve_88',['MakeCurve',['../class_vizualizer_w_p_f_1_1_polybezier_path_maker.html#a6b44830e97771a615cec3a7eb61a6c41',1,'VizualizerWPF::PolybezierPathMaker']]],
+  ['maximalkedges_89',['maximalKEdges',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aa455701e097b6c862469f7936d3f34ba',1,'VizualizerWPF::GraphCoordinates']]],
+  ['middle_90',['Middle',['../namespace_vizualizer_w_p_f.html#aa95aa3e643b222355230511356c6e640ab1ca34f82e83c52b010f86955f264e05',1,'VizualizerWPF']]]
 ];

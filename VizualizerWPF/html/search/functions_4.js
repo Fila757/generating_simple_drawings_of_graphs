@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['findedge_138',['FindEdge',['../class_vizualizer_w_p_f_1_1_main_window.html#ad9927395bd7be34698e1107668e431ce',1,'VizualizerWPF::MainWindow']]],
-  ['findedgeends_139',['FindEdgeEnds',['../class_vizualizer_w_p_f_1_1_main_window.html#a794bbf8cb8842b811f56a265124b45a4',1,'VizualizerWPF::MainWindow']]],
-  ['findedgefromvertices_140',['FindEdgeFromVertices',['../class_vizualizer_w_p_f_1_1_main_window.html#ae74a039514e3337529006cda3c45d15d',1,'VizualizerWPF::MainWindow']]],
-  ['findvertex_141',['FindVertex',['../class_vizualizer_w_p_f_1_1_main_window.html#a48bf2e230d67c6e7d9b92fe4e506218f',1,'VizualizerWPF::MainWindow']]]
+  ['findedgefromvertices_177',['FindEdgeFromVertices',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4a0fcb53e40c51f827f26402f3b39105',1,'VizualizerWPF::GraphCoordinates']]],
+  ['findvertex_178',['FindVertex',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#ad6699a9b2a68eac752e43b9d968de9f6',1,'VizualizerWPF.GraphCoordinates.FindVertex(Point center)'],['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4eadeb0e4646490abe1b4dc1f9feddc7',1,'VizualizerWPF.GraphCoordinates.FindVertex(Ellipse ellipse, double sizeOfVertex)']]],
+  ['findvertexsave_179',['FindVertexSave',['../class_vizualizer_w_p_f_1_1_main_window.html#add6ab0a1e32c7a71073a1c0c5e5608b7',1,'VizualizerWPF::MainWindow']]]
 ];
