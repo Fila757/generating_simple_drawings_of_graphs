@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
@@ -10,12 +11,12 @@ namespace VizualizerWPF
         /// <summary>
         /// Function to check if all faces satisfy our conjecture
         /// </summary>
-        private static void TryAllReferenceFaces()
+        private static void TryAllReferenceFaces(GraphCoordinates graphCoordinates)
         {
-            foreach (var vertex in GetVerticesAndIntersections())
+            foreach (var vertex in graphCoordinates.GetVerticesAndIntersections())
             {
                 List<Vector> firstLines = new List<Vector>();
-                foreach (var l in GetLines(vertex))
+                foreach (var l in graphCoordinates.GetLines(vertex))
                 {
                     firstLines.Add(new Vector(l.X2 - l.X1, l.Y2 - l.Y1));
                 }
@@ -41,9 +42,9 @@ namespace VizualizerWPF
                     }
 
 
-                    facePoint = vertex.center + res;
+                    GraphCoordinates.facePoint = vertex.center + res;
 
-                    TryFace();
+                    TryFace(graphCoordinates);
 
                 }
 
@@ -60,22 +61,23 @@ namespace VizualizerWPF
 
                 graphCoordinates = graphGenerator.GenerateNextDrawing();
                 Console.WriteLine(graphGenerator.counter);
-                TryAllReferenceFaces();
+                TryAllReferenceFaces(graphCoordinates);
 
                 while (graphCoordinates.vertices.Count != 0)
                 {
                     Console.WriteLine(graphGenerator.counter);
                     graphCoordinates = graphGenerator.GenerateNextDrawing();
-                    TryAllReferenceFaces();
+                    TryAllReferenceFaces(graphCoordinates);
                 }
 
             }
         }
 
-        private static void TryFace()
+        private static void TryFace(GraphCoordinates graphCoordinates)
         {
-            ReCalculateKEdges();
+            graphCoordinates.ReCalculateKEdges();
         }
+
 
 
 

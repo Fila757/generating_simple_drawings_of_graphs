@@ -83,14 +83,12 @@ namespace VizualizerWPF
         /// Default point determining outer face</param>
         /// </summary>
 
-        static Point farFarAway = new Point { X = 10000, Y = 10000 };
 
         /// <summary>
         /// Whether we use custom files at moment.
         /// </summary>
         bool savedGraphs = false;
 
-        Point facePoint = farFarAway;
 
         /// <summary>
         /// Set of vertices for which we count invariant edges
@@ -249,50 +247,8 @@ namespace VizualizerWPF
 
       
 
-        /// <summary>
-        /// Get all vertices and intersection contained in <c>graphCoordinates</c>
-        /// </summary>
-        /// <returns></returns>
-        private IEnumerable<Vertex> GetVerticesAndIntersections()
-        {
-            foreach(var vertex in graphCoordinates.vertices)
-            {
-                if (vertex.state == VertexState.Regular || vertex.state == VertexState.Intersection)
-                    yield return vertex;
-            }
-        }
+       
 
-        /// <summary>
-        /// Get all lines incident to <c>vertex</c> so that first end is <c>vertex</c>
-        /// </summary>
-        /// <param name="vertex"></param>
-        /// <returns></returns>
-        private IEnumerable<Line> GetLines(Vertex vertex)
-        {
-           
-            if(vertex.state == VertexState.Regular)
-            {
-                foreach(var edge in graphCoordinates.neighbors[vertex])
-                {
-                    yield return CollisionDetection.ChooseTheLineBy(vertex, edge); //choose the line by the vertex v (of this edge)
-                }
-                yield break;
-            }
-            else if(vertex.state == VertexState.Intersection)
-            {
-                foreach(var line in CollisionDetection.GetEdges(vertex, graphCoordinates))
-                {
-                    yield return CollisionDetection.OrientLineProperly(vertex, line); //orient the edge if the intersection is on the opposite side of the line
-                }
-                yield break;
-            }
-         
-            throw new ArgumentException("Vertex must be regular or intersection.");
-            
-        }
-        /// <summary>
-        /// Function to check whether a drawing satisfy our conjecture for all reference faces.
-        /// </summary>
 
       
 
@@ -684,7 +640,7 @@ namespace VizualizerWPF
 
             if (!(bool)faceCheckBox.IsChecked)
             {
-                facePoint = farFarAway; //changing again to the outer face
+                GraphCoordinates.facePoint = GraphCoordinates.farFarAway; //changing again to the outer face
             }
 
             if ((bool)savedGraphsChechBox.IsChecked && !savedGraphs)
@@ -727,7 +683,7 @@ namespace VizualizerWPF
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
             if(!(bool)faceCheckBox.IsChecked)
-                facePoint = farFarAway;
+                GraphCoordinates.facePoint = GraphCoordinates.farFarAway;
 
             int tmpCounter = graphGenerator.counter;
 
@@ -903,7 +859,7 @@ namespace VizualizerWPF
                         selectedVertices.RemoveAt(1);
                         return;
                     }
-                    if (FindEdgeFromVertices(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1)) != null)
+                    if (graphCoordinates.FindEdgeFromVertices(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1)) != null)
                     {
                         MessageBox.Show("You cannot add edge where there is already put one");
                         selectedVertices.Clear();
@@ -1026,7 +982,7 @@ namespace VizualizerWPF
                         invariantWithRescpectTo.Add(vertex);
                         ellipse.Fill = Brushes.Purple;
                     }
-                    ReCalculateKEdges(invariantWithRescpectTo);
+                    RecalculateKEdgesAndUpdateButtonTexts(invariantWithRescpectTo);
                 }
             }
             else
@@ -1126,7 +1082,7 @@ namespace VizualizerWPF
             if (stateChanging == StateChanging.Invariant)
             {
                 var withoutEdge = FindEdge(line);
-                ReCalculateKEdges(null, withoutEdge);
+                RecalculateKEdgesAndUpdateButtonTexts(null, withoutEdge);
             }
             else
             {
@@ -1136,192 +1092,28 @@ namespace VizualizerWPF
         }
 
 
-        /// <summary>
-        /// Function to find edge between two vertices 
-        /// </summary>
-        /// <param name="a">First vertex</param>
-        /// <param name="b">Second vertex</param>
-        /// <returns>Found edge</returns>
-        private Edge FindEdgeFromVertices(Vertex a, Vertex b)
-        {
-            foreach(var edge in graphCoordinates.edges)
-            {
-                if ((CollisionDetection.CenterOfVertexOnLine(edge.lines[0], a) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), a)) 
-                    &&
-                    (CollisionDetection.CenterOfVertexOnLine(edge.lines[0], b) || CollisionDetection.CenterOfVertexOnLine(edge.lines.Last(), b)))
-                {
-                    return edge;
-                }
-            }
 
-            return null; // so such edge
+    
+
+
+        int maximalKEdges = 8;
+        void RecalculateKEdgesAndUpdateButtonTexts(List<Vertex> withouts = null, Edge withoutEdge = null)  
+        {
+
+            (var kEdgesValues, var invariantKEdges) = graphCoordinates.ReCalculateKEdges(withouts, withoutEdge);
+            UpdateButtonTexts(withouts, withoutEdge, kEdgesValues, invariantKEdges);
         }
 
 
-        bool CheckIfEdgeIsInTriangle(Vertex from, Vertex to, Vertex third, Vertex firstEdgeVertex, Vertex secondEdgeVertex)
+        void UpdateButtonTexts(List<Vertex> withouts, Edge withoutEdge, int [] kEdgesValues, int [] invariantKEdges)
         {
-            if((from == firstEdgeVertex && third == secondEdgeVertex) || (to == firstEdgeVertex && third == secondEdgeVertex) ||
-                (from == secondEdgeVertex && third == firstEdgeVertex) || (to == secondEdgeVertex && third == firstEdgeVertex))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Function to recalculate number of k edges
-        /// and AM, AMAM, AMAMAM k edges
-        /// It is done by finding all triangles upon all edges
-        /// and counting <c>k</c> for every edge
-        /// Then summing function for AM, AMAM, AMAMAM k edges is called
-        /// </summary>
-        /// 
-        int maximalkEdges = 8;
-
-        enum Difference { Zero, One, Two };
-
-        private void ReCalculateKEdges(List<Vertex> withouts = null, Edge withoutEdge = null)
-        {
-            //int kEdgesPicked = 0;//(int)KhranyUpDown.Value;
-
-            var kEdgesValues = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
-            var invariantKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
-
-            Dictionary<(Vertex, Vertex), bool> visited = new Dictionary<(Vertex, Vertex), bool>();
-
-            foreach(var from in graphCoordinates.neighbors.Keys)
-            {
-                foreach(var to in graphCoordinates.neighbors.Keys)
-                {
-                    visited[(from, to)] = false;
-                }
-            }
-
-            if(withouts != null)
-            {
-                foreach (var vertex in withouts)
-                {
-                    foreach (var v in graphCoordinates.neighbors.Keys)
-                    {
-                        visited[(vertex, v)] = true;
-                        visited[(v, vertex)] = true;
-                    }
-                }
-            }
-
-            Vertex? firstEdgeVertex = null;
-            Vertex? secondEdgeVertex = null;
-
-            if (withoutEdge != null)
-            {
-                firstEdgeVertex = FindVertex(withoutEdge.points.First());
-                secondEdgeVertex = FindVertex(withoutEdge.points.Last());
-
-                visited[(firstEdgeVertex.Value, secondEdgeVertex.Value)] = true;
-                visited[(secondEdgeVertex.Value, firstEdgeVertex.Value)] = true;
-
-                foreach (var line in withoutEdge.lines)
-                    line.StrokeDashArray = DoubleCollection.Parse("");
-            }
-
-            foreach(var (from, value) in graphCoordinates.neighbors)
-            {
-                foreach (var e1 in value)
-                {
-
-                    var to = FindVertex(CollisionDetection.ChooseOppositeOne(e1, from.center));
-
-                    if (visited[(from, to)]) continue;
-                    visited[(from, to)] = true;
-                    visited[(to, from)] = true;
-
-                    int sumRight = 0;
-                    int sumLeft = 0;
-                    foreach (var e2 in graphCoordinates.neighbors[to])
-                    {
-                        var third = FindVertex(CollisionDetection.ChooseOppositeOne(e2, to.center));
-                        var e3 = graphCoordinates.neighbors[from].ContainsEnd(from.center, third.center);
-                        if (e3 != null){
-                            if (third == from || third == to
-                                ||
-                                (withouts != null && withouts.Contains(third))
-                                ||
-                                (firstEdgeVertex.HasValue
-                                &&
-                                secondEdgeVertex.HasValue
-                                &&
-                                CheckIfEdgeIsInTriangle(from, to, third, firstEdgeVertex.Value, secondEdgeVertex.Value))) 
-                            {
-                                continue; 
-                            }
-
-                            (Line, List<Line>) allLines = CollisionDetection.PutLinesTogether(e1, e2, e3);
-
-                            if (CollisionDetection.GetOrientation(allLines.Item1, allLines.Item2, facePoint) > 0)
-                                sumRight++;
-                            else
-                                sumLeft++;
-                        }
-                    }
-
-                    int sum = sumRight < sumLeft ? sumRight : sumLeft; 
-
-
-                    kEdgesValues[sum]++;
-                    
-                    var edge = FindEdgeFromVertices(from, to);
-
-                    //if (edge == null) 
-                    //    continue;
-
-                    Difference invariant = Difference.One;
-
-                    if (withouts != null || withoutEdge != null)
-                    {
-                        if (edge.kEdge == sum)
-                        {
-                            invariant = Difference.Zero;
-                            invariantKEdges[sum]++;
-                        }
-                        else if(edge.kEdge - sum == 2)
-                        {
-                            invariant = Difference.Two;
-                        }
-                    }
-                    else
-                    {
-                        edge.kEdge = sum;
-                    }
-
-                    foreach (var line in edge.lines)
-                    {
-
-                        if (withouts != null || withoutEdge != null)
-                        {
-                            if (invariant == Difference.Zero)
-                                line.StrokeDashArray = DoubleCollection.Parse("4 1 1 1 1 1");
-                            else if (invariant == Difference.Two)
-                                line.StrokeDashArray = DoubleCollection.Parse("1 1");
-                            else
-                            {
-                                line.StrokeDashArray = DoubleCollection.Parse("");
-                            }
-                        }
-                        
-                        else
-                            line.Stroke = colors[sum];
-                    }
-                }
-            }
-
-
             if (withouts == null && withoutEdge == null)
             {
-                var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalkEdges, kEdgesValues);
+                var AMKEdgesArray = CustomMath.CalculateAmEdges(maximalKEdges, kEdgesValues);
 
-                PrintAMKEdges(maximalkEdges, AMKEdgesArray);
+                PrintAMKEdges(maximalKEdges, AMKEdgesArray);
 
-                for (int i = 0; i <= maximalkEdges; i++)
+                for (int i = 0; i <= maximalKEdges; i++)
                 {
                     TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
                     textBlock.Text = kEdgesValues[i].ToString();
@@ -1330,13 +1122,13 @@ namespace VizualizerWPF
 
             else
             {
-                var invariantAmKEdges = Enumerable.Repeat(0, maximalkEdges + 1).ToArray();
+                var invariantAmKEdges = Enumerable.Repeat(0, maximalKEdges + 1).ToArray();
 
                 invariantAmKEdges[0] = invariantKEdges[0];
                 TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
                 textBlock.Text = invariantAmKEdges[0].ToString();
 
-                for (int i = 1; i <= maximalkEdges; i++)
+                for (int i = 1; i <= maximalKEdges; i++)
                 {
                     invariantAmKEdges[i] = invariantAmKEdges[i - 1] + invariantKEdges[i];
                     textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
@@ -1345,7 +1137,7 @@ namespace VizualizerWPF
 
                 int amAmInvariant = 0;
 
-                for (int i = 0; i <= maximalkEdges; i++)
+                for (int i = 0; i <= maximalKEdges; i++)
                 {
                     amAmInvariant += invariantAmKEdges[i];
                     textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
@@ -1388,11 +1180,9 @@ namespace VizualizerWPF
                 }
 
             }
-            //textBlockKEdges.Text = $"K hran velikosti {kEdgesPicked} je {kEdgdesValues[kEdgesPicked]}    ";
-
-            //RedrawGraph(graphCoordinates, 1);
-
         }
+
+     
 
         void ZeroInvariantEdgesValues()
         {
@@ -1403,7 +1193,7 @@ namespace VizualizerWPF
                     line.StrokeDashArray = DoubleCollection.Parse("");
             }
 
-            for (int i = 0; i <= maximalkEdges; i++)
+            for (int i = 0; i <= maximalKEdges; i++)
             {
                 var textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
@@ -1465,7 +1255,7 @@ namespace VizualizerWPF
                         Width = sizeOfVertex,
                         Height = sizeOfVertex,
                         Fill = Brushes.Turquoise,
-                        Margin = new Thickness(facePoint.X - sizeOfVertex / 2, facePoint.Y - sizeOfVertex / 2, 0, 0)
+                        Margin = new Thickness(GraphCoordinates.facePoint.X - sizeOfVertex / 2, GraphCoordinates.facePoint.Y - sizeOfVertex / 2, 0, 0)
 
                     });
                     MessageBox.Show("HEUREKA WRONG");
@@ -1498,7 +1288,7 @@ namespace VizualizerWPF
 
             crossings.Text = numberOfIntersections.ToString();
 
-            ReCalculateKEdges();
+            RecalculateKEdgesAndUpdateButtonTexts();
         }
         
         /// <summary>
@@ -1520,14 +1310,14 @@ namespace VizualizerWPF
 
             if (statesCalculation[StateCalculation.ReferenceFace])
             {
-                facePoint = pos;
+                GraphCoordinates.facePoint = pos;
 
                 ZeroInvariantEdgesValues();
                 UpdateStats();
 
 
                 if (invariantWithRescpectTo.Count != 0)
-                    ReCalculateKEdges(invariantWithRescpectTo);
+                    RecalculateKEdgesAndUpdateButtonTexts(invariantWithRescpectTo);
             }
 
             if(stateChanging == StateChanging.Adding)
