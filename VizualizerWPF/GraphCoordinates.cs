@@ -117,7 +117,7 @@ namespace VizualizerWPF
             streamWriter.WriteLine(")");
         }
 
-        public bool ChechkTripleCumulatedEdgesConjecture(int[,] AMKEdgesArray, int size)
+        public bool Chech3AMKConjecture(int[,] AMKEdgesArray, int size)
         {
             for (int i = 0; i <= size; i++)
             {
@@ -130,8 +130,30 @@ namespace VizualizerWPF
                 }
             }
             return true;
-     
-        
+         
+        }
+
+        public bool Chech2AMKConjecture(int[,] AMKEdgesArray, int size)
+        {
+            for (int i = 0; i <= size; i++)
+            {
+                if (edges.Count >= (((2 * i + 3) * (2 * i + 2)) / 2))
+                {
+                    if (AMKEdgesArray[1, i] < (3 * (((i + 3) * (i + 2) * (i + 1)) / 6)))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+
+        }
+
+
+
+        public void DeleteEdgeFromDictionary(Vertex from, Edge to)
+        {
+            neighbors[from].Remove(to);
         }
 
 

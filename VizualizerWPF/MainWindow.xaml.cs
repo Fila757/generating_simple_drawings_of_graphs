@@ -628,15 +628,13 @@ namespace VizualizerWPF
 
         /// <summary>
         /// Function to generate new drawing of clique from data
-        /// If value on UpDown counter is changed then new data file is loaded
+        /// If value of vertices textbox has changed then new data file is loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
 
-            //proving claim for all faces with testing
-            //TryAllDrawings();
 
             if (!(bool)faceCheckBox.IsChecked)
             {
@@ -668,14 +666,10 @@ namespace VizualizerWPF
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             mainCanvas.Children.Clear();
-            //DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
-            //graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            //DrawGraph(graphCoordinates, 1, true);
 
             MakeSmootherAndDraw();
-            //DrawGraph(graphCoordinates, 1);
-            //TryAllReferenceFaces();
+
 
         }
 
@@ -708,11 +702,6 @@ namespace VizualizerWPF
         }
 
 
-        private void DeleteEdgeFromDictionary(Vertex from, Edge to)
-        {
-            //if (graphCoordinates.neighbors.ContainsKey(from))
-            graphCoordinates.neighbors[from].Remove(to);
-        }
         /// <summary>
         /// Function to find vertex containg <c>ellipse</c>
         /// </summary>
@@ -946,8 +935,8 @@ namespace VizualizerWPF
 
                     var (start, end) = FindEdgeEnds(tempEdge);
 
-                    DeleteEdgeFromDictionary(start, tempEdge);
-                    DeleteEdgeFromDictionary(end, tempEdge);
+                    graphCoordinates.DeleteEdgeFromDictionary(start, tempEdge);
+                    graphCoordinates.DeleteEdgeFromDictionary(end, tempEdge);
 
                     RemoveIntersectionsAndMiddleOnes(tempEdge);
 
@@ -1068,8 +1057,8 @@ namespace VizualizerWPF
                 var tempEdge = FindEdge(line); 
                 var (start, end) = FindEdgeEnds(tempEdge);
 
-                DeleteEdgeFromDictionary(start, tempEdge);
-                DeleteEdgeFromDictionary(end, tempEdge);
+                graphCoordinates.DeleteEdgeFromDictionary(start, tempEdge);
+                graphCoordinates.DeleteEdgeFromDictionary(end, tempEdge);
 
                 RemoveIntersectionsAndMiddleOnes(tempEdge);
 
