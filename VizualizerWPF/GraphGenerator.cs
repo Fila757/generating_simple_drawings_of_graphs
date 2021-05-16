@@ -52,7 +52,9 @@ namespace VizualizerWPF
             return new Vertex();
             throw new ArgumentException("There is no such a vertex with that center");
         }
-
+        /// <summary>
+        /// Function to save coordinates to file.
+        /// </summary>
         public void SaveCoordinates()
         {
             var streamWriter = new StreamWriter(
@@ -85,7 +87,11 @@ namespace VizualizerWPF
             streamWriter.WriteLine("#"); // end
             streamWriter.Close();
         }
-
+        /// <summary>
+        /// Function to print given <c>edge</c>, meaning all its line segment
+        /// </summary>
+        /// <param name="streamWriter"></param>
+        /// <param name="edge"></param>
         void PrintLine(StreamWriter streamWriter, Edge edge)
         {
             streamWriter.Write("( ");
@@ -118,10 +124,7 @@ namespace VizualizerWPF
 
         public int counter = 0;
 
-        /// <summary>
-        /// it supposed to run from in it Visual Studio from bin/Debug(Release)/netcoreapp3.1/
-        /// </summary>
-        /// <param name="n">Size of wanted clique</param>
+
         public GraphGenerator(int n)
         {
             SizeOfGraph = n;
@@ -140,7 +143,7 @@ namespace VizualizerWPF
         }
         /// <summary>
         /// Function to sort order of points to 
-        /// create continous line
+        /// create continous edge
         /// </summary>
         /// <param name="line">One line</param>
         /// <returns>Parsed points to line</returns>
@@ -333,20 +336,6 @@ namespace VizualizerWPF
             return graphCoordinates;
         }
 
-        /*
-        private GraphCoordinates ReadUntillPreviousRS()
-        {
-            int counterOfSharps = 0;
-            while(counterOfSharps < 2 && streamReader.BaseStream.Position > 0)
-            {
-                streamReader.BaseStream.Position = streamReader.BaseStream.Seek(-1, SeekOrigin.Current);
-                if (streamReader.Peek() >= 0 && Convert.ToChar(streamReader.Peek()) == '#')
-                    counterOfSharps++;
-            }
-            
-            return ReadUntillNextRS();
-        }
-        */
 
         /// <summary>
         /// Get next drawing
@@ -359,7 +348,10 @@ namespace VizualizerWPF
             return ReadUntillNextRS();
         }
 
-        
+        /// <summary>
+        /// Get previous drawing by going from the beggining of the file (the reopeing of the file is done in the method calling this one)
+        /// </summary>
+        /// <returns></returns>
         public GraphCoordinates GeneratePreviousDrawing()
         {
             counter--;
