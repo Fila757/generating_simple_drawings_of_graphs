@@ -76,15 +76,10 @@
                             </DiscreteObjectKeyFrame.Value>
                         </DiscreteObjectKeyFrame>
                     </ObjectAnimationUsingKeyFrames>
-                    <!--DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="2"></EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="1"></EasingDoubleKeyFrame-->
 
                 </Storyboard>
                 <Storyboard x:Key="MenuClose">
-                    <!--DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.ColumnSpan)" Storyboard.TargetName="GridMenu">
-                <EasingDoubleKeyFrame KeyTime="0" Value="1"></EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="2"></EasingDoubleKeyFrame-->
+
                     <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.ColumnSpan)">
                         <DiscreteObjectKeyFrame KeyTime="0">
                             <DiscreteObjectKeyFrame.Value>
@@ -110,21 +105,11 @@
                 </Storyboard>
             </Grid.Resources>
 
-            <!--Grid.Triggers>
-                <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="OpenMenuButton">
-                    <BeginStoryboard Storyboard="{StaticResource MenuOpen}"></BeginStoryboard>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="CloseMenuButton">
-                    <BeginStoryboard Storyboard="{StaticResource MenuClose}"></BeginStoryboard>
-                </EventTrigger>
-            </-->
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width= "5*" x:Name="FirstColumn"/>
                 <ColumnDefinition Width= "1.5*" x:Name="SecondColumn"/>
                 <ColumnDefinition Width= "0.5*" x:Name="ThirdColumn"/>
             </Grid.ColumnDefinitions>
-            <!-- Grid.Column="{Binding GridColumn}" Grid.ColumnSpan="{Binding GridColumnSpan}"-->
             <Canvas x:Name="mainCanvas" MouseDown="canvas_MouseDown" Grid.Column="0" Grid.ColumnSpan="1" Background="Transparent"  Loaded="Canvas_Loaded"/>
             <Grid x:Name ="GridMenu" Grid.Column="1" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
@@ -530,9 +515,6 @@
 
                     <TextBlock x:Name="infoTheoremamAmAmKEdges8" Grid.Column ="8" Grid.Row= "4" TextAlignment="Left" Margin="1,25,0,0" Visibility="Visible" Text="8: " Foreground="Purple"/>
                     <TextBlock x:Name="theoremAmAmAmKEdges8" Grid.Column ="8" Grid.Row= "4" TextAlignment="Center" Margin="5,25,0,0" Visibility="Visible" Text="5 " Foreground="Black"/>
-
-
-                    <!--Rectangle Grid.Column ="8" Grid.Row= "3"  Margin="0,20,0,20" Visibility="Visible" Stroke="Black"/-->
 
 
                     <TextBlock x:Name="infoInvariantAmKedges" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="9" Margin="1, 0, 0, 0" Visibility="Visible" Text="invariant cumulated k-edges: "/>
