@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['deleteedgefromdictionary_132',['DeleteEdgeFromDictionary',['../class_vizualizer_w_p_f_1_1_main_window.html#aae9c7ef464b219a7e7bd4221fff43444',1,'VizualizerWPF::MainWindow']]],
-  ['determinant_133',['Determinant',['../class_vizualizer_w_p_f_1_1_main_window.html#ab82dd06a5c7db64b1c204bdfce0dc676',1,'VizualizerWPF::MainWindow']]],
-  ['drawgraph_134',['DrawGraph',['../class_vizualizer_w_p_f_1_1_main_window.html#ae78f748992e1b25a958bc08ea0487e66',1,'VizualizerWPF::MainWindow']]]
+  ['deleteedgefromdictionary_172',['DeleteEdgeFromDictionary',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a5d2b09cb4f44229adf5b3486e39f74f3',1,'VizualizerWPF::GraphCoordinates']]],
+  ['determinant_173',['Determinant',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ab53da5564591e71d370324d97fdb70ae',1,'VizualizerWPF::CollisionDetection']]]
 ];

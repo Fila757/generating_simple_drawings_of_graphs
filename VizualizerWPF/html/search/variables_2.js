@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['graphcoordinates_183',['graphCoordinates',['../class_vizualizer_w_p_f_1_1_graph_generator.html#a77053f9718ad4394ec0a08d3879c93f8',1,'VizualizerWPF.GraphGenerator.graphCoordinates()'],['../class_vizualizer_w_p_f_1_1_main_window.html#acdde361eecb375d8f24f1fe360d72c4c',1,'VizualizerWPF.MainWindow.graphCoordinates()']]],
-  ['graphgenerator_184',['graphGenerator',['../class_vizualizer_w_p_f_1_1_main_window.html#af285bb6a4ea3d9c6b7e83646afbe518c',1,'VizualizerWPF::MainWindow']]]
+  ['c_219',['c',['../class_vizualizer_w_p_f_1_1_line_with_coeffients.html#a2e72c5c3d2fb530fd340c5068bd3ce9a',1,'VizualizerWPF::LineWithCoeffients']]],
+  ['center_220',['center',['../struct_vizualizer_w_p_f_1_1_vertex.html#aad4b090ab0fec31175314069104ed2f5',1,'VizualizerWPF::Vertex']]],
+  ['counter_221',['counter',['../class_vizualizer_w_p_f_1_1_graph_generator.html#affee1c3d2075feeadd364cd223fdaf61',1,'VizualizerWPF::GraphGenerator']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['operator_21_3d_159',['operator!=',['../struct_vizualizer_w_p_f_1_1_vertex.html#a50f8bcf409e295b196e092d7b8c92891',1,'VizualizerWPF::Vertex']]],
-  ['operator_3d_3d_160',['operator==',['../struct_vizualizer_w_p_f_1_1_vertex.html#a15fecc80e146393d119de7e9ac69d7b4',1,'VizualizerWPF::Vertex']]]
+  ['savecoordinates_209',['SaveCoordinates',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a910d26c7954631daf6e5d035b46a93e0',1,'VizualizerWPF::GraphCoordinates']]],
+  ['shorten_210',['Shorten',['../class_vizualizer_w_p_f_1_1_edge.html#ad41324d34532fd9149d3f789094345a8',1,'VizualizerWPF::Edge']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sizeofgraph_212',['SizeOfGraph',['../class_vizualizer_w_p_f_1_1_graph_generator.html#a6cd0e9553a5ddbd5110e89d3f3ebd916',1,'VizualizerWPF::GraphGenerator']]]
+  ['instance_258',['Instance',['../class_vizualizer_w_p_f_1_1_conjecture_checker.html#a76185327a4f0f1af4af1e634d668e645',1,'VizualizerWPF::ConjectureChecker']]]
 ];
