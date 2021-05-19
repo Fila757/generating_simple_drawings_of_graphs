@@ -139,14 +139,16 @@ namespace VizualizerWPF
             }
         }
 
-        /*
+        [STAThread]
         static void Main(string[] args)
         {
 
             Instance.Check3AMKConjecture();
             Instance.Check2AMKConjecture();
+
+
         }
-        */
+        
 
 
 
