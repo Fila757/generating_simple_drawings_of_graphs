@@ -284,7 +284,14 @@ namespace VizualizerWPF
             base.OnMouseLeftButtonDown(e);
 
             // Begin dragging the window
-            this.DragMove();
+            try
+            {
+                this.DragMove();
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         /// <summary>
