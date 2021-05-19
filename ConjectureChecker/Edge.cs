@@ -90,7 +90,7 @@ namespace VizualizerWPF
                             Y1 = shortenPoints[shortenPoints.Count - 2].Y,
                             X2 = points[i].X,
                             Y2 = points[i].Y
-                        })
+                        }, graphCoordinates)
                     )
                     
                 {

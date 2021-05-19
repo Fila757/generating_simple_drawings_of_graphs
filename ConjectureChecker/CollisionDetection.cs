@@ -39,7 +39,7 @@ namespace VizualizerWPF
 
         static bool debug = false;
 
-
+        static double sizeOfVertex = 15;
         /// <summary>
         /// Error rate
         /// </summary>
@@ -168,10 +168,10 @@ namespace VizualizerWPF
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public static bool IntersectsSomeLine(Line line)
+        public static bool IntersectsSomeLine(Line line, GraphCoordinates graphCoordinates)
         {
             int numberOfIntersection = 0;
-            foreach(var l in window.LinesIterator())
+            foreach(var l in graphCoordinates.LinesIterator())
             {
                 if (CheckIfTwoLinesIntersectNotAtTheEnd(line, l))
                     numberOfIntersection++;
@@ -187,13 +187,13 @@ namespace VizualizerWPF
         /// <returns></returns>
         public static bool LineAndEllipseAtEnd(Line line, Ellipse ellipse)
         {
-            var intersection1 = (line.X1 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (line.X1 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
-                (line.Y1 - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (line.Y1 - (ellipse.Margin.Top + window.sizeOfVertex / 2));
+            var intersection1 = (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X1 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
+                (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y1 - (ellipse.Margin.Top + sizeOfVertex / 2));
 
-            var intersection2 = (line.X2 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (line.X2 - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
-                (line.Y2 - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (line.Y2 - (ellipse.Margin.Top + window.sizeOfVertex / 2));
+            var intersection2 = (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) * (line.X2 - (ellipse.Margin.Left + sizeOfVertex / 2)) +
+                (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2)) * (line.Y2 - (ellipse.Margin.Top + sizeOfVertex / 2));
 
-            if (intersection1 <= window.sizeOfVertex * window.sizeOfVertex + epsilon || intersection2 <= window.sizeOfVertex * window.sizeOfVertex + epsilon)
+            if (intersection1 <= sizeOfVertex * sizeOfVertex + epsilon || intersection2 <= sizeOfVertex * sizeOfVertex + epsilon)
                 return true;
 
             return false;
@@ -207,7 +207,7 @@ namespace VizualizerWPF
         /// <returns></returns>
         public static bool CenterOfEllipseOnLine(Line line, Ellipse ellipse)
         {
-            var center = new Point { X = ellipse.Margin.Left + window.sizeOfVertex / 2, Y = ellipse.Margin.Top + window.sizeOfVertex / 2 };
+            var center = new Point { X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2 };
             if (((line.Y1 - line.Y2) * center.X + (line.X2 - line.X1) * center.Y
                     + (line.X1 - line.X2) * line.Y1 + (line.Y2 - line.Y1) * line.X1 <= epsilon
                     &&
@@ -283,10 +283,10 @@ namespace VizualizerWPF
         /// <returns></returns>
         public static bool CenterInsideEllipse(Point point, Ellipse ellipse)
         {
-            var intersection = (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) * (point.X - (ellipse.Margin.Left + window.sizeOfVertex / 2)) +
-                (point.Y - (ellipse.Margin.Top + window.sizeOfVertex / 2)) * (point.Y - (ellipse.Margin.Top + window.sizeOfVertex / 2));
+            var intersection = (point.X - (ellipse.Margin.Left + sizeOfVertex / 2)) * (point.X - (ellipse.Margin.Left + sizeOfVertex / 2)) +
+                (point.Y - (ellipse.Margin.Top + sizeOfVertex / 2)) * (point.Y - (ellipse.Margin.Top + sizeOfVertex / 2));
 
-            if (intersection <= window.sizeOfVertex * window.sizeOfVertex + epsilon)
+            if (intersection <= sizeOfVertex * sizeOfVertex + epsilon)
                 return true;
             
             return false;
@@ -306,8 +306,8 @@ namespace VizualizerWPF
                 {
                     X1 = ellipse.Margin.Left,
                     Y1 = ellipse.Margin.Top,
-                    X2 = ellipse.Margin.Left + window.sizeOfVertex,
-                    Y2 = ellipse.Margin.Top + window.sizeOfVertex
+                    X2 = ellipse.Margin.Left + sizeOfVertex,
+                    Y2 = ellipse.Margin.Top + sizeOfVertex
                 }) ? false : true;
         }
 
