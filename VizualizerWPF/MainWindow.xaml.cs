@@ -107,63 +107,9 @@ namespace VizualizerWPF
         List<Vertex> selectedVertices = new List<Vertex>();
         List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
-        GraphCoordinates graphCoordinates = new GraphCoordinates();
-
-        public IEnumerable<Line> LinesIterator()
-        {
-            foreach (var edge in graphCoordinates.edges)
-            {
-                foreach (var line in edge.lines)
-                {
-                    yield return line;
-                }
-            }
-        }
-
-        public IEnumerable<Point> PointsIterator()
-        {
-            foreach (var edge in graphCoordinates.edges)
-            {
-                foreach(var point in edge.points)
-                {
-                    yield return point;
-                }
-            }
-        }
+        public GraphCoordinates graphCoordinates = new GraphCoordinates();
 
 
-        public List<object> PrintingLines()
-        {
-            List<object> lines = new List<object>();
-            foreach (var edge in graphCoordinates.edges)
-            {
-                foreach (var line in edge.lines)
-                {
-                    lines.Add(new { line.X1, line.Y1, line.X2, line.Y2 });
-                }
-            }
-            return lines;
-        }
-
-        public List<object> PrintingLines(List<Line> listLines)
-        {
-            List<object> lines = new List<object>();
-            foreach (var line in listLines)
-            {
-                lines.Add(new { line.X1, line.Y1, line.X2, line.Y2 });
-            }
-            return lines;
-        }
-
-        public List<object> PrintingVertices()
-        {
-            List<object> vertices = new List<object>();
-            foreach(var vertex in graphCoordinates.vertices)
-            {
-                vertices.Add(new { vertex.center.X, vertex.center.Y });
-            }
-            return vertices;
-        }
 
         Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
             Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
@@ -331,7 +277,7 @@ namespace VizualizerWPF
         /// <param name="graphCoordinates"></param>
         private void CreateVerticesFromPoints(GraphCoordinates graphCoordinates)
         {
-            var allPoints = new HashSet<Point>(PointsIterator());
+            var allPoints = new HashSet<Point>(graphCoordinates.PointsIterator());
             var newVertices = new HashSet<Vertex>();
             foreach(var vertex in graphCoordinates.vertices)
             {
@@ -779,7 +725,7 @@ namespace VizualizerWPF
             HashSet<Vertex> intersections = new HashSet<Vertex>( );
             foreach (var line in lines)
             {
-                foreach (var l in LinesIterator())
+                foreach (var l in graphCoordinates.LinesIterator())
                 {
                     //if (l == line) continue;
 
@@ -927,7 +873,7 @@ namespace VizualizerWPF
 
                 /* finding edges which intersected */
                 List<Line> intersectedLines = new List<Line>();
-                foreach (var line in LinesIterator())
+                foreach (var line in graphCoordinates.LinesIterator())
                 {
                     if (CollisionDetection.CenterOfEllipseOnLine(line, ellipse)) // colision at the end can be used if it would not work
                         intersectedLines.Add(line);
@@ -1686,7 +1632,7 @@ namespace VizualizerWPF
             graphCoordinates.neighbors = neighborsTemp;
 
             if((bool)savedGraphsChechBox.IsChecked)
-                AddIntersectionsWithLines(LinesIterator().ToList());
+                AddIntersectionsWithLines(graphCoordinates.LinesIterator().ToList());
 
             ZeroInvariantEdgesValues();
             UpdateStats();

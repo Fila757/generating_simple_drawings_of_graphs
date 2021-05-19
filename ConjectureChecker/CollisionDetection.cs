@@ -36,14 +36,9 @@ namespace VizualizerWPF
         /// <summary>
         /// Class to detect many types of collision in 2D 
         /// </summary>
-        static MainWindow window;
 
         static bool debug = false;
 
-        public static void Init(MainWindow window)
-        {
-            CollisionDetection.window = window;
-        }
 
         /// <summary>
         /// Error rate
@@ -176,7 +171,7 @@ namespace VizualizerWPF
         public static bool IntersectsSomeLine(Line line)
         {
             int numberOfIntersection = 0;
-            foreach(var l in window.graphCoordinates.LinesIterator())
+            foreach(var l in window.LinesIterator())
             {
                 if (CheckIfTwoLinesIntersectNotAtTheEnd(line, l))
                     numberOfIntersection++;
