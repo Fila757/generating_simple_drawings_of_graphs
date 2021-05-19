@@ -85,7 +85,7 @@ namespace VizualizerWPF
         void Check3AMKConjecture() {
             GraphCoordinates graphCoordinates;
 
-            for (int i = 4; i <= 8; i++)
+            for (int i = 8; i <= 8; i++)
             {
                 var graphGenerator = new GraphGenerator(i);
 
@@ -144,7 +144,7 @@ namespace VizualizerWPF
         {
 
             Instance.Check3AMKConjecture();
-            Instance.Check2AMKConjecture();
+            //Instance.Check2AMKConjecture();
 
 
         }

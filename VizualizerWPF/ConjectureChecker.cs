@@ -140,6 +140,7 @@ namespace VizualizerWPF
         }
 
         /*
+        [STAThread]
         static void Main(string[] args)
         {
 
