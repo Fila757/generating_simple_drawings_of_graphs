@@ -1087,6 +1087,13 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	face->edge_ = ab_edge_ptr;
 }
 
+/// <summary>
+/// Function to tear up <c>edge</c> into two halves <c>a_half</c> and <c>b_half</c>.
+/// </summary>
+/// <param name="edge"></param>
+/// <param name="a_half"></param>
+/// <param name="b_half"></param>
+/// <returns></returns>
 inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_ptr<Vertex> >& a_half, vector<shared_ptr<Vertex> >& b_half) {
 
 	a_half = vector<shared_ptr<Vertex> >(edge->vertices_.begin(), edge->vertices_.begin() + edge->vertices_.size() / 2);
@@ -1116,6 +1123,11 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 	return new_vertex;
 }
 
+
+/// <summary>
+/// Creating new vertec on the <c>edge</c> as a new intersection.
+/// </summary>
+/// <param name="edge"></param>
 inline void graph::add_vertex(Edge* edge) {
 
 	auto opposite = edge->opposite_;
@@ -1145,6 +1157,11 @@ inline void graph::add_vertex(Edge* edge) {
 
 }
 
+
+/// <summary>
+/// Deleting the last added edge.
+/// </summary>
+/// <param name="outer_face_bool"></param>
 inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	auto edge = edges.back();
@@ -1197,6 +1214,12 @@ inline void graph::delete_edge_back(bool outer_face_bool) {
 
 	//number_of_edges -= 2;
 }
+
+
+/// <summary>
+/// Deleting given intersection <c>vertex</c>.
+/// </summary>
+/// <param name="vertex"></param>
 inline void graph::delete_vertex(Vertex* vertex) {
 
 	// getting the right variables
@@ -1238,6 +1261,11 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 }
 
+
+/// <summary>
+/// Creating the "dummy" vertex (circle) representing real vertex.
+/// </summary>
+/// <param name="index"></param>
 inline void graph::create_special_vertex(int index, int x, int y) {
 
 	vector<shared_ptr<Vertex> > special_vertices;
@@ -1271,6 +1299,10 @@ inline void graph::create_special_vertex(int index, int x, int y) {
 
 }
 
+/// <summary>
+/// Setting values of array <c>starts</c> to values of given fingerprint.
+/// </summary>
+/// <param name="fingerprint"></param>
 inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprint does include the first ro (0..n), otherwise do the first rotation manually
 
 	for(int i = 0; i < number_of_vertices;i++){
@@ -1280,12 +1312,19 @@ inline void graph::recolor_fingerprint(const string& fingerprint) { //fingerprin
 	}
 }
 
+/// <summary>
+/// Function to create all edges incident to vertex 0.
+/// </summary>
 inline void graph::create_base_star() {
 	for (int i = 1; i < number_of_vertices;i++) {
 		add_edge(segments[starts[0][i]]->vertices_[0], segments[starts[i][0]]->vertices_[0], outer_face, 0, i, make_pair(0, 0), make_pair(0, 0), true); //from vertex is that in rotation
 	}
 }
 
+
+/// <summary>
+/// Function to create all "dummy" vertices
+/// </summary>
 inline void graph::create_all_special_vertices() {
 
 	create_special_vertex(0, 0, 0); // zero ones
@@ -1329,13 +1368,20 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 }
 */
 
+
+/// <summary>
+/// Main algorithm similar to described in psedocode in thesis.
+/// It recursively tries all the possible ways
+/// how to pull the edges.
+/// </summary>
+/// <param name="s_index"></param>
+/// <param name="t_index"></param>
+/// <param name="a"></param>
+/// <param name="b"></param>
 inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, int b) {
 	
 	auto seg = segments[s_index]->next_;
 	
-	//print_graph(this);
-
-	//cout << "" << endl;
 
 	while (seg != segments[s_index]) { //the first doesnt have to be considered because it is either beggining segment so it cannot be intersected or it has been already intersected
 
@@ -1390,42 +1436,8 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 
 		if (!blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)]) { //if there is same index, always true // it can be divided edge so we need to look at the ends of it to get the indices of vertices
 
-			//print_graph(this);
-
-			//if (realized == 25 && (a == 1 && b == 4))
-			//	print_bool = true;
-
 			//intersecting
 			blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = true;
-			
-			/*
-			auto empty = vector<shared_ptr<Vertex> >();
-			auto empty2 = vector<shared_ptr<Vertex> >();
-
-			auto vertices = find_path_through_triangulation(
-				segments[s_index]->vertices_[0],
-				tearup_lines_in_half(seg, empty, empty2, true),
-				segments[s_index]->face_,
-				a,
-				b,
-				make_shared<Vertex>(coordinates_of_special_vertices[b - 1].x, coordinates_of_special_vertices[b - 1].y)
-			);
-
-			
-			redirect_previous_segment(a, b, vertices[vertices.size() - 2]);
-			*/
-
-			/*
-			if (counter == 90 && edges.size() == 160) {
-				cout << "WTF" << endl;
-				for (auto it = edges.begin(); it != edges.end(); it++) {
-					if (it->vertices_.size() == 0) {
-						cout << "WTF MIDDLE" << endl;
-					}
-				}
-				cout << "WTFEND" << endl;
-			}
-			*/
 
 			add_vertex(seg);
 
@@ -1483,11 +1495,10 @@ inline long long factorial(int n) {
 	return (n == 1 || n == 0) ? 1 : n * factorial(n - 1);
 }
 
+
 /// <summary>
-// This struct is my own generator and iterator for all fingerprints
+/// Structure for generating all fingerprints iteratively.
 /// </summary>
-
-
 struct fingerprints {
 	bool done = false;
 	string rotation_system;
@@ -1524,6 +1535,13 @@ struct fingerprints {
 	}
 };
 
+/// <summary>
+/// Function to check whether the ends of <c>edge</c> are <c>a</c> and <c>b</c>.
+/// </summary>
+/// <param name="edge"></param>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 inline bool are_there_ends(Edge* edge, int a, int b) {
 	if (a > b) swap(a, b);
 	if ((min(edge->index_ % 100, edge->index_ / 100) == a) && (max(edge->index_ % 100, edge->index_ / 100) == b))
@@ -1531,30 +1549,13 @@ inline bool are_there_ends(Edge* edge, int a, int b) {
 	return false;
 }
 
-bool debug_bool = false;
+//bool debug_bool = false;
 
+/// <summary>
+/// Function to write coordinates of graph into a file.
+/// </summary>
 inline void graph::write_coordinates() {
 
-	//1384132){//1384295
-	/*
-	if (counter >= 1237990 && are_there_ends(segments[segments.size() - 1], 1, 4) && are_there_ends(segments[segments.size() - 3], 0, 6)) {
-		debug_bool = true;
-		cout << "TADY " << counter <<endl;
-	}
-	
-	if (!debug_bool) {
-		print_bool = true;
-		//counter++;
-		cout << counter++ << endl;
-		return;
-	}
-	*/
-	/*
-	if (counter == 1386926) {
-		cout << "HEU" << endl;
-	}
-	**/
-	//counter++;
 	cout << counter++ << endl;
 
 	vector<vector<vector<Edge> > > drawing_edges;
@@ -1589,6 +1590,13 @@ inline void graph::write_coordinates() {
 	output_file << "#" << endl;
 }
 
+
+/// <summary>
+/// Function to try all possible drawings, 
+/// It tries all the pullings of edges for given fingerprint
+/// until some realization,
+/// because it is already checked fingerprint.
+/// </summary>
 inline void graph::create_all_possible_drawings() {
 
 	for (int i = 0; i < number_of_vertices;i++) {
@@ -1610,12 +1618,10 @@ inline void graph::create_all_possible_drawings() {
 		auto fingerprint = generator_of_fingerprints.get_next();
 		
 		create_all_special_vertices();
-		//print_graph(this);
+
 		recolor_fingerprint(fingerprint);
 		create_base_star();
-		//print_graph(this);
-
-		//cout << counter << endl;
+	
 		
 		/*
 		if (counter <= 600) {
@@ -1647,163 +1653,3 @@ inline void graph::create_all_possible_drawings() {
 	cout << "realized " << realized << endl;
 }
 
-/*
-inline string graph::find_canonic_fingerprint(const string& fingerprint) {
-
-	string permutation_holder;
-	for (int i = 0; i < number_of_vertices;i++) 
-		permutation_holder += (i + '0');
-
-	auto min_fingerprint = fingerprint;
-	auto cur_fingerprint = fingerprint;
-	auto new_fingerprint = fingerprint;
-
-	//string minimal_permutation;
-
-	do { //can be changes just to while because first doesnt any change
-		cur_fingerprint = fingerprint;
-		new_fingerprint = fingerprint;
-		for (int i = 0; i < number_of_vertices;i++) {
-			int rotation_index = -1;
-			for (int j = 0; j < number_of_vertices - 1;j++) {
-				int index = (number_of_vertices - 1) * i + j;
-
-				if (permutation_holder[cur_fingerprint[index] - '0'] == '0'
-					|| (rotation_index == -1 && permutation_holder[cur_fingerprint[index] - '0'] == '1')) rotation_index = j;
-
-				cur_fingerprint[index] = permutation_holder[cur_fingerprint[index] - '0'];
-			}
-
-			rotate(cur_fingerprint.begin() + (number_of_vertices - 1) * i,
-				cur_fingerprint.begin() + (number_of_vertices - 1) * i + rotation_index,
-				cur_fingerprint.begin() + (number_of_vertices - 1) * (i + 1));
-		}
-		for (int i = 0; i < number_of_vertices;i++) {
-			new_fingerprint.replace((number_of_vertices - 1) * (permutation_holder[i] - '0'), number_of_vertices - 1,
-				cur_fingerprint, i * (number_of_vertices - 1), number_of_vertices - 1);
-		}
-		
-		min_fingerprint = min(min_fingerprint, new_fingerprint);
-		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
-
-		for (int i = 0; i < number_of_vertices;i++) {
-			auto inv_part = new_fingerprint.substr(i * (number_of_vertices - 1) + 1, number_of_vertices - 2);
-			reverse(inv_part.begin(), inv_part.end());
-			new_fingerprint.replace(i * (number_of_vertices - 1) + 1, number_of_vertices - 2, inv_part);
-		}
-
-		min_fingerprint = min(min_fingerprint, new_fingerprint);
-		//if (min_fingerprint == new_fingerprint) minimal_permutation = permutation_holder;
-
-	} while (next_permutation(permutation_holder.begin(), permutation_holder.end()));
-
-	//cout << minimal_permutation << endl;
-	return min_fingerprint;
-
-}
-*/
-/*
-inline bool is_correct_K4_slower(vector<int> orders[4], int a[4]) {
-	
-	//The realizable rotation systems of K4 with respect to (strong) isomorhism
-	int order_of_K4[3][3][3] = {
-		{{2, 3, 0},{3, 0, 1},{0, 1, 2}},
-		{{2, 3, 0},{0, 3, 1},{0, 2, 1}},
-		{{3, 2, 0},{1, 3, 0},{0, 2, 1}}
-	};
-
-	for (int u = 0; u < 3;u++) {
-		int number_of_right_ones = 1;
-		for (int i = 1;i < 4;i++) {
-			auto copied = orders[i];
-			copied.insert(copied.end(), orders[i].begin(), orders[i].end()); //copy it twice so we can easily find the pattern even if it has different rotation than mention in order_of_K4
-
-			for (int j = 0; j < copied.size();j++) {
-				int temp = 0;
-				for (int k = 0; k < 3 && j + k < copied.size();k++) {
-					if (copied[j + k] == a[order_of_K4[u][i - 1][k]]) temp++;
-				}
-				if (temp == 3) { number_of_right_ones++; break; }
-			}
-		}
-		if (number_of_right_ones == 4) return true;
-	}
-	return false;
-}
-*/
-/*
-inline string find_lexical_min_rotation(string str)
-{
-	// To store lexicographic minimum string
-	string min = str;
-
-	for (int i = 0; i < str.length(); i++)
-	{
-		// left rotate string by 1 unit
-		rotate(str.begin(), str.begin() + 1, str.end());
-
-		// check if the rotation is minimum so far
-		if (str.compare(min) < 0)
-			min = str;
-	}
-
-	return min;
-}
-*/
-/*
-inline bool is_correct_K4(vector<int> orders[4]) {
-	int number_of_positive_rotation = 0;
-
-	for (int i = 0; i < 4;i++) {
-
-		string rotation;
-		for_each(orders[i].begin(), orders[i].end(), [&](int part) {rotation += to_string(part);});
-
-		auto minimal_rotation = find_lexical_min_rotation(rotation);
-		if (minimal_rotation[1] < minimal_rotation[2])
-			number_of_positive_rotation++;
-	}
-
-	if (number_of_positive_rotation % 2 == 0)
-		return true;
-	return false;
-
-}
-
-*/
-/*
-inline bool graph::is_correct_fingerprint(const string& fingerprint) { //checking all K4
-
-	int i[4];
-
-	for (i[0] = 0; i[0] < number_of_vertices;i[0]++) {
-		for (i[1] = i[0] + 1; i[1] < number_of_vertices;i[1]++) {
-			for (i[2] = i[1] + 1; i[2] < number_of_vertices;i[2]++) {
-				for (i[3] = i[2] + 1; i[3] < number_of_vertices;i[3]++) {
-
-					vector<int> order[4];
-
-					for (int v = 0; v < 4;v++) {
-						for (int u = 0; u < number_of_vertices - 1;u++) {
-							if (fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(1 + v) % 4]
-								|| fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(2 + v) % 4]
-
-								|| fingerprint[u + i[v] * (number_of_vertices - 1)] - '0' == i[(3 + v) % 4])
-							{
-								order[v].push_back(fingerprint[u + i[v] * (number_of_vertices - 1)] - '0');
-							}
-						}
-					}
-					// for slower version
-					//int temp[4];
-					//temp[0] = i[0]; temp[1] = order[0][0];temp[2] = order[0][1];temp[3] = order[0][2];
-
-					if (!is_correct_K4(order)) return false;
-				}
-			}
-		}
-	}
-
-	return true;
-}
-*/

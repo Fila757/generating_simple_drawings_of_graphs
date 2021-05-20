@@ -667,10 +667,6 @@ inline long long factorial(int n) {
 	return fact[n];
 }
 
-/// <summary>
-// This struct is my own generator and iterator for all fingerprints
-/// </summary>
-
 
 /// <summary>
 /// Structure for generating all fingerprints iteratively.
