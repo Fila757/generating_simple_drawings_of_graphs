@@ -22,7 +22,6 @@
     <ClCompile Include="drawing_of_cliques.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="delaunator.hpp" />
     <ClInclude Include="functions.hpp" />
     <ClInclude Include="triangulation.hpp" />
   </ItemGroup>
