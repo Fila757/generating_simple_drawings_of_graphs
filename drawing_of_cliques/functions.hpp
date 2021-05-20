@@ -30,7 +30,7 @@ using namespace std;
 
 using array_4D = vector<vector<vector<vector<bool> > > >;
 
-inline long long fact[SIZE_OF_ARRAY + 5];
+long long fact[SIZE_OF_ARRAY + 5];
 
 inline void precount_factorials(){
 	fact[0] = 1;
