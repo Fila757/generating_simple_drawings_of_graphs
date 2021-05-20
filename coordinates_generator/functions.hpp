@@ -48,6 +48,9 @@ struct Vertex;
 struct Edge;
 struct Face;
 
+/// <summary>
+/// Class to store vertex, containing information about edge <c>to_</c> going into it
+/// </summary>
 struct Vertex {
 	Edge* to_;
 
@@ -92,6 +95,9 @@ struct Vertex {
 	}
 };
 
+/// <summary>
+/// Structure to store a face containing about one edge incident to it
+/// </summary>
 struct Face {
 	Edge* edge_;
 
@@ -100,6 +106,9 @@ struct Face {
 	Face(Edge* edge) : edge_(edge) {}
 };
 
+/// <summary>
+/// Structure to store the edge containing information about <c>next_</c>, <c>prev_</c>, <c>opposite_</c> edges and vertices and face incident to it.
+/// </summary>
 struct Edge {
 	int index_ = 0;
 
@@ -126,6 +135,9 @@ struct Edge {
 
 };
 
+/// <summary>
+/// Main class to store all the information about graph, edges, vertices, ...
+/// </summary>
 struct graph {
 
 	/*normal part*/
@@ -201,7 +213,7 @@ struct graph {
 	void delete_edge_back(bool outer_face_bool = false);
 	void delete_vertex(Vertex* a);
 
-	void redirect_previous_segment(int a, int b, shared_ptr<Vertex> destination);
+	//void redirect_previous_segment(int a, int b, shared_ptr<Vertex> destination);
 	shared_ptr<Vertex> tearup_lines_in_half(
 		Edge* edge,
 		vector<shared_ptr<Vertex> >& a_half,
@@ -221,11 +233,20 @@ struct graph {
 	/*finger print part*/
 
 	//number of edges indexer
+	/// <summary>
+	/// Vector to store (pointers on) edges. 
+	/// </summary>
 	vector<Edge*> segments; 
+
+	/// <summary>
+	/// 4D array to check which edges already intersect	
+	/// </summary>
 	array_4D blocked; 
 
-	// edge from i to j, starting indeces on the the special vertex 
-	// when j to i get the opposite edge index so on point ont the opposite special vertex 
+	/// <summary>
+	/// Array which for given pair of vertice i, j return the index in vector <c>segments</c>
+	///  so the "dummy" edge ("dummy" vertex) where to start (end) 
+	/// </summary>
 	vector<vector<int> > starts;
 
 	// to store canonic fingerprints
@@ -250,6 +271,12 @@ struct graph {
 };
 
 
+/// <summary>
+/// Function to detect whether <c>line1</c> and <c>line2</c> intersect.
+/// </summary>
+/// <param name="line1"></param>
+/// <param name="line2"></param>
+/// <returns></returns>
 inline bool if_two_segmetns_intersects(pair<shared_ptr<Vertex>, shared_ptr<Vertex> > line1, pair<shared_ptr<Vertex>, shared_ptr<Vertex> > line2)
 {
 	auto denominator = (line2.second->y_ - line2.first->y_) * (line1.second->x_ - line1.first->x_) - (line2.second->x_ - line2.first->x_) * (line1.second->y_ - line1.first->y_);
@@ -268,6 +295,13 @@ inline bool if_two_segmetns_intersects(pair<shared_ptr<Vertex>, shared_ptr<Verte
 	return false;
 }
 
+
+/// <summary>
+/// Function to set distance Euclidian distance for all pair of points i, j in <c>points</c>
+/// into matrix <c>distances</c>.
+/// </summary>
+/// <param name="points"></param>
+/// <param name="distances"></param>
 inline void create_coordinates(const vector<shared_ptr<Vertex> >& points, vector<vector<double> >& distances) {
 
 	for (int i = 0; i < points.size();i++) {
@@ -277,6 +311,14 @@ inline void create_coordinates(const vector<shared_ptr<Vertex> >& points, vector
 	}
 }
 
+
+/// <summary>
+/// Standart dijsktra algorithm returning shortest paths from vertex 0 
+/// with paths stored in vector <c>parent</c>.
+/// </summary>
+/// <param name="points"></param>
+/// <param name="distances"></param>
+/// <param name="parent"></param>
 inline void dijsktra(vector<shared_ptr<Vertex> >& points, vector<vector<double> > distances, vector<int>& parent) {
 
 	vector<double> shortest;
@@ -325,6 +367,12 @@ inline void print_graph(graph* g) {
 
 }
 
+/// <summary>
+/// Function to find shortest path between vertices (<c>all_vertices</c>) 0 and 1.
+/// </summary>
+/// <param name="distances"></param>
+/// <param name="all_vertices"></param>
+/// <returns></returns>
 inline vector<shared_ptr<Vertex> > graph::find_shortest_path(const vector<vector<double> > & distances, vector<shared_ptr<Vertex > >& all_vertices) {
 
 
@@ -352,6 +400,14 @@ inline vector<shared_ptr<Vertex> > graph::find_shortest_path(const vector<vector
 	return result;
 }
 
+/// <summary>
+/// Function to create "dummy" vertices for one vertex.
+/// </summary>
+/// <param name="radius"></param>
+/// <param name="cx"></param>
+/// <param name="cy"></param>
+/// <param name="n"></param>
+/// <returns></returns>
 inline vector<pair<double, double> > create_circle(double radius, double cx, double cy, int n) {
 	vector<pair<double, double> > circle;
 
@@ -382,6 +438,12 @@ inline double distance(shared_ptr<Vertex> a, shared_ptr<Vertex> b) {
 }
 
 
+
+/// <summary>
+/// Function to create convex hull of  <c>vertices</c>.
+/// </summary>
+/// <param name="vertices"></param>
+/// <returns></returns>
 inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double> > vertices) {
 	typedef boost::tuple<double, double> point;
 	typedef boost::geometry::model::polygon<point> polygon;
@@ -397,22 +459,6 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 	}
 
 	boost::geometry::assign_points(poly, points);
-	
-	/*
-	
-	string poly_string = "polygon((";
-	for (int i = 0; i < vertices.size();i++) {
-		poly_string += to_string(vertices[i].x);
-		poly_string += " ";
-		poly_string += to_string(vertices[i].y);
-		if (i != vertices.size() - 1) {
-			poly_string += ", ";
-		}
-	}
-	poly_string += "))";
-	boost::geometry::read_wkt(poly_string, poly);
-	*/
-	
 
 	polygon hull;
 	boost::geometry::convex_hull(poly, hull);
@@ -431,16 +477,32 @@ inline vector<pair<double, double> > make_convex_hull(vector<pair<double, double
 	return result;
 }
 
+/// <summary>
+/// Check whether the two pairs are "almost" the same.
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 inline bool compare(pair<double, double> a, pair<double, double> b) {
 	if (abs(a.x - b.x) < EPSILON && abs(a.y - b.y) < EPSILON)
 		return true;
 	return false;
 }
 
+/// <summary>
+/// Function to update the convex hull of vertices of a graph.
+/// </summary>
+/// <param name="vertices"></param>
 inline void graph::update_most_away(vector<pair<double, double> > vertices) {
 	most_away = make_convex_hull(vertices);
 }
 
+/// <summary>
+/// Fucntion to count the determinant.
+/// </summary>
+/// <param name="vec1"></param>
+/// <param name="vec2"></param>
+/// <returns></returns>
 inline double det(pair<double, double> vec1, pair<double, double> vec2) {
 	return vec1.x * vec2.y - vec1.y * vec2.x;
 }
@@ -456,6 +518,13 @@ inline double det(pair<double, double> vec1, pair<double, double> vec2) {
 	v --->
 */
 
+/// <summary>
+/// Function to generate shift perpendicular to given vector <c>vect</c>
+///  in order to be able to move same vertices to distinguish them.
+/// </summary>
+/// <param name="vertex"></param>
+/// <param name="vect"></param>
+/// <returns></returns>
 inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, double> vect) { 
 
 	pair<double, double> first_neg_vect;
@@ -475,6 +544,14 @@ inline pair<double, double> get_shift(shared_ptr<Vertex> vertex, pair<double, do
 	}
 }
 
+
+/// <summary>
+/// Get vertex perpendicular to <c>vect</c> from <c>vertex</c> and
+/// on the right side depending on the clockwise, counterclockwise order of vertices.
+/// </summary>
+/// <param name="vertex"></param>
+/// <param name="vect"></param>
+/// <returns></returns>
 inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> vertex, pair<double, double> vect) {
 
 	auto shift = get_shift(vertex, vect);
@@ -483,9 +560,27 @@ inline pair<double, double> find_vertex_in_right_direction(shared_ptr<Vertex> ve
 }
 
 
+/// <summary>
+/// Get value of linear function f(x, y) = ax+by+c.
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="c"></param>
+/// <param name="point"></param>
+/// <returns></returns>
 inline double get_value(int a, int b, int c, shared_ptr<Vertex> point) {
 	return a * point->x_ + b * point->y_ + c;
 }
+
+/// <summary>
+/// Function to check whether <c>asked_point</c> and <c>on_right_side</c> points
+///  are on the same side of line given by <c>point</c> and vector <c>vect</c>.
+/// </summary>
+/// <param name="asked_point"></param>
+/// <param name="point"></param>
+/// <param name="vect"></param>
+/// <param name="on_right_side"></param>
+/// <returns></returns>
 inline bool is_on_right_side_of(shared_ptr<Vertex>asked_point, shared_ptr<Vertex> point, pair<double, double> vect, shared_ptr<Vertex> on_right_side) {
 	
 	double a = vect.x;
@@ -525,15 +620,24 @@ inline bool are_collinear(shared_ptr<Vertex> v1, shared_ptr<Vertex> v2, shared_p
 
 	double a = v1->x_ * (v2->y_ - v3->y_) + v2->x_ * (v3->y_ - v1->y_) + v3->x_ * (v1->y_ - v2->y_);
 
-	// b = (y2 - y1) / (x2 - x1)
-	// c = (y3 - y2) / (x3 - x2)
-	// b == c
-
 	if (abs(a) < EPSILON)
 		return true;
 	return false;
 }
 
+/// <summary>
+/// Function to find correct way (preserving crossing properties) from vertex <c>a</c>
+/// to vertex <c>b</c> through the <c>face</c>.
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="face"></param>
+/// <param name="a_index"></param>
+/// <param name="b_index"></param>
+/// <param name="shift_previous"></param>
+/// <param name="shift_next"></param>
+/// <param name="outer_face_bool"></param>
+/// <returns></returns>
 inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared_ptr<Vertex> a, shared_ptr<Vertex> b,
 	shared_ptr<Face> face, int a_index, int b_index,
 	pair<double, double> shift_previous,
@@ -915,7 +1019,17 @@ inline vector<shared_ptr<Vertex> > graph::find_path_through_triangulation(shared
 
 }
 
-
+/// <summary>
+/// Function to add edge between <c>a</c> and <c>b</c>.
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <param name="face"></param>
+/// <param name="a_index"></param>
+/// <param name="b_index"></param>
+/// <param name="shift_previous"></param>
+/// <param name="shift_next"></param>
+/// <param name="outer_face_bool"></param>
 inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_ptr<Face> face, int a_index, int b_index, pair<double, double> shift_previous, pair<double, double> shift_next, bool outer_face_bool) {
 
 	Edge* toa = nullptr, * tob = nullptr, * froma = nullptr, * fromb = nullptr;
@@ -927,9 +1041,6 @@ inline void graph::add_edge(shared_ptr<Vertex> a, shared_ptr<Vertex> b, shared_p
 	fromb = tob->next_;
 	
 	auto vertices = find_path_through_triangulation(a, b, face, a_index, b_index, shift_previous, shift_next, outer_face_bool);
-	if (vertices.size() == 1) {
-		cout << "HEEEEEEEEEEEEEEELP" << endl;
-	}
 
 	for (int i = 1; i < vertices.size() - 1; i++) {
 		vertices_.push_back(make_pair(vertices[i]->x_, vertices[i]->y_));
@@ -984,9 +1095,6 @@ inline shared_ptr<Vertex> graph::tearup_lines_in_half(Edge* edge, vector<shared_
 
 	auto a = a_half.back();
 	auto b = b_half[0];
-
-	if (a_half.size() == 0 || b_half.size() == 0)
-		cout << "HEEEELLLP" << endl;
 
 	auto new_vertex = make_shared<Vertex>(edge); //edge is going to this vertex //"edge" it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)
 	new_vertex->index_ = ((edge->index_ / 100 == 0) || (edge->index_ % 100 == 0)) ? -1 : -2;
@@ -1190,6 +1298,7 @@ inline void graph::create_all_special_vertices() {
 	}
 }
 
+/*
 inline void graph::redirect_previous_segment(int a_index, int b_index, shared_ptr<Vertex> destination) {
 	if (segments[segments.size() - 2]->index_ == 100 * a_index + b_index) {
 
@@ -1198,7 +1307,9 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 		auto a = edge_to_change->vertices_[0];
 		auto b = edge_to_change->vertices_.back();
 
-		/*find which face is the the stable one by maintaning pointer to i.e. prev_ edge of edge_to change*/
+		
+		//find which face is the the stable one by maintaning
+		//pointer to i.e. prev_ edge of edge_to change
 
 		auto prev = edge_to_change->prev_;
 		delete_edge_back();
@@ -1208,7 +1319,7 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 
 		auto face = prev->face_;
 
-		/*swaping to_ attribute of divided edge new vertex is important!*/
+		// swaping to_ attribute of divided edge new vertex is important!
 		segments[edges.size() - 1]->vertices_[0]->to_ = segments[edges.size() - 2]->prev_;
 		add_edge(a, b, face, a_index, b_index, make_pair(0, 0), make_pair(0, 0));
 		segments[edges.size() - 3]->vertices_[0]->to_ = segments[edges.size() - 3]->prev_;
@@ -1216,6 +1327,7 @@ inline void graph::redirect_previous_segment(int a_index, int b_index, shared_pt
 			write_coordinates();
 	}
 }
+*/
 
 inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, int b) {
 	
