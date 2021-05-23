@@ -3,7 +3,7 @@
 #include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.3/build/native/include/gtest/gtest.h"
 
 TEST(graphs_all_special_vertices, graph_3) {
-    auto g = graph(3);
+    auto g = graph(3, 0, nullptr);
     int n = g.number_of_vertices;
     g.create_all_special_vertices();
     //g.recolor_fingerprint("120201"); //recolor to the first coloring
@@ -18,8 +18,8 @@ TEST(graphs_all_special_vertices, graph_3) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
@@ -38,7 +38,7 @@ TEST(graphs_all_special_vertices, graph_3) {
 
 
 TEST(graphs_all_special_vertices, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
     g.create_all_special_vertices();
     //g.recolor_fingerprint("123023013012"); //recolor to the first coloring
@@ -53,8 +53,8 @@ TEST(graphs_all_special_vertices, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -71,7 +71,7 @@ TEST(graphs_all_special_vertices, graph_4) {
 }
 
 TEST(graphs_all_special_vertices, graph_5) {
-    auto g = graph(5);
+    auto g = graph(5, 0, nullptr);
     int n = g.number_of_vertices;
     g.create_all_special_vertices();
     //g.recolor_fingerprint("12340234013401240123"); //recolor to the first coloring
@@ -86,8 +86,8 @@ TEST(graphs_all_special_vertices, graph_5) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -104,7 +104,7 @@ TEST(graphs_all_special_vertices, graph_5) {
 }
 
 TEST(graphs_all_special_vertices, graph_8) {
-    auto g = graph(8);
+    auto g = graph(8, 0, nullptr);
     int n = g.number_of_vertices;
     g.create_all_special_vertices();
     //g.recolor_fingerprint("12340234013401240123"); //recolor to the first coloring
@@ -119,8 +119,8 @@ TEST(graphs_all_special_vertices, graph_8) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }

@@ -3,14 +3,14 @@
 #include "../packages/Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.3/build/native/include/gtest/gtest.h"
 
 TEST(graphs_add_vertex, graph_4){
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
 
-    //g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face);
+    //g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
     g.add_vertex(g.segments[g.edges.size() - 6]);
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1) + 2);
@@ -23,8 +23,8 @@ TEST(graphs_add_vertex, graph_4){
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -32,26 +32,26 @@ TEST(graphs_add_vertex, graph_4){
 
     /*the new vertex is really new*/
     for (int i = 0; i < n * (n - 1);i++) {
-        EXPECT_NE(g.segments[i]->vertices_[0], g.segments[g.edges.size() - 1]->vertices_[0]);
+        EXPECT_NE(g.segments[i]->from_, g.segments[g.edges.size() - 1]->from_);
     }
 
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_.back(), g.segments[g.edges.size() - 8]->vertices_.back());
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->to_, g.segments[g.edges.size() - 8]->to_);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[g.edges.size() - 2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[3]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[g.edges.size() - 2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[3]->from_);
 
     //edges 
 
@@ -84,16 +84,16 @@ TEST(graphs_add_vertex, graph_4){
 }
 
 TEST(graphs_delete_vertex, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
 
-    //g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face);
+    //g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
     g.add_vertex(g.segments[g.edges.size() - 6]);
-    g.delete_vertex((g.segments[g.edges.size() - 1]->vertices_[0]).get());
+    g.delete_vertex((g.segments[g.edges.size() - 1]->from_).get());
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1));
 
@@ -105,8 +105,8 @@ TEST(graphs_delete_vertex, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
@@ -114,20 +114,20 @@ TEST(graphs_delete_vertex, graph_4) {
     }
 
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->from_, g.segments[2]->from_);
 
     //edges 
 
@@ -156,14 +156,14 @@ TEST(graphs_delete_vertex, graph_4) {
 }
 
 TEST(graphs_add_2_vertices_on_same_line, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
 
-    //g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face);
+    //g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
     g.add_vertex(g.segments[g.edges.size() - 6]);
     g.add_vertex(g.segments[g.edges.size() - 2]);
 
@@ -177,42 +177,42 @@ TEST(graphs_add_2_vertices_on_same_line, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
     }
 
-    EXPECT_NE(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[g.edges.size() - 1]->vertices_[0]);
+    EXPECT_NE(g.segments[g.edges.size() - 3]->from_, g.segments[g.edges.size() - 1]->from_);
     /*the new vertex is really new*/
     for (int i = 0; i < n * (n - 1);i++) {
-        EXPECT_NE(g.segments[i]->vertices_[0], g.segments[g.edges.size() - 1]->vertices_[0]);
-        EXPECT_NE(g.segments[i]->vertices_[0], g.segments[g.edges.size() - 3]->vertices_[0]);
+        EXPECT_NE(g.segments[i]->from_, g.segments[g.edges.size() - 1]->from_);
+        EXPECT_NE(g.segments[i]->from_, g.segments[g.edges.size() - 3]->from_);
     }
 
-    EXPECT_EQ(g.segments[g.edges.size() - 9]->vertices_.back(), g.segments[g.edges.size() - 1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 9]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 10]->vertices_.back(), g.segments[g.edges.size() - 4]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 10]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 9]->to_, g.segments[g.edges.size() - 1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 9]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 10]->to_, g.segments[g.edges.size() - 4]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 10]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[g.edges.size() - 4]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[g.edges.size() - 2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[g.edges.size() - 4]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[g.edges.size() - 2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[g.edges.size() - 10]->vertices_.back());
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[g.edges.size() - 2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[3]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[g.edges.size() - 10]->to_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[g.edges.size() - 2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[3]->from_);
 
     //edges 
 
@@ -248,18 +248,18 @@ TEST(graphs_add_2_vertices_on_same_line, graph_4) {
 }
 
 TEST(graphs_delete_2_vertices_vertex, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
 
-    //g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face);
+    //g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
     g.add_vertex(g.segments[g.edges.size() - 6]);
     g.add_vertex(g.segments[g.edges.size() - 1]);
-    g.delete_vertex((g.segments[g.edges.size() - 1]->vertices_[0]).get());
-    g.delete_vertex((g.segments[g.edges.size() - 1]->vertices_[0]).get());
+    g.delete_vertex((g.segments[g.edges.size() - 1]->from_).get());
+    g.delete_vertex((g.segments[g.edges.size() - 1]->from_).get());
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1));
 
@@ -271,8 +271,8 @@ TEST(graphs_delete_2_vertices_vertex, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
@@ -280,20 +280,20 @@ TEST(graphs_delete_2_vertices_vertex, graph_4) {
     }
 
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->from_, g.segments[2]->from_);
 
     //edges 
 
@@ -322,17 +322,17 @@ TEST(graphs_delete_2_vertices_vertex, graph_4) {
 }
 
 TEST(graphs_add_2_vertices_and_delete_one, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
 
-    //g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face);
+    //g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face);
     g.add_vertex(g.segments[g.edges.size() - 6]);
     g.add_vertex(g.segments[g.edges.size() - 1]);
-    g.delete_vertex(g.edges.back().vertices_[0].get());
+    g.delete_vertex(g.edges.back().from_.get());
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1) + 2);
 
@@ -344,8 +344,8 @@ TEST(graphs_add_2_vertices_and_delete_one, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
@@ -353,26 +353,26 @@ TEST(graphs_add_2_vertices_and_delete_one, graph_4) {
 
     /*the new vertex is really new*/
     for (int i = 0; i < n * (n - 1);i++) {
-        EXPECT_NE(g.segments[i]->vertices_[0], g.segments[g.edges.size() - 1]->vertices_[0]);
+        EXPECT_NE(g.segments[i]->from_, g.segments[g.edges.size() - 1]->from_);
     }
 
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_.back(), g.segments[g.edges.size() - 8]->vertices_.back());
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->to_, g.segments[g.edges.size() - 8]->to_);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[g.edges.size() - 2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[3]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[g.edges.size() - 2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[3]->from_);
 
     //edges 
 
@@ -405,15 +405,15 @@ TEST(graphs_add_2_vertices_and_delete_one, graph_4) {
 }
 
 TEST(graphs_create_base_star_and_add_edge_and_delete_vertex, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
-    g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face, 1, 2);
+    g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face, 1, 2);
     g.add_vertex(g.segments[g.edges.size() - 2]);
-    g.delete_vertex((g.segments[g.edges.size() - 1]->vertices_[0]).get());
+    g.delete_vertex((g.segments[g.edges.size() - 1]->from_).get());
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1) + 2);
 
@@ -435,33 +435,33 @@ TEST(graphs_create_base_star_and_add_edge_and_delete_vertex, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
         }
     }
 
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_.back(), g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->to_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[4]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[7]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[7]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_[0], g.segments[4]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[4]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[7]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[7]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->from_, g.segments[4]->from_);
 
     //edges 
 
@@ -494,13 +494,13 @@ TEST(graphs_create_base_star_and_add_edge_and_delete_vertex, graph_4) {
 }
 
 TEST(graphs_create_base_star_and_add_edge_and_add_vertex, graph_4) {
-    auto g = graph(4);
+    auto g = graph(4, 0, nullptr);
     int n = g.number_of_vertices;
 
     g.create_all_special_vertices();
     g.recolor_fingerprint("123023013012"); //recolor to the first coloring
     g.create_base_star();
-    g.add_edge(g.segments[4]->vertices_[0], g.segments[7]->vertices_[0], g.outer_face, 1, 2);
+    g.add_edge(g.segments[4]->from_, g.segments[7]->from_, g.outer_face, 1, 2);
     g.add_vertex(g.segments[g.edges.size() - 2]);
 
     EXPECT_EQ(g.edges.size(), n * (n - 1) + 2 * (n - 1) + 4);
@@ -523,8 +523,8 @@ TEST(graphs_create_base_star_and_add_edge_and_add_vertex, graph_4) {
     //vertices 
     for (int i = 0; i < n;i++) {
         for (int j = 0; j < n - 1;j++) {
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back(), g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->vertices_[0]);
-            EXPECT_EQ(g.segments[(n - 1) * i + j]->vertices_.back()->index_, i);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_, g.segments[(n - 1) * i + ((j + 1) % (n - 1))]->from_);
+            EXPECT_EQ(g.segments[(n - 1) * i + j]->to_->index_, i);
 
             //opposite od edges
             EXPECT_EQ(g.segments[(n - 1) * i + j]->opposite_, nullptr);
@@ -532,31 +532,31 @@ TEST(graphs_create_base_star_and_add_edge_and_add_vertex, graph_4) {
     }
 
     for (int i = 0; i < n * (n - 1);i++) {
-        EXPECT_NE(g.segments[i]->vertices_[0], g.segments[g.edges.size() - 1]->vertices_[0]);
+        EXPECT_NE(g.segments[i]->from_, g.segments[g.edges.size() - 1]->from_);
     }
 
-    EXPECT_EQ(g.segments[g.edges.size() - 9]->vertices_.back(), g.segments[0]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 9]->vertices_[0], g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 10]->vertices_.back(), g.segments[3]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 10]->vertices_[0], g.segments[0]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 9]->to_, g.segments[0]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 9]->from_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 10]->to_, g.segments[3]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 10]->from_, g.segments[0]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_.back(), g.segments[1]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 7]->vertices_[0], g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_.back(), g.segments[6]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 8]->vertices_[0], g.segments[1]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->to_, g.segments[1]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 7]->from_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->to_, g.segments[6]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 8]->from_, g.segments[1]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_.back(), g.segments[2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 5]->vertices_[0], g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_.back(), g.segments[9]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 6]->vertices_[0], g.segments[2]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->to_, g.segments[2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 5]->from_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->to_, g.segments[9]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 6]->from_, g.segments[2]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_[0], g.segments[7]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 3]->vertices_.back(), g.segments[g.edges.size() - 4]->vertices_.back());
-    EXPECT_EQ(g.segments[g.edges.size() - 4]->vertices_[0], g.segments[4]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->from_, g.segments[7]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 3]->to_, g.segments[g.edges.size() - 4]->to_);
+    EXPECT_EQ(g.segments[g.edges.size() - 4]->from_, g.segments[4]->from_);
 
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_.back(), g.segments[4]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 1]->vertices_[0], g.segments[g.edges.size() - 2]->vertices_[0]);
-    EXPECT_EQ(g.segments[g.edges.size() - 2]->vertices_.back(), g.segments[7]->vertices_[0]);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->to_, g.segments[4]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 1]->from_, g.segments[g.edges.size() - 2]->from_);
+    EXPECT_EQ(g.segments[g.edges.size() - 2]->to_, g.segments[7]->from_);
 
 
     //edges 
