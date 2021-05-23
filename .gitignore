@@ -12,8 +12,11 @@
 /drawing_of_cliques/Debug
 /drawing_of_cliques/Release
 /drawing_of_cliques/.vs
+/drawing_of_cliques/main
 
 /Tests/x64
+/Tests/Release
+/Tests/Debug
 
 /VizualizerWPF/bin
 /VizualizerWPF/obj
@@ -24,15 +27,14 @@
 /coordinates_generator/Debug
 /coordinates_generator/Release
 
-/Debug
-/Release
 
-/drawing_of_cliques/main
 
 /VizualizerWPF-Copy
 
 /ConjectureChecker/bin
 /ConjectureChecker/obj
 /ConjectureChecker/.vs
+/ConjectureChecker/Release
+/ConjectureChecker/Debug
 
 /ConjectureCheckerCplusplus

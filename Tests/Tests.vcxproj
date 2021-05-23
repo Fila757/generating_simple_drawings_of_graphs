@@ -36,7 +36,6 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dijsktra.cpp" />
     <ClCompile Include="test_all_special_vertices.cpp" />
     <ClCompile Include="test_adding_and_deleting_edges.cpp" />
     <ClCompile Include="pch.cpp">
@@ -46,7 +45,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="test_canonic_fingerprint.cpp" />
-    <ClCompile Include="test_generate_fingerprint.cpp" />
     <ClCompile Include="test_graph_properties.cpp" />
     <ClCompile Include="test_special_vertex.cpp" />
     <ClCompile Include="test_vertices_changes.cpp" />
@@ -73,6 +71,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
