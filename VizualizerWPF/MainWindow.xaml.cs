@@ -1,27 +1,15 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Path = System.Windows.Shapes.Path;
-using System.Text.RegularExpressions;
-using System.ComponentModel;
-using System.Windows.Media.Animation;
 
 /// <summary>
 /// In MainWindow.xaml we have one <c>mainCanvas</c>, topbar for setting constant and resizing/closing the window
@@ -31,125 +19,101 @@ using System.Windows.Media.Animation;
 
 namespace VizualizerWPF
 {
-
-
-
-   
-    enum StateAutoMoving { Auto, None };
-
-    /// <summary>
-    /// States to operate with a drawings
-    /// </summary>
-    enum StateChanging { AddingPolyline, Adding, Removing, Invariant, None };
-
-    /// <summary>
-    /// Enum for showing Intersections or changing reference face
-    /// </summary>
-    public enum StateCalculation { Intersections, ReferenceFace}; //AM = AtMost
-
-    public partial class MainWindow : Window//, INotifyPropertyChanged
+    internal enum StateAutoMoving
     {
-       
- 
-        StateChanging stateChanging = StateChanging.None;
-        public Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
+        Auto,
+        None
+    }
 
-        StateAutoMoving stateAutoMoving = StateAutoMoving.None;
-        System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+    /// <summary>
+    ///     States to operate with a drawings
+    /// </summary>
+    internal enum StateChanging
+    {
+        AddingPolyline,
+        Adding,
+        Removing,
+        Invariant,
+        None
+    }
+
+    /// <summary>
+    ///     Enum for showing Intersections or changing reference face
+    /// </summary>
+    public enum StateCalculation
+    {
+        Intersections,
+        ReferenceFace
+    } //AM = AtMost
+
+    public partial class MainWindow : Window //, INotifyPropertyChanged
+    {
         /// <summary>
-        /// It is class for generating all drawings
+        ///     Actual Height and Actual Width of canvas due to initialization set manually
         /// </summary>
-        GraphGenerator graphGenerator;
+        private double actualHeight = 500;
 
-        /// <summary>
-        /// Shift from 0,0 origin
-        /// Shift from 0,0 origin
-        /// </summary>
-        double cx = 81.25, cy = 219.75; 
-        public double sizeOfVertex;
-        public double scale;
-
-        /// <summary>
-        /// Actual Height and Actual Width of canvas due to initialization set manually
-        /// </summary>
-        double actualHeight = 500;
-        double actualWidth = 1000;
-        /// <summary>
-        /// Resizing paramater to get a drawing little bit from borders
-        /// </summary>
-        double lambda = 1.1;
-
-        /// <summary>
-        /// Default point determining outer face</param>
-        /// </summary>
+        private double actualWidth = 1000;
 
 
-        /// <summary>
-        /// Whether we use custom files at moment.
-        /// </summary>
-        bool savedGraphs = false;
-
-
-        /// <summary>
-        /// Set of vertices for which we count invariant edges
-        /// </summary>
-
-        List<Vertex> invariantWithRescpectTo = new List<Vertex>();
+        private Brush[] colors =
+        {
+            Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
+            Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink
+        };
 
         /// <summary>
-        /// Smoothing constant determining the number of iterations of force-directed algorithm
+        ///     Shift from 0,0 origin
+        ///     Shift from 0,0 origin
         /// </summary>
-        int Smoothing => SmoothingTextBox.Text.Length == 0 ? 0 : (int)Double.Parse(SmoothingTextBox.Text);
+        private double cx = 81.25, cy = 219.75;
 
-        /// <summary>
-        /// List of vertices forming new edge
-        /// </summary>
-        List<Vertex> selectedVertices = new List<Vertex>();
-        List<Vertex> selectedCanvasPlaces = new List<Vertex>();
+        private readonly DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
+
+        private readonly int divisionConst = 50;
 
         public GraphCoordinates graphCoordinates = new GraphCoordinates();
 
+        /// <summary>
+        ///     It is class for generating all drawings
+        /// </summary>
+        private GraphGenerator graphGenerator;
 
 
-        Brush[] colors = new Brush[] {Brushes.Red, Brushes.Orange, Brushes.Yellow, Brushes.LightGreen, Brushes.ForestGreen,
-            Brushes.LightSkyBlue, Brushes.Blue, Brushes.DarkBlue, Brushes.Purple, Brushes.Pink };
+        /// <summary>
+        ///     Set of vertices for which we count invariant edges
+        /// </summary>
+        private List<Vertex> invariantWithRescpectTo = new List<Vertex>();
 
-        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"[^0-9\.]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+        /// <summary>
+        ///     Resizing paramater to get a drawing little bit from borders
+        /// </summary>
+        private readonly double lambda = 1.1;
 
-        private void SmoothingChecker(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new Regex(@"[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
+        /// <summary>
+        ///     Default point determining outer face</param>
+        /// </summary>
+        /// <summary>
+        ///     Whether we use custom files at moment.
+        /// </summary>
+        private bool savedGraphs;
 
-        private void MinMaxValueEdgeChecker(object sender, TextCompositionEventArgs e)
-        {
-            if ((sender as TextBox).Text.Length != 0)
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                e.Handled = (!e.Text.Any(x => (Char.IsDigit(x))) || !e.Text.Any(x => x - '0' >= 0 && 8 >= x - '0'));
-            }
-            
-        }
+        public double scale;
+        private readonly List<Vertex> selectedCanvasPlaces = new List<Vertex>();
 
-        private void MinMaxValueVertexChecker(object sender, TextCompositionEventArgs e)
-        {
-            if ((sender as TextBox).Text.Length != 0)
-            {
-                e.Handled = true;
-            }
-            else
-            {
-                e.Handled = (!e.Text.Any(x => (Char.IsDigit(x))) || !e.Text.Any(x => x - '0' >= 4 && 8 >= x - '0'));
-            }
-        }
+        /// <summary>
+        ///     List of vertices forming new edge
+        /// </summary>
+        private readonly List<Vertex> selectedVertices = new List<Vertex>();
+
+        public double sizeOfVertex;
+
+        private StateAutoMoving stateAutoMoving = StateAutoMoving.None;
+
+
+        private StateChanging stateChanging = StateChanging.None;
+        public Dictionary<StateCalculation, bool> statesCalculation = new Dictionary<StateCalculation, bool>();
 
         public MainWindow()
         {
@@ -180,36 +144,61 @@ namespace VizualizerWPF
             InitializeRightValuesOfKedges();
 
 
-
-            graphGenerator = new GraphGenerator((int)Double.Parse(VerticesTextBox.Text));
+            graphGenerator = new GraphGenerator((int) double.Parse(VerticesTextBox.Text));
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
             MakeSmootherAndDraw();
+        }
 
+        /// <summary>
+        ///     Smoothing constant determining the number of iterations of force-directed algorithm
+        /// </summary>
+        private int Smoothing => SmoothingTextBox.Text.Length == 0 ? 0 : (int) double.Parse(SmoothingTextBox.Text);
 
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex(@"[^0-9\.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void SmoothingChecker(object sender, TextCompositionEventArgs e)
+        {
+            var regex = new Regex(@"[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void MinMaxValueEdgeChecker(object sender, TextCompositionEventArgs e)
+        {
+            if ((sender as TextBox).Text.Length != 0)
+                e.Handled = true;
+            else
+                e.Handled = !e.Text.Any(x => char.IsDigit(x)) || !e.Text.Any(x => x - '0' >= 0 && 8 >= x - '0');
+        }
+
+        private void MinMaxValueVertexChecker(object sender, TextCompositionEventArgs e)
+        {
+            if ((sender as TextBox).Text.Length != 0)
+                e.Handled = true;
+            else
+                e.Handled = !e.Text.Any(x => char.IsDigit(x)) || !e.Text.Any(x => x - '0' >= 4 && 8 >= x - '0');
         }
 
 
-      
-
-       
-
-
-      
         /// <summary>
-        /// Function to initialize wanted values
+        ///     Function to initialize wanted values
         /// </summary>
         private void InitializeRightValuesOfKedges()
         {
-            string atMost = "kEdges";
-            for(int i = 1;i <= 4; i++)
+            var atMost = "kEdges";
+            for (var i = 1; i <= 4; i++)
             {
-                for(int k = 0; k <= 8; k++)
+                for (var k = 0; k <= 8; k++)
                 {
-                    TextBlock textBlock = FindName($"{atMost}{k}RightValue") as TextBlock;
+                    var textBlock = FindName($"{atMost}{k}RightValue") as TextBlock;
                     textBlock.Text = (3 * CustomMath.CombCoeff(k + i, i)).ToString();
                 }
+
                 switch (i)
                 {
                     case 1:
@@ -232,102 +221,96 @@ namespace VizualizerWPF
             // Begin dragging the window
             try
             {
-                this.DragMove();
+                DragMove();
             }
             catch (Exception)
             {
-                return;
             }
         }
 
         /// <summary>
-        /// Function to set width and height of canvas due to dynamic setting (at the beggining, it is 0) 
+        ///     Function to set width and height of canvas due to dynamic setting (at the beggining, it is 0)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Canvas_Loaded(object sender, RoutedEventArgs e)
         {
-            actualWidth = (ActualWidth * 5) / 7;
+            actualWidth = ActualWidth * 5 / 7;
             actualHeight = ActualHeight - 30;
 
-            mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = 0, X2 = actualWidth, Y2 = 0 });
-            mainCanvas.Children.Add(new Line { StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth, Y2 = actualHeight });
+            mainCanvas.Children.Add(new Line
+                {StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = 0, X2 = actualWidth, Y2 = 0});
+            mainCanvas.Children.Add(new Line
+            {
+                StrokeThickness = 10, Fill = Brushes.Black, X1 = 0, Y1 = actualHeight, X2 = actualWidth,
+                Y2 = actualHeight
+            });
         }
 
 
         /// <summary>
-        /// Shortening all edges to redraw uselessly long edges after force-directed algorithm
+        ///     Shortening all edges to redraw uselessly long edges after force-directed algorithm
         /// </summary>
         private void MakeAllLinesNotSharp()
         {
-            
-            foreach (var edge in graphCoordinates.edges)
-            {
-                edge.Shorten(graphCoordinates);
-
-            }
+            foreach (var edge in graphCoordinates.edges) edge.Shorten(graphCoordinates);
             CreateVerticesFromPoints(graphCoordinates);
-            
-            
         }
 
         /// <summary>
-        /// Update the vertices to contains only the points after shortening
+        ///     Update the vertices to contains only the points after shortening
         /// </summary>
         /// <param name="graphCoordinates"></param>
         private void CreateVerticesFromPoints(GraphCoordinates graphCoordinates)
         {
             var allPoints = new HashSet<Point>(graphCoordinates.PointsIterator());
             var newVertices = new HashSet<Vertex>();
-            foreach(var vertex in graphCoordinates.vertices)
-            {
+            foreach (var vertex in graphCoordinates.vertices)
                 if (allPoints.Contains(vertex.center))
                     newVertices.Add(vertex);
-            }
 
             graphCoordinates.vertices = newVertices;
         }
-        
+
 
         /// <summary>
-        /// Subdivide edges, apply force-directed algorithm Smoothing-times, shorten the edges and then draw on canvas
+        ///     Subdivide edges, apply force-directed algorithm Smoothing-times, shorten the edges and then draw on canvas
         /// </summary>
         private void MakeSmootherAndDraw()
         {
             SubDivideEdges(graphCoordinates);
-            for (int i = 0; i < Smoothing; i++)
-            {
+            for (var i = 0; i < Smoothing; i++)
                 graphCoordinates = ForceDirectedAlgorithms.CountAndMoveByForces(graphCoordinates);
-            }
             MakeAllLinesNotSharp();
             DrawGraph(graphCoordinates, 1);
         }
 
         /// <summary>
-        /// Get the value of Z(n)
+        ///     Get the value of Z(n)
         /// </summary>
         /// <returns></returns>
-        private int optimalCrossingNumber() {
-
-            int numberOfVertices = 0;
+        private int optimalCrossingNumber()
+        {
+            var numberOfVertices = 0;
             foreach (var vertex in graphCoordinates.vertices)
-                numberOfVertices += (vertex.state == VertexState.Regular) ? 1 : 0;
+                numberOfVertices += vertex.state == VertexState.Regular ? 1 : 0;
 
-            return (numberOfVertices / 2) *
+            return numberOfVertices / 2 *
                 ((numberOfVertices - 1) / 2) *
                 ((numberOfVertices - 2) / 2) *
                 ((numberOfVertices - 3) / 2) / 4;
         }
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            double frequence = Double.TryParse(AutoTextBox.Text, out frequence) ? frequence : 1;
+            double frequence = double.TryParse(AutoTextBox.Text, out frequence) ? frequence : 1;
             dispatcherTimer.Interval = TimeSpan.FromSeconds(1 / frequence);
-            if(stateAutoMoving == StateAutoMoving.Auto)
+            if (stateAutoMoving == StateAutoMoving.Auto)
                 NextDrawing_Click(sender, new RoutedEventArgs());
         }
 
         /// <summary>
-        /// Function to redraw the drawing (when canvas resize)
+        ///     Function to redraw the drawing (when canvas resize)
         /// </summary>
         /// <param name="graphCoordinates">To store graph topical</param>
         /// <param name="scale">To know if it is maximized or minimized</param>
@@ -335,7 +318,7 @@ namespace VizualizerWPF
         {
             mainCanvas.Children.Clear();
 
-            (double, double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
+            var coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
 
             cx = coordinatesAndScale.Item1;
             cy = coordinatesAndScale.Item2;
@@ -347,16 +330,17 @@ namespace VizualizerWPF
             var vertices = new HashSet<Vertex>();
             foreach (var vertex in graphCoordinates.vertices)
             {
-                Vertex vertexTemp = vertex;
+                var vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
 
-                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0);
+                vertexTemp.ellipse.Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2,
+                    vertexTemp.center.Y - sizeOfVertex / 2, 0, 0);
 
                 vertexTemp.ellipse.Height *= 1; //scale;
                 vertexTemp.ellipse.Width *= 1; //scale;
 
-               mainCanvas.Children.Add(vertexTemp.ellipse);
-               vertices.Add(vertexTemp);
+                mainCanvas.Children.Add(vertexTemp.ellipse);
+                vertices.Add(vertexTemp);
             }
 
             graphCoordinates.vertices = vertices;
@@ -371,37 +355,34 @@ namespace VizualizerWPF
                     line.Y1 = (line.Y1 + cy) * scaleY;
                     line.X2 = (line.X2 + cx) * scaleX;
                     line.Y2 = (line.Y2 + cy) * scaleY;
-                    line.StrokeThickness *= 1;// scale;
+                    line.StrokeThickness *= 1; // scale;
 
                     mainCanvas.Children.Add(line);
                 }
 
                 var pointsTemp = new List<Point>();
-                foreach(var point in edge.points)
-                {
-                    pointsTemp.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY));
-                }
+                foreach (var point in edge.points) pointsTemp.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY));
 
-                edge.points = pointsTemp; 
+                edge.points = pointsTemp;
             }
 
             /* Updating neighbors */
             var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
             foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
-                Vertex vertexTemp = vertex;
+                var vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp);
 
                 neighborsTemp[vertexTemp] = listOfEdges;
-
             }
+
             graphCoordinates.neighbors = neighborsTemp;
         }
 
         /// <summary>
-        /// Function to hangle minimazing and maximazing window
+        ///     Function to hangle minimazing and maximazing window
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -410,98 +391,102 @@ namespace VizualizerWPF
             Canvas_Loaded(sender, new RoutedEventArgs());
 
             RedrawGraph(graphCoordinates);
-
         }
+
         /// <summary>
-        /// Function to change the state of Automoving Button
+        ///     Function to change the state of Automoving Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
         private void AutoButton_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
-            button.Background = stateAutoMoving == StateAutoMoving.Auto ?
-              (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.BlueViolet;
+            button.Background = stateAutoMoving == StateAutoMoving.Auto
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.BlueViolet;
 
             stateAutoMoving = stateAutoMoving == StateAutoMoving.Auto ? StateAutoMoving.None : StateAutoMoving.Auto;
         }
 
         /// <summary>
-        /// Function to change the state of Adding Button
+        ///     Function to change the state of Adding Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Adding_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
             /*changing color*/
-            button.Background = stateChanging == StateChanging.Adding ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
-            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
+            button.Background = stateChanging == StateChanging.Adding
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
+            Removing.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            AddingPolyline.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            Invariant.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
 
             stateChanging = stateChanging == StateChanging.Adding ? StateChanging.None : StateChanging.Adding;
         }
 
         /// <summary>
-        /// Function to change the state of Removing Button
+        ///     Function to change the state of Removing Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Removing_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
             /*changing color*/
-            button.Background = stateChanging == StateChanging.Removing ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
-            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
+            button.Background = stateChanging == StateChanging.Removing
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
+            Adding.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            AddingPolyline.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            Invariant.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
 
             stateChanging = stateChanging == StateChanging.Removing ? StateChanging.None : StateChanging.Removing;
-
         }
 
         /// <summary>
-        /// Function to change the state of AddingPolyline Button
+        ///     Function to change the state of AddingPolyline Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AddingPolyline_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
             /*changing color*/
-            button.Background = stateChanging == StateChanging.AddingPolyline ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
-            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            Invariant.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
+            button.Background = stateChanging == StateChanging.AddingPolyline
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
+            Adding.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            Removing.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            Invariant.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
 
-            stateChanging = stateChanging == StateChanging.AddingPolyline ? StateChanging.None : StateChanging.AddingPolyline;
-
+            stateChanging = stateChanging == StateChanging.AddingPolyline
+                ? StateChanging.None
+                : StateChanging.AddingPolyline;
         }
 
         /// <summary>
-        /// Function to change the state of Invariant Button
+        ///     Function to change the state of Invariant Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Invariant_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
             /*changing color*/
-            button.Background = stateChanging == StateChanging.Invariant ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
-            Adding.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            Removing.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
-            AddingPolyline.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7"));
+            button.Background = stateChanging == StateChanging.Invariant
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
+            Adding.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            Removing.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
+            AddingPolyline.Background = (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7");
 
             stateChanging = stateChanging == StateChanging.Invariant ? StateChanging.None : StateChanging.Invariant;
             if (stateChanging != StateChanging.Invariant)
@@ -510,8 +495,6 @@ namespace VizualizerWPF
                 invariantWithRescpectTo = new List<Vertex>();
                 ZeroInvariantEdgesValues();
             }
-
-
         }
 
 
@@ -522,36 +505,37 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to change the state of Face button
+        ///     Function to change the state of Face button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void RefferenceFace_Click(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
+            var button = sender as Button;
 
-            button.Background = button.Background == Brushes.Red ?
-               (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
+            button.Background = button.Background == Brushes.Red
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
 
             statesCalculation[StateCalculation.ReferenceFace] = !statesCalculation[StateCalculation.ReferenceFace];
         }
 
-        
+
         /// <summary>
-        /// Function to change if intersection are visible or not, intersection can be recognized by green color
+        ///     Function to change if intersection are visible or not, intersection can be recognized by green color
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Intersections_Click(object sender, RoutedEventArgs e)
         {
+            var numberOfIntersections = 0;
 
-            int numberOfIntersections = 0;
-
-            Button button = sender as Button;
+            var button = sender as Button;
 
             /*changing color*/
-            button.Background = statesCalculation[StateCalculation.Intersections] ?
-                (SolidColorBrush)(new BrushConverter().ConvertFrom("#673ab7")) : Brushes.Red;
+            button.Background = statesCalculation[StateCalculation.Intersections]
+                ? (SolidColorBrush) new BrushConverter().ConvertFrom("#673ab7")
+                : Brushes.Red;
 
             statesCalculation[StateCalculation.Intersections] = !statesCalculation[StateCalculation.Intersections];
 
@@ -559,32 +543,24 @@ namespace VizualizerWPF
             {
                 //textblock.Text = 
                 foreach (var vertex in graphCoordinates.vertices)
-                {
                     if (vertex.state == VertexState.Intersection)
-                    {
                         vertex.ellipse.Visibility = Visibility.Hidden;
-                    }
-                }
             }
             else
             {
-                foreach(var vertex in graphCoordinates.vertices)
-                {
+                foreach (var vertex in graphCoordinates.vertices)
                     if (vertex.state == VertexState.Intersection)
                     {
                         vertex.ellipse.Visibility = Visibility.Visible;
                         numberOfIntersections++;
                     }
-                }
             }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
-
-
         }
 
         /// <summary>
-        /// Function to save the current drawing when we click on Save Button 
+        ///     Function to save the current drawing when we click on Save Button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -594,13 +570,13 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to flush the data when we change to custom file working
+        ///     Function to flush the data when we change to custom file working
         /// </summary>
         private void FlushFromBackUpToNormal()
         {
             using (var sr = new StreamReader(@"../../../data/savedGraphsBackUp.txt"))
             {
-                using (var sw = new StreamWriter(@"../../../data/savedGraphs.txt", append: true))
+                using (var sw = new StreamWriter(@"../../../data/savedGraphs.txt", true))
                 {
                     while (!sr.EndOfStream)
                     {
@@ -614,21 +590,17 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to generate new drawing of clique from data
-        /// If value of vertices textbox has changed then new data file is loaded
+        ///     Function to generate new drawing of clique from data
+        ///     If value of vertices textbox has changed then new data file is loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void NextDrawing_Click(object sender, RoutedEventArgs e)
         {
-
-
-            if ((bool)faceCheckBox.IsChecked)
-            {
+            if ((bool) faceCheckBox.IsChecked)
                 GraphCoordinates.facePoint = GraphCoordinates.farFarAway; //changing again to the outer face
-            }
 
-            if ((bool)savedGraphsChechBox.IsChecked && !savedGraphs)
+            if ((bool) savedGraphsChechBox.IsChecked && !savedGraphs)
             {
                 graphGenerator.CloseFile();
                 savedGraphs = true;
@@ -636,19 +608,19 @@ namespace VizualizerWPF
             }
 
             else if (
-                (!(bool)savedGraphsChechBox.IsChecked && graphGenerator.SizeOfGraph != Int32.Parse(VerticesTextBox.Text)) 
-                || 
-                (savedGraphs && !(bool)savedGraphsChechBox.IsChecked)
-                )
+                !(bool) savedGraphsChechBox.IsChecked && graphGenerator.SizeOfGraph != int.Parse(VerticesTextBox.Text)
+                ||
+                savedGraphs && !(bool) savedGraphsChechBox.IsChecked
+            )
             {
                 graphGenerator.CloseFile();
                 savedGraphs = false;
 
                 FlushFromBackUpToNormal();
 
-                graphGenerator = new GraphGenerator((int)Double.Parse(VerticesTextBox.Text));
+                graphGenerator = new GraphGenerator((int) double.Parse(VerticesTextBox.Text));
             }
-                
+
             graphCoordinates = graphGenerator.GenerateNextDrawing();
             numberOfDrawing.Text = graphGenerator.counter.ToString();
 
@@ -656,21 +628,19 @@ namespace VizualizerWPF
 
 
             MakeSmootherAndDraw();
-
-
         }
 
         /// <summary>
-        /// Function to generate previous drawing of clique from data
+        ///     Function to generate previous drawing of clique from data
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void PreviousDrawing_Click(object sender, RoutedEventArgs e)
         {
-            if(!(bool)faceCheckBox.IsChecked)
+            if (!(bool) faceCheckBox.IsChecked)
                 GraphCoordinates.facePoint = GraphCoordinates.farFarAway;
 
-            int tmpCounter = graphGenerator.counter;
+            var tmpCounter = graphGenerator.counter;
 
             if (tmpCounter == 1)
             {
@@ -679,7 +649,9 @@ namespace VizualizerWPF
             }
 
             graphGenerator.CloseFile();
-            graphGenerator = !(bool)savedGraphsChechBox.IsChecked ? new GraphGenerator((int)Double.Parse(VerticesTextBox.Text)) : new GraphGenerator();
+            graphGenerator = !(bool) savedGraphsChechBox.IsChecked
+                ? new GraphGenerator((int) double.Parse(VerticesTextBox.Text))
+                : new GraphGenerator();
             graphGenerator.counter = tmpCounter;
 
             graphCoordinates = graphGenerator.GeneratePreviousDrawing();
@@ -689,31 +661,25 @@ namespace VizualizerWPF
             //DrawGraph(graphCoordinates, WindowState == WindowState.Maximized ? scale : 1);
 
             MakeSmootherAndDraw();
-
         }
-
 
 
         public Vertex? FindVertexSave(Point center)
         {
             foreach (var vertex in graphCoordinates.vertices)
-            {
                 if (Vertex.Compare(vertex.center, center))
                     return vertex;
-            }
 
             return null;
-            
         }
 
         /// <summary>
-        /// Function to find ends of <c>edge</c>
+        ///     Function to find ends of <c>edge</c>
         /// </summary>
         /// <param name="edge"></param>
         /// <returns></returns>
         private (Vertex, Vertex) FindEdgeEnds(Edge edge)
         {
-
             var first = graphCoordinates.FindVertex(edge.points[0]);
             var second = graphCoordinates.FindVertex(edge.points.Last());
 
@@ -722,46 +688,47 @@ namespace VizualizerWPF
 
         private void AddIntersectionsWithLines(List<Line> lines)
         {
-            HashSet<Vertex> intersections = new HashSet<Vertex>( );
+            var intersections = new HashSet<Vertex>();
             foreach (var line in lines)
+            foreach (var l in graphCoordinates.LinesIterator())
             {
-                foreach (var l in graphCoordinates.LinesIterator())
+                //if (l == line) continue;
+
+                var intersection = CollisionDetection.TwoLinesIntersectNotAtTheEnd(line, l);
+                if (!(intersection.X == -1 && intersection.Y == -1))
                 {
-                    //if (l == line) continue;
-
-                    var intersection = CollisionDetection.TwoLinesIntersectNotAtTheEnd(line, l);
-                    if (!(intersection.X == -1 && intersection.Y == -1))
+                    var ellipse2 = new Ellipse
                     {
-                        var ellipse2 = new Ellipse
-                        {
-                            Width = sizeOfVertex,
-                            Height = sizeOfVertex,
-                            Fill = Brushes.Green,
-                            Margin = new Thickness(intersection.X - sizeOfVertex / 2, intersection.Y - sizeOfVertex / 2, 0, 0),
-                            Visibility = statesCalculation[StateCalculation.Intersections] ? Visibility.Visible : Visibility.Hidden
-                        };
-                        ellipse2.MouseDown += ellipse_MouseDown;
-                        Panel.SetZIndex(ellipse2, 10);
-                        //intersections.Add(ellipse2);
+                        Width = sizeOfVertex,
+                        Height = sizeOfVertex,
+                        Fill = Brushes.Green,
+                        Margin = new Thickness(intersection.X - sizeOfVertex / 2, intersection.Y - sizeOfVertex / 2, 0,
+                            0),
+                        Visibility = statesCalculation[StateCalculation.Intersections]
+                            ? Visibility.Visible
+                            : Visibility.Hidden
+                    };
+                    ellipse2.MouseDown += ellipse_MouseDown;
+                    Panel.SetZIndex(ellipse2, 10);
+                    //intersections.Add(ellipse2);
 
-                        intersections.Add(new Vertex(ellipse2, new Point { X = intersection.X, Y = intersection.Y }, VertexState.Intersection));
+                    intersections.Add(new Vertex(ellipse2, new Point {X = intersection.X, Y = intersection.Y},
+                        VertexState.Intersection));
 
-                        //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
-                    }
+                    //MessageBox.Show(new { intersection.x,intersection.y }.ToString());
                 }
             }
 
             foreach (var el in intersections)
             {
-                bool collision = false;
+                var collision = false;
                 foreach (var vertex in graphCoordinates.vertices)
-                {
-                    if (vertex.state == VertexState.Regular && CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
+                    if (vertex.state == VertexState.Regular &&
+                        CollisionDetection.CenterInsideEllipse(el.center, vertex.ellipse))
                     {
                         collision = true;
                         break;
                     }
-                }
 
                 if (!collision)
                 {
@@ -769,39 +736,38 @@ namespace VizualizerWPF
                     mainCanvas.Children.Add(el.ellipse);
                 }
             }
-
         }
 
         /// <summary>
-        /// Function to either select vertices.
-        /// After two are selected then line between them is created.
-        /// Or to delete vertex and all edges neighbouring with it.
+        ///     Function to either select vertices.
+        ///     After two are selected then line between them is created.
+        ///     Or to delete vertex and all edges neighbouring with it.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void ellipse_MouseDown(object sender, RoutedEventArgs e)
         {
-            Ellipse ellipse = sender as Ellipse;
+            var ellipse = sender as Ellipse;
             //MessageBox.Show(new { x = ellipse.Margin.Left, y= ellipse.Margin.Top }.ToString());
 
             if (stateChanging == StateChanging.Adding || stateChanging == StateChanging.AddingPolyline)
             {
                 if (ellipse.Fill == Brushes.Green || ellipse.Fill == Brushes.Red) return;
-                selectedVertices.Add(new Vertex(ellipse, new Point { X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2 }, VertexState.Regular));
+                selectedVertices.Add(new Vertex(ellipse,
+                    new Point {X = ellipse.Margin.Left + sizeOfVertex / 2, Y = ellipse.Margin.Top + sizeOfVertex / 2},
+                    VertexState.Regular));
 
-                if (selectedVertices.Count == 1)
-                {
-                    selectedCanvasPlaces.Clear();
-                }
+                if (selectedVertices.Count == 1) selectedCanvasPlaces.Clear();
                 if (selectedVertices.Count == 2)
                 {
-
                     if (selectedVertices[0] == selectedVertices[1])
                     {
                         selectedVertices.RemoveAt(1);
                         return;
                     }
-                    if (graphCoordinates.FindEdgeFromVertices(selectedVertices.ElementAt(0), selectedVertices.ElementAt(1)) != null)
+
+                    if (graphCoordinates.FindEdgeFromVertices(selectedVertices.ElementAt(0),
+                        selectedVertices.ElementAt(1)) != null)
                     {
                         MessageBox.Show("You cannot add edge where there is already put one");
                         selectedVertices.Clear();
@@ -809,7 +775,7 @@ namespace VizualizerWPF
                         return;
                     }
 
-                    var allVertices = new List<Vertex> { selectedVertices[0] };
+                    var allVertices = new List<Vertex> {selectedVertices[0]};
                     foreach (var p in selectedCanvasPlaces)
                         allVertices.Add(p);
                     allVertices.Add(selectedVertices[1]);
@@ -817,7 +783,7 @@ namespace VizualizerWPF
 
                     var lines = new List<Line>();
 
-                    for (int i = 0; i < allVertices.Count - 1; i++)
+                    for (var i = 0; i < allVertices.Count - 1; i++)
                     {
                         var line = new Line
                         {
@@ -863,21 +829,17 @@ namespace VizualizerWPF
                     /* adding after to not make problems with intersecting with others line segments of these new edge */
                     foreach (var line in lines)
                         mainCanvas.Children.Add(line);
-
                 }
-
             }
 
             if (stateChanging == StateChanging.Removing)
             {
-
                 /* finding edges which intersected */
-                List<Line> intersectedLines = new List<Line>();
+                var intersectedLines = new List<Line>();
                 foreach (var line in graphCoordinates.LinesIterator())
-                {
-                    if (CollisionDetection.CenterOfEllipseOnLine(line, ellipse)) // colision at the end can be used if it would not work
+                    if (CollisionDetection.CenterOfEllipseOnLine(line,
+                        ellipse)) // colision at the end can be used if it would not work
                         intersectedLines.Add(line);
-                }
 
                 /* removing edges */
                 foreach (var line in intersectedLines)
@@ -909,7 +871,6 @@ namespace VizualizerWPF
 
             if (stateChanging == StateChanging.Invariant)
             {
-
                 var vertex = graphCoordinates.FindVertex(ellipse, sizeOfVertex);
 
                 if (vertex.state == VertexState.Regular)
@@ -924,6 +885,7 @@ namespace VizualizerWPF
                         invariantWithRescpectTo.Add(vertex);
                         ellipse.Fill = Brushes.Purple;
                     }
+
                     RecalculateKEdgesAndUpdateButtonTexts(invariantWithRescpectTo);
                 }
             }
@@ -931,42 +893,33 @@ namespace VizualizerWPF
             {
                 UpdateStats();
             }
-
         }
 
         /// <summary>
-        /// Function to find edge containg <c>line</c>
+        ///     Function to find edge containg <c>line</c>
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
         private Edge FindEdge(Line line)
         {
             foreach (var edge in graphCoordinates.edges)
-            {
-                foreach (var l in edge.lines)
-                {
-                    if (l == line)
-                    {
-                        return edge;
-                    }
-                }
-            }
+            foreach (var l in edge.lines)
+                if (l == line)
+                    return edge;
             return null; //it is possible it could be deleted yet
         }
+
         /// <summary>
-        /// Function to remove all intersection with <c>line</c> from canvas and coordinates
+        ///     Function to remove all intersection with <c>line</c> from canvas and coordinates
         /// </summary>
         /// <param name="line"></param>
         private void RemoveIntersections(Line line)
         {
             var removedIntersections = new List<Ellipse>();
             foreach (var ellipse in mainCanvas.Children.OfType<Ellipse>())
-            {
                 if (CollisionDetection.LineAndEllipse(line, ellipse)
-                    && (ellipse.Fill == Brushes.Green))
+                    && ellipse.Fill == Brushes.Green)
                     removedIntersections.Add(ellipse);
-
-            }
 
             foreach (var ellipse in removedIntersections)
             {
@@ -976,7 +929,7 @@ namespace VizualizerWPF
         }
 
 
-        void RemoveIntersectionsAndMiddleOnes(Edge edge)
+        private void RemoveIntersectionsAndMiddleOnes(Edge edge)
         {
             foreach (var l in edge.lines)
             {
@@ -996,21 +949,21 @@ namespace VizualizerWPF
         }
 
         /// <summary>
-        /// Function to remove line if clicked on
-        /// If remove button activated then the edge is removed
-        /// If Invariant button is activated then invariant edges are counted for this edge
+        ///     Function to remove line if clicked on
+        ///     If remove button activated then the edge is removed
+        ///     If Invariant button is activated then invariant edges are counted for this edge
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void line_MouseDown(object sender, RoutedEventArgs e)
         {
-            Line line = sender as Line;
+            var line = sender as Line;
 
             //MessageBox.Show(line.ToString());
 
             if (stateChanging == StateChanging.Removing)
             {
-                var tempEdge = FindEdge(line); 
+                var tempEdge = FindEdge(line);
                 var (start, end) = FindEdgeEnds(tempEdge);
 
                 graphCoordinates.DeleteEdgeFromDictionary(start, tempEdge);
@@ -1019,11 +972,10 @@ namespace VizualizerWPF
                 RemoveIntersectionsAndMiddleOnes(tempEdge);
 
                 graphCoordinates.edges.Remove(tempEdge);
-
             }
 
             ZeroInvariantEdgesValues();
-         
+
             if (stateChanging == StateChanging.Invariant)
             {
                 var withoutEdge = FindEdge(line);
@@ -1033,29 +985,25 @@ namespace VizualizerWPF
             {
                 UpdateStats();
             }
-
         }
 
 
-
-        
-        
-        void RecalculateKEdgesAndUpdateButtonTexts(List<Vertex> withouts = null, Edge withoutEdge = null)  
+        private void RecalculateKEdgesAndUpdateButtonTexts(List<Vertex> withouts = null, Edge withoutEdge = null)
         {
-
-            (var kEdgesValues, var invariantKEdges) = graphCoordinates.ReCalculateKEdges(withouts, withoutEdge);
+            var (kEdgesValues, invariantKEdges) = graphCoordinates.ReCalculateKEdges(withouts, withoutEdge);
             UpdateButtonTexts(withouts, withoutEdge, kEdgesValues, invariantKEdges);
         }
 
         /// <summary>
-        /// Function to update buttons values by <c>kEdgesValues</c> and <c>invariantKEdges</c> values 
-        /// depending on invariant state
+        ///     Function to update buttons values by <c>kEdgesValues</c> and <c>invariantKEdges</c> values
+        ///     depending on invariant state
         /// </summary>
         /// <param name="withouts"></param>
         /// <param name="withoutEdge"></param>
         /// <param name="kEdgesValues"></param>
         /// <param name="invariantKEdges"></param>
-        void UpdateButtonTexts(List<Vertex> withouts, Edge withoutEdge, int [] kEdgesValues, int [] invariantKEdges)
+        private void UpdateButtonTexts(List<Vertex> withouts, Edge withoutEdge, int[] kEdgesValues,
+            int[] invariantKEdges)
         {
             if (withouts == null && withoutEdge == null)
             {
@@ -1063,9 +1011,9 @@ namespace VizualizerWPF
 
                 PrintAMKEdges(GraphCoordinates.maximalKEdges, AMKEdgesArray);
 
-                for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
+                for (var i = 0; i <= GraphCoordinates.maximalKEdges; i++)
                 {
-                    TextBlock textBlock = FindName($"kEdges{i}") as TextBlock;
+                    var textBlock = FindName($"kEdges{i}") as TextBlock;
                     textBlock.Text = kEdgesValues[i].ToString();
                 }
             }
@@ -1075,19 +1023,19 @@ namespace VizualizerWPF
                 var invariantAmKEdges = Enumerable.Repeat(0, GraphCoordinates.maximalKEdges + 1).ToArray();
 
                 invariantAmKEdges[0] = invariantKEdges[0];
-                TextBlock textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
+                var textBlock = FindName($"invariantAmKedges{0}") as TextBlock;
                 textBlock.Text = invariantAmKEdges[0].ToString();
 
-                for (int i = 1; i <= GraphCoordinates.maximalKEdges; i++)
+                for (var i = 1; i <= GraphCoordinates.maximalKEdges; i++)
                 {
                     invariantAmKEdges[i] = invariantAmKEdges[i - 1] + invariantKEdges[i];
                     textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
                     textBlock.Text = invariantAmKEdges[i].ToString();
                 }
 
-                int amAmInvariant = 0;
+                var amAmInvariant = 0;
 
-                for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
+                for (var i = 0; i <= GraphCoordinates.maximalKEdges; i++)
                 {
                     amAmInvariant += invariantAmKEdges[i];
                     textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
@@ -1096,106 +1044,98 @@ namespace VizualizerWPF
 
                 if (withoutEdge != null)
                 {
-
                     int second, third;
 
                     textBlock = removedEdgeAMAMAMSecond;
-                    textBlock.Text = (FindName($"invariantAmAmKedges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text.ToString();
-                    second = Int32.Parse(textBlock.Text);
+                    textBlock.Text =
+                        (FindName($"invariantAmAmKedges{int.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text;
+                    second = int.Parse(textBlock.Text);
 
 
                     textBlock = removedEdgeAMAMAMThird;
                     textBlock.Text =
-                        ((((Int32.Parse(kWhenRemovingUpDown.Text) + 2) - withoutEdge.kEdge)
-                        *
-                        ((Int32.Parse(kWhenRemovingUpDown.Text) + 1) - withoutEdge.kEdge)) / 2).ToString();
-                    third = Int32.Parse(textBlock.Text);
+                        ((int.Parse(kWhenRemovingUpDown.Text) + 2 - withoutEdge.kEdge)
+                            *
+                            (int.Parse(kWhenRemovingUpDown.Text) + 1 - withoutEdge.kEdge) / 2).ToString();
+                    third = int.Parse(textBlock.Text);
 
-                    removedEdgeAMAMAMFirst.Text = (Int32.Parse((FindName($"amAmAmKEdges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) - second - third).ToString();
-
+                    removedEdgeAMAMAMFirst.Text =
+                        (int.Parse((FindName($"amAmAmKEdges{int.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) -
+                         second - third).ToString();
 
 
                     textBlock = removedEdgeAMAMSecond;
-                    textBlock.Text = (FindName($"invariantAmKedges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text.ToString();
-                    second = Int32.Parse(textBlock.Text);
+                    textBlock.Text = (FindName($"invariantAmKedges{int.Parse(kWhenRemovingUpDown.Text)}") as TextBlock)
+                        .Text;
+                    second = int.Parse(textBlock.Text);
 
 
                     textBlock = removedEdgeAMAMThird;
-                    textBlock.Text = ((Int32.Parse(kWhenRemovingUpDown.Text) + 1) - withoutEdge.kEdge).ToString();
-                    third = Int32.Parse(textBlock.Text);
+                    textBlock.Text = (int.Parse(kWhenRemovingUpDown.Text) + 1 - withoutEdge.kEdge).ToString();
+                    third = int.Parse(textBlock.Text);
 
-                    removedEdgeAMAMFirst.Text = (Int32.Parse((FindName($"amAmKEdges{Int32.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) - second - third).ToString();
-
-
+                    removedEdgeAMAMFirst.Text =
+                        (int.Parse((FindName($"amAmKEdges{int.Parse(kWhenRemovingUpDown.Text)}") as TextBlock).Text) -
+                         second - third).ToString();
                 }
-
             }
         }
 
-     
+
         /// <summary>
-        /// Function to restore values of invariant textblock to zeroes and redraw all lines to non-dashed
+        ///     Function to restore values of invariant textblock to zeroes and redraw all lines to non-dashed
         /// </summary>
-        void ZeroInvariantEdgesValues()
+        private void ZeroInvariantEdgesValues()
         {
+            foreach (var edge in graphCoordinates.edges)
+            foreach (var line in edge.lines)
+                line.StrokeDashArray = DoubleCollection.Parse("");
 
-            foreach(var edge in graphCoordinates.edges)
-            {
-                foreach(var line in edge.lines)
-                    line.StrokeDashArray = DoubleCollection.Parse("");
-            }
-
-            for (int i = 0; i <= GraphCoordinates.maximalKEdges; i++)
+            for (var i = 0; i <= GraphCoordinates.maximalKEdges; i++)
             {
                 var textBlock = FindName($"invariantAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
 
                 textBlock = FindName($"invariantAmAmKedges{i}") as TextBlock;
                 textBlock.Text = 0.ToString();
-
-            }            
+            }
         }
 
-  
 
         /// <summary>
-        /// Function to Print values of <c>AMKEdgesArray</c> to respective textblocks 
-        /// Checking also the 3AMK theorem (a messagebox shows up when something wrong)
+        ///     Function to Print values of <c>AMKEdgesArray</c> to respective textblocks
+        ///     Checking also the 3AMK theorem (a messagebox shows up when something wrong)
         /// </summary>
         /// <param name="size"></param>
         /// <param name="AMKEdgesArray"></param>
         private void PrintAMKEdges(int size, int[,] AMKEdgesArray)
         {
-
-            for(int i = 0; i <= size; i++)
+            for (var i = 0; i <= size; i++)
             {
-                TextBlock textBlock = FindName($"amKEdges{i}") as TextBlock;
+                var textBlock = FindName($"amKEdges{i}") as TextBlock;
                 textBlock.Text = AMKEdgesArray[0, i].ToString();
             }
 
-            for (int i = 0; i <= size; i++)
+            for (var i = 0; i <= size; i++)
             {
-                TextBlock textBlock = FindName($"amAmKEdges{i}") as TextBlock;
+                var textBlock = FindName($"amAmKEdges{i}") as TextBlock;
                 textBlock.Text = AMKEdgesArray[1, i].ToString();
             }
 
 
-            for (int i = 0; i <= size; i++)
+            for (var i = 0; i <= size; i++)
             {
-                TextBlock textBlock = FindName($"amAmAmKEdges{i}") as TextBlock;
+                var textBlock = FindName($"amAmAmKEdges{i}") as TextBlock;
                 textBlock.Text = AMKEdgesArray[2, i].ToString();
 
 
-                
                 textBlock = FindName($"theoremAmAmAmKEdges{i}") as TextBlock;
-                if (graphCoordinates.edges.Count >= (((2 * i + 3) * (2 * i + 2)) / 2))
-                {
-                    textBlock.Text = (AMKEdgesArray[2, i] >= (3 * (((i + 4) * (i + 3) * (i + 2) * (i + 1)) / 24))) ? "T" : "F";
-                }
+                if (graphCoordinates.edges.Count >= (2 * i + 3) * (2 * i + 2) / 2)
+                    textBlock.Text = AMKEdgesArray[2, i] >= 3 * ((i + 4) * (i + 3) * (i + 2) * (i + 1) / 24)
+                        ? "T"
+                        : "F";
                 else
-                {
                     textBlock.Text = "-";
-                }
 
                 if (textBlock.Text == "F")
                 {
@@ -1204,30 +1144,23 @@ namespace VizualizerWPF
                         Width = sizeOfVertex,
                         Height = sizeOfVertex,
                         Fill = Brushes.Turquoise,
-                        Margin = new Thickness(GraphCoordinates.facePoint.X - sizeOfVertex / 2, GraphCoordinates.facePoint.Y - sizeOfVertex / 2, 0, 0)
-
+                        Margin = new Thickness(GraphCoordinates.facePoint.X - sizeOfVertex / 2,
+                            GraphCoordinates.facePoint.Y - sizeOfVertex / 2, 0, 0)
                     });
                     MessageBox.Show("HEUREKA WRONG");
-
-                   
                 }
             }
- 
         }
 
         /// <summary>
-        /// Function to coun intersections and to update all other stats regading $k$-edges
+        ///     Function to coun intersections and to update all other stats regading $k$-edges
         /// </summary>
         private void UpdateStats()
         {
-            int numberOfIntersections = 0;
+            var numberOfIntersections = 0;
             foreach (var vertex in graphCoordinates.vertices)
-            {
                 if (vertex.state == VertexState.Intersection)
-                {
                     numberOfIntersections++;
-                }
-            }
 
             optimal.Text = numberOfIntersections == optimalCrossingNumber() ? "YES" : "NO";
 
@@ -1235,21 +1168,19 @@ namespace VizualizerWPF
 
             RecalculateKEdgesAndUpdateButtonTexts();
         }
-        
+
         /// <summary>
-        /// Function to add vertex when the place is empty and to detect a change of a reference face 
+        ///     Function to add vertex when the place is empty and to detect a change of a reference face
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void canvas_MouseDown(object sender, RoutedEventArgs e)
         {
-
-
-           //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
+            //MessageBox.Show(Mouse.GetPosition(sender as IInputElement).ToString());
             if (e.OriginalSource is Ellipse || e.OriginalSource is Line)
                 return;
 
-            Point pos = Mouse.GetPosition(mainCanvas);
+            var pos = Mouse.GetPosition(mainCanvas);
             //MessageBox.Show((mainCanvas.ActualWidth).ToString() + " " + pos.ToString());
 
 
@@ -1265,9 +1196,9 @@ namespace VizualizerWPF
                     RecalculateKEdgesAndUpdateButtonTexts(invariantWithRescpectTo);
             }
 
-            if(stateChanging == StateChanging.Adding)
+            if (stateChanging == StateChanging.Adding)
             {
-                Ellipse ellipse = new Ellipse
+                var ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
@@ -1279,17 +1210,16 @@ namespace VizualizerWPF
                 mainCanvas.Children.Add(ellipse);
 
                 //MessageBox.Show((new { X = pos.X, Y = pos.Y }).ToString());
-                var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Regular);
+                var vertex = new Vertex(ellipse, new Point {X = pos.X, Y = pos.Y}, VertexState.Regular);
                 graphCoordinates.vertices.Add(vertex);
                 graphCoordinates.neighbors.Add(vertex, new List<Edge>());
             }
 
-            if(stateChanging == StateChanging.AddingPolyline)
+            if (stateChanging == StateChanging.AddingPolyline)
             {
-
                 //PrintNumberOfEllipses();
 
-                Ellipse ellipse = new Ellipse
+                var ellipse = new Ellipse
                 {
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
@@ -1299,63 +1229,45 @@ namespace VizualizerWPF
                 };
                 Panel.SetZIndex(ellipse, 100);
                 ellipse.MouseDown += ellipse_MouseDown;
-                
+
                 //mainCanvas.Children.Add(ellipse);
 
-                var vertex = new Vertex(ellipse, new Point { X = pos.X, Y = pos.Y }, VertexState.Middle);
-                
+                var vertex = new Vertex(ellipse, new Point {X = pos.X, Y = pos.Y}, VertexState.Middle);
+
                 //graphCoordinates.vertices.Add(vertex);
 
                 selectedCanvasPlaces.Add(vertex);
 
                 //PrintNumberOfEllipses();
             }
-
-           
         }
 
         /// <summary>
-        /// Function to find appropriate shift and rescaling so all the <c>points</c> fit into the canvas
+        ///     Function to find appropriate shift and rescaling so all the <c>points</c> fit into the canvas
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-
-        (double, double, double, double) FindClipingSizes(HashSet<Point> points)
+        private (double, double, double, double) FindClipingSizes(HashSet<Point> points)
         {
             double leftX = 100000000, rightX = -100000000, topY = -100000000, bottomY = 100000000;
 
-            foreach(var point in points)
+            foreach (var point in points)
             {
-                if(leftX > point.X)
-                {
-                    leftX = point.X;
-                }
+                if (leftX > point.X) leftX = point.X;
 
-                if(rightX < point.X)
-                {
-                    rightX = point.X;
-                }
+                if (rightX < point.X) rightX = point.X;
 
-                if(topY < point.Y)
-                {
-                    topY = point.Y;
-                }
+                if (topY < point.Y) topY = point.Y;
 
-                if(bottomY > point.Y)
-                {
-                    bottomY = point.Y; // in usual coordinates system
-                }
+                if (bottomY > point.Y) bottomY = point.Y; // in usual coordinates system
             }
 
-            double sizeX = Math.Abs(rightX - leftX);
-            double sizeY = Math.Abs(topY - bottomY);
+            var sizeX = Math.Abs(rightX - leftX);
+            var sizeY = Math.Abs(topY - bottomY);
 
-            return (-leftX + 20, -bottomY + 20, actualWidth / (sizeX * lambda), actualHeight / (sizeY * lambda)); //actual?
-
+            return (-leftX + 20, -bottomY + 20, actualWidth / (sizeX * lambda),
+                actualHeight / (sizeY * lambda)); //actual?
         }
-
-
-        int divisionConst = 50;
 
         /*
         public event PropertyChangedEventHandler PropertyChanged;
@@ -1369,45 +1281,43 @@ namespace VizualizerWPF
         */
 
         /// <summary>
-        /// Function to connect consecutive points and get the line segments
+        ///     Function to connect consecutive points and get the line segments
         /// </summary>
         /// <param name="points"></param>
         /// <returns></returns>
-        List<Line> CreateLinesFromPoints(List<Point> points)
+        private List<Line> CreateLinesFromPoints(List<Point> points)
         {
             var lines = new List<Line>();
-            for (int i = 0; i < points.Count - 1; i++)
-            {
+            for (var i = 0; i < points.Count - 1; i++)
                 lines.Add(new Line
                 {
                     X1 = points[i].X,
                     X2 = points[i + 1].X,
                     Y1 = points[i].Y,
-                    Y2 = points[i + 1].Y,
+                    Y2 = points[i + 1].Y
                 });
-            }
             return lines;
         }
 
         /// <summary>
-        /// Function to subdivide line depending on the divisionConstant 
-        /// (line is divided so that every line segment is now shorter than that divisionConstant)
+        ///     Function to subdivide line depending on the divisionConstant
+        ///     (line is divided so that every line segment is now shorter than that divisionConstant)
         /// </summary>
         /// <param name="line"></param>
         /// <param name="graphCoordinates"></param>
         /// <returns></returns>
-        (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
+        private (List<Line>, List<Point>) SubDivideLine(Line line, GraphCoordinates graphCoordinates)
         {
             var edgePoints = new List<Point>();
-          
-            int count = (int)Math.Ceiling(CollisionDetection.GetDistance(line) / divisionConst) ;
-            double length = CollisionDetection.GetDistance(line) / count;
 
-            Vector direction = new Vector(line.X2 - line.X1, line.Y2 - line.Y1);
+            var count = (int) Math.Ceiling(CollisionDetection.GetDistance(line) / divisionConst);
+            var length = CollisionDetection.GetDistance(line) / count;
+
+            var direction = new Vector(line.X2 - line.X1, line.Y2 - line.Y1);
             direction.Normalize();
 
             edgePoints.Add(new Point(line.X1, line.Y1));
-            for (int i = 1; i < count; i++)
+            for (var i = 1; i < count; i++)
             {
                 edgePoints.Add(new Point(line.X1, line.Y1) + direction * (i * length));
 
@@ -1417,24 +1327,23 @@ namespace VizualizerWPF
             edgePoints.Add(new Point(line.X2, line.Y2));
             var edgeLines = CreateLinesFromPoints(edgePoints);
 
-            edgePoints.RemoveAt(0); edgePoints.RemoveAt(edgePoints.Count - 1);
+            edgePoints.RemoveAt(0);
+            edgePoints.RemoveAt(edgePoints.Count - 1);
             return (edgeLines, edgePoints);
-            
         }
 
         /// <summary>
-        /// Function to subdivide all lines contained in the <c>edge</c>
+        ///     Function to subdivide all lines contained in the <c>edge</c>
         /// </summary>
         /// <param name="edge"></param>
         /// <param name="graphCoordinates"></param>
-        void SubDivideEdge(Edge edge, GraphCoordinates graphCoordinates)
+        private void SubDivideEdge(Edge edge, GraphCoordinates graphCoordinates)
         {
-
             var tempPoints = new List<Point>();
 
-            int index = 0;
+            var index = 0;
 
-            List<Line> tempLines = new List<Line>();
+            var tempLines = new List<Line>();
             foreach (var line in edge.lines)
             {
                 var linesAndPoints = SubDivideLine(line, graphCoordinates);
@@ -1449,14 +1358,13 @@ namespace VizualizerWPF
 
             edge.lines = tempLines;
             edge.points = tempPoints;
-
         }
 
         /// <summary>
-        /// Function to subdivide all the edges in <c>graphCoordinates</c>
+        ///     Function to subdivide all the edges in <c>graphCoordinates</c>
         /// </summary>
         /// <param name="graphCoordinates"></param>
-        void SubDivideEdges(GraphCoordinates graphCoordinates)
+        private void SubDivideEdges(GraphCoordinates graphCoordinates)
         {
             foreach (var edge in graphCoordinates.edges)
                 SubDivideEdge(edge, graphCoordinates);
@@ -1464,14 +1372,14 @@ namespace VizualizerWPF
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void RestoreButton_Click(object sender, RoutedEventArgs e)
         {
             if (WindowState == WindowState.Maximized)
                 WindowState = WindowState.Normal;
-            else if(WindowState == WindowState.Normal)
+            else if (WindowState == WindowState.Normal)
                 WindowState = WindowState.Maximized;
         }
 
@@ -1495,12 +1403,11 @@ namespace VizualizerWPF
             OpenMenuButton.Visibility = Visibility.Collapsed;
             CloseMenuButton.Visibility = Visibility.Visible;
 
-            var sb = (Storyboard)BottomGrid.FindResource("MenuOpen");
+            var sb = (Storyboard) BottomGrid.FindResource("MenuOpen");
             sb.Begin();
 
             UpdateCanvasWidthWhenClose();
             RedrawGraph(graphCoordinates);
-
         }
 
 
@@ -1509,7 +1416,7 @@ namespace VizualizerWPF
             OpenMenuButton.Visibility = Visibility.Visible;
             CloseMenuButton.Visibility = Visibility.Collapsed;
 
-            var sb = (Storyboard)BottomGrid.FindResource("MenuClose");
+            var sb = (Storyboard) BottomGrid.FindResource("MenuClose");
             sb.Begin();
 
             UpdateCanvasWidthWhenOpen();
@@ -1517,38 +1424,34 @@ namespace VizualizerWPF
         }
 
 
-
         /// <summary>
-        /// Function to draw a graph even when the canvas is not loaded yet
-        /// The main difference to ReDraw the graph that here we first create ellipses, lines and so on, because
-        /// graphCoordinates consists only of Vertices and Edges only containing points after generating
+        ///     Function to draw a graph even when the canvas is not loaded yet
+        ///     The main difference to ReDraw the graph that here we first create ellipses, lines and so on, because
+        ///     graphCoordinates consists only of Vertices and Edges only containing points after generating
         /// </summary>
         /// <param name="graphCoordinates">Class to store graph</param>
         /// <param name="scale"></param>
-        void DrawGraph(GraphCoordinates graphCoordinates, double scale)
+        private void DrawGraph(GraphCoordinates graphCoordinates, double scale)
         {
-
             mainCanvas.Children.Clear();
 
             double scaleX = scale, scaleY = scale;
 
             if (!(actualWidth == 0 && actualHeight == 0))
             {
-
-                (double, double, double, double) coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
+                var coordinatesAndScale = FindClipingSizes(graphCoordinates.GetAllPoints());
 
                 cx = coordinatesAndScale.Item1;
                 cy = coordinatesAndScale.Item2;
                 scaleX = coordinatesAndScale.Item3;
                 scaleY = coordinatesAndScale.Item4;
             }
-            
-                
+
+
             /*Updating vertices*/
             var vertices = new HashSet<Vertex>();
-            foreach(var vertex in graphCoordinates.vertices)
+            foreach (var vertex in graphCoordinates.vertices)
             {
-
                 var vertexTemp = vertex;
 
                 var coordinates = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
@@ -1559,11 +1462,14 @@ namespace VizualizerWPF
                     Width = sizeOfVertex,
                     Height = sizeOfVertex,
                     Fill = vertexTemp.state == VertexState.Regular ? Brushes.Blue :
-                    ((vertexTemp.state == VertexState.Intersection) ? Brushes.Green : Brushes.Red),
-                    Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2, vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
-                    Visibility = ((vertexTemp.state == VertexState.Intersection && !statesCalculation[StateCalculation.Intersections]) ||
-                    (vertexTemp.state == VertexState.Middle)) ? Visibility.Hidden : Visibility.Visible
-
+                        vertexTemp.state == VertexState.Intersection ? Brushes.Green : Brushes.Red,
+                    Margin = new Thickness(vertexTemp.center.X - sizeOfVertex / 2,
+                        vertexTemp.center.Y - sizeOfVertex / 2, 0, 0),
+                    Visibility = vertexTemp.state == VertexState.Intersection &&
+                                 !statesCalculation[StateCalculation.Intersections] ||
+                                 vertexTemp.state == VertexState.Middle
+                        ? Visibility.Hidden
+                        : Visibility.Visible
                 };
 
                 ellipse.MouseDown += ellipse_MouseDown;
@@ -1579,19 +1485,15 @@ namespace VizualizerWPF
             graphCoordinates.vertices = vertices;
 
 
-
             foreach (var edge in graphCoordinates.edges)
             {
-
                 var tempPoints = new List<Point>();
                 foreach (var point in edge.points)
-                {
                     tempPoints.Add(point.Add(new Point(cx, cy)).Scale(scaleX, scaleY)); //first scale, then add
-                }
 
                 edge.points = tempPoints;
 
-                List<Line> tempLines = new List<Line>();
+                var tempLines = new List<Line>();
                 foreach (var line in edge.lines)
                 {
                     var l = new Line
@@ -1611,9 +1513,7 @@ namespace VizualizerWPF
                 }
 
                 edge.lines = tempLines;
-
             }
-
 
 
             /* Updating neighbors */
@@ -1621,17 +1521,17 @@ namespace VizualizerWPF
             var neighborsTemp = new Dictionary<Vertex, List<Edge>>();
             foreach (var (vertex, listOfEdges) in graphCoordinates.neighbors)
             {
-                Vertex vertexTemp = vertex;
+                var vertexTemp = vertex;
                 vertexTemp.center = vertexTemp.center.Add(new Point(cx, cy)).Scale(scaleX, scaleY);
 
                 graphCoordinates.vertices.TryGetValue(vertexTemp, out vertexTemp); //to set also ellipse on right sizes
 
                 neighborsTemp[vertexTemp] = listOfEdges;
-
             }
+
             graphCoordinates.neighbors = neighborsTemp;
 
-            if((bool)savedGraphsChechBox.IsChecked)
+            if ((bool) savedGraphsChechBox.IsChecked)
                 AddIntersectionsWithLines(graphCoordinates.LinesIterator().ToList());
 
             ZeroInvariantEdgesValues();
@@ -1639,7 +1539,5 @@ namespace VizualizerWPF
 
             //cx = copyCx; cy = copyCy;
         }
-       
     }
-
 }

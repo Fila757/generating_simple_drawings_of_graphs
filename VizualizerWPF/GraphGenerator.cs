@@ -7,20 +7,17 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
-
     /// <summary>
-    /// Class to read drawing from file, create
-    /// and store graphs
+    ///     Class to read drawing from file, create
+    ///     and store graphs
     /// </summary>
-    class GraphGenerator
+    internal class GraphGenerator
     {
+        public int counter;
 
-        StreamReader streamReader;
-        public int SizeOfGraph {get; set;}
+        private GraphCoordinates graphCoordinates = new GraphCoordinates();
 
-        GraphCoordinates graphCoordinates = new GraphCoordinates();
-
-        public int counter = 0;
+        private readonly StreamReader streamReader;
 
 
         public GraphGenerator(int n)
@@ -34,28 +31,32 @@ namespace VizualizerWPF
             streamReader = new StreamReader(@"../../../data/savedGraphs.txt");
         }
 
+        public int SizeOfGraph { get; set; }
+
 
         public void CloseFile()
         {
             streamReader.Dispose(); //delete if we want to remain state of file
         }
+
         /// <summary>
-        /// Function to sort order of points to 
-        /// create continous edge
+        ///     Function to sort order of points to
+        ///     create continous edge
         /// </summary>
         /// <param name="line">One line</param>
         /// <returns>Parsed points to line</returns>
-        List<double []> SortFromStartToEnd(List<string []> line)
+        private List<double[]> SortFromStartToEnd(List<string[]> line)
         {
-            List<double[] > doubleLine = new List<double[]>();
+            var doubleLine = new List<double[]>();
 
             int FindNextLine(Point a, int cur)
             {
-                for(int i = 0; i < line.Count; i++)
+                for (var i = 0; i < line.Count; i++)
                 {
                     //if (i != cur)
                     //{
-                    var from = new Point { X = Double.Parse(line[i].ElementAt(0)), Y = Double.Parse(line[i].ElementAt(1)) };
+                    var from = new Point
+                        {X = double.Parse(line[i].ElementAt(0)), Y = double.Parse(line[i].ElementAt(1))};
                     if (from == a)
                         return i;
                     //}
@@ -66,9 +67,13 @@ namespace VizualizerWPF
 
             int FindPreviousLine(Point a)
             {
-                for (int i = 0; i < line.Count; i++)
+                for (var i = 0; i < line.Count; i++)
                 {
-                    var to = new Point { X = Double.Parse(line[i].ElementAt(line[i].Length - 2)), Y = Double.Parse(line[i].ElementAt(line[i].Length - 1)) };
+                    var to = new Point
+                    {
+                        X = double.Parse(line[i].ElementAt(line[i].Length - 2)),
+                        Y = double.Parse(line[i].ElementAt(line[i].Length - 1))
+                    };
                     if (to == a)
                         return i;
                 }
@@ -78,9 +83,10 @@ namespace VizualizerWPF
 
             int FindFirst()
             {
-                for (int i = 0; i < line.Count; i++)
+                for (var i = 0; i < line.Count; i++)
                 {
-                    var from = new Point { X = Double.Parse(line[i].ElementAt(0)), Y = Double.Parse(line[i].ElementAt(1))};
+                    var from = new Point
+                        {X = double.Parse(line[i].ElementAt(0)), Y = double.Parse(line[i].ElementAt(1))};
 
                     if (FindPreviousLine(from) == -1)
                         return i;
@@ -91,9 +97,13 @@ namespace VizualizerWPF
 
             int FindLast()
             {
-                for (int i = 0; i < line.Count; i++)
+                for (var i = 0; i < line.Count; i++)
                 {
-                    var to = new Point { X = Double.Parse(line[i].ElementAt(line[i].Length - 2)), Y = Double.Parse(line[i].ElementAt(line[i].Length - 1)) };
+                    var to = new Point
+                    {
+                        X = double.Parse(line[i].ElementAt(line[i].Length - 2)),
+                        Y = double.Parse(line[i].ElementAt(line[i].Length - 1))
+                    };
                     if (FindNextLine(to, -1) == -1)
                         return i;
                 }
@@ -101,68 +111,72 @@ namespace VizualizerWPF
                 throw new ArgumentException("there is no last line");
             }
 
-            int first = FindFirst();
-            int last = FindLast();
+            var first = FindFirst();
+            var last = FindLast();
 
             double[] temp;
-            int cur = first;
-            while(cur != last)
+            var cur = first;
+            while (cur != last)
             {
                 temp = new double[line[cur].Length];
-                for (int i = 0; i < line[cur].Length; i++)
-                    temp[i] = Double.Parse(line[cur][i]);
+                for (var i = 0; i < line[cur].Length; i++)
+                    temp[i] = double.Parse(line[cur][i]);
                 doubleLine.Add(temp);
 
-                cur = FindNextLine(new Point { X = doubleLine.Last().ElementAt(doubleLine.Last().Length - 2), Y = doubleLine.Last().ElementAt(doubleLine.Last().Length - 1)}, cur);
+                cur = FindNextLine(
+                    new Point
+                    {
+                        X = doubleLine.Last().ElementAt(doubleLine.Last().Length - 2),
+                        Y = doubleLine.Last().ElementAt(doubleLine.Last().Length - 1)
+                    }, cur);
             }
+
             temp = new double[line[cur].Length];
-            for (int i = 0; i < line[cur].Length; i++)
-                temp[i] = Double.Parse(line[cur][i]);
+            for (var i = 0; i < line[cur].Length; i++)
+                temp[i] = double.Parse(line[cur][i]);
             doubleLine.Add(temp);
 
             return doubleLine;
         }
 
         /// <summary>
-        /// Read whole points and lines of cliques
-        /// and generate graph out of it
+        ///     Read whole points and lines of cliques
+        ///     and generate graph out of it
         /// </summary>
         /// <returns>New graph</returns>
-        GraphCoordinates ReadUntillNextRS(bool skip = false)
+        private GraphCoordinates ReadUntillNextRS(bool skip = false)
         {
             graphCoordinates = new GraphCoordinates();
 
             string line;
-            while (!String.Equals((line = streamReader.ReadLine()), "#") && line != null)
+            while (!string.Equals(line = streamReader.ReadLine(), "#") && line != null)
             {
                 if (line == "" || skip)
                     continue;
 
-                List<Vertex> vertices = new List<Vertex>();
+                var vertices = new List<Vertex>();
 
-                string[] temp = line.Split(new char[] {'(', ')'}, StringSplitOptions.RemoveEmptyEntries);
+                var temp = line.Split(new[] {'(', ')'}, StringSplitOptions.RemoveEmptyEntries);
 
                 temp = temp.Where(x => x != " ").ToArray();
 
-                List<string[]> tempList = new List<string[]>();
+                var tempList = new List<string[]>();
                 foreach (var t in temp)
-                    tempList.Add(t.Split(new char[0], options : StringSplitOptions.RemoveEmptyEntries));
+                    tempList.Add(t.Split(new char[0], StringSplitOptions.RemoveEmptyEntries));
 
                 var edge = new Edge(new List<Point>(), new List<Line>());
 
-                List<double[]> sortedLine = SortFromStartToEnd(tempList);
+                var sortedLine = SortFromStartToEnd(tempList);
 
-                for (int i = 0; i < sortedLine.Count; i++)
+                for (var i = 0; i < sortedLine.Count; i++)
                 {
                     var stateFrom = i == 0 ? VertexState.Regular : VertexState.Intersection;
                     var stateTo = i == sortedLine.Count - 1 ? VertexState.Regular : VertexState.Intersection;
 
-                    List<Point> points = new List<Point>();
+                    var points = new List<Point>();
 
-                    for (int j = 0; j < sortedLine[i].Length; j += 2)
-                    {
-                        points.Add(new Point { X = sortedLine[i][j], Y = sortedLine[i][j + 1] });
-                    }
+                    for (var j = 0; j < sortedLine[i].Length; j += 2)
+                        points.Add(new Point {X = sortedLine[i][j], Y = sortedLine[i][j + 1]});
 
                     //add just every second . . _ . _ . _ . _ ., . _ is always the same
                     if (i == 0)
@@ -170,7 +184,7 @@ namespace VizualizerWPF
                         vertices.Add(new Vertex(new Ellipse(), points.First(), stateFrom));
                         edge.points.Add(points.First());
 
-                        for (int j = 1; j < points.Count - 1; j++)
+                        for (var j = 1; j < points.Count - 1; j++)
                         {
                             vertices.Add(new Vertex(new Ellipse(), points[j], VertexState.Middle));
                             edge.points.Add(points[j]);
@@ -178,11 +192,10 @@ namespace VizualizerWPF
 
                         vertices.Add(new Vertex(new Ellipse(), points.Last(), stateTo));
                         edge.points.Add(points.Last());
-
                     }
                     else
                     {
-                        for (int j = 1; j < points.Count - 1; j++)
+                        for (var j = 1; j < points.Count - 1; j++)
                         {
                             vertices.Add(new Vertex(new Ellipse(), points[j], VertexState.Middle));
                             edge.points.Add(points[j]);
@@ -196,23 +209,22 @@ namespace VizualizerWPF
                     //    edge.points.Add(point);
 
 
-                    for (int j = 0; j < points.Count - 1; j++)
-                    {
+                    for (var j = 0; j < points.Count - 1; j++)
                         edge.lines.Add(new Line
                         {
                             X1 = points[j].X,
                             X2 = points[j + 1].X,
                             Y1 = points[j].Y,
-                            Y2 = points[j + 1].Y,
+                            Y2 = points[j + 1].Y
                         });
-                    }
                 }
 
                 graphCoordinates.edges.Add(edge);
 
-                
-                Vertex actualZero = vertices[0]; Vertex actualLast = vertices[vertices.Count - 1];
-                
+
+                var actualZero = vertices[0];
+                var actualLast = vertices[vertices.Count - 1];
+
                 /*
                 if (graphCoordinates.vertices.Contains(vertices[0]))
                     graphCoordinates.vertices.TryGetValue(vertices[0], out actualZero);
@@ -236,32 +248,33 @@ namespace VizualizerWPF
 
 
         /// <summary>
-        /// Get next drawing
+        ///     Get next drawing
         /// </summary>
         /// <returns>New graph</returns>
         public GraphCoordinates GenerateNextDrawing()
         {
-            counter++; 
+            counter++;
 
             return ReadUntillNextRS();
         }
 
         /// <summary>
-        /// Get previous drawing by going from the beggining of the file (the reopeing of the file is done in the method calling this one)
+        ///     Get previous drawing by going from the beggining of the file (the reopeing of the file is done in the method
+        ///     calling this one)
         /// </summary>
         /// <returns></returns>
         public GraphCoordinates GeneratePreviousDrawing()
         {
             counter--;
 
-            int tmpCounter = 1;
+            var tmpCounter = 1;
             while (tmpCounter < counter)
             {
                 ReadUntillNextRS(true);
                 tmpCounter++;
             }
+
             return ReadUntillNextRS();
         }
-        
     }
 }
