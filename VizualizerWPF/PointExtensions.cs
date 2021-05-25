@@ -1,27 +1,26 @@
 ﻿using System.Windows;
-using System;
 
 namespace VizualizerWPF
 {
     /// <summary>
-    /// Class to extend methods as Scale Point
-    /// Add two Points, Multiply point with int
-    /// Substract two points and
-    /// Method point ToVector
+    ///     Class to extend methods as Scale Point
+    ///     Add two Points, Multiply point with int
+    ///     Substract two points and
+    ///     Method point ToVector
     /// </summary>
     public static class PointExtensions
     {
         public static Point Scale(this Point point, double scale)
         {
-            Point tempPoint = new Point();
+            var tempPoint = new Point();
             tempPoint.X = point.X * scale;
-            tempPoint.Y =  point.Y * scale;
+            tempPoint.Y = point.Y * scale;
             return tempPoint;
         }
 
         public static Point Scale(this Point point, double scaleX, double scaleY)
         {
-            Point tempPoint = new Point();
+            var tempPoint = new Point();
             tempPoint.X = point.X * scaleX;
             tempPoint.Y = point.Y * scaleY;
             return tempPoint;
@@ -29,7 +28,7 @@ namespace VizualizerWPF
 
         public static Point Add(this Point point, Point point1)
         {
-            Point tempPoint = new Point();
+            var tempPoint = new Point();
             tempPoint.X = point.X + point1.X;
             tempPoint.Y = point.Y + point1.Y;
             return tempPoint;
@@ -37,7 +36,7 @@ namespace VizualizerWPF
 
         public static Point Mulitply(this Point point, int scale)
         {
-            return new Point { X = point.X * scale, Y = point.Y * scale };
+            return new Point {X = point.X * scale, Y = point.Y * scale};
         }
 
         public static Point Substract(this Point point1, Point point2)
@@ -47,26 +46,25 @@ namespace VizualizerWPF
 
         public static Vector ToVector(this Point point)
         {
-            return (Vector)point;
+            return (Vector) point;
         }
 
         public static Point ToPoint(this Vector vector)
         {
-            return (Point)vector;
+            return (Point) vector;
         }
+
         /// <summary>
-        /// Get the ratio of two parralel vectors
+        ///     Get the ratio of two parralel vectors
         /// </summary>
         /// <param name="vector1"></param>
         /// <param name="vector2"></param>
         /// <returns></returns>
-
         public static double Divide(this Vector vector1, Vector vector2)
         {
-            if(vector2.X == 0 && vector1.X == 0)
-                return vector1.Y / vector2.Y; 
-            else
-                return vector1.X / vector2.X;
+            if (vector2.X == 0 && vector1.X == 0)
+                return vector1.Y / vector2.Y;
+            return vector1.X / vector2.X;
         }
 
         public static Point Substract(this Point point, double a)
@@ -79,5 +77,4 @@ namespace VizualizerWPF
             return vector.ToPoint().Scale(a).ToVector();
         }
     }
-
 }

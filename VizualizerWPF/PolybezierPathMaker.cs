@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
-using Path = System.Windows.Shapes.Path;
+using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
     /// <summary>
-    /// <code>
+    ///     <code>
     ///  Point[] points1 = {
     ///     new Point(60, 30),
     ///     new Point(200, 130),
@@ -16,54 +16,52 @@ namespace VizualizerWPF
     ///     new Point(200, 50),
     /// };
     ///  Path path1 = PolybezierPathMaker.MakeCurve(points1, 0);
-    ///
+    /// 
     ///  path1.Stroke = Brushes.LightGreen;
     ///  path1.StrokeThickness = 5;
     ///  mainCanvas.Children.Add(path1);
-    ///
+    /// 
     ///  Path path2 = PolybezierPathMaker.MakeCurve(new Point[2] { new Point(50, 50), new Point(122, 122) }, 0);
     ///  path2.Stroke = Brushes.LightCoral;
     ///  path2.StrokeThickness = 5;
     ///  mainCanvas.Children.Add(path2);
     /// </code>
     /// </summary>
-    class PolybezierPathMaker
+    internal class PolybezierPathMaker
     {
-
-
         private static Point[] MakeCurvePoints(Point[] points, double tension)
         {
             if (points.Length < 2) return null;
-            double control_scale = tension / 0.5 * 0.175;
+            var control_scale = tension / 0.5 * 0.175;
 
             // Make a list containing the points and
             // appropriate control points.
-            List<Point> result_points = new List<Point>();
+            var result_points = new List<Point>();
             result_points.Add(points[0]);
 
-            for (int i = 0; i < points.Length - 1; i++)
+            for (var i = 0; i < points.Length - 1; i++)
             {
                 // Get the point and its neighbors.
-                Point pt_before = points[Math.Max(i - 1, 0)];
-                Point pt = points[i];
-                Point pt_after = points[i + 1];
-                Point pt_after2 = points[Math.Min(i + 2, points.Length - 1)];
+                var pt_before = points[Math.Max(i - 1, 0)];
+                var pt = points[i];
+                var pt_after = points[i + 1];
+                var pt_after2 = points[Math.Min(i + 2, points.Length - 1)];
 
-                double dx1 = pt_after.X - pt_before.X;
-                double dy1 = pt_after.Y - pt_before.Y;
+                var dx1 = pt_after.X - pt_before.X;
+                var dy1 = pt_after.Y - pt_before.Y;
 
-                Point p1 = points[i];
-                Point p4 = pt_after;
+                var p1 = points[i];
+                var p4 = pt_after;
 
-                double dx = pt_after.X - pt_before.X;
-                double dy = pt_after.Y - pt_before.Y;
-                Point p2 = new Point(
+                var dx = pt_after.X - pt_before.X;
+                var dy = pt_after.Y - pt_before.Y;
+                var p2 = new Point(
                     pt.X + control_scale * dx,
                     pt.Y + control_scale * dy);
 
                 dx = pt_after2.X - pt.X;
                 dy = pt_after2.Y - pt.Y;
-                Point p3 = new Point(
+                var p3 = new Point(
                     pt_after.X - control_scale * dx,
                     pt_after.Y - control_scale * dy);
 
@@ -83,32 +81,32 @@ namespace VizualizerWPF
         private static Path MakeBezierPath(Point[] points)
         {
             // Create a Path to hold the geometry.
-            Path path = new Path();
+            var path = new Path();
 
             // Add a PathGeometry.
-            PathGeometry path_geometry = new PathGeometry();
+            var path_geometry = new PathGeometry();
             path.Data = path_geometry;
 
             // Create a PathFigure.
-            PathFigure path_figure = new PathFigure();
+            var path_figure = new PathFigure();
             path_geometry.Figures.Add(path_figure);
 
             // Start at the first point.
             path_figure.StartPoint = points[0];
 
             // Create a PathSegmentCollection.
-            PathSegmentCollection path_segment_collection =
+            var path_segment_collection =
                 new PathSegmentCollection();
             path_figure.Segments = path_segment_collection;
 
             // Add the rest of the points to a PointCollection.
-            PointCollection point_collection =
+            var point_collection =
                 new PointCollection(points.Length - 1);
-            for (int i = 1; i < points.Length; i++)
+            for (var i = 1; i < points.Length; i++)
                 point_collection.Add(points[i]);
 
             // Make a PolyBezierSegment from the points.
-            PolyBezierSegment bezier_segment = new PolyBezierSegment();
+            var bezier_segment = new PolyBezierSegment();
             bezier_segment.Points = point_collection;
 
             // Add the PolyBezierSegment to othe segment collection.
@@ -121,7 +119,7 @@ namespace VizualizerWPF
         public static Path MakeCurve(Point[] points, double tension)
         {
             if (points.Length < 2) return null;
-            Point[] result_points = MakeCurvePoints(points, tension);
+            var result_points = MakeCurvePoints(points, tension);
 
             // Use the points to create the path.
             return MakeBezierPath(result_points.ToArray());

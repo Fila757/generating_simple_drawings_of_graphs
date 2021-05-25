@@ -1,922 +1,948 @@
 <?xml version="1.0"?>
+
 <doc>
-    <assembly>
-        <name>VizualizerWPF</name>
-    </assembly>
-    <members>
-        <member name="T:VizualizerWPF.App">
-            <summary>
-            Interaction logic for App.xaml
-            </summary>
-            <summary>
-            App
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.App.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.App.Main">
-            <summary>
-            Application Entry Point.
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.LineWithCoeffients">
-            <summary>
-            Line in form ax + by + c = 0
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.HalfLineWithCoeffients">
-            <summary>
-            Half line with the direction which is either the same or opposite to "line", the "direction" choose which one.
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.CollisionDetection.window">
-            <summary>
-            Class to detect many types of collision in 2D 
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.CollisionDetection.epsilon">
-            <summary>
-            Error rate
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.LineAndHalfLine(System.Windows.Shapes.Line,VizualizerWPF.HalfLineWithCoeffients)">
-            <summary>
-            Function to detect whether Line and HalfLine intersect. 
-            </summary>
-            <param name="line1"></param>
-            <param name="halfLine"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.TwoLines(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
-            <summary>
-            Detect intersection of two line segment
-            </summary>
-            <param name="line1"></param>
-            <param name="line2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.TwoLinesIntersectNotAtTheEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
-            <summary>
-            Detect if two lines intersect except of their end points and return the intersection
-            </summary>
-            <param name="line1"></param>
-            <param name="line2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.CheckIfTwoLinesIntersectNotAtTheEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
-            <summary>
-             Detect if two lines intersect except of their end points
-            </summary>
-            <param name="line1"></param>
-            <param name="line2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.IntersectsSomeLine(System.Windows.Shapes.Line)">
-            <summary>
-            Function to detect whether conrete <c>line</c> intersect any of the lines of the window
-            </summary>
-            <param name="line"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.LineAndEllipseAtEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
-            <summary>
-            Function to detect if end of the <c>line</c> is in given <c>ellipse</c>(circle)
-            </summary>
-            <param name="line"></param>
-            <param name="ellipse"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.CenterOfEllipseOnLine(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
-            <summary>
-            Detect if center of <c>ellipse</c> lies on given <c>line</c>
-            </summary>
-            <param name="line"></param>
-            <param name="ellipse"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.CenterOfVertexOnLine(System.Windows.Shapes.Line,VizualizerWPF.Vertex)">
-            <summary>
-            Function to detect if vertex <c>v</c> lines on <c>line</c>.
-            </summary>
-            <param name="line"></param>
-            <param name="v"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.CenterOnLine(System.Windows.Shapes.Line,System.Windows.Point)">
-            <summary>
-            Detects if a point <c>center</c> lies on line <c>line</c>
-            </summary>
-            <param name="line"></param>
-            <param name="center"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.CenterInsideEllipse(System.Windows.Point,System.Windows.Shapes.Ellipse)">
-            <summary>
-            Detect if <c>point</c> is inside <c>ellipse</c> (circle)
-            </summary>
-            <param name="point"></param>
-            <param name="ellipse"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.LineAndEllipse(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
-            <summary>
-            Detect if <c>ellipse</c> and <c>line</c> intersects 
-            </summary>
-            <param name="line"></param>
-            <param name="ellipse"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.TwoPaths(System.Windows.Shapes.Path,System.Windows.Shapes.Path)">
-            <summary>
-            General collision detection for further generalization 
-            and bezier lines 
-            </summary>
-            <param name="path1">first object</param>
-            <param name="path2">second object</param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetAlmostMid(System.Windows.Shapes.Line,System.Int32,System.Int32)">
-            <summary>
-            return point on <c>line</c> in ratio <c>a</c> to <c>b</c>.
-            </summary>
-            <param name="line"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetLineWithCoefficients(System.Windows.Shapes.Line)">
-            <summary>
-            Convert <c>line</c> into LineWithCoefficients 
-            </summary>
-            <param name="line"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetPerpendicularToAlmostMid(System.Windows.Shapes.Line,System.Int32,System.Int32)">
-            <summary>
-            Create a perpendicular line to <c>line</c>t at the point which has ration <c>a</c> to <c>b</c>.
-            </summary>
-            <param name="line"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetRaysGoingFromPoint(System.Windows.Point)">
-            <summary>
-            Create many of rays going from <c>point</c>.
-            </summary>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetPerpendicularsToAlmostMids(System.Windows.Shapes.Line)">
-            <summary>
-            Iterator for getting many perpendicular lines to <c>line</c>
-            </summary>
-            <param name="line"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetOrientation(System.Windows.Shapes.Line,System.Collections.Generic.List{System.Windows.Shapes.Line},System.Windows.Point)">
-            <summary>
-            Function to detect the orieantion of the triangle formed by <c>lines</c> and <c>line</c>, where <c>point</c> determines the reference face
-            </summary>
-            <param name="line"></param>
-            <param name="lines"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.ChooseOppositeOne(VizualizerWPF.Edge,System.Windows.Point)">
-            <summary>
-            Function to get opposite end of <c>edge</c> to <c>point</c>.
-            </summary>
-            <param name="edge"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.ChooseTheLineBy(VizualizerWPF.Vertex,VizualizerWPF.Edge)">
-            <summary>
-            Function to get line of Edge <c>e</c> incident to  <c>v</c>.
-            </summary>
-            <param name="v"></param>
-            <param name="e"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.OrientLineProperly(VizualizerWPF.Vertex,System.Windows.Shapes.Line)">
-            <summary>
-            Function to orient line <c>l</c> so that <c>v</c> is first point.
-            </summary>
-            <param name="v"></param>
-            <param name="l"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.PutLinesTogether(VizualizerWPF.Edge,VizualizerWPF.Edge,VizualizerWPF.Edge)">
-            <summary>
-            Function to add lines of triangle together except for the one to which we consider perpendicular rays
-            </summary>
-            <param name="e1"></param>
-            <param name="e2"></param>
-            <param name="e3"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.CollisionDetection.GetEdges(VizualizerWPF.Vertex,VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Iterator to get all the line of the edges incident to <c>v</c>.
-            </summary>
-            <param name="v"></param>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ConjectureChecker.GetAllReferenceFaces(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Iterator to get all faces (points) to check the conjectures
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.ConjectureChecker.TryFace3AMK(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to check if the the conjecture holds for currently set face
-            </summary>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ConjectureChecker.TryFace2AMK(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to check if the the conjecture holds for currently set face
-            </summary>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ConjectureChecker.Check3AMKConjecture">
-            <summary>
-            Checking conjecture for all alredy generated drawings drawings
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.ConjectureChecker.Check2AMKConjecture">
-            <summary>
-            Checking conjecture for all alredy generated drawings drawings
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.Edge">
-            <summary>
-            Class to store edges in graph
-            meaming all lines and points
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.Edge.IsSharp(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Function to detect, whether consectuive points <c>point1</c>, <c>point2</c>, <c>point3</c> are at angle less then cca 30°
-            </summary>
-            <param name="point1"></param>
-            <param name="point2"></param>
-            <param name="point3"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.Edge.CreateLinesFromPoints">
-            <summary>
-            Function to connect points to create line segment between them.
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.Edge.Shorten(VizualizerWPF.GraphCoordinates@)">
-            <summary>
-            Function to go through the Edge and shorten if it is wanted.
-            </summary>
-            <param name="graphCoordinates"></param>
-        </member>
-        <member name="M:VizualizerWPF.Edge.IsShortEnough(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
-            <summary>
-            This function is called by <c>Shorten</c> to shorten only small enough lines
-            </summary>
-            <param name="point1"></param>
-            <param name="point2"></param>
-            <param name="point3"></param>
-            <returns></returns>
-        </member>
-        <member name="T:VizualizerWPF.EdgeListExtensions">
-            <summary>
-            Extension class on list of Edges
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.EdgeListExtensions.ContainsEnd(System.Collections.Generic.List{VizualizerWPF.Edge},System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Function to get the edge contained in <c>list</c> which is incident to both <c>oppositeTo</c> and <c>point</c>. 
-            </summary>
-            <param name="list"></param>
-            <param name="oppositeTo"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.EdgeListExtensions.GetEnds(System.Collections.Generic.List{VizualizerWPF.Edge},System.Windows.Point)">
-            <summary>
-            Function to get all other ends, compare to <c>point</c>, of edges in <c>list</c>.
-            </summary>
-            <param name="list"></param>
-            <param name="point"></param>
-            <returns></returns>
-        </member>
-        <member name="T:VizualizerWPF.ForceDirectedAlgorithms">
-            <summary>
-            Class to apply (iteratively) force-directed algorithm. 
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.ForceDirectedAlgorithms.delta">
-            <summary>
-            The desider length of all edges
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.ForceDirectedAlgorithms.INF">
-            <summary>
-            Maximal force we want to apply
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.ForceDirectedAlgorithms.RegionVectors">
-            <summary>
-            Vectors of borders of zones 
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.FindNeighbors(VizualizerWPF.GraphCoordinates,VizualizerWPF.Vertex)">
-            <summary>
-            Get all opposite point to <c>vertex</c> in <c>graphCoordinates</c> 
-            </summary>
-            <param name="graphCoordinates"></param>
-            <param name="vertex"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.Min(System.Windows.Vector,System.Windows.Vector)">
-            <summary>
-            Function to get smaller vector.
-            </summary>
-            <param name="vector1"></param>
-            <param name="vector2"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.IsBetween(System.Windows.Vector,System.Windows.Vector,System.Windows.Vector)">
-            <summary>
-            Function to detect if the <c>midlle</c> vector is between (the smaller part) determined by <c>first</c> and <c>second</c>.
-            </summary>
-            <param name="first"></param>
-            <param name="second"></param>
-            <param name="middle"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountAttractionForce(System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Get attraction force of <c>b</c> when <c>a</c> is fixed. 
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRepulsionForce(System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Get repulsion force of <c>b</c> when <c>a</c> is fixed. 
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.Projection(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Get projection of <c>v</c> on the line determined by <c>a</c> and <c>b</c>.
-            </summary>
-            <param name="v"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRepulsionEdgeForce(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Get repulsion force of <v>c</v> with edge determined by <c>a</c> and <c>b</c> fixed.
-            </summary>
-            <param name="v"></param>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountForceInnerVertex(System.Windows.Point,System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.List{VizualizerWPF.Edge},System.Collections.Generic.Dictionary{System.Windows.Point,System.Double[]})">
-            <summary>
-            Function to count and add forces to vertex <c>v</c>.
-            </summary>
-            <param name="v"></param>
-            <param name="neighbors"></param>
-            <param name="vertices"></param>
-            <param name="edges"></param>
-            <param name="Rs"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountAndMoveByForces(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Apply force-directed algorithm to all vertices on canvas.
-            </summary>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRadii(System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.List{VizualizerWPF.Edge},System.Collections.Generic.Dictionary{System.Windows.Point,System.Double[]})">
-            <summary>
-            Function to count the radii of zones to preserve the crossing properties. 
-            </summary>
-            <param name="vertices"></param>
-            <param name="edges"></param>
-            <param name="Rs"></param>
-        </member>
-        <member name="T:VizualizerWPF.GraphCoordinates">
-            <summary>
-            Class to store graph to know what to draw on canvas
-            <param name="vertices">Hashset to store vertices</param>
-            <param name="edge">List to store edges</param>
-            <param name="neigbors">Dictionary to store neighbors of all vertices</param>
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.AddToDictionary(VizualizerWPF.Vertex,VizualizerWPF.Edge)">
-            <summary>
-            Safe version of adding to dictionary 
-            if value is not present, new list is created
-            </summary>
-            <param name="key"></param>
-            <param name="value"></param>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.SaveCoordinates">
-            <summary>
-            Function to save coordinates to file.
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.PrintLine(System.IO.StreamWriter,VizualizerWPF.Edge)">
-            <summary>
-            Function to print given <c>edge</c>, meaning all its line segment
-            </summary>
-            <param name="streamWriter"></param>
-            <param name="edge"></param>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.Chech3AMKConjecture(System.Int32[0:,0:],System.Int32)">
-            <summary>
-            Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
-            </summary>
-            <param name="AMKEdgesArray"></param>
-            <param name="size"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.Chech2AMKConjecture(System.Int32[0:,0:],System.Int32)">
-            <summary>
-            Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
-            </summary>
-            <param name="AMKEdgesArray"></param>
-            <param name="size"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.GetLines(VizualizerWPF.Vertex)">
-            <summary>
-            Get all lines incident to <c>vertex</c> so that first end is <c>vertex</c>
-            </summary>
-            <param name="vertex"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.GetVerticesAndIntersections">
-            <summary>
-            Get all vertices and intersection contained in <c>graphCoordinates</c>
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="F:VizualizerWPF.GraphCoordinates.maximalKEdges">
-            <summary>
-            Function to recalculate number of k edges
-            and AM, AMAM, AMAMAM k edges
-            It is done by finding all triangles upon all edges
-            and counting <c>k</c> for every edge (also invariant counting is done)
-            </summary>
-            
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.FindEdgeFromVertices(VizualizerWPF.Vertex,VizualizerWPF.Vertex)">
-            <summary>
-            Function to find edge between two vertices 
-            </summary>
-            <param name="a">First vertex</param>
-            <param name="b">Second vertex</param>
-            <returns>Found edge</returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.FindVertex(System.Windows.Point)">
-            <summary>
-            Function to find vertex with center equal to <c>center</c>.
-            </summary>
-            <param name="center"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.FindVertex(System.Windows.Shapes.Ellipse,System.Double)">
-            <summary>
-            Function to find vertex containg <c>ellipse</c>
-            </summary>
-            <param name="ellipse"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphCoordinates.GetAllPoints">
-            <summary>
-            Function to get all points from vertices
-            </summary>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="T:VizualizerWPF.GraphGenerator">
-            <summary>
-            Class to read drawing from file, create
-            and store graphs
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.GraphGenerator.SortFromStartToEnd(System.Collections.Generic.List{System.String[]})">
-            <summary>
-            Function to sort order of points to 
-            create continous edge
-            </summary>
-            <param name="line">One line</param>
-            <returns>Parsed points to line</returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphGenerator.ReadUntillNextRS(System.Boolean)">
-            <summary>
-            Read whole points and lines of cliques
-            and generate graph out of it
-            </summary>
-            <returns>New graph</returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphGenerator.GenerateNextDrawing">
-            <summary>
-            Get next drawing
-            </summary>
-            <returns>New graph</returns>
-        </member>
-        <member name="M:VizualizerWPF.GraphGenerator.GeneratePreviousDrawing">
-            <summary>
-            Get previous drawing by going from the beggining of the file (the reopeing of the file is done in the method calling this one)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.HashSetExtesions.AddList``1(System.Collections.Generic.HashSet{``0},System.Collections.Generic.List{``0})">
-            <summary>
-            Hashset extesion to remain order of added elements 
-            (UnionWith could be used but I didnt found implemenation)
-            </summary>
-            <typeparam name="T"></typeparam>
-            <param name="hashset"></param>
-            <param name="list"></param>
-        </member>
-        <member name="T:VizualizerWPF.StateChanging">
-            <summary>
-            States to operate with a drawings
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.StateCalculation">
-            <summary>
-            Enum for showing Intersections or changing reference face
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.MainWindow">
-            <summary>
-            MainWindow
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.graphGenerator">
-            <summary>
-            It is class for generating all drawings
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.cx">
-            <summary>
-            Shift from 0,0 origin
-            Shift from 0,0 origin
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.cy">
-            <summary>
-            Shift from 0,0 origin
-            Shift from 0,0 origin
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.actualHeight">
-            <summary>
-            Actual Height and Actual Width of canvas due to initialization set manually
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.lambda">
-            <summary>
-            Resizing paramater to get a drawing little bit from borders
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "F:VizualizerWPF.MainWindow.savedGraphs" -->
-        <member name="F:VizualizerWPF.MainWindow.invariantWithRescpectTo">
-            <summary>
-            Set of vertices for which we count invariant edges
-            </summary>
-        </member>
-        <member name="P:VizualizerWPF.MainWindow.Smoothing">
-            <summary>
-            Smoothing constant determining the number of iterations of force-directed algorithm
-            </summary>
-        </member>
-        <member name="F:VizualizerWPF.MainWindow.selectedVertices">
-            <summary>
-            List of vertices forming new edge
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.InitializeRightValuesOfKedges">
-            <summary>
-            Function to initialize wanted values
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.Canvas_Loaded(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to set width and height of canvas due to dynamic setting (at the beggining, it is 0) 
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.MakeAllLinesNotSharp">
-            <summary>
-            Shortening all edges to redraw uselessly long edges after force-directed algorithm
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.CreateVerticesFromPoints(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Update the vertices to contains only the points after shortening
-            </summary>
-            <param name="graphCoordinates"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.MakeSmootherAndDraw">
-            <summary>
-            Subdivide edges, apply force-directed algorithm Smoothing-times, shorten the edges and then draw on canvas
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.optimalCrossingNumber">
-            <summary>
-            Get the value of Z(n)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.RedrawGraph(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to redraw the drawing (when canvas resize)
-            </summary>
-            <param name="graphCoordinates">To store graph topical</param>
-            <param name="scale">To know if it is maximized or minimized</param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.ResizeWindowEvent(System.Object,System.EventArgs)">
-            <summary>
-            Function to hangle minimazing and maximazing window
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.AutoButton_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of Automoving Button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.Adding_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of Adding Button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.Removing_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of Removing Button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.AddingPolyline_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of AddingPolyline Button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.Invariant_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of Invariant Button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.RefferenceFace_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change the state of Face button
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.Intersections_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to change if intersection are visible or not, intersection can be recognized by green color
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.SaveDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to save the current drawing when we click on Save Button 
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.FlushFromBackUpToNormal">
-            <summary>
-            Function to flush the data when we change to custom file working
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.NextDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to generate new drawing of clique from data
-            If value of vertices textbox has changed then new data file is loaded
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.PreviousDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to generate previous drawing of clique from data
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.FindEdgeEnds(VizualizerWPF.Edge)">
-            <summary>
-            Function to find ends of <c>edge</c>
-            </summary>
-            <param name="edge"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.ellipse_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to either select vertices.
-            After two are selected then line between them is created.
-            Or to delete vertex and all edges neighbouring with it.
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.FindEdge(System.Windows.Shapes.Line)">
-            <summary>
-            Function to find edge containg <c>line</c>
-            </summary>
-            <param name="line"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.RemoveIntersections(System.Windows.Shapes.Line)">
-            <summary>
-            Function to remove all intersection with <c>line</c> from canvas and coordinates
-            </summary>
-            <param name="line"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.line_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to remove line if clicked on
-            If remove button activated then the edge is removed
-            If Invariant button is activated then invariant edges are counted for this edge
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.UpdateButtonTexts(System.Collections.Generic.List{VizualizerWPF.Vertex},VizualizerWPF.Edge,System.Int32[],System.Int32[])">
-            <summary>
-            Function to update buttons values by <c>kEdgesValues</c> and <c>invariantKEdges</c> values 
-            depending on invariant state
-            </summary>
-            <param name="withouts"></param>
-            <param name="withoutEdge"></param>
-            <param name="kEdgesValues"></param>
-            <param name="invariantKEdges"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.ZeroInvariantEdgesValues">
-            <summary>
-            Function to restore values of invariant textblock to zeroes and redraw all lines to non-dashed
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.PrintAMKEdges(System.Int32,System.Int32[0:,0:])">
-            <summary>
-            Function to Print values of <c>AMKEdgesArray</c> to respective textblocks 
-            Checking also the 3AMK theorem (a messagebox shows up when something wrong)
-            </summary>
-            <param name="size"></param>
-            <param name="AMKEdgesArray"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.UpdateStats">
-            <summary>
-            Function to coun intersections and to update all other stats regading $k$-edges
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.canvas_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Function to add vertex when the place is empty and to detect a change of a reference face 
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.FindClipingSizes(System.Collections.Generic.HashSet{System.Windows.Point})">
-            <summary>
-            Function to find appropriate shift and rescaling so all the <c>points</c> fit into the canvas
-            </summary>
-            <param name="points"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.CreateLinesFromPoints(System.Collections.Generic.List{System.Windows.Point})">
-            <summary>
-            Function to connect consecutive points and get the line segments
-            </summary>
-            <param name="points"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.SubDivideLine(System.Windows.Shapes.Line,VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to subdivide line depending on the divisionConstant 
-            (line is divided so that every line segment is now shorter than that divisionConstant)
-            </summary>
-            <param name="line"></param>
-            <param name="graphCoordinates"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.SubDivideEdge(VizualizerWPF.Edge,VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to subdivide all lines contained in the <c>edge</c>
-            </summary>
-            <param name="edge"></param>
-            <param name="graphCoordinates"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.SubDivideEdges(VizualizerWPF.GraphCoordinates)">
-            <summary>
-            Function to subdivide all the edges in <c>graphCoordinates</c>
-            </summary>
-            <param name="graphCoordinates"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.DrawGraph(VizualizerWPF.GraphCoordinates,System.Double)">
-            <summary>
-            Function to draw a graph even when the canvas is not loaded yet
-            The main difference to ReDraw the graph that here we first create ellipses, lines and so on, because
-            graphCoordinates consists only of Vertices and Edges only containing points after generating
-            </summary>
-            <param name="graphCoordinates">Class to store graph</param>
-            <param name="scale"></param>
-        </member>
-        <member name="M:VizualizerWPF.MainWindow.InitializeComponent">
-            <summary>
-            InitializeComponent
-            </summary>
-        </member>
-        <member name="T:VizualizerWPF.PointExtensions">
-            <summary>
-            Class to extend methods as Scale Point
-            Add two Points, Multiply point with int
-            Substract two points and
-            Method point ToVector
-            </summary>
-        </member>
-        <member name="M:VizualizerWPF.PointExtensions.Divide(System.Windows.Vector,System.Windows.Vector)">
-            <summary>
-            Get the ratio of two parralel vectors
-            </summary>
-            <param name="vector1"></param>
-            <param name="vector2"></param>
-            <returns></returns>
-        </member>
-        <member name="T:VizualizerWPF.PolybezierPathMaker">
-             <summary>
-             <code>
-              Point[] points1 = {
-                 new Point(60, 30),
-                 new Point(200, 130),
-                 new Point(100, 150),
-                 new Point(200, 50),
-             };
-              Path path1 = PolybezierPathMaker.MakeCurve(points1, 0);
-            
-              path1.Stroke = Brushes.LightGreen;
-              path1.StrokeThickness = 5;
-              mainCanvas.Children.Add(path1);
-            
-              Path path2 = PolybezierPathMaker.MakeCurve(new Point[2] { new Point(50, 50), new Point(122, 122) }, 0);
-              path2.Stroke = Brushes.LightCoral;
-              path2.StrokeThickness = 5;
-              mainCanvas.Children.Add(path2);
-             </code>
-             </summary>
-        </member>
-        <member name="T:VizualizerWPF.VertexState">
-            <summary>
-            Enum to recongize state of vertex
-            </summary>
-        </member>
-        <!-- Badly formed XML comment ignored for member "T:VizualizerWPF.Vertex" -->
-        <member name="M:VizualizerWPF.Vertex.Compare(System.Windows.Point,System.Windows.Point)">
-            <summary>
-            Compare points in both coordinates and consider the same if there both coordinates are the same except for small error 0.0001
-            </summary>
-            <param name="a"></param>
-            <param name="b"></param>
-            <returns></returns>
-        </member>
-        <member name="M:VizualizerWPF.Vertex.GetHashCode">
-            <summary>
-            GetHashCode by rounding the coordinates to avoid numerical errors
-            </summary>
-            <returns></returns>
-        </member>
-    </members>
+	<assembly>
+		<name>VizualizerWPF</name>
+	</assembly>
+	<members>
+		<member name="T:VizualizerWPF.App">
+			<summary>
+				Interaction logic for App.xaml
+			</summary>
+			<summary>
+				App
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.App.InitializeComponent">
+			<summary>
+				InitializeComponent
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.App.Main">
+			<summary>
+				Application Entry Point.
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.LineWithCoeffients">
+			<summary>
+				Line in form ax + by + c = 0
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.HalfLineWithCoeffients">
+			<summary>
+				Half line with the direction which is either the same or opposite to "line", the "direction" choose which one.
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.CollisionDetection.window">
+			<summary>
+				Class to detect many types of collision in 2D
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.CollisionDetection.epsilon">
+			<summary>
+				Error rate
+			</summary>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.LineAndHalfLine(System.Windows.Shapes.Line,VizualizerWPF.HalfLineWithCoeffients)">
+			<summary>
+				Function to detect whether Line and HalfLine intersect.
+			</summary>
+			<param name="line1"></param>
+			<param name="halfLine"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.TwoLines(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
+			<summary>
+				Detect intersection of two line segment
+			</summary>
+			<param name="line1"></param>
+			<param name="line2"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.TwoLinesIntersectNotAtTheEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
+			<summary>
+				Detect if two lines intersect except of their end points and return the intersection
+			</summary>
+			<param name="line1"></param>
+			<param name="line2"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.CheckIfTwoLinesIntersectNotAtTheEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Line)">
+			<summary>
+				Detect if two lines intersect except of their end points
+			</summary>
+			<param name="line1"></param>
+			<param name="line2"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.IntersectsSomeLine(System.Windows.Shapes.Line)">
+			<summary>
+				Function to detect whether conrete <c>line</c> intersect any of the lines of the window
+			</summary>
+			<param name="line"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.LineAndEllipseAtEnd(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
+			<summary>
+				Function to detect if end of the <c>line</c> is in given <c>ellipse</c>(circle)
+			</summary>
+			<param name="line"></param>
+			<param name="ellipse"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.CenterOfEllipseOnLine(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
+			<summary>
+				Detect if center of <c>ellipse</c> lies on given <c>line</c>
+			</summary>
+			<param name="line"></param>
+			<param name="ellipse"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.CenterOfVertexOnLine(System.Windows.Shapes.Line,VizualizerWPF.Vertex)">
+			<summary>
+				Function to detect if vertex <c>v</c> lines on <c>line</c>.
+			</summary>
+			<param name="line"></param>
+			<param name="v"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.CenterOnLine(System.Windows.Shapes.Line,System.Windows.Point)">
+			<summary>
+				Detects if a point <c>center</c> lies on line <c>line</c>
+			</summary>
+			<param name="line"></param>
+			<param name="center"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.CenterInsideEllipse(System.Windows.Point,System.Windows.Shapes.Ellipse)">
+			<summary>
+				Detect if <c>point</c> is inside <c>ellipse</c> (circle)
+			</summary>
+			<param name="point"></param>
+			<param name="ellipse"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.LineAndEllipse(System.Windows.Shapes.Line,System.Windows.Shapes.Ellipse)">
+			<summary>
+				Detect if <c>ellipse</c> and <c>line</c> intersects
+			</summary>
+			<param name="line"></param>
+			<param name="ellipse"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.TwoPaths(System.Windows.Shapes.Path,System.Windows.Shapes.Path)">
+			<summary>
+				General collision detection for further generalization
+				and bezier lines
+			</summary>
+			<param name="path1">first object</param>
+			<param name="path2">second object</param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.GetAlmostMid(System.Windows.Shapes.Line,System.Int32,System.Int32)">
+			<summary>
+				return point on <c>line</c> in ratio <c>a</c> to <c>b</c>.
+			</summary>
+			<param name="line"></param>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.GetLineWithCoefficients(System.Windows.Shapes.Line)">
+			<summary>
+				Convert <c>line</c> into LineWithCoefficients
+			</summary>
+			<param name="line"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.GetPerpendicularToAlmostMid(System.Windows.Shapes.Line,System.Int32,System.Int32)">
+			<summary>
+				Create a perpendicular line to <c>line</c>t at the point which has ration <c>a</c> to <c>b</c>.
+			</summary>
+			<param name="line"></param>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.GetRaysGoingFromPoint(System.Windows.Point)">
+			<summary>
+				Create many of rays going from <c>point</c>.
+			</summary>
+			<param name="point"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.GetPerpendicularsToAlmostMids(System.Windows.Shapes.Line)">
+			<summary>
+				Iterator for getting many perpendicular lines to <c>line</c>
+			</summary>
+			<param name="line"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.GetOrientation(System.Windows.Shapes.Line,System.Collections.Generic.List{System.Windows.Shapes.Line},System.Windows.Point)">
+			<summary>
+				Function to detect the orieantion of the triangle formed by <c>lines</c> and <c>line</c>, where <c>point</c>
+				determines the reference face
+			</summary>
+			<param name="line"></param>
+			<param name="lines"></param>
+			<param name="point"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.ChooseOppositeOne(VizualizerWPF.Edge,System.Windows.Point)">
+			<summary>
+				Function to get opposite end of <c>edge</c> to <c>point</c>.
+			</summary>
+			<param name="edge"></param>
+			<param name="point"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.ChooseTheLineBy(VizualizerWPF.Vertex,VizualizerWPF.Edge)">
+			<summary>
+				Function to get line of Edge <c>e</c> incident to  <c>v</c>.
+			</summary>
+			<param name="v"></param>
+			<param name="e"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.OrientLineProperly(VizualizerWPF.Vertex,System.Windows.Shapes.Line)">
+			<summary>
+				Function to orient line <c>l</c> so that <c>v</c> is first point.
+			</summary>
+			<param name="v"></param>
+			<param name="l"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.CollisionDetection.PutLinesTogether(VizualizerWPF.Edge,VizualizerWPF.Edge,VizualizerWPF.Edge)">
+			<summary>
+				Function to add lines of triangle together except for the one to which we consider perpendicular rays
+			</summary>
+			<param name="e1"></param>
+			<param name="e2"></param>
+			<param name="e3"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.CollisionDetection.GetEdges(VizualizerWPF.Vertex,VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Iterator to get all the line of the edges incident to <c>v</c>.
+			</summary>
+			<param name="v"></param>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ConjectureChecker.GetAllReferenceFaces(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Iterator to get all faces (points) to check the conjectures
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.ConjectureChecker.TryFace3AMK(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to check if the the conjecture holds for currently set face
+			</summary>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ConjectureChecker.TryFace2AMK(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to check if the the conjecture holds for currently set face
+			</summary>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ConjectureChecker.Check3AMKConjecture">
+			<summary>
+				Checking conjecture for all alredy generated drawings drawings
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.ConjectureChecker.Check2AMKConjecture">
+			<summary>
+				Checking conjecture for all alredy generated drawings drawings
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.Edge">
+			<summary>
+				Class to store edges in graph
+				meaming all lines and points
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.Edge.IsSharp(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Function to detect, whether consectuive points <c>point1</c>, <c>point2</c>, <c>point3</c> are at angle less then cca 30°
+			</summary>
+			<param name="point1"></param>
+			<param name="point2"></param>
+			<param name="point3"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.Edge.CreateLinesFromPoints">
+			<summary>
+				Function to connect points to create line segment between them.
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.Edge.Shorten(VizualizerWPF.GraphCoordinates@)">
+			<summary>
+				Function to go through the Edge and shorten if it is wanted.
+			</summary>
+			<param name="graphCoordinates"></param>
+		</member>
+		<member name="M:VizualizerWPF.Edge.IsShortEnough(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
+			<summary>
+				This function is called by <c>Shorten</c> to shorten only small enough lines
+			</summary>
+			<param name="point1"></param>
+			<param name="point2"></param>
+			<param name="point3"></param>
+			<returns></returns>
+		</member>
+		<member name="T:VizualizerWPF.EdgeListExtensions">
+			<summary>
+				Extension class on list of Edges
+			</summary>
+		</member>
+		<member
+			name="M:VizualizerWPF.EdgeListExtensions.ContainsEnd(System.Collections.Generic.List{VizualizerWPF.Edge},System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Function to get the edge contained in <c>list</c> which is incident to both <c>oppositeTo</c> and <c>point</c>.
+			</summary>
+			<param name="list"></param>
+			<param name="oppositeTo"></param>
+			<param name="point"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.EdgeListExtensions.GetEnds(System.Collections.Generic.List{VizualizerWPF.Edge},System.Windows.Point)">
+			<summary>
+				Function to get all other ends, compare to <c>point</c>, of edges in <c>list</c>.
+			</summary>
+			<param name="list"></param>
+			<param name="point"></param>
+			<returns></returns>
+		</member>
+		<member name="T:VizualizerWPF.ForceDirectedAlgorithms">
+			<summary>
+				Class to apply (iteratively) force-directed algorithm.
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.ForceDirectedAlgorithms.delta">
+			<summary>
+				The desider length of all edges
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.ForceDirectedAlgorithms.INF">
+			<summary>
+				Maximal force we want to apply
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.ForceDirectedAlgorithms.RegionVectors">
+			<summary>
+				Vectors of borders of zones
+			</summary>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.FindNeighbors(VizualizerWPF.GraphCoordinates,VizualizerWPF.Vertex)">
+			<summary>
+				Get all opposite point to <c>vertex</c> in <c>graphCoordinates</c>
+			</summary>
+			<param name="graphCoordinates"></param>
+			<param name="vertex"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ForceDirectedAlgorithms.Min(System.Windows.Vector,System.Windows.Vector)">
+			<summary>
+				Function to get smaller vector.
+			</summary>
+			<param name="vector1"></param>
+			<param name="vector2"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.IsBetween(System.Windows.Vector,System.Windows.Vector,System.Windows.Vector)">
+			<summary>
+				Function to detect if the <c>midlle</c> vector is between (the smaller part) determined by <c>first</c> and
+				<c>second</c>.
+			</summary>
+			<param name="first"></param>
+			<param name="second"></param>
+			<param name="middle"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.CountAttractionForce(System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Get attraction force of <c>b</c> when <c>a</c> is fixed.
+			</summary>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRepulsionForce(System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Get repulsion force of <c>b</c> when <c>a</c> is fixed.
+			</summary>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.Projection(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Get projection of <c>v</c> on the line determined by <c>a</c> and <c>b</c>.
+			</summary>
+			<param name="v"></param>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRepulsionEdgeForce(System.Windows.Point,System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Get repulsion force of <v>c</v> with edge determined by <c>a</c> and <c>b</c> fixed.
+			</summary>
+			<param name="v"></param>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.CountForceInnerVertex(System.Windows.Point,System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.List{VizualizerWPF.Edge},System.Collections.Generic.Dictionary{System.Windows.Point,System.Double[]})">
+			<summary>
+				Function to count and add forces to vertex <c>v</c>.
+			</summary>
+			<param name="v"></param>
+			<param name="neighbors"></param>
+			<param name="vertices"></param>
+			<param name="edges"></param>
+			<param name="Rs"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.ForceDirectedAlgorithms.CountAndMoveByForces(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Apply force-directed algorithm to all vertices on canvas.
+			</summary>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.ForceDirectedAlgorithms.CountRadii(System.Collections.Generic.HashSet{System.Windows.Point},System.Collections.Generic.List{VizualizerWPF.Edge},System.Collections.Generic.Dictionary{System.Windows.Point,System.Double[]})">
+			<summary>
+				Function to count the radii of zones to preserve the crossing properties.
+			</summary>
+			<param name="vertices"></param>
+			<param name="edges"></param>
+			<param name="Rs"></param>
+		</member>
+		<member name="T:VizualizerWPF.GraphCoordinates">
+			<summary>
+				Class to store graph to know what to draw on canvas
+				<param name="vertices">Hashset to store vertices</param>
+				<param name="edge">List to store edges</param>
+				<param name="neigbors">Dictionary to store neighbors of all vertices</param>
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.AddToDictionary(VizualizerWPF.Vertex,VizualizerWPF.Edge)">
+			<summary>
+				Safe version of adding to dictionary
+				if value is not present, new list is created
+			</summary>
+			<param name="key"></param>
+			<param name="value"></param>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.SaveCoordinates">
+			<summary>
+				Function to save coordinates to file.
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.PrintLine(System.IO.StreamWriter,VizualizerWPF.Edge)">
+			<summary>
+				Function to print given <c>edge</c>, meaning all its line segment
+			</summary>
+			<param name="streamWriter"></param>
+			<param name="edge"></param>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.Chech3AMKConjecture(System.Int32[0:,0:],System.Int32)">
+			<summary>
+				Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
+			</summary>
+			<param name="AMKEdgesArray"></param>
+			<param name="size"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.Chech2AMKConjecture(System.Int32[0:,0:],System.Int32)">
+			<summary>
+				Check if the conjecture holds for given values of <c>AMKEdgesArray</c>
+			</summary>
+			<param name="AMKEdgesArray"></param>
+			<param name="size"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.GetLines(VizualizerWPF.Vertex)">
+			<summary>
+				Get all lines incident to <c>vertex</c> so that first end is <c>vertex</c>
+			</summary>
+			<param name="vertex"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.GetVerticesAndIntersections">
+			<summary>
+				Get all vertices and intersection contained in <c>graphCoordinates</c>
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="F:VizualizerWPF.GraphCoordinates.maximalKEdges">
+			<summary>
+				Function to recalculate number of k edges
+				and AM, AMAM, AMAMAM k edges
+				It is done by finding all triangles upon all edges
+				and counting <c>k</c> for every edge (also invariant counting is done)
+			</summary>
+
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.FindEdgeFromVertices(VizualizerWPF.Vertex,VizualizerWPF.Vertex)">
+			<summary>
+				Function to find edge between two vertices
+			</summary>
+			<param name="a">First vertex</param>
+			<param name="b">Second vertex</param>
+			<returns>Found edge</returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.FindVertex(System.Windows.Point)">
+			<summary>
+				Function to find vertex with center equal to <c>center</c>.
+			</summary>
+			<param name="center"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.FindVertex(System.Windows.Shapes.Ellipse,System.Double)">
+			<summary>
+				Function to find vertex containg <c>ellipse</c>
+			</summary>
+			<param name="ellipse"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphCoordinates.GetAllPoints">
+			<summary>
+				Function to get all points from vertices
+			</summary>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member name="T:VizualizerWPF.GraphGenerator">
+			<summary>
+				Class to read drawing from file, create
+				and store graphs
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.GraphGenerator.SortFromStartToEnd(System.Collections.Generic.List{System.String[]})">
+			<summary>
+				Function to sort order of points to
+				create continous edge
+			</summary>
+			<param name="line">One line</param>
+			<returns>Parsed points to line</returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphGenerator.ReadUntillNextRS(System.Boolean)">
+			<summary>
+				Read whole points and lines of cliques
+				and generate graph out of it
+			</summary>
+			<returns>New graph</returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphGenerator.GenerateNextDrawing">
+			<summary>
+				Get next drawing
+			</summary>
+			<returns>New graph</returns>
+		</member>
+		<member name="M:VizualizerWPF.GraphGenerator.GeneratePreviousDrawing">
+			<summary>
+				Get previous drawing by going from the beggining of the file (the reopeing of the file is done in the method calling this one)
+			</summary>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.HashSetExtesions.AddList``1(System.Collections.Generic.HashSet{``0},System.Collections.Generic.List{``0})">
+			<summary>
+				Hashset extesion to remain order of added elements
+				(UnionWith could be used but I didnt found implemenation)
+			</summary>
+			<typeparam name="T"></typeparam>
+			<param name="hashset"></param>
+			<param name="list"></param>
+		</member>
+		<member name="T:VizualizerWPF.StateChanging">
+			<summary>
+				States to operate with a drawings
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.StateCalculation">
+			<summary>
+				Enum for showing Intersections or changing reference face
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.MainWindow">
+			<summary>
+				MainWindow
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.graphGenerator">
+			<summary>
+				It is class for generating all drawings
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.cx">
+			<summary>
+				Shift from 0,0 origin
+				Shift from 0,0 origin
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.cy">
+			<summary>
+				Shift from 0,0 origin
+				Shift from 0,0 origin
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.actualHeight">
+			<summary>
+				Actual Height and Actual Width of canvas due to initialization set manually
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.lambda">
+			<summary>
+				Resizing paramater to get a drawing little bit from borders
+			</summary>
+		</member>
+		<!-- Badly formed XML comment ignored for member "F:VizualizerWPF.MainWindow.savedGraphs" -->
+		<member name="F:VizualizerWPF.MainWindow.invariantWithRescpectTo">
+			<summary>
+				Set of vertices for which we count invariant edges
+			</summary>
+		</member>
+		<member name="P:VizualizerWPF.MainWindow.Smoothing">
+			<summary>
+				Smoothing constant determining the number of iterations of force-directed algorithm
+			</summary>
+		</member>
+		<member name="F:VizualizerWPF.MainWindow.selectedVertices">
+			<summary>
+				List of vertices forming new edge
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.InitializeRightValuesOfKedges">
+			<summary>
+				Function to initialize wanted values
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.Canvas_Loaded(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to set width and height of canvas due to dynamic setting (at the beggining, it is 0)
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.MakeAllLinesNotSharp">
+			<summary>
+				Shortening all edges to redraw uselessly long edges after force-directed algorithm
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.CreateVerticesFromPoints(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Update the vertices to contains only the points after shortening
+			</summary>
+			<param name="graphCoordinates"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.MakeSmootherAndDraw">
+			<summary>
+				Subdivide edges, apply force-directed algorithm Smoothing-times, shorten the edges and then draw on canvas
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.optimalCrossingNumber">
+			<summary>
+				Get the value of Z(n)
+			</summary>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.RedrawGraph(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to redraw the drawing (when canvas resize)
+			</summary>
+			<param name="graphCoordinates">To store graph topical</param>
+			<param name="scale">To know if it is maximized or minimized</param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.ResizeWindowEvent(System.Object,System.EventArgs)">
+			<summary>
+				Function to hangle minimazing and maximazing window
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.AutoButton_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of Automoving Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.Adding_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of Adding Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.Removing_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of Removing Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.AddingPolyline_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of AddingPolyline Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.Invariant_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of Invariant Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.RefferenceFace_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change the state of Face button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.Intersections_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to change if intersection are visible or not, intersection can be recognized by green color
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.SaveDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to save the current drawing when we click on Save Button
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.FlushFromBackUpToNormal">
+			<summary>
+				Function to flush the data when we change to custom file working
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.NextDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to generate new drawing of clique from data
+				If value of vertices textbox has changed then new data file is loaded
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.PreviousDrawing_Click(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to generate previous drawing of clique from data
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.FindEdgeEnds(VizualizerWPF.Edge)">
+			<summary>
+				Function to find ends of <c>edge</c>
+			</summary>
+			<param name="edge"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.ellipse_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to either select vertices.
+				After two are selected then line between them is created.
+				Or to delete vertex and all edges neighbouring with it.
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.FindEdge(System.Windows.Shapes.Line)">
+			<summary>
+				Function to find edge containg <c>line</c>
+			</summary>
+			<param name="line"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.RemoveIntersections(System.Windows.Shapes.Line)">
+			<summary>
+				Function to remove all intersection with <c>line</c> from canvas and coordinates
+			</summary>
+			<param name="line"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.line_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to remove line if clicked on
+				If remove button activated then the edge is removed
+				If Invariant button is activated then invariant edges are counted for this edge
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member
+			name="M:VizualizerWPF.MainWindow.UpdateButtonTexts(System.Collections.Generic.List{VizualizerWPF.Vertex},VizualizerWPF.Edge,System.Int32[],System.Int32[])">
+			<summary>
+				Function to update buttons values by <c>kEdgesValues</c> and <c>invariantKEdges</c> values
+				depending on invariant state
+			</summary>
+			<param name="withouts"></param>
+			<param name="withoutEdge"></param>
+			<param name="kEdgesValues"></param>
+			<param name="invariantKEdges"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.ZeroInvariantEdgesValues">
+			<summary>
+				Function to restore values of invariant textblock to zeroes and redraw all lines to non-dashed
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.PrintAMKEdges(System.Int32,System.Int32[0:,0:])">
+			<summary>
+				Function to Print values of <c>AMKEdgesArray</c> to respective textblocks
+				Checking also the 3AMK theorem (a messagebox shows up when something wrong)
+			</summary>
+			<param name="size"></param>
+			<param name="AMKEdgesArray"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.UpdateStats">
+			<summary>
+				Function to coun intersections and to update all other stats regading $k$-edges
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.canvas_MouseDown(System.Object,System.Windows.RoutedEventArgs)">
+			<summary>
+				Function to add vertex when the place is empty and to detect a change of a reference face
+			</summary>
+			<param name="sender"></param>
+			<param name="e"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.FindClipingSizes(System.Collections.Generic.HashSet{System.Windows.Point})">
+			<summary>
+				Function to find appropriate shift and rescaling so all the <c>points</c> fit into the canvas
+			</summary>
+			<param name="points"></param>
+			<returns></returns>
+		</member>
+		<member
+			name="M:VizualizerWPF.MainWindow.CreateLinesFromPoints(System.Collections.Generic.List{System.Windows.Point})">
+			<summary>
+				Function to connect consecutive points and get the line segments
+			</summary>
+			<param name="points"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.SubDivideLine(System.Windows.Shapes.Line,VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to subdivide line depending on the divisionConstant
+				(line is divided so that every line segment is now shorter than that divisionConstant)
+			</summary>
+			<param name="line"></param>
+			<param name="graphCoordinates"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.SubDivideEdge(VizualizerWPF.Edge,VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to subdivide all lines contained in the <c>edge</c>
+			</summary>
+			<param name="edge"></param>
+			<param name="graphCoordinates"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.SubDivideEdges(VizualizerWPF.GraphCoordinates)">
+			<summary>
+				Function to subdivide all the edges in <c>graphCoordinates</c>
+			</summary>
+			<param name="graphCoordinates"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.DrawGraph(VizualizerWPF.GraphCoordinates,System.Double)">
+			<summary>
+				Function to draw a graph even when the canvas is not loaded yet
+				The main difference to ReDraw the graph that here we first create ellipses, lines and so on, because
+				graphCoordinates consists only of Vertices and Edges only containing points after generating
+			</summary>
+			<param name="graphCoordinates">Class to store graph</param>
+			<param name="scale"></param>
+		</member>
+		<member name="M:VizualizerWPF.MainWindow.InitializeComponent">
+			<summary>
+				InitializeComponent
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.PointExtensions">
+			<summary>
+				Class to extend methods as Scale Point
+				Add two Points, Multiply point with int
+				Substract two points and
+				Method point ToVector
+			</summary>
+		</member>
+		<member name="M:VizualizerWPF.PointExtensions.Divide(System.Windows.Vector,System.Windows.Vector)">
+			<summary>
+				Get the ratio of two parralel vectors
+			</summary>
+			<param name="vector1"></param>
+			<param name="vector2"></param>
+			<returns></returns>
+		</member>
+		<member name="T:VizualizerWPF.PolybezierPathMaker">
+			<summary>
+				<code>
+					Point[] points1 = {
+					new Point(60, 30),
+					new Point(200, 130),
+					new Point(100, 150),
+					new Point(200, 50),
+					};
+					Path path1 = PolybezierPathMaker.MakeCurve(points1, 0);
+
+					path1.Stroke = Brushes.LightGreen;
+					path1.StrokeThickness = 5;
+					mainCanvas.Children.Add(path1);
+
+					Path path2 = PolybezierPathMaker.MakeCurve(new Point[2] { new Point(50, 50), new Point(122, 122) }, 0);
+					path2.Stroke = Brushes.LightCoral;
+					path2.StrokeThickness = 5;
+					mainCanvas.Children.Add(path2);
+				</code>
+			</summary>
+		</member>
+		<member name="T:VizualizerWPF.VertexState">
+			<summary>
+				Enum to recongize state of vertex
+			</summary>
+		</member>
+		<!-- Badly formed XML comment ignored for member "T:VizualizerWPF.Vertex" -->
+		<member name="M:VizualizerWPF.Vertex.Compare(System.Windows.Point,System.Windows.Point)">
+			<summary>
+				Compare points in both coordinates and consider the same if there both coordinates are the same except for small error 0.0001
+			</summary>
+			<param name="a"></param>
+			<param name="b"></param>
+			<returns></returns>
+		</member>
+		<member name="M:VizualizerWPF.Vertex.GetHashCode">
+			<summary>
+				GetHashCode by rounding the coordinates to avoid numerical errors
+			</summary>
+			<returns></returns>
+		</member>
+	</members>
 </doc>
