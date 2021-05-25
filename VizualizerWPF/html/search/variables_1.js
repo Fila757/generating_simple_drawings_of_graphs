@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['b_217',['b',['../class_vizualizer_w_p_f_1_1_line_with_coeffients.html#a6abbd33bed221e908b6835ab54f49831',1,'VizualizerWPF::LineWithCoeffients']]],
-  ['border_218',['border',['../class_vizualizer_w_p_f_1_1_half_line_with_coeffients.html#af8d77c2c25a5a7d827efbd609db86eb6',1,'VizualizerWPF::HalfLineWithCoeffients']]]
+  ['maximalkedges_98',['maximalKEdges',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aa455701e097b6c862469f7936d3f34ba',1,'VizualizerWPF::GraphCoordinates']]]
 ];

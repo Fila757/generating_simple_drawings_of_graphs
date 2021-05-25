@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['debug_139',['debug',['../namespacedebug.html',1,'']]]
+  ['vizualizerwpf_61',['VizualizerWPF',['../namespace_vizualizer_w_p_f.html',1,'']]]
 ];
