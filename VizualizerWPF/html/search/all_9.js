@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kedge_76',['kEdge',['../class_vizualizer_w_p_f_1_1_edge.html#aad4e9e862a57533c92e3fde00645b49f',1,'VizualizerWPF::Edge']]]
+  ['orientlineproperly_39',['OrientLineProperly',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ae1aaceb35b4ee7e15855d2e3c71a624c',1,'VizualizerWPF::CollisionDetection']]]
 ];

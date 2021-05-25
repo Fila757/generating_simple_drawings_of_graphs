@@ -1,6 +1,13 @@
 var searchData=
 [
-  ['findedgefromvertices_177',['FindEdgeFromVertices',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4a0fcb53e40c51f827f26402f3b39105',1,'VizualizerWPF::GraphCoordinates']]],
-  ['findvertex_178',['FindVertex',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#ad6699a9b2a68eac752e43b9d968de9f6',1,'VizualizerWPF.GraphCoordinates.FindVertex(Point center)'],['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4eadeb0e4646490abe1b4dc1f9feddc7',1,'VizualizerWPF.GraphCoordinates.FindVertex(Ellipse ellipse, double sizeOfVertex)']]],
-  ['findvertexsave_179',['FindVertexSave',['../class_vizualizer_w_p_f_1_1_main_window.html#add6ab0a1e32c7a71073a1c0c5e5608b7',1,'VizualizerWPF::MainWindow']]]
+  ['generatenextdrawing_76',['GenerateNextDrawing',['../class_vizualizer_w_p_f_1_1_graph_generator.html#af06ed391cb0ba159f9ad846523cb029c',1,'VizualizerWPF::GraphGenerator']]],
+  ['generatepreviousdrawing_77',['GeneratePreviousDrawing',['../class_vizualizer_w_p_f_1_1_graph_generator.html#ae2212a01929fabc4bce59a13fe7c1823',1,'VizualizerWPF::GraphGenerator']]],
+  ['getallpoints_78',['GetAllPoints',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a6c65b0e81e991da05a056fc626c457ea',1,'VizualizerWPF::GraphCoordinates']]],
+  ['getedges_79',['GetEdges',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a90bc8d3940691d30e7fd9cf95f92e863',1,'VizualizerWPF::CollisionDetection']]],
+  ['gethashcode_80',['GetHashCode',['../struct_vizualizer_w_p_f_1_1_vertex.html#a7dfe68f54f0e4ff08294aa832f728e20',1,'VizualizerWPF::Vertex']]],
+  ['getlines_81',['GetLines',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a747265a46e00d619042de79055d019fb',1,'VizualizerWPF::GraphCoordinates']]],
+  ['getorientation_82',['GetOrientation',['../class_vizualizer_w_p_f_1_1_collision_detection.html#aba5f845bcb3fcd359fc9247640aae442',1,'VizualizerWPF::CollisionDetection']]],
+  ['getperpendicularstoalmostmids_83',['GetPerpendicularsToAlmostMids',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a715ace704c3a7d4aadc681499ea4478a',1,'VizualizerWPF::CollisionDetection']]],
+  ['getraysgoingfrompoint_84',['GetRaysGoingFromPoint',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a9eb31e5f7c1d8d760c8a364f5c182343',1,'VizualizerWPF::CollisionDetection']]],
+  ['getverticesandintersections_85',['GetVerticesAndIntersections',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a87c82001706a576a98becd76770cc9fa',1,'VizualizerWPF::GraphCoordinates']]]
 ];
