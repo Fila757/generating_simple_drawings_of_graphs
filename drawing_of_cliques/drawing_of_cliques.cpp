@@ -6,7 +6,10 @@
 
 using namespace std;
 
-
+/// <summary>
+/// The checker is design for Linux.
+/// </summary>
+/// <returns></returns>
 int main()
 {
     int n = 7;
