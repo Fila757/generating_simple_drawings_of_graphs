@@ -7,6 +7,10 @@
 
 using namespace std;
 
+/// <summary>
+/// The generator is designed for Linux.
+/// </summary>
+/// <returns></returns>
 int main()
 {
     int n = 8;

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 /// <summary>
+/// The Visualizer is designed for Windows.
 /// In MainWindow.xaml we have one <c>mainCanvas</c>, topbar for setting constant and resizing/closing the window
 /// There are also some information about a drawing. To operate with the drawing, there are some buttons to help us, adding, removing, ...
 /// Then values we want to consider are shown, for more see User's guide
