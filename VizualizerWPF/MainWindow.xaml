@@ -58,7 +58,58 @@
         </Grid>
         <Grid x:Name="BottomGrid" Margin="0, 30, 0, 0">
             <Grid.Resources>
+                <Storyboard x:Key="MenuOpen">
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>2</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.Column)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="mainCanvas" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                </Storyboard>
+                <Storyboard x:Key="MenuClose">
+
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>1</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="GridMenu" Storyboard.TargetProperty="(Grid.Column)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>2</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="mainCanvas" Storyboard.TargetProperty="(Grid.ColumnSpan)">
+                        <DiscreteObjectKeyFrame KeyTime="0">
+                            <DiscreteObjectKeyFrame.Value>
+                                <System:Int32>2</System:Int32>
+                            </DiscreteObjectKeyFrame.Value>
+                        </DiscreteObjectKeyFrame>
+                    </ObjectAnimationUsingKeyFrames>
+                </Storyboard>
             </Grid.Resources>
+
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="5*" x:Name="FirstColumn" />
