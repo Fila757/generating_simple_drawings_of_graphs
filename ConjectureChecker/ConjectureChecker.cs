@@ -6,6 +6,9 @@ using System.Windows.Shapes;
 
 namespace VizualizerWPF
 {
+    /// <summary>
+    /// The visualizer is designed for Windows.
+    /// </summary>
     class ConjectureChecker
     {
 
