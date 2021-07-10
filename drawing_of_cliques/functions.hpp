@@ -845,6 +845,7 @@ inline void graph::create_all_possible_drawings() {
 		edges.resize(0); segments.resize(0);
 		done = false;
 		outer_face = make_shared<Face>();
+		intersetions = 0;
 	}
 
 	close_files();
