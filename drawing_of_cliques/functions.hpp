@@ -62,6 +62,7 @@ struct graph {
 
 	int realized = 0;
 	bool done = false;
+	int intersections = 0;
 
 	int index;
 
@@ -353,6 +354,8 @@ inline void graph::add_vertex(Edge* edge) {
 		opposite->face_->counter_of_same_last_edges[min(edge->index_ / 100, edge->index_ % 100)]++;
 	}
 
+	intersections++;
+
 
 }
 
@@ -455,6 +458,8 @@ inline void graph::delete_vertex(Vertex* vertex) {
 
 	segments.pop_back(); segments.pop_back();
 	edges.pop_back(); edges.pop_back();
+
+	intersections--;
 
 }
 
@@ -606,7 +611,7 @@ inline void graph::find_the_way_to_intersect(int s_index, int t_index, int a, in
 				//cout << "#############IN####################" << endl;
 				find_the_way_to_intersect(edges.size() - 3, t_index, a, b); //it is 3rd from the end, because it was added as second in add_vertex and then 2 more were added in add_edge
 				if (done) {
-					blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)]  = false;
+					blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = false;
 					return;
 				}
 			}
@@ -834,7 +839,7 @@ inline void graph::create_all_possible_drawings() {
 		//print_graph(this);
 		if (done) {
 			cout << "yes" << endl;
-			output_file << fingerprint << "\n";
+			output_file << fingerprint << " " << intersections << "\n";
 		}
 
 		edges.resize(0); segments.resize(0);
