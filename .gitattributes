@@ -2,7 +2,13 @@ drawing_of_cliques/html/* linguist-vendored=true
 coordinates_generator/html/* linguist-vendored=true
 VizualizerWPF/html/* linguist-vendored=true
 ConjectureChecker/html/* linguist-vendored=true
+
 drawing_of_cliques/*.html* linguist-vendored=true
 coordinates_generator/*.html* linguist-vendored=true
 VizualizerWPF/*.html* linguist-vendored=true
 ConjectureChecker/*.html* linguist-vendored=true
+
+drawing_of_cliques/html/search* linguist-vendored=true
+coordinates_generator/html/search* linguist-vendored=true
+VizualizerWPF/html/search* linguist-vendored=true
+ConjectureChecker/html/search* linguist-vendored=true
