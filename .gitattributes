@@ -12,3 +12,6 @@ drawing_of_cliques/html/search/* linguist-vendored=true
 coordinates_generator/html/search/* linguist-vendored=true
 VizualizerWPF/html/search/* linguist-vendored=true
 ConjectureChecker/html/search/* linguist-vendored=true
+
+Articles/main.tex linguist-vendored=true
+
