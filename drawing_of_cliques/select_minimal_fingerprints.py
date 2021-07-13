@@ -20,6 +20,8 @@ with open(f'graph{n}_minimal.txt', 'w') as file:
         intersections = splitted_line[1]
 
         if intersections <= z(n):
+            if intersections < z(n):
+                raise AssertionError(f"There is a drawing with less then z({n}).")
             file.write(line)
 
 
