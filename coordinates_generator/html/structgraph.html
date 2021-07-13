@@ -97,11 +97,9 @@ $(document).ready(function(){initNavTree('structgraph.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a446ab388def546c0d5ced0ccfec29817"><td class="memItemLeft" align="right" valign="top"><a id="a446ab388def546c0d5ced0ccfec29817"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>close_files</b> ()</td></tr>
+<tr class="memitem:a446ab388def546c0d5ced0ccfec29817"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">close_files</a> ()</td></tr>
 <tr class="separator:a446ab388def546c0d5ced0ccfec29817"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07b7f117a6a3c6595adfa733a124f75b"><td class="memItemLeft" align="right" valign="top"><a id="a07b7f117a6a3c6595adfa733a124f75b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>graph</b> (int n, int ii)</td></tr>
+<tr class="memitem:a07b7f117a6a3c6595adfa733a124f75b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a07b7f117a6a3c6595adfa733a124f75b">graph</a> (int n, int ii)</td></tr>
 <tr class="separator:a07b7f117a6a3c6595adfa733a124f75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90d5c07e0184212d1092cf6fee932a02"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a90d5c07e0184212d1092cf6fee932a02">add_edge</a> (shared_ptr&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt; a, shared_ptr&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt; b, shared_ptr&lt; <a class="el" href="struct_face.html">Face</a> &gt; face, int a_index, int b_index, pair&lt; double, double &gt; previous_vertex, pair&lt; double, double &gt; next_vertex, bool outer_face_bool=false)</td></tr>
 <tr class="memdesc:a90d5c07e0184212d1092cf6fee932a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to add edge between <code>a</code> and <code>b</code>.  <a href="structgraph.html#a90d5c07e0184212d1092cf6fee932a02">More...</a><br /></td></tr>
@@ -121,7 +119,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>close_files</b> ()</t
 <tr class="memitem:acaa6e82ce65896ab971a73040d103770"><td class="memItemLeft" align="right" valign="top">vector&lt; shared_ptr&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#acaa6e82ce65896ab971a73040d103770">find_path_through_triangulation</a> (shared_ptr&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt; a, shared_ptr&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt; b, shared_ptr&lt; <a class="el" href="struct_face.html">Face</a> &gt; face, int a_index, int b_index, pair&lt; double, double &gt; shift_previous, pair&lt; double, double &gt; shift_next, bool outer_face_bool=false)</td></tr>
 <tr class="memdesc:acaa6e82ce65896ab971a73040d103770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to find correct way (preserving crossing properties) from vertex <code>a</code> to vertex <code>b</code> through the <code>face</code>.  <a href="structgraph.html#acaa6e82ce65896ab971a73040d103770">More...</a><br /></td></tr>
 <tr class="separator:acaa6e82ce65896ab971a73040d103770"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3552c2830eb221d8c937a3adb6ff0dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">create_special_vertex</a> (int index, int x, int y)</td></tr>
+<tr class="memitem:a3552c2830eb221d8c937a3adb6ff0dc5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">create_special_vertex</a> (int <a class="el" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">index</a>, int <a class="el" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, int <a class="el" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>)</td></tr>
 <tr class="memdesc:a3552c2830eb221d8c937a3adb6ff0dc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creating the "dummy" vertex (circle) representing real vertex.  <a href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">More...</a><br /></td></tr>
 <tr class="separator:a3552c2830eb221d8c937a3adb6ff0dc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7086c1c3651ec56f1bded29350f16c26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a7086c1c3651ec56f1bded29350f16c26">recolor_fingerprint</a> (const string &amp;rotation)</td></tr>
@@ -151,46 +149,34 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>close_files</b> ()</t
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6830f19734b78eb24f47e5744cc84a33"><td class="memItemLeft" align="right" valign="top"><a id="a6830f19734b78eb24f47e5744cc84a33"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>number_of_vertices</b> = 0</td></tr>
+<tr class="memitem:a6830f19734b78eb24f47e5744cc84a33"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a6830f19734b78eb24f47e5744cc84a33">number_of_vertices</a> = 0</td></tr>
 <tr class="separator:a6830f19734b78eb24f47e5744cc84a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af400609e2689802f8bc671e0d0935464"><td class="memItemLeft" align="right" valign="top"><a id="af400609e2689802f8bc671e0d0935464"></a>
-vector&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outer_vertices</b> {<a class="el" href="struct_vertex.html">Vertex</a>(336, 341), <a class="el" href="struct_vertex.html">Vertex</a>(310, -337), <a class="el" href="struct_vertex.html">Vertex</a>(-329, -283), <a class="el" href="struct_vertex.html">Vertex</a>(-302, 297)}</td></tr>
+<tr class="memitem:af400609e2689802f8bc671e0d0935464"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="struct_vertex.html">Vertex</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#af400609e2689802f8bc671e0d0935464">outer_vertices</a> {<a class="el" href="struct_vertex.html">Vertex</a>(336, 341), <a class="el" href="struct_vertex.html">Vertex</a>(310, -337), <a class="el" href="struct_vertex.html">Vertex</a>(-329, -283), <a class="el" href="struct_vertex.html">Vertex</a>(-302, 297)}</td></tr>
 <tr class="separator:af400609e2689802f8bc671e0d0935464"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab75c73ff8b6549531fbbb8eea6b067ed"><td class="memItemLeft" align="right" valign="top"><a id="ab75c73ff8b6549531fbbb8eea6b067ed"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>realized</b> = 0</td></tr>
+<tr class="memitem:ab75c73ff8b6549531fbbb8eea6b067ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#ab75c73ff8b6549531fbbb8eea6b067ed">realized</a> = 0</td></tr>
 <tr class="separator:ab75c73ff8b6549531fbbb8eea6b067ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14bfe1cad3fafac7649782421c5b39c4"><td class="memItemLeft" align="right" valign="top"><a id="a14bfe1cad3fafac7649782421c5b39c4"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>done</b> = false</td></tr>
+<tr class="memitem:a14bfe1cad3fafac7649782421c5b39c4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a14bfe1cad3fafac7649782421c5b39c4">done</a> = false</td></tr>
 <tr class="separator:a14bfe1cad3fafac7649782421c5b39c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab5e86eb8f1db71c53a03c3793e71d3a"><td class="memItemLeft" align="right" valign="top"><a id="aab5e86eb8f1db71c53a03c3793e71d3a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>counter</b> = 0</td></tr>
+<tr class="memitem:aab5e86eb8f1db71c53a03c3793e71d3a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#aab5e86eb8f1db71c53a03c3793e71d3a">counter</a> = 0</td></tr>
 <tr class="separator:aab5e86eb8f1db71c53a03c3793e71d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3102f55633656b2d285953d3fde20997"><td class="memItemLeft" align="right" valign="top"><a id="a3102f55633656b2d285953d3fde20997"></a>
-vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>most_away</b></td></tr>
+<tr class="memitem:a3102f55633656b2d285953d3fde20997"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a3102f55633656b2d285953d3fde20997">most_away</a></td></tr>
 <tr class="separator:a3102f55633656b2d285953d3fde20997"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4258b65d64692f86109938453dedd26"><td class="memItemLeft" align="right" valign="top"><a id="ab4258b65d64692f86109938453dedd26"></a>
-list&lt; <a class="el" href="struct_edge.html">Edge</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>edges</b></td></tr>
+<tr class="memitem:ab4258b65d64692f86109938453dedd26"><td class="memItemLeft" align="right" valign="top">list&lt; <a class="el" href="struct_edge.html">Edge</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a></td></tr>
 <tr class="separator:ab4258b65d64692f86109938453dedd26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a796dbf5abc441eff747a1296a47304b7"><td class="memItemLeft" align="right" valign="top"><a id="a796dbf5abc441eff747a1296a47304b7"></a>
-shared_ptr&lt; <a class="el" href="struct_face.html">Face</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>outer_face</b></td></tr>
+<tr class="memitem:a796dbf5abc441eff747a1296a47304b7"><td class="memItemLeft" align="right" valign="top">shared_ptr&lt; <a class="el" href="struct_face.html">Face</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">outer_face</a></td></tr>
 <tr class="separator:a796dbf5abc441eff747a1296a47304b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bba295498fe51872196779428caa7a1"><td class="memItemLeft" align="right" valign="top"><a id="a0bba295498fe51872196779428caa7a1"></a>
-ofstream&#160;</td><td class="memItemRight" valign="bottom"><b>output_file</b></td></tr>
+<tr class="memitem:a0bba295498fe51872196779428caa7a1"><td class="memItemLeft" align="right" valign="top">ofstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a0bba295498fe51872196779428caa7a1">output_file</a></td></tr>
 <tr class="separator:a0bba295498fe51872196779428caa7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9e71127c4f7ab7db2e395f341712bee"><td class="memItemLeft" align="right" valign="top"><a id="af9e71127c4f7ab7db2e395f341712bee"></a>
-vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>vertices_</b></td></tr>
+<tr class="memitem:af9e71127c4f7ab7db2e395f341712bee"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#af9e71127c4f7ab7db2e395f341712bee">vertices_</a></td></tr>
 <tr class="separator:af9e71127c4f7ab7db2e395f341712bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af51610c581ca5fd2a1bc500e540c5c4e"><td class="memItemLeft" align="right" valign="top"><a id="af51610c581ca5fd2a1bc500e540c5c4e"></a>
-vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>coordinates_of_special_vertices</b></td></tr>
+<tr class="memitem:af51610c581ca5fd2a1bc500e540c5c4e"><td class="memItemLeft" align="right" valign="top">vector&lt; pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#af51610c581ca5fd2a1bc500e540c5c4e">coordinates_of_special_vertices</a></td></tr>
 <tr class="separator:af51610c581ca5fd2a1bc500e540c5c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1b1f599b2551c199bb14f0ceaff164c7"><td class="memItemLeft" align="right" valign="top"><a id="a1b1f599b2551c199bb14f0ceaff164c7"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
+<tr class="memitem:a1b1f599b2551c199bb14f0ceaff164c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">index</a></td></tr>
 <tr class="separator:a1b1f599b2551c199bb14f0ceaff164c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abfb0a8f661faf0b4b5ee4c3ce2c76a50"><td class="memItemLeft" align="right" valign="top">vector&lt; <a class="el" href="struct_edge.html">Edge</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">segments</a></td></tr>
 <tr class="memdesc:abfb0a8f661faf0b4b5ee4c3ce2c76a50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector to store (pointers on) edges.  <a href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">More...</a><br /></td></tr>
 <tr class="separator:abfb0a8f661faf0b4b5ee4c3ce2c76a50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa9301f221d75a5f0600b5c98917b9018"><td class="memItemLeft" align="right" valign="top">array_4D&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a></td></tr>
+<tr class="memitem:aa9301f221d75a5f0600b5c98917b9018"><td class="memItemLeft" align="right" valign="top"><a class="el" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a></td></tr>
 <tr class="memdesc:aa9301f221d75a5f0600b5c98917b9018"><td class="mdescLeft">&#160;</td><td class="mdescRight">4D array to check which edges already intersect  <a href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">More...</a><br /></td></tr>
 <tr class="separator:aa9301f221d75a5f0600b5c98917b9018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a158492da510bca1fea20d9c694419f7b"><td class="memItemLeft" align="right" valign="top">vector&lt; vector&lt; int &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgraph.html#a158492da510bca1fea20d9c694419f7b">starts</a></td></tr>
@@ -199,7 +185,44 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Main class to store all the information about graph, edges, vertices, ... </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a07b7f117a6a3c6595adfa733a124f75b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07b7f117a6a3c6595adfa733a124f75b">&#9670;&nbsp;</a></span>graph()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">graph::graph </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>ii</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a90d5c07e0184212d1092cf6fee932a02"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90d5c07e0184212d1092cf6fee932a02">&#9670;&nbsp;</a></span>add_edge()</h2>
 
@@ -318,6 +341,31 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a446ab388def546c0d5ced0ccfec29817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a446ab388def546c0d5ced0ccfec29817">&#9670;&nbsp;</a></span>close_files()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void graph::close_files </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -869,12 +917,166 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">array_4D graph::blocked</td>
+          <td class="memname"><a class="el" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a> graph::blocked</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>4D array to check which edges already intersect </p>
+
+</div>
+</div>
+<a id="af51610c581ca5fd2a1bc500e540c5c4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af51610c581ca5fd2a1bc500e540c5c4e">&#9670;&nbsp;</a></span>coordinates_of_special_vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;pair&lt;double, double&gt; &gt; graph::coordinates_of_special_vertices</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab5e86eb8f1db71c53a03c3793e71d3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab5e86eb8f1db71c53a03c3793e71d3a">&#9670;&nbsp;</a></span>counter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int graph::counter = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a14bfe1cad3fafac7649782421c5b39c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14bfe1cad3fafac7649782421c5b39c4">&#9670;&nbsp;</a></span>done</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool graph::done = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4258b65d64692f86109938453dedd26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4258b65d64692f86109938453dedd26">&#9670;&nbsp;</a></span>edges</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">list&lt;<a class="el" href="struct_edge.html">Edge</a>&gt; graph::edges</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1b1f599b2551c199bb14f0ceaff164c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b1f599b2551c199bb14f0ceaff164c7">&#9670;&nbsp;</a></span>index</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int graph::index</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3102f55633656b2d285953d3fde20997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3102f55633656b2d285953d3fde20997">&#9670;&nbsp;</a></span>most_away</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt; pair&lt;double, double&gt; &gt; graph::most_away</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6830f19734b78eb24f47e5744cc84a33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6830f19734b78eb24f47e5744cc84a33">&#9670;&nbsp;</a></span>number_of_vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int graph::number_of_vertices = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a796dbf5abc441eff747a1296a47304b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a796dbf5abc441eff747a1296a47304b7">&#9670;&nbsp;</a></span>outer_face</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">shared_ptr&lt;<a class="el" href="struct_face.html">Face</a>&gt; graph::outer_face</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af400609e2689802f8bc671e0d0935464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af400609e2689802f8bc671e0d0935464">&#9670;&nbsp;</a></span>outer_vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;<a class="el" href="struct_vertex.html">Vertex</a>&gt; graph::outer_vertices {<a class="el" href="struct_vertex.html">Vertex</a>(336, 341), <a class="el" href="struct_vertex.html">Vertex</a>(310, -337), <a class="el" href="struct_vertex.html">Vertex</a>(-329, -283), <a class="el" href="struct_vertex.html">Vertex</a>(-302, 297)}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0bba295498fe51872196779428caa7a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bba295498fe51872196779428caa7a1">&#9670;&nbsp;</a></span>output_file</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ofstream graph::output_file</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab75c73ff8b6549531fbbb8eea6b067ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab75c73ff8b6549531fbbb8eea6b067ed">&#9670;&nbsp;</a></span>realized</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int graph::realized = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -907,6 +1109,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>index</b></td></tr>
 </div><div class="memdoc">
 
 <p>Array which for given pair of vertice i, j return the index in vector <code>segments</code> so the "dummy" edge ("dummy" vertex) where to start (end) </p>
+
+</div>
+</div>
+<a id="af9e71127c4f7ab7db2e395f341712bee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9e71127c4f7ab7db2e395f341712bee">&#9670;&nbsp;</a></span>vertices_</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">vector&lt;pair&lt;double, double&gt; &gt; graph::vertices_</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

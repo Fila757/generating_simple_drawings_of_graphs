@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['twolines_39',['TwoLines',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a7e60dabf80f59ab06799799842bf44b9',1,'VizualizerWPF::CollisionDetection']]],
-  ['twolinesintersectnotattheend_40',['TwoLinesIntersectNotAtTheEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#adbd9ae56a26ecd092bf6bbebd24426f3',1,'VizualizerWPF::CollisionDetection']]],
-  ['twopaths_41',['TwoPaths',['../class_vizualizer_w_p_f_1_1_collision_detection.html#af8f664f8f5128cbcae72b379b616303b',1,'VizualizerWPF::CollisionDetection']]]
+  ['main_94',['Main',['../class_vizualizer_w_p_f_1_1_conjecture_checker.html#a953db81d1b8e3c28e756a7ad490a6efc',1,'VizualizerWPF::ConjectureChecker']]],
+  ['maximalkedges_95',['maximalKEdges',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aa455701e097b6c862469f7936d3f34ba',1,'VizualizerWPF::GraphCoordinates']]],
+  ['middle_96',['Middle',['../namespace_vizualizer_w_p_f.html#aa95aa3e643b222355230511356c6e640ab1ca34f82e83c52b010f86955f264e05',1,'VizualizerWPF']]],
+  ['mulitply_97',['Mulitply',['../class_vizualizer_w_p_f_1_1_point_extensions.html#a20d945383959120fc90e7a023611eb08',1,'VizualizerWPF::PointExtensions']]]
 ];

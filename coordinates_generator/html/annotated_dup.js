@@ -1,11 +1,11 @@
 var annotated_dup =
 [
-    [ "mapbox", null, [
-      [ "detail", null, [
+    [ "mapbox", "namespacemapbox.html", [
+      [ "detail", "namespacemapbox_1_1detail.html", [
         [ "Earcut", "classmapbox_1_1detail_1_1_earcut.html", "classmapbox_1_1detail_1_1_earcut" ]
       ] ],
-      [ "util", null, [
-        [ "nth", "structmapbox_1_1util_1_1nth.html", null ]
+      [ "util", "namespacemapbox_1_1util.html", [
+        [ "nth", "structmapbox_1_1util_1_1nth.html", "structmapbox_1_1util_1_1nth" ]
       ] ]
     ] ],
     [ "Edge", "struct_edge.html", "struct_edge" ],

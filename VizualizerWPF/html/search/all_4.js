@@ -1,15 +1,12 @@
 var searchData=
 [
-  ['generatenextdrawing_17',['GenerateNextDrawing',['../class_vizualizer_w_p_f_1_1_graph_generator.html#af06ed391cb0ba159f9ad846523cb029c',1,'VizualizerWPF::GraphGenerator']]],
-  ['generatepreviousdrawing_18',['GeneratePreviousDrawing',['../class_vizualizer_w_p_f_1_1_graph_generator.html#ae2212a01929fabc4bce59a13fe7c1823',1,'VizualizerWPF::GraphGenerator']]],
-  ['getallpoints_19',['GetAllPoints',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a6c65b0e81e991da05a056fc626c457ea',1,'VizualizerWPF::GraphCoordinates']]],
-  ['getedges_20',['GetEdges',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a90bc8d3940691d30e7fd9cf95f92e863',1,'VizualizerWPF::CollisionDetection']]],
-  ['gethashcode_21',['GetHashCode',['../struct_vizualizer_w_p_f_1_1_vertex.html#a7dfe68f54f0e4ff08294aa832f728e20',1,'VizualizerWPF::Vertex']]],
-  ['getlines_22',['GetLines',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a747265a46e00d619042de79055d019fb',1,'VizualizerWPF::GraphCoordinates']]],
-  ['getorientation_23',['GetOrientation',['../class_vizualizer_w_p_f_1_1_collision_detection.html#aba5f845bcb3fcd359fc9247640aae442',1,'VizualizerWPF::CollisionDetection']]],
-  ['getperpendicularstoalmostmids_24',['GetPerpendicularsToAlmostMids',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a715ace704c3a7d4aadc681499ea4478a',1,'VizualizerWPF::CollisionDetection']]],
-  ['getraysgoingfrompoint_25',['GetRaysGoingFromPoint',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a9eb31e5f7c1d8d760c8a364f5c182343',1,'VizualizerWPF::CollisionDetection']]],
-  ['getverticesandintersections_26',['GetVerticesAndIntersections',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a87c82001706a576a98becd76770cc9fa',1,'VizualizerWPF::GraphCoordinates']]],
-  ['graphcoordinates_27',['GraphCoordinates',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html',1,'VizualizerWPF']]],
-  ['graphgenerator_28',['GraphGenerator',['../class_vizualizer_w_p_f_1_1_graph_generator.html',1,'VizualizerWPF']]]
+  ['edge_70',['Edge',['../class_vizualizer_w_p_f_1_1_edge.html#a7258185027778280a494e908272e8087',1,'VizualizerWPF.Edge.Edge()'],['../class_vizualizer_w_p_f_1_1_edge.html#a90f83a497b5a3266b01edd39a0204d9b',1,'VizualizerWPF.Edge.Edge(List&lt; Point &gt; points, List&lt; Line &gt; lines)'],['../class_vizualizer_w_p_f_1_1_edge.html',1,'VizualizerWPF.Edge']]],
+  ['edge_2ecs_71',['Edge.cs',['../_edge_8cs.html',1,'']]],
+  ['edgelistextensions_72',['EdgeListExtensions',['../class_vizualizer_w_p_f_1_1_edge_list_extensions.html',1,'VizualizerWPF']]],
+  ['edgelistextensions_2ecs_73',['EdgeListExtensions.cs',['../_edge_list_extensions_8cs.html',1,'']]],
+  ['edges_74',['edges',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aeb18673ab8a84d42e0f29d0f0098da60',1,'VizualizerWPF::GraphCoordinates']]],
+  ['ellipse_75',['ellipse',['../struct_vizualizer_w_p_f_1_1_vertex.html#a71612dde8fd1621670dfd7d531220adc',1,'VizualizerWPF::Vertex']]],
+  ['ellipse_5fmousedown_76',['ellipse_MouseDown',['../class_vizualizer_w_p_f_1_1_main_window.html#a2685a7148e10b6f485713cc4d46aaecf',1,'VizualizerWPF::MainWindow']]],
+  ['epsilon_77',['epsilon',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a7647faf9154772c8f03e3fdd65510008',1,'VizualizerWPF::CollisionDetection']]],
+  ['equals_78',['Equals',['../struct_vizualizer_w_p_f_1_1_vertex.html#ae4709ce262fe4a30566ae98ac5bab7c0',1,'VizualizerWPF.Vertex.Equals(object obj)'],['../struct_vizualizer_w_p_f_1_1_vertex.html#a8b5ea464ff5cfad68311213b44813f6b',1,'VizualizerWPF.Vertex.Equals(Vertex other)'],['../struct_vizualizer_w_p_f_1_1_vertex.html#ac004e0313a99a7a0962684e5c62003ed',1,'VizualizerWPF.Vertex.Equals(Vertex x, Vertex y)']]]
 ];

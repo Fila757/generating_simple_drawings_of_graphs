@@ -85,7 +85,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="title">functions.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="functions_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
@@ -99,7 +99,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;fstream&gt;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;triangulation.hpp&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="triangulation_8hpp.html">triangulation.hpp</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#include &lt;queue&gt;</span></div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#include &lt;unordered_set&gt;</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
@@ -113,101 +113,101 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#ifndef M_PI</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define M_PI 3.14159265358979323846</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="functions_8hpp.html#ae71449b1cc6e6250b91f539153a7a0d3">   29</a></span>&#160;<span class="preprocessor">#define M_PI 3.14159265358979323846</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="preprocessor">#ifndef INF</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#define INF 100000000</span></div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">   33</a></span>&#160;<span class="preprocessor">#define INF 100000000</span></div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// !INF</span></div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="preprocessor">#ifndef EPSILON</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;<span class="preprocessor">#define EPSILON 0.0001</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">   37</a></span>&#160;<span class="preprocessor">#define EPSILON 0.0001</span></div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#define x first</span></div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="preprocessor">#define y second</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">   40</a></span>&#160;<span class="preprocessor">#define x first</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">   41</a></span>&#160;<span class="preprocessor">#define y second</span></div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> print_bool = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">   43</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a> = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">using</span> array_4D = vector&lt;vector&lt;vector&lt;vector&lt;bool&gt; &gt; &gt; &gt;;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">   45</a></span>&#160;<span class="keyword">using</span> <a class="code" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a> = vector&lt;vector&lt;vector&lt;vector&lt;bool&gt; &gt; &gt; &gt;;</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">struct </span><a class="code" href="struct_vertex.html">Vertex</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">struct </span><a class="code" href="struct_edge.html">Edge</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">struct </span><a class="code" href="struct_face.html">Face</a>;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="struct_vertex.html">   54</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_vertex.html">Vertex</a> {</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* to_;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">   55</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">to_</a>;</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="struct_vertex.html#a440133980998b323a2642f8759d7b3f4">   57</a></span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">double</span> x_, y_;</div>
+<div class="line"><a name="l00059"></a><span class="lineno"><a class="line" href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">   59</a></span>&#160;    <span class="keywordtype">double</span> <a class="code" href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">x_</a>, y_;</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160; </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    pair&lt;double, double&gt; shift_first = make_pair(0, 0);</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    pair&lt;double, double&gt; shift_second = make_pair(0, 0);</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="struct_vertex.html#a3eb528af0325038d9728eb838cbc4720">   61</a></span>&#160;    pair&lt;double, double&gt; shift_first = make_pair(0, 0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno"><a class="line" href="struct_vertex.html#a379e5cebe11918222b18e9f97d593137">   62</a></span>&#160;    pair&lt;double, double&gt; shift_second = make_pair(0, 0);</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="struct_vertex.html">Vertex</a>() {}</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">   64</a></span>&#160;    <a class="code" href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">Vertex</a>() {}</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <a class="code" href="struct_vertex.html">Vertex</a>(<span class="keywordtype">double</span> x, <span class="keywordtype">double</span> y) : x_(x), y_(y) {}</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="struct_vertex.html#a2927de87e482ddebbb18abf7f811c6c3">   66</a></span>&#160;    <a class="code" href="struct_vertex.html#a2927de87e482ddebbb18abf7f811c6c3">Vertex</a>(<span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) : x_(<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>), y_(<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) {}</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="comment">//it is really good to be the opposite one because when you create new vertex </span></div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">//from the edge side then it is good to go from the intersection opposite side</span></div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="struct_vertex.html">Vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* to) : to_(to) {}</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">   70</a></span>&#160;    <a class="code" href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">Vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* to) : to_(to) {}</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>&amp; a) {</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> x_ == a.x_ &amp;&amp; y_ == a.y_;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="struct_vertex.html#a6e7547915a8a3996b88b07f8d88bda1d">   72</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#a6e7547915a8a3996b88b07f8d88bda1d">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>&amp; a) {</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;        <span class="keywordflow">return</span> x_ == a.<a class="code" href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">x_</a> &amp;&amp; y_ == a.<a class="code" href="struct_vertex.html#a5ed3844414a4155a8804e35d5a75a3f6">y_</a>;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>&amp; a) {</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="struct_vertex.html#a70857a5ed59a47f097237d69c00c2dac">   76</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#a70857a5ed59a47f097237d69c00c2dac">operator!=</a>(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>&amp; a) {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == a);</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    }</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">bool</span> operator==(<a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> a-&gt;x_ == x_ &amp;&amp; a-&gt;y_ == y_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="struct_vertex.html#ac2e9dd488c6a6fb928629b2c8efe4e94">   80</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#ac2e9dd488c6a6fb928629b2c8efe4e94">operator==</a>(<a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> a-&gt;<a class="code" href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">x_</a> == x_ &amp;&amp; a-&gt;<a class="code" href="struct_vertex.html#a5ed3844414a4155a8804e35d5a75a3f6">y_</a> == y_;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">bool</span> operator!=(<a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="struct_vertex.html#ac470de2bc74387e5a74b47c88afa1f9c">   84</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#ac470de2bc74387e5a74b47c88afa1f9c">operator!=</a>(<a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">return</span> !(<span class="keyword">this</span> == a);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    }</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">return</span> a-&gt;x_ == x_ &amp;&amp; a-&gt;y_ == y_;</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="struct_vertex.html#a72db05bde1797061d9931ec3b5a47bfa">   89</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#a72db05bde1797061d9931ec3b5a47bfa">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        <span class="keywordflow">return</span> a-&gt;<a class="code" href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">x_</a> == x_ &amp;&amp; a-&gt;<a class="code" href="struct_vertex.html#a5ed3844414a4155a8804e35d5a75a3f6">y_</a> == y_;</div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="struct_vertex.html#aeec622d36d09b6e9109a3e90d84e7971">   93</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_vertex.html#aeec622d36d09b6e9109a3e90d84e7971">operator!=</a>(<span class="keyword">const</span> <a class="code" href="struct_vertex.html">Vertex</a>* a) {</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;        <span class="keywordflow">return</span> !(<span class="keyword">this</span> == a);</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    }</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;};</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160; </div>
 <div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="struct_face.html">  101</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_face.html">Face</a> {</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* edge_;</div>
+<div class="line"><a name="l00102"></a><span class="lineno"><a class="line" href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">  102</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">edge_</a>;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="struct_face.html">Face</a>() {}</div>
+<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">  104</a></span>&#160;    <a class="code" href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">Face</a>() {}</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160; </div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="struct_face.html">Face</a>(<a class="code" href="struct_edge.html">Edge</a>* edge) : edge_(edge) {}</div>
+<div class="line"><a name="l00106"></a><span class="lineno"><a class="line" href="struct_face.html#a4e63b1d45a84871b99949fca4c18ef1e">  106</a></span>&#160;    <a class="code" href="struct_face.html#a4e63b1d45a84871b99949fca4c18ef1e">Face</a>(<a class="code" href="struct_edge.html">Edge</a>* edge) : edge_(edge) {}</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
 <div class="line"><a name="l00112"></a><span class="lineno"><a class="line" href="struct_edge.html">  112</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_edge.html">Edge</a> {</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">  113</a></span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* next_;</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* prev_;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* opposite_;</div>
+<div class="line"><a name="l00115"></a><span class="lineno"><a class="line" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">  115</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
+<div class="line"><a name="l00116"></a><span class="lineno"><a class="line" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">  116</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a>;</div>
+<div class="line"><a name="l00117"></a><span class="lineno"><a class="line" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">  117</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; vertices_;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">  119</a></span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; <a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>;</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    shared_ptr&lt;Face&gt; face_;</div>
+<div class="line"><a name="l00121"></a><span class="lineno"><a class="line" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">  121</a></span>&#160;    shared_ptr&lt;Face&gt; <a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>;</div>
 <div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160; </div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>() {}</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">  123</a></span>&#160;    <a class="code" href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">Edge</a>() {}</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>(<a class="code" href="struct_edge.html">Edge</a>* next, <a class="code" href="struct_edge.html">Edge</a>* prev, <a class="code" href="struct_edge.html">Edge</a>* opposite, vector&lt;shared_ptr&lt;Vertex&gt; &gt; vertices, shared_ptr&lt;Face&gt; face, <span class="keywordtype">int</span> index) :</div>
+<div class="line"><a name="l00125"></a><span class="lineno"><a class="line" href="struct_edge.html#ab11361f1cc3426c85b9ce6995db2925f">  125</a></span>&#160;    <a class="code" href="struct_edge.html#ab11361f1cc3426c85b9ce6995db2925f">Edge</a>(<a class="code" href="struct_edge.html">Edge</a>* next, <a class="code" href="struct_edge.html">Edge</a>* prev, <a class="code" href="struct_edge.html">Edge</a>* opposite, vector&lt;shared_ptr&lt;Vertex&gt; &gt; vertices, shared_ptr&lt;Face&gt; face, <span class="keywordtype">int</span> index) :</div>
 <div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;        next_(next), prev_(prev), opposite_(opposite), vertices_(vertices), face_(face), index_(index) {}</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> (vertices_[0] == a.vertices_[0] &amp;&amp; vertices_.back() == a.vertices_.back());</div>
+<div class="line"><a name="l00128"></a><span class="lineno"><a class="line" href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">  128</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;        <span class="keywordflow">return</span> (vertices_[0] == a.<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>[0] &amp;&amp; vertices_.back() == a.<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.back());</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    }</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160; </div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
+<div class="line"><a name="l00132"></a><span class="lineno"><a class="line" href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">  132</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">operator!=</a>(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == a);</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;    }</div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
@@ -216,34 +216,34 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00141"></a><span class="lineno"><a class="line" href="structgraph.html">  141</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgraph.html">graph</a> {</div>
 <div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160; </div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    <span class="comment">/*normal part*/</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">int</span> number_of_vertices = 0; <span class="comment">//just real vertices</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="structgraph.html#a6830f19734b78eb24f47e5744cc84a33">  144</a></span>&#160;    <span class="keywordtype">int</span> number_of_vertices = 0; <span class="comment">//just real vertices</span></div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    vector&lt;Vertex&gt; outer_vertices{<a class="code" href="struct_vertex.html">Vertex</a>(336, 341), <a class="code" href="struct_vertex.html">Vertex</a>(310, -337), <a class="code" href="struct_vertex.html">Vertex</a>(-329, -283), <a class="code" href="struct_vertex.html">Vertex</a>(-302, 297)}; </div>
+<div class="line"><a name="l00146"></a><span class="lineno"><a class="line" href="structgraph.html#af400609e2689802f8bc671e0d0935464">  146</a></span>&#160;    vector&lt;Vertex&gt; outer_vertices{<a class="code" href="struct_vertex.html">Vertex</a>(336, 341), <a class="code" href="struct_vertex.html">Vertex</a>(310, -337), <a class="code" href="struct_vertex.html">Vertex</a>(-329, -283), <a class="code" href="struct_vertex.html">Vertex</a>(-302, 297)}; </div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordtype">int</span> realized = 0;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="structgraph.html#ab75c73ff8b6549531fbbb8eea6b067ed">  148</a></span>&#160;    <span class="keywordtype">int</span> realized = 0;</div>
+<div class="line"><a name="l00149"></a><span class="lineno"><a class="line" href="structgraph.html#a14bfe1cad3fafac7649782421c5b39c4">  149</a></span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><a name="l00151"></a><span class="lineno"><a class="line" href="structgraph.html#aab5e86eb8f1db71c53a03c3793e71d3a">  151</a></span>&#160;    <span class="keywordtype">int</span> counter = 0;</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    vector&lt; pair&lt;double, double&gt; &gt; most_away;</div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="structgraph.html#a3102f55633656b2d285953d3fde20997">  153</a></span>&#160;    vector&lt; pair&lt;double, double&gt; &gt; <a class="code" href="structgraph.html#a3102f55633656b2d285953d3fde20997">most_away</a>;</div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    list&lt;Edge&gt; edges;</div>
+<div class="line"><a name="l00155"></a><span class="lineno"><a class="line" href="structgraph.html#ab4258b65d64692f86109938453dedd26">  155</a></span>&#160;    list&lt;Edge&gt; <a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>;</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    shared_ptr&lt;Face&gt; outer_face;</div>
+<div class="line"><a name="l00157"></a><span class="lineno"><a class="line" href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">  157</a></span>&#160;    shared_ptr&lt;Face&gt; <a class="code" href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">outer_face</a>;</div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    ofstream output_file;</div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="line" href="structgraph.html#a0bba295498fe51872196779428caa7a1">  159</a></span>&#160;    ofstream <a class="code" href="structgraph.html#a0bba295498fe51872196779428caa7a1">output_file</a>;</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    vector&lt;pair&lt;double, double&gt; &gt; vertices_;</div>
+<div class="line"><a name="l00161"></a><span class="lineno"><a class="line" href="structgraph.html#af9e71127c4f7ab7db2e395f341712bee">  161</a></span>&#160;    vector&lt;pair&lt;double, double&gt; &gt; <a class="code" href="structgraph.html#af9e71127c4f7ab7db2e395f341712bee">vertices_</a>;</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    vector&lt;pair&lt;double, double&gt; &gt; coordinates_of_special_vertices;</div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="structgraph.html#af51610c581ca5fd2a1bc500e540c5c4e">  163</a></span>&#160;    vector&lt;pair&lt;double, double&gt; &gt; <a class="code" href="structgraph.html#af51610c581ca5fd2a1bc500e540c5c4e">coordinates_of_special_vertices</a>;</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">int</span> index;</div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="line" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">  165</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">index</a>;</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160; </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">void</span> close_files() {</div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">  167</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">close_files</a>() {</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        output_file.close();</div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    }</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="structgraph.html">graph</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> ii) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="structgraph.html#a07b7f117a6a3c6595adfa733a124f75b">  171</a></span>&#160;    <a class="code" href="structgraph.html#a07b7f117a6a3c6595adfa733a124f75b">graph</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> ii) {</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        index = ii;</div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        number_of_vertices = n;</div>
@@ -310,13 +310,13 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;    <span class="comment">//number of edges indexer</span></div>
 <div class="line"><a name="l00239"></a><span class="lineno"><a class="line" href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">  239</a></span>&#160;<span class="comment"></span>    vector&lt;Edge*&gt; <a class="code" href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">segments</a>; </div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">  244</a></span>&#160;    array_4D <a class="code" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a>; </div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">  244</a></span>&#160;    <a class="code" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a> <a class="code" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a>; </div>
 <div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
 <div class="line"><a name="l00250"></a><span class="lineno"><a class="line" href="structgraph.html#a158492da510bca1fea20d9c694419f7b">  250</a></span>&#160;    vector&lt;vector&lt;int&gt; &gt; <a class="code" href="structgraph.html#a158492da510bca1fea20d9c694419f7b">starts</a>;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;    <span class="comment">// to store canonic fingerprints</span></div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160; </div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordtype">void</span> create_special_vertex(<span class="keywordtype">int</span> index, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;    <span class="keywordtype">void</span> create_special_vertex(<span class="keywordtype">int</span> index, <span class="keywordtype">int</span> <a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, <span class="keywordtype">int</span> <a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>);</div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <span class="keywordtype">void</span> recolor_fingerprint(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rotation);</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;    <span class="keywordtype">void</span> create_base_star();</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <span class="keywordtype">void</span> create_all_special_vertices();</div>
@@ -336,7 +336,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;};</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160; </div>
 <div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> if_two_segmetns_intersects(pair&lt;shared_ptr&lt;Vertex&gt;, shared_ptr&lt;Vertex&gt; &gt; line1, pair&lt;shared_ptr&lt;Vertex&gt;, shared_ptr&lt;Vertex&gt; &gt; line2)</div>
+<div class="line"><a name="l00280"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a243327df8fed2351de8ddfc9044f7a87">  280</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a243327df8fed2351de8ddfc9044f7a87">if_two_segmetns_intersects</a>(pair&lt;shared_ptr&lt;Vertex&gt;, shared_ptr&lt;Vertex&gt; &gt; line1, pair&lt;shared_ptr&lt;Vertex&gt;, shared_ptr&lt;Vertex&gt; &gt; line2)</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;{</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="keyword">auto</span> denominator = (line2.second-&gt;y_ - line2.first-&gt;y_) * (line1.second-&gt;x_ - line1.first-&gt;x_) - (line2.second-&gt;x_ - line2.first-&gt;x_) * (line1.second-&gt;y_ - line1.first-&gt;y_);</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
@@ -349,13 +349,13 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keyword">auto</span> s = numS / denominator;</div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;    <span class="keyword">auto</span> t = numT / denominator;</div>
 <div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordflow">if</span> (abs(denominator) &lt; EPSILON &amp;&amp; (s &gt;= -EPSILON &amp;&amp; s &lt;= 1 + EPSILON) &amp;&amp; (t &gt;= -EPSILON &amp;&amp; t &lt;= 1 + EPSILON))</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;    <span class="keywordflow">if</span> (abs(denominator) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> &amp;&amp; (s &gt;= -<a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> &amp;&amp; s &lt;= 1 + <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>) &amp;&amp; (t &gt;= -<a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> &amp;&amp; t &lt;= 1 + <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>))</div>
 <div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;}</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
 <div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> create_coordinates(<span class="keyword">const</span> vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; points, vector&lt;vector&lt;double&gt; &gt;&amp; distances) {</div>
+<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a28bf9d73479dfb3c00c960e9a5a7cc8c">  305</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="functions_8hpp.html#a28bf9d73479dfb3c00c960e9a5a7cc8c">create_coordinates</a>(<span class="keyword">const</span> vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; points, vector&lt;vector&lt;double&gt; &gt;&amp; distances) {</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160; </div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; points.size();i++) {</div>
 <div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; points.size();j++) {</div>
@@ -365,7 +365,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
 <div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
-<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> dijsktra(vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; points, vector&lt;vector&lt;double&gt; &gt; distances, vector&lt;int&gt;&amp; parent) {</div>
+<div class="line"><a name="l00322"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a6e1870b2bebbcb56978ccc480beedc23">  322</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="functions_8hpp.html#a6e1870b2bebbcb56978ccc480beedc23">dijsktra</a>(vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; points, vector&lt;vector&lt;double&gt; &gt; distances, vector&lt;int&gt;&amp; parent) {</div>
 <div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160; </div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;    vector&lt;double&gt; shortest;</div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;    shortest.resize(points.size());</div>
@@ -375,7 +375,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    visited.resize(points.size());</div>
 <div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160; </div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; points.size(); i++) {</div>
-<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        shortest[i] = INF;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;        shortest[i] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    }</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
 <div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    shortest[0] = 0;</div>
@@ -401,11 +401,11 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160; </div>
-<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> print_graph(<a class="code" href="structgraph.html">graph</a>* g) {</div>
-<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;number of edges: &quot;</span> &lt;&lt; g-&gt;edges.size() &lt;&lt; endl;</div>
+<div class="line"><a name="l00358"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">  358</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">print_graph</a>(<a class="code" href="structgraph.html">graph</a>* g) {</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;number of edges: &quot;</span> &lt;&lt; g-&gt;<a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>.size() &lt;&lt; endl;</div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : g-&gt;edges) {</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : g-&gt;<a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>) {</div>
 <div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;        cout &lt;&lt; it.vertices_[0] &lt;&lt; <span class="stringliteral">&quot;:from to:&quot;</span> &lt;&lt; it.vertices_.back() &lt;&lt; <span class="stringliteral">&quot; face:&quot;</span> &lt;&lt; it.face_ &lt;&lt; <span class="stringliteral">&quot; prev:&quot;</span> &lt;&lt; it.prev_-&gt;index_ &lt;&lt; <span class="stringliteral">&quot; next:&quot;</span> &lt;&lt; it.next_-&gt;index_</div>
 <div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; opp:&quot;</span> &lt;&lt; ((it.opposite_ == <span class="keyword">nullptr</span>) ? -1 : it.opposite_-&gt;index_) &lt;&lt; <span class="stringliteral">&quot; index:&quot;</span> &lt;&lt; it.index_ &lt;&lt;  <span class="stringliteral">&quot; s: &quot;</span> &lt;&lt; i &lt;&lt; endl;</div>
 <div class="line"><a name="l00365"></a><span class="lineno">  365</span>&#160;        i++;</div>
@@ -427,7 +427,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160; </div>
 <div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;    vector&lt;int&gt; parent;</div>
 <div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;    parent.resize(all_vertices.size());</div>
-<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    dijsktra(all_vertices, distances, parent);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;    <a class="code" href="functions_8hpp.html#a6e1870b2bebbcb56978ccc480beedc23">dijsktra</a>(all_vertices, distances, parent);</div>
 <div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160; </div>
 <div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; result;</div>
 <div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160; </div>
@@ -440,13 +440,13 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;    <span class="keywordflow">return</span> result;</div>
 <div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;}</div>
 <div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160; </div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;<span class="keyword">inline</span> vector&lt;pair&lt;double, double&gt; &gt; create_circle(<span class="keywordtype">double</span> radius, <span class="keywordtype">double</span> cx, <span class="keywordtype">double</span> cy, <span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00411"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aba4a50012fd79739d64706c8087949bc">  411</a></span>&#160;<span class="keyword">inline</span> vector&lt;pair&lt;double, double&gt; &gt; <a class="code" href="functions_8hpp.html#aba4a50012fd79739d64706c8087949bc">create_circle</a>(<span class="keywordtype">double</span> radius, <span class="keywordtype">double</span> cx, <span class="keywordtype">double</span> cy, <span class="keywordtype">int</span> n) {</div>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;    vector&lt;pair&lt;double, double&gt; &gt; circle;</div>
 <div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160; </div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;    <span class="keywordtype">double</span> unit_angle = (double)360 / n;</div>
 <div class="line"><a name="l00415"></a><span class="lineno">  415</span>&#160; </div>
 <div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n;i++) {</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        circle.push_back(make_pair((<span class="keywordtype">int</span>)(cx + radius * cos((i + 1) * (unit_angle / 180) * M_PI)),(<span class="keywordtype">int</span>)(cy + radius * sin((i + 1) * (unit_angle / 180) * M_PI))));</div>
+<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;        circle.push_back(make_pair((<span class="keywordtype">int</span>)(cx + radius * cos((i + 1) * (unit_angle / 180) * <a class="code" href="functions_8hpp.html#ae71449b1cc6e6250b91f539153a7a0d3">M_PI</a>)),(<span class="keywordtype">int</span>)(cy + radius * sin((i + 1) * (unit_angle / 180) * <a class="code" href="functions_8hpp.html#ae71449b1cc6e6250b91f539153a7a0d3">M_PI</a>))));</div>
 <div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;    }</div>
 <div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160; </div>
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;    <span class="comment">/*</span></div>
@@ -457,21 +457,21 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keywordflow">return</span> circle;</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;}</div>
 <div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160; </div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> distance(pair&lt;double, double&gt; a) {</div>
+<div class="line"><a name="l00428"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">  428</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(pair&lt;double, double&gt; a) {</div>
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keywordflow">return</span> sqrt((a.x ) * (a.x) + (a.y) * (a.y ));</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;}</div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
-<div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> distance(pair&lt;double, double&gt; a, pair&lt;double, double&gt; b) {</div>
+<div class="line"><a name="l00432"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aca3bb76b4c07efc7598c0b2c465f8018">  432</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(pair&lt;double, double&gt; a, pair&lt;double, double&gt; b) {</div>
 <div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;    <span class="keywordflow">return</span> sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));</div>
 <div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;}</div>
 <div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160; </div>
-<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> distance(shared_ptr&lt;Vertex&gt; a, shared_ptr&lt;Vertex&gt; b) {</div>
+<div class="line"><a name="l00436"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a885d3ee09e82566db201e84904fec287">  436</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(shared_ptr&lt;Vertex&gt; a, shared_ptr&lt;Vertex&gt; b) {</div>
 <div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;    <span class="keywordflow">return</span> sqrt((a-&gt;x_ - b-&gt;x_) * (a-&gt;x_ - b-&gt;x_) + (a-&gt;y_ - b-&gt;y_) * (a-&gt;y_ - b-&gt;y_));</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;}</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160; </div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160; </div>
 <div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160; </div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;<span class="keyword">inline</span> vector&lt;pair&lt;double, double&gt; &gt; make_convex_hull(vector&lt;pair&lt;double, double&gt; &gt; vertices) {</div>
+<div class="line"><a name="l00447"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a8403933a7efd1fe3cc0644134768a593">  447</a></span>&#160;<span class="keyword">inline</span> vector&lt;pair&lt;double, double&gt; &gt; <a class="code" href="functions_8hpp.html#a8403933a7efd1fe3cc0644134768a593">make_convex_hull</a>(vector&lt;pair&lt;double, double&gt; &gt; vertices) {</div>
 <div class="line"><a name="l00448"></a><span class="lineno">  448</span>&#160;    <span class="keyword">typedef</span> boost::tuple&lt;double, double&gt; point;</div>
 <div class="line"><a name="l00449"></a><span class="lineno">  449</span>&#160;    <span class="keyword">typedef</span> boost::geometry::model::polygon&lt;point&gt; polygon;</div>
 <div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160; </div>
@@ -482,7 +482,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;    </div>
 <div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; vertices.size();i++){</div>
 <div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;        points.push_back(</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;            boost::make_tuple&lt;double, double&gt;(vertices[i].x, vertices[i].y));</div>
+<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;            boost::make_tuple&lt;double, double&gt;(vertices[i].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, vertices[i].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>));</div>
 <div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;    }</div>
 <div class="line"><a name="l00460"></a><span class="lineno">  460</span>&#160; </div>
 <div class="line"><a name="l00461"></a><span class="lineno">  461</span>&#160;    boost::geometry::assign_points(poly, points);</div>
@@ -504,17 +504,17 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;    <span class="keywordflow">return</span> result;</div>
 <div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;}</div>
 <div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160; </div>
-<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> compare(pair&lt;double, double&gt; a, pair&lt;double, double&gt; b) {</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keywordflow">if</span> (abs(a.x - b.x) &lt; EPSILON &amp;&amp; abs(a.y - b.y) &lt; EPSILON)</div>
+<div class="line"><a name="l00486"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a6363f71fbeb7c983169d84505be8ce71">  486</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a6363f71fbeb7c983169d84505be8ce71">compare</a>(pair&lt;double, double&gt; a, pair&lt;double, double&gt; b) {</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;    <span class="keywordflow">if</span> (abs(a.x - b.x) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> &amp;&amp; abs(a.y - b.y) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>)</div>
 <div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00490"></a><span class="lineno">  490</span>&#160;}</div>
 <div class="line"><a name="l00491"></a><span class="lineno">  491</span>&#160; </div>
 <div class="line"><a name="l00496"></a><span class="lineno"><a class="line" href="structgraph.html#a903960dfe4cefbc301f40f4855dcd54c">  496</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a903960dfe4cefbc301f40f4855dcd54c">graph::update_most_away</a>(vector&lt;pair&lt;double, double&gt; &gt; vertices) {</div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    most_away = make_convex_hull(vertices);</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;    most_away = <a class="code" href="functions_8hpp.html#a8403933a7efd1fe3cc0644134768a593">make_convex_hull</a>(vertices);</div>
 <div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;}</div>
 <div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160; </div>
-<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> det(pair&lt;double, double&gt; vec1, pair&lt;double, double&gt; vec2) {</div>
+<div class="line"><a name="l00506"></a><span class="lineno"><a class="line" href="functions_8hpp.html#ab65bcb922266805e323d4c7125fe5734">  506</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#ab65bcb922266805e323d4c7125fe5734">det</a>(pair&lt;double, double&gt; vec1, pair&lt;double, double&gt; vec2) {</div>
 <div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;    <span class="keywordflow">return</span> vec1.x * vec2.y - vec1.y * vec2.x;</div>
 <div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;}</div>
 <div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160; </div>
@@ -529,7 +529,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="comment">    v ---&gt;</span></div>
 <div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160; </div>
-<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;<span class="keyword">inline</span> pair&lt;double, double&gt; get_shift(shared_ptr&lt;Vertex&gt; vertex, pair&lt;double, double&gt; vect) { </div>
+<div class="line"><a name="l00528"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a0291586cbcabe4ac13aeaab79e227198">  528</a></span>&#160;<span class="keyword">inline</span> pair&lt;double, double&gt; <a class="code" href="functions_8hpp.html#a0291586cbcabe4ac13aeaab79e227198">get_shift</a>(shared_ptr&lt;Vertex&gt; vertex, pair&lt;double, double&gt; vect) { </div>
 <div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160; </div>
 <div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;    pair&lt;double, double&gt; first_neg_vect;</div>
 <div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;    pair&lt;double, double&gt; second_neg_vect;</div>
@@ -540,34 +540,34 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00536"></a><span class="lineno">  536</span>&#160;    second_neg_vect = make_pair(vect.y, -vect.x);</div>
 <div class="line"><a name="l00537"></a><span class="lineno">  537</span>&#160;    </div>
 <div class="line"><a name="l00538"></a><span class="lineno">  538</span>&#160; </div>
-<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    <span class="keywordflow">if</span> (det(vect, first_neg_vect) &lt; 0) { <span class="comment">//negative der is to the right</span></div>
-<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        <span class="keywordflow">return</span> make_pair(10 * EPSILON * first_neg_vect.x, 10 * EPSILON * first_neg_vect.y); <span class="comment">// 10* EPSILON to be recognizable</span></div>
+<div class="line"><a name="l00539"></a><span class="lineno">  539</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#ab65bcb922266805e323d4c7125fe5734">det</a>(vect, first_neg_vect) &lt; 0) { <span class="comment">//negative der is to the right</span></div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;        <span class="keywordflow">return</span> make_pair(10 * <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> * first_neg_vect.x, 10 * <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> * first_neg_vect.y); <span class="comment">// 10* EPSILON to be recognizable</span></div>
 <div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;    }</div>
 <div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;    <span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;        <span class="keywordflow">return</span> make_pair(10 * EPSILON * second_neg_vect.x, 10 * EPSILON * second_neg_vect.y);</div>
+<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;        <span class="keywordflow">return</span> make_pair(10 * <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> * second_neg_vect.x, 10 * <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> * second_neg_vect.y);</div>
 <div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;    }</div>
 <div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;}</div>
 <div class="line"><a name="l00546"></a><span class="lineno">  546</span>&#160; </div>
 <div class="line"><a name="l00547"></a><span class="lineno">  547</span>&#160; </div>
-<div class="line"><a name="l00555"></a><span class="lineno">  555</span>&#160;<span class="keyword">inline</span> pair&lt;double, double&gt; find_vertex_in_right_direction(shared_ptr&lt;Vertex&gt; vertex, pair&lt;double, double&gt; vect) {</div>
+<div class="line"><a name="l00555"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">  555</a></span>&#160;<span class="keyword">inline</span> pair&lt;double, double&gt; <a class="code" href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">find_vertex_in_right_direction</a>(shared_ptr&lt;Vertex&gt; vertex, pair&lt;double, double&gt; vect) {</div>
 <div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160; </div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    <span class="keyword">auto</span> shift = get_shift(vertex, vect);</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    <span class="keywordflow">return</span> make_pair(100 * (shift.x / distance(shift)), 100 * ((shift.y / distance(shift))));</div>
+<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;    <span class="keyword">auto</span> shift = <a class="code" href="functions_8hpp.html#a0291586cbcabe4ac13aeaab79e227198">get_shift</a>(vertex, vect);</div>
+<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;    <span class="keywordflow">return</span> make_pair(100 * (shift.x / <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(shift)), 100 * ((shift.y / <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(shift))));</div>
 <div class="line"><a name="l00559"></a><span class="lineno">  559</span>&#160; </div>
 <div class="line"><a name="l00560"></a><span class="lineno">  560</span>&#160;}</div>
 <div class="line"><a name="l00561"></a><span class="lineno">  561</span>&#160; </div>
 <div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160; </div>
-<div class="line"><a name="l00571"></a><span class="lineno">  571</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> get_value(<span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b, <span class="keywordtype">int</span> c, shared_ptr&lt;Vertex&gt; point) {</div>
+<div class="line"><a name="l00571"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a10a406b8a70042b521fdc30fc4c3aab2">  571</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">double</span> <a class="code" href="functions_8hpp.html#a10a406b8a70042b521fdc30fc4c3aab2">get_value</a>(<span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b, <span class="keywordtype">int</span> c, shared_ptr&lt;Vertex&gt; point) {</div>
 <div class="line"><a name="l00572"></a><span class="lineno">  572</span>&#160;    <span class="keywordflow">return</span> a * point-&gt;x_ + b * point-&gt;y_ + c;</div>
 <div class="line"><a name="l00573"></a><span class="lineno">  573</span>&#160;}</div>
 <div class="line"><a name="l00574"></a><span class="lineno">  574</span>&#160; </div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> is_on_right_side_of(shared_ptr&lt;Vertex&gt;asked_point, shared_ptr&lt;Vertex&gt; point, pair&lt;double, double&gt; vect, shared_ptr&lt;Vertex&gt; on_right_side) {</div>
+<div class="line"><a name="l00584"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">  584</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a>(shared_ptr&lt;Vertex&gt;asked_point, shared_ptr&lt;Vertex&gt; point, pair&lt;double, double&gt; vect, shared_ptr&lt;Vertex&gt; on_right_side) {</div>
 <div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;    </div>
 <div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;    <span class="keywordtype">double</span> a = vect.x;</div>
 <div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;    <span class="keywordtype">double</span> b = vect.y;</div>
 <div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;    <span class="keywordtype">double</span> c = -(a * point-&gt;x_ + b * point-&gt;y_);</div>
 <div class="line"><a name="l00589"></a><span class="lineno">  589</span>&#160;    </div>
-<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="keywordflow">if</span> (get_value(a, b, c, asked_point) * get_value(a, b, c, on_right_side) &gt; 0)</div>
+<div class="line"><a name="l00590"></a><span class="lineno">  590</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#a10a406b8a70042b521fdc30fc4c3aab2">get_value</a>(a, b, c, asked_point) * <a class="code" href="functions_8hpp.html#a10a406b8a70042b521fdc30fc4c3aab2">get_value</a>(a, b, c, on_right_side) &gt; 0)</div>
 <div class="line"><a name="l00591"></a><span class="lineno">  591</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00592"></a><span class="lineno">  592</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00593"></a><span class="lineno">  593</span>&#160;}</div>
@@ -591,7 +591,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00611"></a><span class="lineno">  611</span>&#160;<span class="comment">}</span></div>
 <div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;<span class="comment">*/</span></div>
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160; </div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> are_collinear(shared_ptr&lt;Vertex&gt; v1, shared_ptr&lt;Vertex&gt; v2, shared_ptr&lt;Vertex&gt; v3) {</div>
+<div class="line"><a name="l00614"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a1f162786911acbb95cd50f19133db6bb">  614</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a1f162786911acbb95cd50f19133db6bb">are_collinear</a>(shared_ptr&lt;Vertex&gt; v1, shared_ptr&lt;Vertex&gt; v2, shared_ptr&lt;Vertex&gt; v3) {</div>
 <div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160; </div>
 <div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;    <span class="comment">/* Calculation the area of</span></div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;<span class="comment">    triangle.We have skipped</span></div>
@@ -600,7 +600,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00620"></a><span class="lineno">  620</span>&#160; </div>
 <div class="line"><a name="l00621"></a><span class="lineno">  621</span>&#160;    <span class="keywordtype">double</span> a = v1-&gt;x_ * (v2-&gt;y_ - v3-&gt;y_) + v2-&gt;x_ * (v3-&gt;y_ - v1-&gt;y_) + v3-&gt;x_ * (v1-&gt;y_ - v2-&gt;y_);</div>
 <div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160; </div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    <span class="keywordflow">if</span> (abs(a) &lt; EPSILON)</div>
+<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;    <span class="keywordflow">if</span> (abs(a) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>)</div>
 <div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160;}</div>
@@ -612,10 +612,10 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00645"></a><span class="lineno">  645</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* toa = <span class="keyword">nullptr</span>, * tob = <span class="keyword">nullptr</span>, * froma = <span class="keyword">nullptr</span>, * fromb = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00646"></a><span class="lineno">  646</span>&#160; </div>
 <div class="line"><a name="l00647"></a><span class="lineno">  647</span>&#160;    toa = a-&gt;to_;</div>
-<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    froma = toa-&gt;next_;</div>
+<div class="line"><a name="l00648"></a><span class="lineno">  648</span>&#160;    froma = toa-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l00649"></a><span class="lineno">  649</span>&#160; </div>
 <div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;    tob = b-&gt;to_;</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;    fromb = tob-&gt;next_;</div>
+<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;    fromb = tob-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160; </div>
 <div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;    <span class="comment">/* triangulation */</span></div>
 <div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160; </div>
@@ -646,9 +646,9 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; outer_vertices.size(); i++)</div>
 <div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;            outside_points.push_back(make_shared&lt;Vertex&gt;(outer_vertices[i]));</div>
 <div class="line"><a name="l00681"></a><span class="lineno">  681</span>&#160;        outside_points.insert(outside_points.end(), faces_vertices.begin(), faces_vertices.end());</div>
-<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;        create_coordinates(outside_points, outside_distances);</div>
+<div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;        <a class="code" href="functions_8hpp.html#a28bf9d73479dfb3c00c960e9a5a7cc8c">create_coordinates</a>(outside_points, outside_distances);</div>
 <div class="line"><a name="l00683"></a><span class="lineno">  683</span>&#160; </div>
-<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;        <span class="keywordtype">double</span> mn = INF; <span class="keywordtype">int</span> mn_index = -1;</div>
+<div class="line"><a name="l00684"></a><span class="lineno">  684</span>&#160;        <span class="keywordtype">double</span> mn = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>; <span class="keywordtype">int</span> mn_index = -1;</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; outer_vertices.size(); i++) {</div>
 <div class="line"><a name="l00686"></a><span class="lineno">  686</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = outer_vertices.size(); j &lt; outside_distances[i].size(); j++) {</div>
 <div class="line"><a name="l00687"></a><span class="lineno">  687</span>&#160;                <span class="keywordflow">if</span> (outside_distances[i][j] &lt; mn) {</div>
@@ -674,10 +674,10 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00707"></a><span class="lineno">  707</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; faces_vertices.size(); i++) {</div>
 <div class="line"><a name="l00708"></a><span class="lineno">  708</span>&#160;            <span class="keywordflow">if</span> (*faces_vertices[i] != *faces_vertices[i - 1]) {</div>
 <div class="line"><a name="l00709"></a><span class="lineno">  709</span>&#160;                <span class="keywordflow">if</span> ((faces_vertices[i]-&gt;index_ == -1) &amp;&amp;</div>
-<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                    (compare(make_pair(faces_vertices[i]-&gt;x_ - faces_vertices[i - 1]-&gt;x_, faces_vertices[i]-&gt;y_ - faces_vertices[i - 1]-&gt;y_), faces_vertices[i]-&gt;shift_first)</div>
+<div class="line"><a name="l00710"></a><span class="lineno">  710</span>&#160;                    (<a class="code" href="functions_8hpp.html#a6363f71fbeb7c983169d84505be8ce71">compare</a>(make_pair(faces_vertices[i]-&gt;x_ - faces_vertices[i - 1]-&gt;x_, faces_vertices[i]-&gt;y_ - faces_vertices[i - 1]-&gt;y_), faces_vertices[i]-&gt;shift_first)</div>
 <div class="line"><a name="l00711"></a><span class="lineno">  711</span>&#160;                    ||</div>
-<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;                    compare(make_pair(faces_vertices[i]-&gt;x_ - faces_vertices[i - 1]-&gt;x_, faces_vertices[i]-&gt;y_ - faces_vertices[i - 1]-&gt;y_), faces_vertices[i]-&gt;shift_second))) {</div>
-<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                    <span class="keyword">auto</span> shift = get_shift(</div>
+<div class="line"><a name="l00712"></a><span class="lineno">  712</span>&#160;                    <a class="code" href="functions_8hpp.html#a6363f71fbeb7c983169d84505be8ce71">compare</a>(make_pair(faces_vertices[i]-&gt;x_ - faces_vertices[i - 1]-&gt;x_, faces_vertices[i]-&gt;y_ - faces_vertices[i - 1]-&gt;y_), faces_vertices[i]-&gt;shift_second))) {</div>
+<div class="line"><a name="l00713"></a><span class="lineno">  713</span>&#160;                    <span class="keyword">auto</span> shift = <a class="code" href="functions_8hpp.html#a0291586cbcabe4ac13aeaab79e227198">get_shift</a>(</div>
 <div class="line"><a name="l00714"></a><span class="lineno">  714</span>&#160;                        faces_vertices[i],</div>
 <div class="line"><a name="l00715"></a><span class="lineno">  715</span>&#160;                        make_pair(faces_vertices[i]-&gt;x_ - faces_vertices[i - 1]-&gt;x_,</div>
 <div class="line"><a name="l00716"></a><span class="lineno">  716</span>&#160;                            faces_vertices[i]-&gt;y_ - faces_vertices[i - 1]-&gt;y_));</div>
@@ -693,7 +693,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;                coords.push_back(make_pair(faces_vertices[i]-&gt;x_, faces_vertices[i]-&gt;y_));</div>
 <div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;            }</div>
 <div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; most_away.size(); j++) {</div>
-<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;                <span class="keywordflow">if</span> (abs(faces_vertices[i]-&gt;x_ - most_away[j].x) &lt; EPSILON &amp;&amp; abs(faces_vertices[i]-&gt;y_ - most_away[j].y) &lt; EPSILON) {</div>
+<div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;                <span class="keywordflow">if</span> (abs(faces_vertices[i]-&gt;x_ - most_away[j].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a> &amp;&amp; abs(faces_vertices[i]-&gt;y_ - most_away[j].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>) {</div>
 <div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;                    local_most_away[j] = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00731"></a><span class="lineno">  731</span>&#160;                }</div>
 <div class="line"><a name="l00732"></a><span class="lineno">  732</span>&#160;            }</div>
@@ -711,7 +711,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00744"></a><span class="lineno">  744</span>&#160; </div>
 <div class="line"><a name="l00745"></a><span class="lineno">  745</span>&#160;        <span class="keywordflow">if</span> (second_outer_face_bool) {</div>
 <div class="line"><a name="l00746"></a><span class="lineno">  746</span>&#160;            <span class="comment">/* minimum rotation of outer part*/</span></div>
-<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;            <span class="keywordtype">double</span> mn = INF;</div>
+<div class="line"><a name="l00747"></a><span class="lineno">  747</span>&#160;            <span class="keywordtype">double</span> mn = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00748"></a><span class="lineno">  748</span>&#160;            <span class="keywordtype">int</span> index_min;</div>
 <div class="line"><a name="l00749"></a><span class="lineno">  749</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; outer_vertices.size(); i++) {</div>
 <div class="line"><a name="l00750"></a><span class="lineno">  750</span>&#160;                <span class="keywordflow">if</span> ((outer_vertices[i].x_ - faces_vertices.back()-&gt;x_) * (outer_vertices[i].x_ - faces_vertices.back()-&gt;x_) +</div>
@@ -763,8 +763,8 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00796"></a><span class="lineno">  796</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; indices.size(); i += 3){</div>
 <div class="line"><a name="l00797"></a><span class="lineno">  797</span>&#160; </div>
 <div class="line"><a name="l00798"></a><span class="lineno">  798</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 3; j++) {</div>
-<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;                <span class="keyword">auto</span> vertex = make_shared&lt;Vertex&gt;((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,</div>
-<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;                    (coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);</div>
+<div class="line"><a name="l00799"></a><span class="lineno">  799</span>&#160;                <span class="keyword">auto</span> vertex = make_shared&lt;Vertex&gt;((coords[indices[i + j]].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a> + coords[indices[i + ((j + 1) % 3)]].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>) / 2,</div>
+<div class="line"><a name="l00800"></a><span class="lineno">  800</span>&#160;                    (coords[indices[i + j]].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a> + coords[indices[i + ((j + 1) % 3)]].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) / 2);</div>
 <div class="line"><a name="l00801"></a><span class="lineno">  801</span>&#160;                <span class="keywordflow">if</span> (!visited_vertices.count(make_pair(vertex-&gt;x_, vertex-&gt;y_)) <span class="comment">//should be first one there</span></div>
 <div class="line"><a name="l00802"></a><span class="lineno">  802</span>&#160;                    &amp;&amp;</div>
 <div class="line"><a name="l00803"></a><span class="lineno">  803</span>&#160;                    !(second_outer_face_bool &amp;&amp; </div>
@@ -794,7 +794,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00827"></a><span class="lineno">  827</span>&#160;        distances.resize(all_vertices.size());</div>
 <div class="line"><a name="l00828"></a><span class="lineno">  828</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; all_vertices.size(); i++) {</div>
 <div class="line"><a name="l00829"></a><span class="lineno">  829</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; all_vertices.size(); j++) {</div>
-<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;                distances[i].push_back(INF);</div>
+<div class="line"><a name="l00830"></a><span class="lineno">  830</span>&#160;                distances[i].push_back(<a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>);</div>
 <div class="line"><a name="l00831"></a><span class="lineno">  831</span>&#160;            }</div>
 <div class="line"><a name="l00832"></a><span class="lineno">  832</span>&#160;        }</div>
 <div class="line"><a name="l00833"></a><span class="lineno">  833</span>&#160; </div>
@@ -822,8 +822,8 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00855"></a><span class="lineno">  855</span>&#160;            <span class="keywordtype">bool</span> contains_b = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00856"></a><span class="lineno">  856</span>&#160; </div>
 <div class="line"><a name="l00857"></a><span class="lineno">  857</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 3; j++) {</div>
-<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;                <span class="keyword">auto</span> vertex = make_shared&lt;Vertex&gt;((coords[indices[i + j]].x + coords[indices[i + ((j + 1) % 3)]].x) / 2,</div>
-<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;                    (coords[indices[i + j]].y + coords[indices[i + ((j + 1) % 3)]].y) / 2);</div>
+<div class="line"><a name="l00858"></a><span class="lineno">  858</span>&#160;                <span class="keyword">auto</span> vertex = make_shared&lt;Vertex&gt;((coords[indices[i + j]].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a> + coords[indices[i + ((j + 1) % 3)]].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>) / 2,</div>
+<div class="line"><a name="l00859"></a><span class="lineno">  859</span>&#160;                    (coords[indices[i + j]].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a> + coords[indices[i + ((j + 1) % 3)]].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) / 2);</div>
 <div class="line"><a name="l00860"></a><span class="lineno">  860</span>&#160;                <span class="keywordflow">if</span> (!(second_outer_face_bool &amp;&amp;</div>
 <div class="line"><a name="l00861"></a><span class="lineno">  861</span>&#160;                        ((min(indices[i + j], indices[i + ((j + 1) % 3)]) == 0)</div>
 <div class="line"><a name="l00862"></a><span class="lineno">  862</span>&#160;                            &amp;&amp; (max(indices[i + j], indices[i + ((j + 1) % 3)]) == coords.size() - 7)))</div>
@@ -846,30 +846,30 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00879"></a><span class="lineno">  879</span>&#160;                        mid_index++;</div>
 <div class="line"><a name="l00880"></a><span class="lineno">  880</span>&#160;                    }</div>
 <div class="line"><a name="l00881"></a><span class="lineno">  881</span>&#160;                }</div>
-<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;                <span class="keywordflow">if</span> (distance(coords[indices[i + (j % 3)]], make_pair(a-&gt;x_, a-&gt;y_)) &lt; EPSILON) {</div>
+<div class="line"><a name="l00882"></a><span class="lineno">  882</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(coords[indices[i + (j % 3)]], make_pair(a-&gt;x_, a-&gt;y_)) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>) {</div>
 <div class="line"><a name="l00883"></a><span class="lineno">  883</span>&#160;                    contains_a = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00884"></a><span class="lineno">  884</span>&#160;                }</div>
 <div class="line"><a name="l00885"></a><span class="lineno">  885</span>&#160; </div>
-<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;                <span class="keywordflow">if</span> (distance(coords[indices[i + (j % 3)]], make_pair(b-&gt;x_, b-&gt;y_)) &lt; EPSILON) {</div>
+<div class="line"><a name="l00886"></a><span class="lineno">  886</span>&#160;                <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(coords[indices[i + (j % 3)]], make_pair(b-&gt;x_, b-&gt;y_)) &lt; <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>) {</div>
 <div class="line"><a name="l00887"></a><span class="lineno">  887</span>&#160;                    contains_b = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00888"></a><span class="lineno">  888</span>&#160;                }</div>
 <div class="line"><a name="l00889"></a><span class="lineno">  889</span>&#160;            }</div>
 <div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160; </div>
 <div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;            <span class="keywordflow">for</span>(<span class="keywordtype">int</span> u = 0;u &lt; triangle_indices.size();u++){</div>
 <div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160;                <span class="keywordflow">for</span>(<span class="keywordtype">int</span> v = u + 1;v &lt; triangle_indices.size();v++){</div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;                    distances[triangle_indices[u]+2][triangle_indices[v]+2] = distance(mids[triangle_indices[u]], mids[triangle_indices[v]]);</div>
-<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;                    distances[triangle_indices[v]+2][triangle_indices[u]+2] = distance(mids[triangle_indices[v]], mids[triangle_indices[u]]);</div>
+<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;                    distances[triangle_indices[u]+2][triangle_indices[v]+2] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(mids[triangle_indices[u]], mids[triangle_indices[v]]);</div>
+<div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;                    distances[triangle_indices[v]+2][triangle_indices[u]+2] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(mids[triangle_indices[v]], mids[triangle_indices[u]]);</div>
 <div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;                }</div>
 <div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160;            }</div>
 <div class="line"><a name="l00897"></a><span class="lineno">  897</span>&#160; </div>
 <div class="line"><a name="l00898"></a><span class="lineno">  898</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> u = 0; u &lt; triangle_indices.size(); u++) {</div>
 <div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160;                <span class="keywordflow">if</span> (contains_a) {</div>
-<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;                    distances[triangle_indices[u] + 2][0] = distance(mids[triangle_indices[u]], a);</div>
-<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;                    distances[0][triangle_indices[u] + 2] = distance(a, mids[triangle_indices[u]]);</div>
+<div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;                    distances[triangle_indices[u] + 2][0] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(mids[triangle_indices[u]], a);</div>
+<div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160;                    distances[0][triangle_indices[u] + 2] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(a, mids[triangle_indices[u]]);</div>
 <div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;                }</div>
 <div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160;                <span class="keywordflow">if</span>(contains_b) {</div>
-<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;                    distances[triangle_indices[u] + 2][1] = distance(mids[triangle_indices[u]], b);</div>
-<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;                    distances[1][triangle_indices[u] + 2] = distance(b, mids[triangle_indices[u]]);</div>
+<div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;                    distances[triangle_indices[u] + 2][1] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(mids[triangle_indices[u]], b);</div>
+<div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;                    distances[1][triangle_indices[u] + 2] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(b, mids[triangle_indices[u]]);</div>
 <div class="line"><a name="l00906"></a><span class="lineno">  906</span>&#160;                }</div>
 <div class="line"><a name="l00907"></a><span class="lineno">  907</span>&#160;            }</div>
 <div class="line"><a name="l00908"></a><span class="lineno">  908</span>&#160; </div>
@@ -884,8 +884,8 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00917"></a><span class="lineno">  917</span>&#160;                    &amp;&amp;</div>
 <div class="line"><a name="l00918"></a><span class="lineno">  918</span>&#160;                    ((b-&gt;x_ == coords[indices[i + ((j + 1) % 3)]].x) &amp;&amp; (b-&gt;y_ == coords[indices[i + ((j + 1) % 3)]].y))</div>
 <div class="line"><a name="l00919"></a><span class="lineno">  919</span>&#160;                    ) {</div>
-<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;                    distances[0][1] = distance(a, b) - EPSILON; <span class="comment">//substracting epsilon in order to choose a -- b instead of a -- mid -- b which is also possible</span></div>
-<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                    distances[1][0] = distance(b, a) - EPSILON;</div>
+<div class="line"><a name="l00920"></a><span class="lineno">  920</span>&#160;                    distances[0][1] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(a, b) - <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>; <span class="comment">//substracting epsilon in order to choose a -- b instead of a -- mid -- b which is also possible</span></div>
+<div class="line"><a name="l00921"></a><span class="lineno">  921</span>&#160;                    distances[1][0] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(b, a) - <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>;</div>
 <div class="line"><a name="l00922"></a><span class="lineno">  922</span>&#160;                }</div>
 <div class="line"><a name="l00923"></a><span class="lineno">  923</span>&#160;            }</div>
 <div class="line"><a name="l00924"></a><span class="lineno">  924</span>&#160;        }</div>
@@ -897,8 +897,8 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00930"></a><span class="lineno">  930</span>&#160;                    &amp;&amp;</div>
 <div class="line"><a name="l00931"></a><span class="lineno">  931</span>&#160;                    ((a-&gt;x_ == coords[indices[i + ((j + 1) % 3)]].x) &amp;&amp; (a-&gt;y_ == coords[indices[i + ((j + 1) % 3)]].y))</div>
 <div class="line"><a name="l00932"></a><span class="lineno">  932</span>&#160;                    ) {</div>
-<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;                    distances[0][1] = distance(a, b) - EPSILON;</div>
-<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;                    distances[1][0] = distance(b, a) - EPSILON;</div>
+<div class="line"><a name="l00933"></a><span class="lineno">  933</span>&#160;                    distances[0][1] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(a, b) - <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>;</div>
+<div class="line"><a name="l00934"></a><span class="lineno">  934</span>&#160;                    distances[1][0] = <a class="code" href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a>(b, a) - <a class="code" href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>;</div>
 <div class="line"><a name="l00935"></a><span class="lineno">  935</span>&#160;                }</div>
 <div class="line"><a name="l00936"></a><span class="lineno">  936</span>&#160;            }</div>
 <div class="line"><a name="l00937"></a><span class="lineno">  937</span>&#160;        }</div>
@@ -910,14 +910,14 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00943"></a><span class="lineno">  943</span>&#160;        next_vertex-&gt;x_ = b-&gt;x_ + shift_next.x;<span class="comment">//(second_outer_face_bool ? shift_next.x : -shift_next.x);</span></div>
 <div class="line"><a name="l00944"></a><span class="lineno">  944</span>&#160;        next_vertex-&gt;y_ = b-&gt;y_ + shift_next.y;<span class="comment">//(second_outer_face_bool ? shift_next.y : -shift_next.y);</span></div>
 <div class="line"><a name="l00945"></a><span class="lineno">  945</span>&#160;        <span class="keywordflow">if</span> (b-&gt;index_ == -1) { <span class="comment">// (b-&gt;shift_epsilon.x != 0 || b-&gt;shift_epsilon.y != 0) instead of b-&gt;index_ == -1</span></div>
-<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;            <span class="keywordflow">if</span> (!is_on_right_side_of(a, b, shift_next, next_vertex)) {</div>
-<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;                distances[1][0] = INF;</div>
-<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;                distances[0][1] = INF;</div>
+<div class="line"><a name="l00946"></a><span class="lineno">  946</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a>(a, b, shift_next, next_vertex)) {</div>
+<div class="line"><a name="l00947"></a><span class="lineno">  947</span>&#160;                distances[1][0] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
+<div class="line"><a name="l00948"></a><span class="lineno">  948</span>&#160;                distances[0][1] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00949"></a><span class="lineno">  949</span>&#160;            }</div>
 <div class="line"><a name="l00950"></a><span class="lineno">  950</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 2; i &lt; distances.size(); i++) {</div>
-<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;                <span class="keywordflow">if</span> (!is_on_right_side_of(mids[i - 2], b, shift_next, next_vertex)) { <span class="comment">// coordinates_of_special_vertices[b_index - 1]</span></div>
-<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;                    distances[1][i] = INF;</div>
-<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;                    distances[i][1] = INF;</div>
+<div class="line"><a name="l00951"></a><span class="lineno">  951</span>&#160;                <span class="keywordflow">if</span> (!<a class="code" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a>(mids[i - 2], b, shift_next, next_vertex)) { <span class="comment">// coordinates_of_special_vertices[b_index - 1]</span></div>
+<div class="line"><a name="l00952"></a><span class="lineno">  952</span>&#160;                    distances[1][i] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
+<div class="line"><a name="l00953"></a><span class="lineno">  953</span>&#160;                    distances[i][1] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00954"></a><span class="lineno">  954</span>&#160;                }</div>
 <div class="line"><a name="l00955"></a><span class="lineno">  955</span>&#160;            }</div>
 <div class="line"><a name="l00956"></a><span class="lineno">  956</span>&#160;        }</div>
@@ -927,14 +927,14 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00960"></a><span class="lineno">  960</span>&#160;        previous_vertex-&gt;x_ = a-&gt;x_ + shift_previous.x;<span class="comment">//(second_outer_face_bool ? shift_previous.x : -shift_previous.x);</span></div>
 <div class="line"><a name="l00961"></a><span class="lineno">  961</span>&#160;        previous_vertex-&gt;y_ = a-&gt;y_ + shift_previous.y;<span class="comment">//(second_outer_face_bool ? shift_previous.y : -shift_previous.y);</span></div>
 <div class="line"><a name="l00962"></a><span class="lineno">  962</span>&#160;        <span class="keywordflow">if</span> (a-&gt;index_ == -1) { <span class="comment">// (b-&gt;shift_epsilon.x != 0 || b-&gt;shift_epsilon.y != 0) instead of b-&gt;index_ == -1</span></div>
-<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;            <span class="keywordflow">if</span> (!is_on_right_side_of(b, a, shift_previous, previous_vertex)) {</div>
-<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;                distances[0][1] = INF;</div>
-<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;                distances[1][0] = INF;</div>
+<div class="line"><a name="l00963"></a><span class="lineno">  963</span>&#160;            <span class="keywordflow">if</span> (!<a class="code" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a>(b, a, shift_previous, previous_vertex)) {</div>
+<div class="line"><a name="l00964"></a><span class="lineno">  964</span>&#160;                distances[0][1] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
+<div class="line"><a name="l00965"></a><span class="lineno">  965</span>&#160;                distances[1][0] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00966"></a><span class="lineno">  966</span>&#160;            }</div>
 <div class="line"><a name="l00967"></a><span class="lineno">  967</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 2; i &lt; distances.size(); i++) {</div>
-<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;                <span class="keywordflow">if</span> (!is_on_right_side_of(mids[i-2], a, shift_previous, previous_vertex)) {</div>
-<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;                    distances[0][i] = INF;</div>
-<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;                    distances[i][0] = INF;</div>
+<div class="line"><a name="l00968"></a><span class="lineno">  968</span>&#160;                <span class="keywordflow">if</span> (!<a class="code" href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a>(mids[i-2], a, shift_previous, previous_vertex)) {</div>
+<div class="line"><a name="l00969"></a><span class="lineno">  969</span>&#160;                    distances[0][i] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
+<div class="line"><a name="l00970"></a><span class="lineno">  970</span>&#160;                    distances[i][0] = <a class="code" href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a>;</div>
 <div class="line"><a name="l00971"></a><span class="lineno">  971</span>&#160;                }</div>
 <div class="line"><a name="l00972"></a><span class="lineno">  972</span>&#160;            }</div>
 <div class="line"><a name="l00973"></a><span class="lineno">  973</span>&#160;        }</div>
@@ -964,7 +964,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;        vector&lt;shared_ptr&lt;Vertex&gt; &gt; non_colinear; </div>
 <div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;        non_colinear.push_back(vertices[0]); non_colinear.push_back(vertices[1]); <span class="comment">//there are always at least two vertices</span></div>
 <div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 2; i &lt; vertices.size(); i++) {</div>
-<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;            <span class="keywordflow">if</span> (are_collinear(non_colinear[non_colinear.size()-2], non_colinear[non_colinear.size()-1], vertices[i])) {</div>
+<div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#a1f162786911acbb95cd50f19133db6bb">are_collinear</a>(non_colinear[non_colinear.size()-2], non_colinear[non_colinear.size()-1], vertices[i])) {</div>
 <div class="line"><a name="l01001"></a><span class="lineno"> 1001</span>&#160;                non_colinear.pop_back(); non_colinear.push_back(vertices[i]); <span class="comment">//skip when collinear</span></div>
 <div class="line"><a name="l01002"></a><span class="lineno"> 1002</span>&#160;            }</div>
 <div class="line"><a name="l01003"></a><span class="lineno"> 1003</span>&#160;            <span class="keywordflow">else</span> {</div>
@@ -991,10 +991,10 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01035"></a><span class="lineno"> 1035</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* toa = <span class="keyword">nullptr</span>, * tob = <span class="keyword">nullptr</span>, * froma = <span class="keyword">nullptr</span>, * fromb = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l01036"></a><span class="lineno"> 1036</span>&#160; </div>
 <div class="line"><a name="l01037"></a><span class="lineno"> 1037</span>&#160;    toa = a-&gt;to_;</div>
-<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;    froma = toa-&gt;next_;</div>
+<div class="line"><a name="l01038"></a><span class="lineno"> 1038</span>&#160;    froma = toa-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l01039"></a><span class="lineno"> 1039</span>&#160; </div>
 <div class="line"><a name="l01040"></a><span class="lineno"> 1040</span>&#160;    tob = b-&gt;to_;</div>
-<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;    fromb = tob-&gt;next_;</div>
+<div class="line"><a name="l01041"></a><span class="lineno"> 1041</span>&#160;    fromb = tob-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l01042"></a><span class="lineno"> 1042</span>&#160;    </div>
 <div class="line"><a name="l01043"></a><span class="lineno"> 1043</span>&#160;    <span class="keyword">auto</span> vertices = find_path_through_triangulation(a, b, face, a_index, b_index, shift_previous, shift_next, outer_face_bool);</div>
 <div class="line"><a name="l01044"></a><span class="lineno"> 1044</span>&#160; </div>
@@ -1020,22 +1020,22 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160; </div>
 <div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;    <span class="comment">//print_graph(this);</span></div>
 <div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160; </div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;    ab_edge_ptr-&gt;opposite_ = ba_edge_ptr; <span class="comment">//setting opposite edge that has been already made and face edge</span></div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;    ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a> = ba_edge_ptr; <span class="comment">//setting opposite edge that has been already made and face edge</span></div>
 <div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;    new_face-&gt;edge_ = ba_edge_ptr;</div>
 <div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160; </div>
 <div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;    <span class="comment">/*if it throws an exception it is allright because we are tryint to connect unconnectable vertices*/</span></div>
-<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;    froma-&gt;prev_ = ba_edge_ptr; <span class="comment">//changing neighborhood edges</span></div>
-<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;    toa-&gt;next_ = ab_edge_ptr;</div>
-<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;    fromb-&gt;prev_ = ab_edge_ptr;</div>
-<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;    tob-&gt;next_ = ba_edge_ptr;</div>
+<div class="line"><a name="l01071"></a><span class="lineno"> 1071</span>&#160;    froma-&gt;<a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a> = ba_edge_ptr; <span class="comment">//changing neighborhood edges</span></div>
+<div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160;    toa-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = ab_edge_ptr;</div>
+<div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;    fromb-&gt;<a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a> = ab_edge_ptr;</div>
+<div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;    tob-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = ba_edge_ptr;</div>
 <div class="line"><a name="l01075"></a><span class="lineno"> 1075</span>&#160; </div>
 <div class="line"><a name="l01076"></a><span class="lineno"> 1076</span>&#160;    <span class="comment">//print_graph(this);</span></div>
 <div class="line"><a name="l01077"></a><span class="lineno"> 1077</span>&#160; </div>
 <div class="line"><a name="l01078"></a><span class="lineno"> 1078</span>&#160;    <span class="keywordflow">if</span> (!outer_face_bool) { <span class="comment">//because if it is outer face it is not needed so it can be quicker</span></div>
 <div class="line"><a name="l01079"></a><span class="lineno"> 1079</span>&#160;        <span class="keyword">auto</span> start_edge = ba_edge_ptr; <span class="comment">//setting the face property to all edges around this face</span></div>
-<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;        <span class="keyword">auto</span> cur_edge = start_edge-&gt;next_;</div>
+<div class="line"><a name="l01080"></a><span class="lineno"> 1080</span>&#160;        <span class="keyword">auto</span> cur_edge = start_edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l01081"></a><span class="lineno"> 1081</span>&#160;        <span class="keywordflow">while</span> (start_edge != cur_edge) {</div>
-<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;            cur_edge-&gt;face_ = new_face;</div>
+<div class="line"><a name="l01082"></a><span class="lineno"> 1082</span>&#160;            cur_edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a> = new_face;</div>
 <div class="line"><a name="l01083"></a><span class="lineno"> 1083</span>&#160;            cur_edge = cur_edge-&gt;next_;</div>
 <div class="line"><a name="l01084"></a><span class="lineno"> 1084</span>&#160;        }</div>
 <div class="line"><a name="l01085"></a><span class="lineno"> 1085</span>&#160;    }</div>
@@ -1045,15 +1045,15 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01089"></a><span class="lineno"> 1089</span>&#160; </div>
 <div class="line"><a name="l01097"></a><span class="lineno"><a class="line" href="structgraph.html#ab3e5d36d160cfb1b74f02a5d9e4f3572"> 1097</a></span>&#160;<span class="keyword">inline</span> shared_ptr&lt;Vertex&gt; <a class="code" href="structgraph.html#ab3e5d36d160cfb1b74f02a5d9e4f3572">graph::tearup_lines_in_half</a>(<a class="code" href="struct_edge.html">Edge</a>* edge, vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; a_half, vector&lt;shared_ptr&lt;Vertex&gt; &gt;&amp; b_half) {</div>
 <div class="line"><a name="l01098"></a><span class="lineno"> 1098</span>&#160; </div>
-<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;    a_half = vector&lt;shared_ptr&lt;Vertex&gt; &gt;(edge-&gt;vertices_.begin(), edge-&gt;vertices_.begin() + edge-&gt;vertices_.size() / 2);</div>
-<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;    b_half = vector&lt;shared_ptr&lt;Vertex&gt; &gt;(edge-&gt;vertices_.begin() + edge-&gt;vertices_.size() / 2, edge-&gt;vertices_.end());</div>
+<div class="line"><a name="l01099"></a><span class="lineno"> 1099</span>&#160;    a_half = vector&lt;shared_ptr&lt;Vertex&gt; &gt;(edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.begin(), edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.begin() + edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.size() / 2);</div>
+<div class="line"><a name="l01100"></a><span class="lineno"> 1100</span>&#160;    b_half = vector&lt;shared_ptr&lt;Vertex&gt; &gt;(edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.begin() + edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.size() / 2, edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.end());</div>
 <div class="line"><a name="l01101"></a><span class="lineno"> 1101</span>&#160; </div>
 <div class="line"><a name="l01102"></a><span class="lineno"> 1102</span>&#160; </div>
 <div class="line"><a name="l01103"></a><span class="lineno"> 1103</span>&#160;    <span class="keyword">auto</span> a = a_half.back();</div>
 <div class="line"><a name="l01104"></a><span class="lineno"> 1104</span>&#160;    <span class="keyword">auto</span> b = b_half[0];</div>
 <div class="line"><a name="l01105"></a><span class="lineno"> 1105</span>&#160; </div>
 <div class="line"><a name="l01106"></a><span class="lineno"> 1106</span>&#160;    <span class="keyword">auto</span> new_vertex = make_shared&lt;Vertex&gt;(edge); <span class="comment">//edge is going to this vertex //&quot;edge&quot; it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)</span></div>
-<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;    new_vertex-&gt;index_ = ((edge-&gt;index_ / 100 == 0) || (edge-&gt;index_ % 100 == 0)) ? -1 : -2;</div>
+<div class="line"><a name="l01107"></a><span class="lineno"> 1107</span>&#160;    new_vertex-&gt;index_ = ((edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100 == 0) || (edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100 == 0)) ? -1 : -2;</div>
 <div class="line"><a name="l01108"></a><span class="lineno"> 1108</span>&#160;    new_vertex-&gt;x_ = (a-&gt;x_ + b-&gt;x_) / 2; new_vertex-&gt;y_ = (a-&gt;y_ + b-&gt;y_) / 2;</div>
 <div class="line"><a name="l01109"></a><span class="lineno"> 1109</span>&#160; </div>
 <div class="line"><a name="l01110"></a><span class="lineno"> 1110</span>&#160;    new_vertex-&gt;shift_first = make_pair(new_vertex-&gt;x_ - a-&gt;x_, new_vertex-&gt;y_ - a-&gt;y_);</div>
@@ -1075,25 +1075,25 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01126"></a><span class="lineno"> 1126</span>&#160; </div>
 <div class="line"><a name="l01131"></a><span class="lineno"><a class="line" href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70"> 1131</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70">graph::add_vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* edge) {</div>
 <div class="line"><a name="l01132"></a><span class="lineno"> 1132</span>&#160; </div>
-<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;opposite_;</div>
+<div class="line"><a name="l01133"></a><span class="lineno"> 1133</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l01134"></a><span class="lineno"> 1134</span>&#160; </div>
 <div class="line"><a name="l01135"></a><span class="lineno"> 1135</span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; a_half;</div>
 <div class="line"><a name="l01136"></a><span class="lineno"> 1136</span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; b_half;</div>
 <div class="line"><a name="l01137"></a><span class="lineno"> 1137</span>&#160; </div>
 <div class="line"><a name="l01138"></a><span class="lineno"> 1138</span>&#160;    tearup_lines_in_half(edge, a_half, b_half);</div>
 <div class="line"><a name="l01139"></a><span class="lineno"> 1139</span>&#160; </div>
-<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(edge-&gt;next_, edge, opposite, b_half, edge-&gt;face_, edge-&gt;index_)); <span class="comment">//new vertex to b, part of normal edge</span></div>
+<div class="line"><a name="l01140"></a><span class="lineno"> 1140</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>, edge, opposite, b_half, edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a>)); <span class="comment">//new vertex to b, part of normal edge</span></div>
 <div class="line"><a name="l01141"></a><span class="lineno"> 1141</span>&#160;    <span class="keyword">auto</span> tob = &amp;edges.back();</div>
 <div class="line"><a name="l01142"></a><span class="lineno"> 1142</span>&#160;    segments.push_back(tob);</div>
 <div class="line"><a name="l01143"></a><span class="lineno"> 1143</span>&#160; </div>
-<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(opposite-&gt;next_, opposite, edge, a_half, opposite-&gt;face_, opposite-&gt;index_)); <span class="comment">//create from new_vertex to a, part of opposite</span></div>
+<div class="line"><a name="l01144"></a><span class="lineno"> 1144</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(opposite-&gt;next_, opposite, edge, a_half, opposite-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>, opposite-&gt;index_)); <span class="comment">//create from new_vertex to a, part of opposite</span></div>
 <div class="line"><a name="l01145"></a><span class="lineno"> 1145</span>&#160;    <span class="keyword">auto</span> toa = &amp;edges.back();</div>
 <div class="line"><a name="l01146"></a><span class="lineno"> 1146</span>&#160;    segments.push_back(toa);</div>
 <div class="line"><a name="l01147"></a><span class="lineno"> 1147</span>&#160; </div>
 <div class="line"><a name="l01148"></a><span class="lineno"> 1148</span>&#160;    reverse(a_half.begin(), a_half.end());</div>
-<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;    edge-&gt;vertices_ = a_half; <span class="comment">//changing properties of edge</span></div>
-<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;    edge-&gt;next_ = tob;</div>
-<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;    edge-&gt;opposite_ = toa;</div>
+<div class="line"><a name="l01149"></a><span class="lineno"> 1149</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a> = a_half; <span class="comment">//changing properties of edge</span></div>
+<div class="line"><a name="l01150"></a><span class="lineno"> 1150</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = tob;</div>
+<div class="line"><a name="l01151"></a><span class="lineno"> 1151</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a> = toa;</div>
 <div class="line"><a name="l01152"></a><span class="lineno"> 1152</span>&#160; </div>
 <div class="line"><a name="l01153"></a><span class="lineno"> 1153</span>&#160;    reverse(b_half.begin(), b_half.end());</div>
 <div class="line"><a name="l01154"></a><span class="lineno"> 1154</span>&#160;    opposite-&gt;vertices_ = b_half; <span class="comment">//changing properties of opposite</span></div>
@@ -1160,13 +1160,13 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01223"></a><span class="lineno"><a class="line" href="structgraph.html#a375b5a329c1fbb634be55e002abc0097"> 1223</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a375b5a329c1fbb634be55e002abc0097">graph::delete_vertex</a>(<a class="code" href="struct_vertex.html">Vertex</a>* vertex) {</div>
 <div class="line"><a name="l01224"></a><span class="lineno"> 1224</span>&#160; </div>
 <div class="line"><a name="l01225"></a><span class="lineno"> 1225</span>&#160;    <span class="comment">// getting the right variables</span></div>
-<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;    <span class="keyword">auto</span> edge = vertex-&gt;to_;</div>
+<div class="line"><a name="l01226"></a><span class="lineno"> 1226</span>&#160;    <span class="keyword">auto</span> edge = vertex-&gt;<a class="code" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">to_</a>;</div>
 <div class="line"><a name="l01227"></a><span class="lineno"> 1227</span>&#160; </div>
-<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;    <span class="keyword">auto</span> toa = edge-&gt;opposite_;</div>
-<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;    <span class="keyword">auto</span> tob = edge-&gt;next_;</div>
-<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;    <span class="keyword">auto</span> edge_opposite = tob-&gt;opposite_;</div>
+<div class="line"><a name="l01228"></a><span class="lineno"> 1228</span>&#160;    <span class="keyword">auto</span> toa = edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
+<div class="line"><a name="l01229"></a><span class="lineno"> 1229</span>&#160;    <span class="keyword">auto</span> tob = edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
+<div class="line"><a name="l01230"></a><span class="lineno"> 1230</span>&#160;    <span class="keyword">auto</span> edge_opposite = tob-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l01231"></a><span class="lineno"> 1231</span>&#160; </div>
-<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;    <span class="keyword">auto</span> a = toa-&gt;vertices_.back();</div>
+<div class="line"><a name="l01232"></a><span class="lineno"> 1232</span>&#160;    <span class="keyword">auto</span> a = toa-&gt;<a class="code" href="struct_edge.html#aebc87a22327cce1005197362687ea36f">vertices_</a>.back();</div>
 <div class="line"><a name="l01233"></a><span class="lineno"> 1233</span>&#160;    <span class="keyword">auto</span> b = tob-&gt;vertices_.back();</div>
 <div class="line"><a name="l01234"></a><span class="lineno"> 1234</span>&#160; </div>
 <div class="line"><a name="l01235"></a><span class="lineno"> 1235</span>&#160;    <span class="comment">// reconnecting edges and therefore removing the vertex</span></div>
@@ -1199,7 +1199,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01262"></a><span class="lineno"> 1262</span>&#160;}</div>
 <div class="line"><a name="l01263"></a><span class="lineno"> 1263</span>&#160; </div>
 <div class="line"><a name="l01264"></a><span class="lineno"> 1264</span>&#160; </div>
-<div class="line"><a name="l01269"></a><span class="lineno"><a class="line" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5"> 1269</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">graph::create_special_vertex</a>(<span class="keywordtype">int</span> index, <span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y) {</div>
+<div class="line"><a name="l01269"></a><span class="lineno"><a class="line" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5"> 1269</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">graph::create_special_vertex</a>(<span class="keywordtype">int</span> index, <span class="keywordtype">int</span> <a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, <span class="keywordtype">int</span> <a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>) {</div>
 <div class="line"><a name="l01270"></a><span class="lineno"> 1270</span>&#160; </div>
 <div class="line"><a name="l01271"></a><span class="lineno"> 1271</span>&#160;    vector&lt;shared_ptr&lt;Vertex&gt; &gt; special_vertices;</div>
 <div class="line"><a name="l01272"></a><span class="lineno"> 1272</span>&#160; </div>
@@ -1207,7 +1207,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01274"></a><span class="lineno"> 1274</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; number_of_vertices - 1;i++) {</div>
 <div class="line"><a name="l01275"></a><span class="lineno"> 1275</span>&#160;        <span class="keyword">auto</span> new_vertex = make_shared&lt;Vertex&gt;();</div>
 <div class="line"><a name="l01276"></a><span class="lineno"> 1276</span>&#160;        new_vertex-&gt;index_ = index; <span class="comment">//the real index of vertex</span></div>
-<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;        new_vertex-&gt;x_ = x; new_vertex-&gt;y_ = y;</div>
+<div class="line"><a name="l01277"></a><span class="lineno"> 1277</span>&#160;        new_vertex-&gt;x_ = <a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>; new_vertex-&gt;y_ = <a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>;</div>
 <div class="line"><a name="l01278"></a><span class="lineno"> 1278</span>&#160;        special_vertices.push_back(new_vertex);</div>
 <div class="line"><a name="l01279"></a><span class="lineno"> 1279</span>&#160;    }</div>
 <div class="line"><a name="l01280"></a><span class="lineno"> 1280</span>&#160; </div>
@@ -1252,11 +1252,11 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01329"></a><span class="lineno"> 1329</span>&#160; </div>
 <div class="line"><a name="l01330"></a><span class="lineno"> 1330</span>&#160;    create_special_vertex(0, 0, 0); <span class="comment">// zero ones</span></div>
 <div class="line"><a name="l01331"></a><span class="lineno"> 1331</span>&#160; </div>
-<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;    coordinates_of_special_vertices = create_circle(150, 0, 0, number_of_vertices - 1);</div>
+<div class="line"><a name="l01332"></a><span class="lineno"> 1332</span>&#160;    coordinates_of_special_vertices = <a class="code" href="functions_8hpp.html#aba4a50012fd79739d64706c8087949bc">create_circle</a>(150, 0, 0, number_of_vertices - 1);</div>
 <div class="line"><a name="l01333"></a><span class="lineno"> 1333</span>&#160; </div>
 <div class="line"><a name="l01334"></a><span class="lineno"> 1334</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; number_of_vertices;i++) { <span class="comment">//the rest of a star</span></div>
-<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;        create_special_vertex(i, coordinates_of_special_vertices[i - 1].x, coordinates_of_special_vertices[i - 1].y);</div>
-<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;        vertices_.push_back(make_pair((<span class="keywordtype">int</span>)coordinates_of_special_vertices[i - 1].x, (<span class="keywordtype">int</span>)coordinates_of_special_vertices[i - 1].y));</div>
+<div class="line"><a name="l01335"></a><span class="lineno"> 1335</span>&#160;        create_special_vertex(i, coordinates_of_special_vertices[i - 1].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, coordinates_of_special_vertices[i - 1].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>);</div>
+<div class="line"><a name="l01336"></a><span class="lineno"> 1336</span>&#160;        vertices_.push_back(make_pair((<span class="keywordtype">int</span>)coordinates_of_special_vertices[i - 1].<a class="code" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a>, (<span class="keywordtype">int</span>)coordinates_of_special_vertices[i - 1].<a class="code" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a>));</div>
 <div class="line"><a name="l01337"></a><span class="lineno"> 1337</span>&#160;    }</div>
 <div class="line"><a name="l01338"></a><span class="lineno"> 1338</span>&#160;}</div>
 <div class="line"><a name="l01339"></a><span class="lineno"> 1339</span>&#160; </div>
@@ -1301,7 +1301,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01387"></a><span class="lineno"> 1387</span>&#160; </div>
 <div class="line"><a name="l01388"></a><span class="lineno"> 1388</span>&#160;        <span class="keywordflow">if</span> (seg == segments[t_index]) {</div>
 <div class="line"><a name="l01389"></a><span class="lineno"> 1389</span>&#160; </div>
-<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;            <span class="keyword">auto</span> shift_previous = find_vertex_in_right_direction(segments[s_index]-&gt;vertices_[0],</div>
+<div class="line"><a name="l01390"></a><span class="lineno"> 1390</span>&#160;            <span class="keyword">auto</span> shift_previous = <a class="code" href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">find_vertex_in_right_direction</a>(segments[s_index]-&gt;vertices_[0],</div>
 <div class="line"><a name="l01391"></a><span class="lineno"> 1391</span>&#160;                make_pair(segments[segments.size() - 3]-&gt;vertices_[1]-&gt;x_ - segments[segments.size() - 3]-&gt;vertices_[0]-&gt;x_, </div>
 <div class="line"><a name="l01392"></a><span class="lineno"> 1392</span>&#160;                    segments[segments.size() - 3]-&gt;vertices_[1]-&gt;y_ - segments[segments.size() - 3]-&gt;vertices_[0]-&gt;y_</div>
 <div class="line"><a name="l01393"></a><span class="lineno"> 1393</span>&#160;                ));</div>
@@ -1317,7 +1317,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01403"></a><span class="lineno"> 1403</span>&#160;                shift_previous,</div>
 <div class="line"><a name="l01404"></a><span class="lineno"> 1404</span>&#160;                make_pair(0, 0)</div>
 <div class="line"><a name="l01405"></a><span class="lineno"> 1405</span>&#160;                );</div>
-<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;            <span class="keywordflow">if</span> (print_bool)</div>
+<div class="line"><a name="l01406"></a><span class="lineno"> 1406</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a>)</div>
 <div class="line"><a name="l01407"></a><span class="lineno"> 1407</span>&#160;                write_coordinates();</div>
 <div class="line"><a name="l01408"></a><span class="lineno"> 1408</span>&#160; </div>
 <div class="line"><a name="l01409"></a><span class="lineno"> 1409</span>&#160;            <span class="keywordflow">if</span> (b &lt; number_of_vertices - 1) {</div>
@@ -1341,7 +1341,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01427"></a><span class="lineno"> 1427</span>&#160;            }</div>
 <div class="line"><a name="l01428"></a><span class="lineno"> 1428</span>&#160; </div>
 <div class="line"><a name="l01429"></a><span class="lineno"> 1429</span>&#160;            delete_edge_back();</div>
-<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;            <span class="keywordflow">if</span> (print_bool)</div>
+<div class="line"><a name="l01430"></a><span class="lineno"> 1430</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a>)</div>
 <div class="line"><a name="l01431"></a><span class="lineno"> 1431</span>&#160;                write_coordinates();</div>
 <div class="line"><a name="l01432"></a><span class="lineno"> 1432</span>&#160;        }</div>
 <div class="line"><a name="l01433"></a><span class="lineno"> 1433</span>&#160; </div>
@@ -1355,12 +1355,12 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01441"></a><span class="lineno"> 1441</span>&#160; </div>
 <div class="line"><a name="l01442"></a><span class="lineno"> 1442</span>&#160;            add_vertex(seg);</div>
 <div class="line"><a name="l01443"></a><span class="lineno"> 1443</span>&#160; </div>
-<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;            <span class="keyword">auto</span> shift_previous = find_vertex_in_right_direction(segments[s_index]-&gt;vertices_[0],</div>
+<div class="line"><a name="l01444"></a><span class="lineno"> 1444</span>&#160;            <span class="keyword">auto</span> shift_previous = <a class="code" href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">find_vertex_in_right_direction</a>(segments[s_index]-&gt;vertices_[0],</div>
 <div class="line"><a name="l01445"></a><span class="lineno"> 1445</span>&#160;                make_pair(segments[segments.size() - 5]-&gt;vertices_[1]-&gt;x_ - segments[segments.size() - 5]-&gt;vertices_[0]-&gt;x_,</div>
 <div class="line"><a name="l01446"></a><span class="lineno"> 1446</span>&#160;                    segments[segments.size() - 5]-&gt;vertices_[1]-&gt;y_ - segments[segments.size() - 5]-&gt;vertices_[0]-&gt;y_</div>
 <div class="line"><a name="l01447"></a><span class="lineno"> 1447</span>&#160;                ));</div>
 <div class="line"><a name="l01448"></a><span class="lineno"> 1448</span>&#160; </div>
-<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;            <span class="keyword">auto</span> shift_next = find_vertex_in_right_direction(segments[edges.size() - 2]-&gt;vertices_[0],</div>
+<div class="line"><a name="l01449"></a><span class="lineno"> 1449</span>&#160;            <span class="keyword">auto</span> shift_next = <a class="code" href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">find_vertex_in_right_direction</a>(segments[edges.size() - 2]-&gt;vertices_[0],</div>
 <div class="line"><a name="l01450"></a><span class="lineno"> 1450</span>&#160;                make_pair(segments[edges.size() - 2]-&gt;vertices_[1]-&gt;x_ - segments[edges.size() - 2]-&gt;vertices_[0]-&gt;x_,</div>
 <div class="line"><a name="l01451"></a><span class="lineno"> 1451</span>&#160;                    segments[edges.size() - 2]-&gt;vertices_[1]-&gt;y_ - segments[edges.size() - 2]-&gt;vertices_[0]-&gt;y_));</div>
 <div class="line"><a name="l01452"></a><span class="lineno"> 1452</span>&#160; </div>
@@ -1379,7 +1379,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01465"></a><span class="lineno"> 1465</span>&#160;                shift_previous,</div>
 <div class="line"><a name="l01466"></a><span class="lineno"> 1466</span>&#160;                shift_next</div>
 <div class="line"><a name="l01467"></a><span class="lineno"> 1467</span>&#160;                );</div>
-<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;            <span class="keywordflow">if</span>(print_bool)</div>
+<div class="line"><a name="l01468"></a><span class="lineno"> 1468</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a>)</div>
 <div class="line"><a name="l01469"></a><span class="lineno"> 1469</span>&#160;                write_coordinates();</div>
 <div class="line"><a name="l01470"></a><span class="lineno"> 1470</span>&#160; </div>
 <div class="line"><a name="l01471"></a><span class="lineno"> 1471</span>&#160;            <span class="comment">/*important! changing to_ to the opposite direction */</span></div>
@@ -1398,23 +1398,23 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01484"></a><span class="lineno"> 1484</span>&#160;            delete_edge_back();</div>
 <div class="line"><a name="l01485"></a><span class="lineno"> 1485</span>&#160;            delete_vertex((seg-&gt;vertices_.back()).get());</div>
 <div class="line"><a name="l01486"></a><span class="lineno"> 1486</span>&#160;            blocked[min(a, b)][max(a, b)][min(index_first_end, index_second_end)][max(index_first_end, index_second_end)] = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;            <span class="keywordflow">if</span> (print_bool)</div>
+<div class="line"><a name="l01487"></a><span class="lineno"> 1487</span>&#160;            <span class="keywordflow">if</span> (<a class="code" href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a>)</div>
 <div class="line"><a name="l01488"></a><span class="lineno"> 1488</span>&#160;                write_coordinates();</div>
 <div class="line"><a name="l01489"></a><span class="lineno"> 1489</span>&#160;        }</div>
 <div class="line"><a name="l01490"></a><span class="lineno"> 1490</span>&#160;        seg = seg-&gt;next_;</div>
 <div class="line"><a name="l01491"></a><span class="lineno"> 1491</span>&#160;    }</div>
 <div class="line"><a name="l01492"></a><span class="lineno"> 1492</span>&#160;}</div>
 <div class="line"><a name="l01493"></a><span class="lineno"> 1493</span>&#160; </div>
-<div class="line"><a name="l01494"></a><span class="lineno"> 1494</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> factorial(<span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    <span class="keywordflow">return</span> (n == 1 || n == 0) ? 1 : n * factorial(n - 1);</div>
+<div class="line"><a name="l01494"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e"> 1494</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a>(<span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l01495"></a><span class="lineno"> 1495</span>&#160;    <span class="keywordflow">return</span> (n == 1 || n == 0) ? 1 : n * <a class="code" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a>(n - 1);</div>
 <div class="line"><a name="l01496"></a><span class="lineno"> 1496</span>&#160;}</div>
 <div class="line"><a name="l01497"></a><span class="lineno"> 1497</span>&#160; </div>
 <div class="line"><a name="l01498"></a><span class="lineno"> 1498</span>&#160; </div>
 <div class="line"><a name="l01502"></a><span class="lineno"><a class="line" href="structfingerprints.html"> 1502</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structfingerprints.html">fingerprints</a> {</div>
-<div class="line"><a name="l01503"></a><span class="lineno"> 1503</span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l01504"></a><span class="lineno"> 1504</span>&#160;    <span class="keywordtype">string</span> rotation_system;</div>
+<div class="line"><a name="l01503"></a><span class="lineno"><a class="line" href="structfingerprints.html#a5db069136ef761bf638546eb576f5b0a"> 1503</a></span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01504"></a><span class="lineno"><a class="line" href="structfingerprints.html#a4dac9b2559293cda7929829edff37101"> 1504</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structfingerprints.html#a4dac9b2559293cda7929829edff37101">rotation_system</a>;</div>
 <div class="line"><a name="l01505"></a><span class="lineno"> 1505</span>&#160; </div>
-<div class="line"><a name="l01506"></a><span class="lineno"> 1506</span>&#160;    ifstream input_file;</div>
+<div class="line"><a name="l01506"></a><span class="lineno"><a class="line" href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9"> 1506</a></span>&#160;    ifstream <a class="code" href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9">input_file</a>;</div>
 <div class="line"><a name="l01507"></a><span class="lineno"> 1507</span>&#160; </div>
 <div class="line"><a name="l01508"></a><span class="lineno"><a class="line" href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6"> 1508</a></span>&#160;    <a class="code" href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6">fingerprints</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> index) {</div>
 <div class="line"><a name="l01509"></a><span class="lineno"> 1509</span>&#160;    </div>
@@ -1444,9 +1444,9 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01535"></a><span class="lineno"> 1535</span>&#160;    }</div>
 <div class="line"><a name="l01536"></a><span class="lineno"> 1536</span>&#160;};</div>
 <div class="line"><a name="l01537"></a><span class="lineno"> 1537</span>&#160; </div>
-<div class="line"><a name="l01545"></a><span class="lineno"> 1545</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> are_there_ends(<a class="code" href="struct_edge.html">Edge</a>* edge, <span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b) {</div>
+<div class="line"><a name="l01545"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a0225853fb826aa23328c5a8168f3d220"> 1545</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a0225853fb826aa23328c5a8168f3d220">are_there_ends</a>(<a class="code" href="struct_edge.html">Edge</a>* edge, <span class="keywordtype">int</span> a, <span class="keywordtype">int</span> b) {</div>
 <div class="line"><a name="l01546"></a><span class="lineno"> 1546</span>&#160;    <span class="keywordflow">if</span> (a &gt; b) swap(a, b);</div>
-<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;    <span class="keywordflow">if</span> ((min(edge-&gt;index_ % 100, edge-&gt;index_ / 100) == a) &amp;&amp; (max(edge-&gt;index_ % 100, edge-&gt;index_ / 100) == b))</div>
+<div class="line"><a name="l01547"></a><span class="lineno"> 1547</span>&#160;    <span class="keywordflow">if</span> ((min(edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100) == a) &amp;&amp; (max(edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100) == b))</div>
 <div class="line"><a name="l01548"></a><span class="lineno"> 1548</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l01549"></a><span class="lineno"> 1549</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l01550"></a><span class="lineno"> 1550</span>&#160;}</div>
@@ -1546,37 +1546,97 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01653"></a><span class="lineno"> 1653</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;realized &quot;</span> &lt;&lt; realized &lt;&lt; endl;</div>
 <div class="line"><a name="l01654"></a><span class="lineno"> 1654</span>&#160;}</div>
 <div class="line"><a name="l01655"></a><span class="lineno"> 1655</span>&#160; </div>
+<div class="ttc" id="afunctions_8hpp_html_a002b2f4894492820fe708b1b7e7c5e70"><div class="ttname"><a href="functions_8hpp.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a></div><div class="ttdeci">#define EPSILON</div><div class="ttdef"><b>Definition:</b> functions.hpp:37</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a0225853fb826aa23328c5a8168f3d220"><div class="ttname"><a href="functions_8hpp.html#a0225853fb826aa23328c5a8168f3d220">are_there_ends</a></div><div class="ttdeci">bool are_there_ends(Edge *edge, int a, int b)</div><div class="ttdoc">Function to check whether the ends of edge are a and b.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1545</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a0291586cbcabe4ac13aeaab79e227198"><div class="ttname"><a href="functions_8hpp.html#a0291586cbcabe4ac13aeaab79e227198">get_shift</a></div><div class="ttdeci">pair&lt; double, double &gt; get_shift(shared_ptr&lt; Vertex &gt; vertex, pair&lt; double, double &gt; vect)</div><div class="ttdoc">Function to generate shift perpendicular to given vector vect in order to be able to move same vertic...</div><div class="ttdef"><b>Definition:</b> functions.hpp:528</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a0ed6a908288e0cd87f79c1b5ab56d07c"><div class="ttname"><a href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">y</a></div><div class="ttdeci">#define y</div><div class="ttdef"><b>Definition:</b> functions.hpp:41</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a10a406b8a70042b521fdc30fc4c3aab2"><div class="ttname"><a href="functions_8hpp.html#a10a406b8a70042b521fdc30fc4c3aab2">get_value</a></div><div class="ttdeci">double get_value(int a, int b, int c, shared_ptr&lt; Vertex &gt; point)</div><div class="ttdoc">Get value of linear function f(x, y) = ax+by+c.</div><div class="ttdef"><b>Definition:</b> functions.hpp:571</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a1251d18f47ed8e4217197669689d8d1d"><div class="ttname"><a href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">print_graph</a></div><div class="ttdeci">void print_graph(graph *g)</div><div class="ttdef"><b>Definition:</b> functions.hpp:358</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a12c2040f25d8e3a7b9e1c2024c618cb6"><div class="ttname"><a href="functions_8hpp.html#a12c2040f25d8e3a7b9e1c2024c618cb6">INF</a></div><div class="ttdeci">#define INF</div><div class="ttdef"><b>Definition:</b> functions.hpp:33</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a1f162786911acbb95cd50f19133db6bb"><div class="ttname"><a href="functions_8hpp.html#a1f162786911acbb95cd50f19133db6bb">are_collinear</a></div><div class="ttdeci">bool are_collinear(shared_ptr&lt; Vertex &gt; v1, shared_ptr&lt; Vertex &gt; v2, shared_ptr&lt; Vertex &gt; v3)</div><div class="ttdef"><b>Definition:</b> functions.hpp:614</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a243327df8fed2351de8ddfc9044f7a87"><div class="ttname"><a href="functions_8hpp.html#a243327df8fed2351de8ddfc9044f7a87">if_two_segmetns_intersects</a></div><div class="ttdeci">bool if_two_segmetns_intersects(pair&lt; shared_ptr&lt; Vertex &gt;, shared_ptr&lt; Vertex &gt; &gt; line1, pair&lt; shared_ptr&lt; Vertex &gt;, shared_ptr&lt; Vertex &gt; &gt; line2)</div><div class="ttdoc">Function to detect whether line1 and line2 intersect.</div><div class="ttdef"><b>Definition:</b> functions.hpp:280</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a28bf9d73479dfb3c00c960e9a5a7cc8c"><div class="ttname"><a href="functions_8hpp.html#a28bf9d73479dfb3c00c960e9a5a7cc8c">create_coordinates</a></div><div class="ttdeci">void create_coordinates(const vector&lt; shared_ptr&lt; Vertex &gt; &gt; &amp;points, vector&lt; vector&lt; double &gt; &gt; &amp;distances)</div><div class="ttdoc">Function to set distance Euclidian distance for all pair of points i, j in points into matrix distanc...</div><div class="ttdef"><b>Definition:</b> functions.hpp:305</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a6363f71fbeb7c983169d84505be8ce71"><div class="ttname"><a href="functions_8hpp.html#a6363f71fbeb7c983169d84505be8ce71">compare</a></div><div class="ttdeci">bool compare(pair&lt; double, double &gt; a, pair&lt; double, double &gt; b)</div><div class="ttdoc">Check whether the two pairs are &quot;almost&quot; the same.</div><div class="ttdef"><b>Definition:</b> functions.hpp:486</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a6c4b361d72eb3767ba424ac9a6ecf52b"><div class="ttname"><a href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">x</a></div><div class="ttdeci">#define x</div><div class="ttdef"><b>Definition:</b> functions.hpp:40</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a6cd4c8b7dd25813d488cead0d7b4f89b"><div class="ttname"><a href="functions_8hpp.html#a6cd4c8b7dd25813d488cead0d7b4f89b">is_on_right_side_of</a></div><div class="ttdeci">bool is_on_right_side_of(shared_ptr&lt; Vertex &gt;asked_point, shared_ptr&lt; Vertex &gt; point, pair&lt; double, double &gt; vect, shared_ptr&lt; Vertex &gt; on_right_side)</div><div class="ttdoc">Function to check whether asked_point and on_right_side points are on the same side of line given by ...</div><div class="ttdef"><b>Definition:</b> functions.hpp:584</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a6e1870b2bebbcb56978ccc480beedc23"><div class="ttname"><a href="functions_8hpp.html#a6e1870b2bebbcb56978ccc480beedc23">dijsktra</a></div><div class="ttdeci">void dijsktra(vector&lt; shared_ptr&lt; Vertex &gt; &gt; &amp;points, vector&lt; vector&lt; double &gt; &gt; distances, vector&lt; int &gt; &amp;parent)</div><div class="ttdoc">Standart dijsktra algorithm returning shortest paths from vertex 0 with paths stored in vector parent...</div><div class="ttdef"><b>Definition:</b> functions.hpp:322</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a7af370bd033e43816bc5b0e93773d525"><div class="ttname"><a href="functions_8hpp.html#a7af370bd033e43816bc5b0e93773d525">distance</a></div><div class="ttdeci">double distance(pair&lt; double, double &gt; a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:428</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a8403933a7efd1fe3cc0644134768a593"><div class="ttname"><a href="functions_8hpp.html#a8403933a7efd1fe3cc0644134768a593">make_convex_hull</a></div><div class="ttdeci">vector&lt; pair&lt; double, double &gt; &gt; make_convex_hull(vector&lt; pair&lt; double, double &gt; &gt; vertices)</div><div class="ttdoc">Function to create convex hull of vertices.</div><div class="ttdef"><b>Definition:</b> functions.hpp:447</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a991a318839a5285ed0903f0c27468246"><div class="ttname"><a href="functions_8hpp.html#a991a318839a5285ed0903f0c27468246">find_vertex_in_right_direction</a></div><div class="ttdeci">pair&lt; double, double &gt; find_vertex_in_right_direction(shared_ptr&lt; Vertex &gt; vertex, pair&lt; double, double &gt; vect)</div><div class="ttdoc">Get vertex perpendicular to vect from vertex and on the right side depending on the clockwise,...</div><div class="ttdef"><b>Definition:</b> functions.hpp:555</div></div>
+<div class="ttc" id="afunctions_8hpp_html_aa19910c8c4ce3524c20a32b6bc39ab8e"><div class="ttname"><a href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a></div><div class="ttdeci">long long factorial(int n)</div><div class="ttdef"><b>Definition:</b> functions.hpp:1494</div></div>
+<div class="ttc" id="afunctions_8hpp_html_ab65bcb922266805e323d4c7125fe5734"><div class="ttname"><a href="functions_8hpp.html#ab65bcb922266805e323d4c7125fe5734">det</a></div><div class="ttdeci">double det(pair&lt; double, double &gt; vec1, pair&lt; double, double &gt; vec2)</div><div class="ttdoc">Fucntion to count the determinant.</div><div class="ttdef"><b>Definition:</b> functions.hpp:506</div></div>
+<div class="ttc" id="afunctions_8hpp_html_aba4a50012fd79739d64706c8087949bc"><div class="ttname"><a href="functions_8hpp.html#aba4a50012fd79739d64706c8087949bc">create_circle</a></div><div class="ttdeci">vector&lt; pair&lt; double, double &gt; &gt; create_circle(double radius, double cx, double cy, int n)</div><div class="ttdoc">Function to create &quot;dummy&quot; vertices for one vertex.</div><div class="ttdef"><b>Definition:</b> functions.hpp:411</div></div>
+<div class="ttc" id="afunctions_8hpp_html_ae71449b1cc6e6250b91f539153a7a0d3"><div class="ttname"><a href="functions_8hpp.html#ae71449b1cc6e6250b91f539153a7a0d3">M_PI</a></div><div class="ttdeci">#define M_PI</div><div class="ttdef"><b>Definition:</b> functions.hpp:29</div></div>
+<div class="ttc" id="afunctions_8hpp_html_aebd6f9527d2a4f9f441f657d28429951"><div class="ttname"><a href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a></div><div class="ttdeci">vector&lt; vector&lt; vector&lt; vector&lt; bool &gt; &gt; &gt; &gt; array_4D</div><div class="ttdef"><b>Definition:</b> functions.hpp:45</div></div>
+<div class="ttc" id="afunctions_8hpp_html_afd417b680d74985a7f349f012a79a1c3"><div class="ttname"><a href="functions_8hpp.html#afd417b680d74985a7f349f012a79a1c3">print_bool</a></div><div class="ttdeci">bool print_bool</div><div class="ttdef"><b>Definition:</b> functions.hpp:43</div></div>
 <div class="ttc" id="astruct_edge_html"><div class="ttname"><a href="struct_edge.html">Edge</a></div><div class="ttdoc">Structure to store the edge containing information about next_, prev_, opposite_ edges and vertices a...</div><div class="ttdef"><b>Definition:</b> functions.hpp:112</div></div>
+<div class="ttc" id="astruct_edge_html_a079ee1e11ec72ceb0902f668119c8e60"><div class="ttname"><a href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">Edge::prev_</a></div><div class="ttdeci">Edge * prev_</div><div class="ttdef"><b>Definition:</b> functions.hpp:116</div></div>
+<div class="ttc" id="astruct_edge_html_a3106b11d60125009dbf7a738ce540fdf"><div class="ttname"><a href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">Edge::Edge</a></div><div class="ttdeci">Edge()</div><div class="ttdef"><b>Definition:</b> functions.hpp:123</div></div>
+<div class="ttc" id="astruct_edge_html_a34660cd60175f80accdd483cb57fcc05"><div class="ttname"><a href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">Edge::operator!=</a></div><div class="ttdeci">bool operator!=(const Edge &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:132</div></div>
+<div class="ttc" id="astruct_edge_html_a5b1ce46568048aa6199c38c7ea9ab87c"><div class="ttname"><a href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">Edge::operator==</a></div><div class="ttdeci">bool operator==(const Edge &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:128</div></div>
+<div class="ttc" id="astruct_edge_html_ab11361f1cc3426c85b9ce6995db2925f"><div class="ttname"><a href="struct_edge.html#ab11361f1cc3426c85b9ce6995db2925f">Edge::Edge</a></div><div class="ttdeci">Edge(Edge *next, Edge *prev, Edge *opposite, vector&lt; shared_ptr&lt; Vertex &gt; &gt; vertices, shared_ptr&lt; Face &gt; face, int index)</div><div class="ttdef"><b>Definition:</b> functions.hpp:125</div></div>
+<div class="ttc" id="astruct_edge_html_aba065b72e140a46c1f9086b94ed77225"><div class="ttname"><a href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">Edge::opposite_</a></div><div class="ttdeci">Edge * opposite_</div><div class="ttdef"><b>Definition:</b> functions.hpp:117</div></div>
+<div class="ttc" id="astruct_edge_html_ad12fac6ed0e178cba03558a0c4ba84c2"><div class="ttname"><a href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">Edge::face_</a></div><div class="ttdeci">shared_ptr&lt; Face &gt; face_</div><div class="ttdef"><b>Definition:</b> functions.hpp:121</div></div>
+<div class="ttc" id="astruct_edge_html_adaeb46182fd867ba9b3786d6b2321387"><div class="ttname"><a href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">Edge::index_</a></div><div class="ttdeci">int index_</div><div class="ttdef"><b>Definition:</b> functions.hpp:113</div></div>
+<div class="ttc" id="astruct_edge_html_aebc87a22327cce1005197362687ea36f"><div class="ttname"><a href="struct_edge.html#aebc87a22327cce1005197362687ea36f">Edge::vertices_</a></div><div class="ttdeci">vector&lt; shared_ptr&lt; Vertex &gt; &gt; vertices_</div><div class="ttdef"><b>Definition:</b> functions.hpp:119</div></div>
+<div class="ttc" id="astruct_edge_html_aed165482a12c6d4c7895c6fe764ea27d"><div class="ttname"><a href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">Edge::next_</a></div><div class="ttdeci">Edge * next_</div><div class="ttdef"><b>Definition:</b> functions.hpp:115</div></div>
 <div class="ttc" id="astruct_face_html"><div class="ttname"><a href="struct_face.html">Face</a></div><div class="ttdoc">Structure to store a face containing about one edge incident to it</div><div class="ttdef"><b>Definition:</b> functions.hpp:101</div></div>
+<div class="ttc" id="astruct_face_html_a027107da14c4970f8c2ec9c3802eceaf"><div class="ttname"><a href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">Face::edge_</a></div><div class="ttdeci">Edge * edge_</div><div class="ttdef"><b>Definition:</b> functions.hpp:102</div></div>
+<div class="ttc" id="astruct_face_html_a4e63b1d45a84871b99949fca4c18ef1e"><div class="ttname"><a href="struct_face.html#a4e63b1d45a84871b99949fca4c18ef1e">Face::Face</a></div><div class="ttdeci">Face(Edge *edge)</div><div class="ttdef"><b>Definition:</b> functions.hpp:106</div></div>
+<div class="ttc" id="astruct_face_html_afdb634bc2d5287ba0d62e46b57e9dc2e"><div class="ttname"><a href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">Face::Face</a></div><div class="ttdeci">Face()</div><div class="ttdef"><b>Definition:</b> functions.hpp:104</div></div>
 <div class="ttc" id="astruct_vertex_html"><div class="ttname"><a href="struct_vertex.html">Vertex</a></div><div class="ttdoc">Class to store vertex, containing information about edge to_ going into it</div><div class="ttdef"><b>Definition:</b> functions.hpp:54</div></div>
+<div class="ttc" id="astruct_vertex_html_a2927de87e482ddebbb18abf7f811c6c3"><div class="ttname"><a href="struct_vertex.html#a2927de87e482ddebbb18abf7f811c6c3">Vertex::Vertex</a></div><div class="ttdeci">Vertex(double x, double y)</div><div class="ttdef"><b>Definition:</b> functions.hpp:66</div></div>
+<div class="ttc" id="astruct_vertex_html_a473275eccf2bfef6c1c5f73147c9b0e0"><div class="ttname"><a href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">Vertex::to_</a></div><div class="ttdeci">Edge * to_</div><div class="ttdef"><b>Definition:</b> functions.hpp:55</div></div>
+<div class="ttc" id="astruct_vertex_html_a5ed3844414a4155a8804e35d5a75a3f6"><div class="ttname"><a href="struct_vertex.html#a5ed3844414a4155a8804e35d5a75a3f6">Vertex::y_</a></div><div class="ttdeci">double y_</div><div class="ttdef"><b>Definition:</b> functions.hpp:59</div></div>
+<div class="ttc" id="astruct_vertex_html_a6e7547915a8a3996b88b07f8d88bda1d"><div class="ttname"><a href="struct_vertex.html#a6e7547915a8a3996b88b07f8d88bda1d">Vertex::operator==</a></div><div class="ttdeci">bool operator==(const Vertex &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:72</div></div>
+<div class="ttc" id="astruct_vertex_html_a70857a5ed59a47f097237d69c00c2dac"><div class="ttname"><a href="struct_vertex.html#a70857a5ed59a47f097237d69c00c2dac">Vertex::operator!=</a></div><div class="ttdeci">bool operator!=(const Vertex &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:76</div></div>
+<div class="ttc" id="astruct_vertex_html_a72db05bde1797061d9931ec3b5a47bfa"><div class="ttname"><a href="struct_vertex.html#a72db05bde1797061d9931ec3b5a47bfa">Vertex::operator==</a></div><div class="ttdeci">bool operator==(const Vertex *a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:89</div></div>
+<div class="ttc" id="astruct_vertex_html_a7e1775ef7ec96f19ba52e7e6aadb9b2b"><div class="ttname"><a href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">Vertex::Vertex</a></div><div class="ttdeci">Vertex(Edge *to)</div><div class="ttdef"><b>Definition:</b> functions.hpp:70</div></div>
+<div class="ttc" id="astruct_vertex_html_a97488994a2482d70da74e1b91d40e169"><div class="ttname"><a href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">Vertex::Vertex</a></div><div class="ttdeci">Vertex()</div><div class="ttdef"><b>Definition:</b> functions.hpp:64</div></div>
+<div class="ttc" id="astruct_vertex_html_ac2e9dd488c6a6fb928629b2c8efe4e94"><div class="ttname"><a href="struct_vertex.html#ac2e9dd488c6a6fb928629b2c8efe4e94">Vertex::operator==</a></div><div class="ttdeci">bool operator==(Vertex *a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:80</div></div>
+<div class="ttc" id="astruct_vertex_html_ac470de2bc74387e5a74b47c88afa1f9c"><div class="ttname"><a href="struct_vertex.html#ac470de2bc74387e5a74b47c88afa1f9c">Vertex::operator!=</a></div><div class="ttdeci">bool operator!=(Vertex *a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:84</div></div>
+<div class="ttc" id="astruct_vertex_html_aeec622d36d09b6e9109a3e90d84e7971"><div class="ttname"><a href="struct_vertex.html#aeec622d36d09b6e9109a3e90d84e7971">Vertex::operator!=</a></div><div class="ttdeci">bool operator!=(const Vertex *a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:93</div></div>
+<div class="ttc" id="astruct_vertex_html_af43c7f6fde5d36a8bfc3af862e331ef9"><div class="ttname"><a href="struct_vertex.html#af43c7f6fde5d36a8bfc3af862e331ef9">Vertex::x_</a></div><div class="ttdeci">double x_</div><div class="ttdef"><b>Definition:</b> functions.hpp:59</div></div>
 <div class="ttc" id="astructfingerprints_html"><div class="ttname"><a href="structfingerprints.html">fingerprints</a></div><div class="ttdoc">Structure for generating all fingerprints iteratively.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1502</div></div>
+<div class="ttc" id="astructfingerprints_html_a2bebdb761f7bd322a21a96e481fcb1c9"><div class="ttname"><a href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9">fingerprints::input_file</a></div><div class="ttdeci">ifstream input_file</div><div class="ttdef"><b>Definition:</b> functions.hpp:1506</div></div>
+<div class="ttc" id="astructfingerprints_html_a4dac9b2559293cda7929829edff37101"><div class="ttname"><a href="structfingerprints.html#a4dac9b2559293cda7929829edff37101">fingerprints::rotation_system</a></div><div class="ttdeci">string rotation_system</div><div class="ttdef"><b>Definition:</b> functions.hpp:1504</div></div>
 <div class="ttc" id="astructfingerprints_html_a73fde32e28205c084c70597f0585a4f6"><div class="ttname"><a href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6">fingerprints::fingerprints</a></div><div class="ttdeci">fingerprints(int n, int index)</div><div class="ttdoc">summary&gt;</div><div class="ttdef"><b>Definition:</b> functions.hpp:1508</div></div>
 <div class="ttc" id="astructfingerprints_html_a9f9614a695abbc15c0ed4ca5b9676a95"><div class="ttname"><a href="structfingerprints.html#a9f9614a695abbc15c0ed4ca5b9676a95">fingerprints::get_next</a></div><div class="ttdeci">string get_next()</div><div class="ttdef"><b>Definition:</b> functions.hpp:1525</div></div>
 <div class="ttc" id="astructgraph_html"><div class="ttname"><a href="structgraph.html">graph</a></div><div class="ttdoc">Main class to store all the information about graph, edges, vertices, ...</div><div class="ttdef"><b>Definition:</b> functions.hpp:141</div></div>
+<div class="ttc" id="astructgraph_html_a07b7f117a6a3c6595adfa733a124f75b"><div class="ttname"><a href="structgraph.html#a07b7f117a6a3c6595adfa733a124f75b">graph::graph</a></div><div class="ttdeci">graph(int n, int ii)</div><div class="ttdef"><b>Definition:</b> functions.hpp:171</div></div>
+<div class="ttc" id="astructgraph_html_a0bba295498fe51872196779428caa7a1"><div class="ttname"><a href="structgraph.html#a0bba295498fe51872196779428caa7a1">graph::output_file</a></div><div class="ttdeci">ofstream output_file</div><div class="ttdef"><b>Definition:</b> functions.hpp:159</div></div>
 <div class="ttc" id="astructgraph_html_a0c09ed3319fc7c591cbec236a92c3595"><div class="ttname"><a href="structgraph.html#a0c09ed3319fc7c591cbec236a92c3595">graph::find_the_way_to_intersect</a></div><div class="ttdeci">void find_the_way_to_intersect(int s_index, int t_index, int a, int b)</div><div class="ttdoc">Main algorithm similar to described in psedocode in thesis. It recursively tries all the possible way...</div><div class="ttdef"><b>Definition:</b> functions.hpp:1381</div></div>
 <div class="ttc" id="astructgraph_html_a158492da510bca1fea20d9c694419f7b"><div class="ttname"><a href="structgraph.html#a158492da510bca1fea20d9c694419f7b">graph::starts</a></div><div class="ttdeci">vector&lt; vector&lt; int &gt; &gt; starts</div><div class="ttdoc">Array which for given pair of vertice i, j return the index in vector segments so the &quot;dummy&quot; edge (&quot;...</div><div class="ttdef"><b>Definition:</b> functions.hpp:250</div></div>
+<div class="ttc" id="astructgraph_html_a1b1f599b2551c199bb14f0ceaff164c7"><div class="ttname"><a href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">graph::index</a></div><div class="ttdeci">int index</div><div class="ttdef"><b>Definition:</b> functions.hpp:165</div></div>
+<div class="ttc" id="astructgraph_html_a3102f55633656b2d285953d3fde20997"><div class="ttname"><a href="structgraph.html#a3102f55633656b2d285953d3fde20997">graph::most_away</a></div><div class="ttdeci">vector&lt; pair&lt; double, double &gt; &gt; most_away</div><div class="ttdef"><b>Definition:</b> functions.hpp:153</div></div>
 <div class="ttc" id="astructgraph_html_a3552c2830eb221d8c937a3adb6ff0dc5"><div class="ttname"><a href="structgraph.html#a3552c2830eb221d8c937a3adb6ff0dc5">graph::create_special_vertex</a></div><div class="ttdeci">void create_special_vertex(int index, int x, int y)</div><div class="ttdoc">Creating the &quot;dummy&quot; vertex (circle) representing real vertex.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1269</div></div>
 <div class="ttc" id="astructgraph_html_a375b5a329c1fbb634be55e002abc0097"><div class="ttname"><a href="structgraph.html#a375b5a329c1fbb634be55e002abc0097">graph::delete_vertex</a></div><div class="ttdeci">void delete_vertex(Vertex *a)</div><div class="ttdoc">Deleting given intersection vertex.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1223</div></div>
+<div class="ttc" id="astructgraph_html_a446ab388def546c0d5ced0ccfec29817"><div class="ttname"><a href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">graph::close_files</a></div><div class="ttdeci">void close_files()</div><div class="ttdef"><b>Definition:</b> functions.hpp:167</div></div>
 <div class="ttc" id="astructgraph_html_a47f29674c66ed736500f39b9afd4f183"><div class="ttname"><a href="structgraph.html#a47f29674c66ed736500f39b9afd4f183">graph::create_base_star</a></div><div class="ttdeci">void create_base_star()</div><div class="ttdoc">Function to create all edges incident to vertex 0.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1318</div></div>
 <div class="ttc" id="astructgraph_html_a706278ef82c148b89cd13481734ad18f"><div class="ttname"><a href="structgraph.html#a706278ef82c148b89cd13481734ad18f">graph::write_coordinates</a></div><div class="ttdeci">void write_coordinates()</div><div class="ttdoc">Function to write coordinates of graph into a file.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1557</div></div>
 <div class="ttc" id="astructgraph_html_a7086c1c3651ec56f1bded29350f16c26"><div class="ttname"><a href="structgraph.html#a7086c1c3651ec56f1bded29350f16c26">graph::recolor_fingerprint</a></div><div class="ttdeci">void recolor_fingerprint(const string &amp;rotation)</div><div class="ttdoc">Setting values of array starts to values of given fingerprint.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1306</div></div>
+<div class="ttc" id="astructgraph_html_a796dbf5abc441eff747a1296a47304b7"><div class="ttname"><a href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">graph::outer_face</a></div><div class="ttdeci">shared_ptr&lt; Face &gt; outer_face</div><div class="ttdef"><b>Definition:</b> functions.hpp:157</div></div>
 <div class="ttc" id="astructgraph_html_a903960dfe4cefbc301f40f4855dcd54c"><div class="ttname"><a href="structgraph.html#a903960dfe4cefbc301f40f4855dcd54c">graph::update_most_away</a></div><div class="ttdeci">void update_most_away(vector&lt; pair&lt; double, double &gt; &gt; vertices)</div><div class="ttdoc">Function to update the convex hull of vertices of a graph.</div><div class="ttdef"><b>Definition:</b> functions.hpp:496</div></div>
 <div class="ttc" id="astructgraph_html_a90d5c07e0184212d1092cf6fee932a02"><div class="ttname"><a href="structgraph.html#a90d5c07e0184212d1092cf6fee932a02">graph::add_edge</a></div><div class="ttdeci">void add_edge(shared_ptr&lt; Vertex &gt; a, shared_ptr&lt; Vertex &gt; b, shared_ptr&lt; Face &gt; face, int a_index, int b_index, pair&lt; double, double &gt; previous_vertex, pair&lt; double, double &gt; next_vertex, bool outer_face_bool=false)</div><div class="ttdoc">Function to add edge between a and b.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1033</div></div>
 <div class="ttc" id="astructgraph_html_aa803ca4bc3dd14c3feea7cfec289b83c"><div class="ttname"><a href="structgraph.html#aa803ca4bc3dd14c3feea7cfec289b83c">graph::create_all_special_vertices</a></div><div class="ttdeci">void create_all_special_vertices()</div><div class="ttdoc">Function to create all &quot;dummy&quot; vertices</div><div class="ttdef"><b>Definition:</b> functions.hpp:1328</div></div>
 <div class="ttc" id="astructgraph_html_aa9301f221d75a5f0600b5c98917b9018"><div class="ttname"><a href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">graph::blocked</a></div><div class="ttdeci">array_4D blocked</div><div class="ttdoc">4D array to check which edges already intersect</div><div class="ttdef"><b>Definition:</b> functions.hpp:244</div></div>
 <div class="ttc" id="astructgraph_html_ab3e5d36d160cfb1b74f02a5d9e4f3572"><div class="ttname"><a href="structgraph.html#ab3e5d36d160cfb1b74f02a5d9e4f3572">graph::tearup_lines_in_half</a></div><div class="ttdeci">shared_ptr&lt; Vertex &gt; tearup_lines_in_half(Edge *edge, vector&lt; shared_ptr&lt; Vertex &gt; &gt; &amp;a_half, vector&lt; shared_ptr&lt; Vertex &gt; &gt; &amp;b_half)</div><div class="ttdoc">Function to tear up edge into two halves a_half and b_half.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1097</div></div>
+<div class="ttc" id="astructgraph_html_ab4258b65d64692f86109938453dedd26"><div class="ttname"><a href="structgraph.html#ab4258b65d64692f86109938453dedd26">graph::edges</a></div><div class="ttdeci">list&lt; Edge &gt; edges</div><div class="ttdef"><b>Definition:</b> functions.hpp:155</div></div>
 <div class="ttc" id="astructgraph_html_abfb0a8f661faf0b4b5ee4c3ce2c76a50"><div class="ttname"><a href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">graph::segments</a></div><div class="ttdeci">vector&lt; Edge * &gt; segments</div><div class="ttdoc">Vector to store (pointers on) edges.</div><div class="ttdef"><b>Definition:</b> functions.hpp:239</div></div>
 <div class="ttc" id="astructgraph_html_acaa6e82ce65896ab971a73040d103770"><div class="ttname"><a href="structgraph.html#acaa6e82ce65896ab971a73040d103770">graph::find_path_through_triangulation</a></div><div class="ttdeci">vector&lt; shared_ptr&lt; Vertex &gt; &gt; find_path_through_triangulation(shared_ptr&lt; Vertex &gt; a, shared_ptr&lt; Vertex &gt; b, shared_ptr&lt; Face &gt; face, int a_index, int b_index, pair&lt; double, double &gt; shift_previous, pair&lt; double, double &gt; shift_next, bool outer_face_bool=false)</div><div class="ttdoc">Function to find correct way (preserving crossing properties) from vertex a to vertex b through the f...</div><div class="ttdef"><b>Definition:</b> functions.hpp:641</div></div>
 <div class="ttc" id="astructgraph_html_acbbf7467f9b4990a96063633a88c92cb"><div class="ttname"><a href="structgraph.html#acbbf7467f9b4990a96063633a88c92cb">graph::create_all_possible_drawings</a></div><div class="ttdeci">void create_all_possible_drawings()</div><div class="ttdoc">Function to try all possible drawings, It tries all the pullings of edges for given fingerprint until...</div><div class="ttdef"><b>Definition:</b> functions.hpp:1600</div></div>
 <div class="ttc" id="astructgraph_html_ae10244d298cc8d07ceaa25ccc824a520"><div class="ttname"><a href="structgraph.html#ae10244d298cc8d07ceaa25ccc824a520">graph::find_shortest_path</a></div><div class="ttdeci">vector&lt; shared_ptr&lt; Vertex &gt; &gt; find_shortest_path(const vector&lt; vector&lt; double &gt; &gt; &amp;distances, vector&lt; shared_ptr&lt; Vertex &gt; &gt; &amp;face_vertices)</div><div class="ttdoc">Function to find shortest path between vertices (all_vertices) 0 and 1.</div><div class="ttdef"><b>Definition:</b> functions.hpp:376</div></div>
 <div class="ttc" id="astructgraph_html_af190325b46dc381380796a6a94241d98"><div class="ttname"><a href="structgraph.html#af190325b46dc381380796a6a94241d98">graph::delete_edge_back</a></div><div class="ttdeci">void delete_edge_back(bool outer_face_bool=false)</div><div class="ttdoc">Deleting the last added edge.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1165</div></div>
 <div class="ttc" id="astructgraph_html_af3dd3506255c3399e140f058e2c8cb70"><div class="ttname"><a href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70">graph::add_vertex</a></div><div class="ttdeci">void add_vertex(Edge *edge)</div><div class="ttdoc">Creating new vertec on the edge as a new intersection.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1131</div></div>
+<div class="ttc" id="astructgraph_html_af51610c581ca5fd2a1bc500e540c5c4e"><div class="ttname"><a href="structgraph.html#af51610c581ca5fd2a1bc500e540c5c4e">graph::coordinates_of_special_vertices</a></div><div class="ttdeci">vector&lt; pair&lt; double, double &gt; &gt; coordinates_of_special_vertices</div><div class="ttdef"><b>Definition:</b> functions.hpp:163</div></div>
+<div class="ttc" id="astructgraph_html_af9e71127c4f7ab7db2e395f341712bee"><div class="ttname"><a href="structgraph.html#af9e71127c4f7ab7db2e395f341712bee">graph::vertices_</a></div><div class="ttdeci">vector&lt; pair&lt; double, double &gt; &gt; vertices_</div><div class="ttdef"><b>Definition:</b> functions.hpp:161</div></div>
+<div class="ttc" id="atriangulation_8hpp_html"><div class="ttname"><a href="triangulation_8hpp.html">triangulation.hpp</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>functions.hpp</b></li>
+    <li class="navelem"><a class="el" href="functions_8hpp.html">functions.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

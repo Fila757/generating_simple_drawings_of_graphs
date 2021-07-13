@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['savecoordinates_82',['SaveCoordinates',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a910d26c7954631daf6e5d035b46a93e0',1,'VizualizerWPF::GraphCoordinates']]],
-  ['shorten_83',['Shorten',['../class_vizualizer_w_p_f_1_1_edge.html#ad41324d34532fd9149d3f789094345a8',1,'VizualizerWPF::Edge']]]
+  ['lineandellipse_213',['LineAndEllipse',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a13a4cce23e14581363f3eeee34635167',1,'VizualizerWPF::CollisionDetection']]],
+  ['lineandellipseatend_214',['LineAndEllipseAtEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a31a5285512bfb2e022cdb0076f5d070a',1,'VizualizerWPF::CollisionDetection']]],
+  ['lineandhalfline_215',['LineAndHalfLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a5e00cb651b32f57e93dddae0a1bd8efe',1,'VizualizerWPF::CollisionDetection']]],
+  ['linesiterator_216',['LinesIterator',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#af641dc7854da99dbc98deffb0eb20a1a',1,'VizualizerWPF::GraphCoordinates']]]
 ];

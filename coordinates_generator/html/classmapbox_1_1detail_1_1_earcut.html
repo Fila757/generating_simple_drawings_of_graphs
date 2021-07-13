@@ -85,28 +85,1385 @@ $(document).ready(function(){initNavTree('classmapbox_1_1detail_1_1_earcut.html'
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classmapbox_1_1detail_1_1_earcut-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">mapbox::detail::Earcut&lt; N &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="triangulation_8hpp_source.html">triangulation.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut_1_1_object_pool.html">ObjectPool</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab892b077a45bc6dd229bc89295b5c95b"><td class="memTemplParams" colspan="2"><a id="ab892b077a45bc6dd229bc89295b5c95b"></a>
-template&lt;typename Polygon &gt; </td></tr>
-<tr class="memitem:ab892b077a45bc6dd229bc89295b5c95b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (const Polygon &amp;points)</td></tr>
+<tr class="memitem:ab892b077a45bc6dd229bc89295b5c95b"><td class="memTemplParams" colspan="2">template&lt;typename Polygon &gt; </td></tr>
+<tr class="memitem:ab892b077a45bc6dd229bc89295b5c95b"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ab892b077a45bc6dd229bc89295b5c95b">operator()</a> (const Polygon &amp;points)</td></tr>
 <tr class="separator:ab892b077a45bc6dd229bc89295b5c95b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ae8a063c08f32c31bdcd75ff789fa17f4"><td class="memItemLeft" align="right" valign="top"><a id="ae8a063c08f32c31bdcd75ff789fa17f4"></a>
-std::vector&lt; N &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>indices</b></td></tr>
+<tr class="memitem:ae8a063c08f32c31bdcd75ff789fa17f4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; N &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ae8a063c08f32c31bdcd75ff789fa17f4">indices</a></td></tr>
 <tr class="separator:ae8a063c08f32c31bdcd75ff789fa17f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8464b2ca13583bd59c72b5c86269445"><td class="memItemLeft" align="right" valign="top"><a id="aa8464b2ca13583bd59c72b5c86269445"></a>
-std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>vertices</b> = 0</td></tr>
+<tr class="memitem:aa8464b2ca13583bd59c72b5c86269445"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#aa8464b2ca13583bd59c72b5c86269445">vertices</a> = 0</td></tr>
 <tr class="separator:aa8464b2ca13583bd59c72b5c86269445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:afd47aff4dd6e901194d3c21063160194"><td class="memTemplParams" colspan="2">template&lt;typename Ring &gt; </td></tr>
+<tr class="memitem:afd47aff4dd6e901194d3c21063160194"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#afd47aff4dd6e901194d3c21063160194">linkedList</a> (const Ring &amp;points, const bool clockwise)</td></tr>
+<tr class="separator:afd47aff4dd6e901194d3c21063160194"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af572e4c4990214886260bdcc349e63e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#af572e4c4990214886260bdcc349e63e9">filterPoints</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *start, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *end=nullptr)</td></tr>
+<tr class="separator:af572e4c4990214886260bdcc349e63e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf6e2febfb73da52b998181ad5c1dd42"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#adf6e2febfb73da52b998181ad5c1dd42">earcutLinked</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *ear, int pass=0)</td></tr>
+<tr class="separator:adf6e2febfb73da52b998181ad5c1dd42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a105b50e2b0bb31e4999333e73594bb24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a105b50e2b0bb31e4999333e73594bb24">isEar</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *ear)</td></tr>
+<tr class="separator:a105b50e2b0bb31e4999333e73594bb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e674c81037646b0cd2d170cea3a4db"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a03e674c81037646b0cd2d170cea3a4db">isEarHashed</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *ear)</td></tr>
+<tr class="separator:a03e674c81037646b0cd2d170cea3a4db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10a5255c4df28f7d064c01e5947f78e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a10a5255c4df28f7d064c01e5947f78e5">cureLocalIntersections</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *start)</td></tr>
+<tr class="separator:a10a5255c4df28f7d064c01e5947f78e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50652b44c2fd24678b7465f68408ccd3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a50652b44c2fd24678b7465f68408ccd3">splitEarcut</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *start)</td></tr>
+<tr class="separator:a50652b44c2fd24678b7465f68408ccd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f25ae65b130db41da119d5ee989a80"><td class="memTemplParams" colspan="2">template&lt;typename Polygon &gt; </td></tr>
+<tr class="memitem:a17f25ae65b130db41da119d5ee989a80"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a17f25ae65b130db41da119d5ee989a80">eliminateHoles</a> (const Polygon &amp;points, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *outerNode)</td></tr>
+<tr class="separator:a17f25ae65b130db41da119d5ee989a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3950e676ac974b7a0abc3b84b09499bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a3950e676ac974b7a0abc3b84b09499bb">eliminateHole</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *hole, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *outerNode)</td></tr>
+<tr class="separator:a3950e676ac974b7a0abc3b84b09499bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3872517d12bb59c6e76d5d8766f3283"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ad3872517d12bb59c6e76d5d8766f3283">findHoleBridge</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *hole, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *outerNode)</td></tr>
+<tr class="separator:ad3872517d12bb59c6e76d5d8766f3283"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac12a1e4f161440c54d716fba4f55ddad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ac12a1e4f161440c54d716fba4f55ddad">sectorContainsSector</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *m, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p)</td></tr>
+<tr class="separator:ac12a1e4f161440c54d716fba4f55ddad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76ec1598fdb9e1105e7e1322cd430bc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a76ec1598fdb9e1105e7e1322cd430bc8">indexCurve</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *start)</td></tr>
+<tr class="separator:a76ec1598fdb9e1105e7e1322cd430bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5994f60ada67f1c84a7c8840276db619"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a5994f60ada67f1c84a7c8840276db619">sortLinked</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *list)</td></tr>
+<tr class="separator:a5994f60ada67f1c84a7c8840276db619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae71e175b998b05baeaebe25c151cfd40"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ae71e175b998b05baeaebe25c151cfd40">zOrder</a> (const double x_, const double y_)</td></tr>
+<tr class="separator:ae71e175b998b05baeaebe25c151cfd40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada9883c4efa2aec9ca437cd2198ebe82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ada9883c4efa2aec9ca437cd2198ebe82">getLeftmost</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *start)</td></tr>
+<tr class="separator:ada9883c4efa2aec9ca437cd2198ebe82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0bf22d1711724cdd355c1c606e402dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#aa0bf22d1711724cdd355c1c606e402dd">pointInTriangle</a> (double ax, double ay, double bx, double by, double cx, double cy, double px, double py) const</td></tr>
+<tr class="separator:aa0bf22d1711724cdd355c1c606e402dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a915fed6489afb673a4a932edc36f8b2b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a915fed6489afb673a4a932edc36f8b2b">isValidDiagonal</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *a, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *b)</td></tr>
+<tr class="separator:a915fed6489afb673a4a932edc36f8b2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a302414231242aaeee8ecca31d0949cb7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a302414231242aaeee8ecca31d0949cb7">area</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *q, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *r) const</td></tr>
+<tr class="separator:a302414231242aaeee8ecca31d0949cb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae385d207e875af76e361ed819c4de628"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ae385d207e875af76e361ed819c4de628">equals</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p1, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p2)</td></tr>
+<tr class="separator:ae385d207e875af76e361ed819c4de628"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecc9b3e3c58701c606dd6484d2a8b07c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#aecc9b3e3c58701c606dd6484d2a8b07c">intersects</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p1, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *q1, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p2, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *q2)</td></tr>
+<tr class="separator:aecc9b3e3c58701c606dd6484d2a8b07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1db2a396f809f681ba6b7d7752c8b80f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a1db2a396f809f681ba6b7d7752c8b80f">onSegment</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *q, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *r)</td></tr>
+<tr class="separator:a1db2a396f809f681ba6b7d7752c8b80f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a027cfb5dcb531a8ce39290dfc409b525"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a027cfb5dcb531a8ce39290dfc409b525">sign</a> (double val)</td></tr>
+<tr class="separator:a027cfb5dcb531a8ce39290dfc409b525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f009bc2ba1caa968039138df218e2d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a35f009bc2ba1caa968039138df218e2d">intersectsPolygon</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *a, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *b)</td></tr>
+<tr class="separator:a35f009bc2ba1caa968039138df218e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6343d4da3b156ef6c1486f3031a5158"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ab6343d4da3b156ef6c1486f3031a5158">locallyInside</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *a, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *b)</td></tr>
+<tr class="separator:ab6343d4da3b156ef6c1486f3031a5158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29fde548c62e1696e17a7557602c9a8e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a29fde548c62e1696e17a7557602c9a8e">middleInside</a> (const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *a, const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *b)</td></tr>
+<tr class="separator:a29fde548c62e1696e17a7557602c9a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29a208fa4e026cde97613f97dd7cf269"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a29a208fa4e026cde97613f97dd7cf269">splitPolygon</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *a, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *b)</td></tr>
+<tr class="separator:a29a208fa4e026cde97613f97dd7cf269"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0e165dc9b51d106cd6bd6a40e0523c3"><td class="memTemplParams" colspan="2">template&lt;typename Point &gt; </td></tr>
+<tr class="memitem:ae0e165dc9b51d106cd6bd6a40e0523c3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ae0e165dc9b51d106cd6bd6a40e0523c3">insertNode</a> (std::size_t i, const Point &amp;p, <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *last)</td></tr>
+<tr class="separator:ae0e165dc9b51d106cd6bd6a40e0523c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf19fe945f0c71b1d26942c8c6368784"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#adf19fe945f0c71b1d26942c8c6368784">removeNode</a> (<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *p)</td></tr>
+<tr class="separator:adf19fe945f0c71b1d26942c8c6368784"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:abe55ab52c574e2f70fcb955e5395b4c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#abe55ab52c574e2f70fcb955e5395b4c9">hashing</a></td></tr>
+<tr class="separator:abe55ab52c574e2f70fcb955e5395b4c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a690c8fc8caa72a583d5558c942e4a2a2"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a690c8fc8caa72a583d5558c942e4a2a2">minX</a></td></tr>
+<tr class="separator:a690c8fc8caa72a583d5558c942e4a2a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ff1fb54fdc603062d33ae69a9abbe5"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a35ff1fb54fdc603062d33ae69a9abbe5">maxX</a></td></tr>
+<tr class="separator:a35ff1fb54fdc603062d33ae69a9abbe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ebf908bd67bf14e4cd02542afc19997"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a1ebf908bd67bf14e4cd02542afc19997">minY</a></td></tr>
+<tr class="separator:a1ebf908bd67bf14e4cd02542afc19997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa30656e19d1a06808f79398151b2aa3a"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#aa30656e19d1a06808f79398151b2aa3a">maxY</a></td></tr>
+<tr class="separator:aa30656e19d1a06808f79398151b2aa3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a224678caff7cea8edc15dd47d05c43a3"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#a224678caff7cea8edc15dd47d05c43a3">inv_size</a> = 0</td></tr>
+<tr class="separator:a224678caff7cea8edc15dd47d05c43a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad74eb98bc3a9f44d9774653b5fcef9d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmapbox_1_1detail_1_1_earcut_1_1_object_pool.html">ObjectPool</a>&lt; <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html#ad74eb98bc3a9f44d9774653b5fcef9d4">nodes</a></td></tr>
+<tr class="separator:ad74eb98bc3a9f44d9774653b5fcef9d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a302414231242aaeee8ecca31d0949cb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a302414231242aaeee8ecca31d0949cb7">&#9670;&nbsp;</a></span>area()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::area </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>r</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10a5255c4df28f7d064c01e5947f78e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10a5255c4df28f7d064c01e5947f78e5">&#9670;&nbsp;</a></span>cureLocalIntersections()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::cureLocalIntersections </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adf6e2febfb73da52b998181ad5c1dd42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf6e2febfb73da52b998181ad5c1dd42">&#9670;&nbsp;</a></span>earcutLinked()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::earcutLinked </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>ear</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pass</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3950e676ac974b7a0abc3b84b09499bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3950e676ac974b7a0abc3b84b09499bb">&#9670;&nbsp;</a></span>eliminateHole()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::eliminateHole </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>hole</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>outerNode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a17f25ae65b130db41da119d5ee989a80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f25ae65b130db41da119d5ee989a80">&#9670;&nbsp;</a></span>eliminateHoles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<div class="memtemplate">
+template&lt;typename Polygon &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::eliminateHoles </td>
+          <td>(</td>
+          <td class="paramtype">const Polygon &amp;&#160;</td>
+          <td class="paramname"><em>points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>outerNode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae385d207e875af76e361ed819c4de628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae385d207e875af76e361ed819c4de628">&#9670;&nbsp;</a></span>equals()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::equals </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af572e4c4990214886260bdcc349e63e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af572e4c4990214886260bdcc349e63e9">&#9670;&nbsp;</a></span>filterPoints()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::filterPoints </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>end</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad3872517d12bb59c6e76d5d8766f3283"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3872517d12bb59c6e76d5d8766f3283">&#9670;&nbsp;</a></span>findHoleBridge()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::findHoleBridge </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>hole</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>outerNode</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada9883c4efa2aec9ca437cd2198ebe82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada9883c4efa2aec9ca437cd2198ebe82">&#9670;&nbsp;</a></span>getLeftmost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::getLeftmost </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76ec1598fdb9e1105e7e1322cd430bc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76ec1598fdb9e1105e7e1322cd430bc8">&#9670;&nbsp;</a></span>indexCurve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::indexCurve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae0e165dc9b51d106cd6bd6a40e0523c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0e165dc9b51d106cd6bd6a40e0523c3">&#9670;&nbsp;</a></span>insertNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<div class="memtemplate">
+template&lt;typename Point &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::insertNode </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Point &amp;&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>last</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aecc9b3e3c58701c606dd6484d2a8b07c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecc9b3e3c58701c606dd6484d2a8b07c">&#9670;&nbsp;</a></span>intersects()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::intersects </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>q1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>q2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35f009bc2ba1caa968039138df218e2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f009bc2ba1caa968039138df218e2d">&#9670;&nbsp;</a></span>intersectsPolygon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::intersectsPolygon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a105b50e2b0bb31e4999333e73594bb24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a105b50e2b0bb31e4999333e73594bb24">&#9670;&nbsp;</a></span>isEar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::isEar </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>ear</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03e674c81037646b0cd2d170cea3a4db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03e674c81037646b0cd2d170cea3a4db">&#9670;&nbsp;</a></span>isEarHashed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::isEarHashed </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>ear</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a915fed6489afb673a4a932edc36f8b2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a915fed6489afb673a4a932edc36f8b2b">&#9670;&nbsp;</a></span>isValidDiagonal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::isValidDiagonal </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afd47aff4dd6e901194d3c21063160194"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd47aff4dd6e901194d3c21063160194">&#9670;&nbsp;</a></span>linkedList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<div class="memtemplate">
+template&lt;typename Ring &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::linkedList </td>
+          <td>(</td>
+          <td class="paramtype">const Ring &amp;&#160;</td>
+          <td class="paramname"><em>points</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const bool&#160;</td>
+          <td class="paramname"><em>clockwise</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab6343d4da3b156ef6c1486f3031a5158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6343d4da3b156ef6c1486f3031a5158">&#9670;&nbsp;</a></span>locallyInside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::locallyInside </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29fde548c62e1696e17a7557602c9a8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29fde548c62e1696e17a7557602c9a8e">&#9670;&nbsp;</a></span>middleInside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::middleInside </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1db2a396f809f681ba6b7d7752c8b80f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1db2a396f809f681ba6b7d7752c8b80f">&#9670;&nbsp;</a></span>onSegment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::onSegment </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>q</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>r</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab892b077a45bc6dd229bc89295b5c95b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab892b077a45bc6dd229bc89295b5c95b">&#9670;&nbsp;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<div class="memtemplate">
+template&lt;typename Polygon &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">const Polygon &amp;&#160;</td>
+          <td class="paramname"><em>points</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0bf22d1711724cdd355c1c606e402dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0bf22d1711724cdd355c1c606e402dd">&#9670;&nbsp;</a></span>pointInTriangle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::pointInTriangle </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ax</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>ay</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>bx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>by</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>cy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>px</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>py</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="adf19fe945f0c71b1d26942c8c6368784"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf19fe945f0c71b1d26942c8c6368784">&#9670;&nbsp;</a></span>removeNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::removeNode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac12a1e4f161440c54d716fba4f55ddad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac12a1e4f161440c54d716fba4f55ddad">&#9670;&nbsp;</a></span>sectorContainsSector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::sectorContainsSector </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>m</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>p</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a027cfb5dcb531a8ce39290dfc409b525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a027cfb5dcb531a8ce39290dfc409b525">&#9670;&nbsp;</a></span>sign()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::sign </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5994f60ada67f1c84a7c8840276db619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5994f60ada67f1c84a7c8840276db619">&#9670;&nbsp;</a></span>sortLinked()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::sortLinked </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>list</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50652b44c2fd24678b7465f68408ccd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50652b44c2fd24678b7465f68408ccd3">&#9670;&nbsp;</a></span>splitEarcut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::splitEarcut </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>start</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a29a208fa4e026cde97613f97dd7cf269"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29a208fa4e026cde97613f97dd7cf269">&#9670;&nbsp;</a></span>splitPolygon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a>&lt; N &gt;::<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> * <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::splitPolygon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae71e175b998b05baeaebe25c151cfd40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71e175b998b05baeaebe25c151cfd40">&#9670;&nbsp;</a></span>zOrder()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::zOrder </td>
+          <td>(</td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>x_</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const double&#160;</td>
+          <td class="paramname"><em>y_</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abe55ab52c574e2f70fcb955e5395b4c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe55ab52c574e2f70fcb955e5395b4c9">&#9670;&nbsp;</a></span>hashing</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::hashing</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae8a063c08f32c31bdcd75ff789fa17f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a063c08f32c31bdcd75ff789fa17f4">&#9670;&nbsp;</a></span>indices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;N&gt; <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::indices</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a224678caff7cea8edc15dd47d05c43a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a224678caff7cea8edc15dd47d05c43a3">&#9670;&nbsp;</a></span>inv_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::inv_size = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a35ff1fb54fdc603062d33ae69a9abbe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ff1fb54fdc603062d33ae69a9abbe5">&#9670;&nbsp;</a></span>maxX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::maxX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa30656e19d1a06808f79398151b2aa3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa30656e19d1a06808f79398151b2aa3a">&#9670;&nbsp;</a></span>maxY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::maxY</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a690c8fc8caa72a583d5558c942e4a2a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a690c8fc8caa72a583d5558c942e4a2a2">&#9670;&nbsp;</a></span>minX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::minX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ebf908bd67bf14e4cd02542afc19997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ebf908bd67bf14e4cd02542afc19997">&#9670;&nbsp;</a></span>minY</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::minY</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad74eb98bc3a9f44d9774653b5fcef9d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad74eb98bc3a9f44d9774653b5fcef9d4">&#9670;&nbsp;</a></span>nodes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmapbox_1_1detail_1_1_earcut_1_1_object_pool.html">ObjectPool</a>&lt;<a class="el" href="structmapbox_1_1detail_1_1_earcut_1_1_node.html">Node</a>&gt; <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::nodes</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa8464b2ca13583bd59c72b5c86269445"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8464b2ca13583bd59c72b5c86269445">&#9670;&nbsp;</a></span>vertices</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename N  = uint32_t&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t <a class="el" href="classmapbox_1_1detail_1_1_earcut.html">mapbox::detail::Earcut</a>&lt; N &gt;::vertices = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="triangulation_8hpp_source.html">triangulation.hpp</a></li>
 </ul>
@@ -115,7 +1472,7 @@ std::size_t&#160;</td><td class="memItemRight" valign="bottom"><b>vertices</b> =
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>mapbox</b></li><li class="navelem"><b>detail</b></li><li class="navelem"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a></li>
+    <li class="navelem"><a class="el" href="namespacemapbox.html">mapbox</a></li><li class="navelem"><a class="el" href="namespacemapbox_1_1detail.html">detail</a></li><li class="navelem"><a class="el" href="classmapbox_1_1detail_1_1_earcut.html">Earcut</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

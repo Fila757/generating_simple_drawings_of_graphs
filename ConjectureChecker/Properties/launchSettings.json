@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "ConjectureChecker": {
-      "commandName": "Project",
-      "commandLineArgs": ">> debug.txt"
-    }
-  }
-}

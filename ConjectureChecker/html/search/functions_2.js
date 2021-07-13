@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['findedgefromvertices_65',['FindEdgeFromVertices',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4a0fcb53e40c51f827f26402f3b39105',1,'VizualizerWPF::GraphCoordinates']]],
-  ['findvertex_66',['FindVertex',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#ad6699a9b2a68eac752e43b9d968de9f6',1,'VizualizerWPF.GraphCoordinates.FindVertex(Point center)'],['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a4eadeb0e4646490abe1b4dc1f9feddc7',1,'VizualizerWPF.GraphCoordinates.FindVertex(Ellipse ellipse, double sizeOfVertex)']]]
+  ['deleteedgefromdictionary_185',['DeleteEdgeFromDictionary',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a5d2b09cb4f44229adf5b3486e39f74f3',1,'VizualizerWPF::GraphCoordinates']]],
+  ['determinant_186',['Determinant',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ab53da5564591e71d370324d97fdb70ae',1,'VizualizerWPF::CollisionDetection']]],
+  ['divide_187',['Divide',['../class_vizualizer_w_p_f_1_1_point_extensions.html#ad292020ddf3c383ec26d902300dba56c',1,'VizualizerWPF::PointExtensions']]]
 ];

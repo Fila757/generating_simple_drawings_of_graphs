@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vertex_60',['Vertex',['../struct_vizualizer_w_p_f_1_1_vertex.html',1,'VizualizerWPF']]]
+  ['pointextensions_250',['PointExtensions',['../class_vizualizer_w_p_f_1_1_point_extensions.html',1,'VizualizerWPF']]]
 ];

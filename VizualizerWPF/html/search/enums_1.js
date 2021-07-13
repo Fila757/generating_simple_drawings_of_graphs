@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['vertexstate_101',['VertexState',['../namespace_vizualizer_w_p_f.html#aa95aa3e643b222355230511356c6e640',1,'VizualizerWPF']]]
+  ['stateautomoving_462',['StateAutoMoving',['../namespace_vizualizer_w_p_f.html#a25ac27f266ee34349bdc2b8392ea0419',1,'VizualizerWPF']]],
+  ['statecalculation_463',['StateCalculation',['../namespace_vizualizer_w_p_f.html#aa238e230543a89508d90205b26487a87',1,'VizualizerWPF']]],
+  ['statechanging_464',['StateChanging',['../namespace_vizualizer_w_p_f.html#a37105a0b372bc8b780566902cac62bdc',1,'VizualizerWPF']]]
 ];

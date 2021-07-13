@@ -1,4 +1,32 @@
 var searchData=
 [
-  ['edge_13',['Edge',['../class_vizualizer_w_p_f_1_1_edge.html',1,'VizualizerWPF']]]
+  ['c_6',['c',['../class_vizualizer_w_p_f_1_1_line_with_coeffients.html#a2e72c5c3d2fb530fd340c5068bd3ce9a',1,'VizualizerWPF::LineWithCoeffients']]],
+  ['calculateamedges_7',['CalculateAmEdges',['../class_vizualizer_w_p_f_1_1_custom_math.html#aaa02245519c8ab131ec173297b919e5b',1,'VizualizerWPF::CustomMath']]],
+  ['center_8',['center',['../struct_vizualizer_w_p_f_1_1_vertex.html#aad4b090ab0fec31175314069104ed2f5',1,'VizualizerWPF::Vertex']]],
+  ['centerinsideellipse_9',['CenterInsideEllipse',['../class_vizualizer_w_p_f_1_1_collision_detection.html#adbf5b7da9e13227426c0d0e3b1840a99',1,'VizualizerWPF::CollisionDetection']]],
+  ['centerofellipseonline_10',['CenterOfEllipseOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a881e18046f4f41fcc24c50f631247f21',1,'VizualizerWPF::CollisionDetection']]],
+  ['centerofvertexonline_11',['CenterOfVertexOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a22582724871dd486fcf9a10a12f1e27b',1,'VizualizerWPF::CollisionDetection']]],
+  ['centeronline_12',['CenterOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ad87cdac41d83e32cfcf3a2102a95516c',1,'VizualizerWPF::CollisionDetection']]],
+  ['chech2amkconjecture_13',['Chech2AMKConjecture',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a13a67ca0ae4d72647153927f6841ea19',1,'VizualizerWPF::GraphCoordinates']]],
+  ['chech3amkconjecture_14',['Chech3AMKConjecture',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aa6dbd5c5d59850196cd969ece5dd8201',1,'VizualizerWPF::GraphCoordinates']]],
+  ['check2amkconjecture_15',['Check2AMKConjecture',['../class_vizualizer_w_p_f_1_1_conjecture_checker.html#aafd0614cfecf324dddd308410099648d',1,'VizualizerWPF::ConjectureChecker']]],
+  ['check3amkconjecture_16',['Check3AMKConjecture',['../class_vizualizer_w_p_f_1_1_conjecture_checker.html#abfee6013e3f3324731beac0f4ced30af',1,'VizualizerWPF::ConjectureChecker']]],
+  ['checkifedgeisintriangle_17',['CheckIfEdgeIsInTriangle',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ae93ea7d7deab51fd091bf41885a608b0',1,'VizualizerWPF::CollisionDetection']]],
+  ['checkiftwolinesintersectnotattheend_18',['CheckIfTwoLinesIntersectNotAtTheEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#af92f7da9bc194e9ca38752fca0517d21',1,'VizualizerWPF::CollisionDetection']]],
+  ['chooseoppositeone_19',['ChooseOppositeOne',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ab0f8af3c6028c1532f021f0c52eec5d9',1,'VizualizerWPF::CollisionDetection']]],
+  ['choosethelineby_20',['ChooseTheLineBy',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a7ccd665dd9a5c1ecc19ab6191b7ab8ab',1,'VizualizerWPF::CollisionDetection']]],
+  ['closefile_21',['CloseFile',['../class_vizualizer_w_p_f_1_1_graph_generator.html#a896b36960cabc3a5eba6f4646d3daff7',1,'VizualizerWPF::GraphGenerator']]],
+  ['collisiondetection_22',['CollisionDetection',['../class_vizualizer_w_p_f_1_1_collision_detection.html',1,'VizualizerWPF']]],
+  ['collisiondetection_2ecs_23',['CollisionDetection.cs',['../_collision_detection_8cs.html',1,'']]],
+  ['colors_24',['colors',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#acec422af1fd6731446e1ec1273fd8217',1,'VizualizerWPF::GraphCoordinates']]],
+  ['combcoeff_25',['CombCoeff',['../class_vizualizer_w_p_f_1_1_custom_math.html#ad8d492499b75700ffb981d1fd7f2a361',1,'VizualizerWPF::CustomMath']]],
+  ['compare_26',['Compare',['../struct_vizualizer_w_p_f_1_1_vertex.html#a71d328befdb424ee0395f0754b94f001',1,'VizualizerWPF::Vertex']]],
+  ['comparelinesbyangle_27',['CompareLinesByAngle',['../class_vizualizer_w_p_f_1_1_collision_detection.html#aa2865667ae4b92a609b0a76271ffa868',1,'VizualizerWPF::CollisionDetection']]],
+  ['conjecturechecker_28',['ConjectureChecker',['../class_vizualizer_w_p_f_1_1_conjecture_checker.html',1,'VizualizerWPF']]],
+  ['conjecturechecker_2ecs_29',['ConjectureChecker.cs',['../_conjecture_checker_8cs.html',1,'']]],
+  ['containsend_30',['ContainsEnd',['../class_vizualizer_w_p_f_1_1_edge_list_extensions.html#a73a1c3658846a3b238a0a58d7dfd649c',1,'VizualizerWPF::EdgeListExtensions']]],
+  ['counter_31',['counter',['../class_vizualizer_w_p_f_1_1_graph_generator.html#affee1c3d2075feeadd364cd223fdaf61',1,'VizualizerWPF::GraphGenerator']]],
+  ['createlinesfrompoints_32',['CreateLinesFromPoints',['../class_vizualizer_w_p_f_1_1_edge.html#ac3a078bb00862306c13c82ed69ce5b8e',1,'VizualizerWPF::Edge']]],
+  ['custommath_33',['CustomMath',['../class_vizualizer_w_p_f_1_1_custom_math.html',1,'VizualizerWPF']]],
+  ['custommath_2ecs_34',['CustomMath.cs',['../_custom_math_8cs.html',1,'']]]
 ];

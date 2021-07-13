@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['twolines_45',['TwoLines',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a7e60dabf80f59ab06799799842bf44b9',1,'VizualizerWPF::CollisionDetection']]],
-  ['twolinesintersectnotattheend_46',['TwoLinesIntersectNotAtTheEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#adbd9ae56a26ecd092bf6bbebd24426f3',1,'VizualizerWPF::CollisionDetection']]],
-  ['twopaths_47',['TwoPaths',['../class_vizualizer_w_p_f_1_1_collision_detection.html#af8f664f8f5128cbcae72b379b616303b',1,'VizualizerWPF::CollisionDetection']]]
+  ['neighbors_157',['neighbors',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#ad3f639915f7ed5053ee0af869b10148f',1,'VizualizerWPF::GraphCoordinates']]],
+  ['nextdrawing_5fclick_158',['NextDrawing_Click',['../class_vizualizer_w_p_f_1_1_main_window.html#ae067ff6ed31958e8734154f6a4f48cc6',1,'VizualizerWPF::MainWindow']]],
+  ['none_159',['None',['../namespace_vizualizer_w_p_f.html#a25ac27f266ee34349bdc2b8392ea0419a6adf97f83acf6453d4a6a4b1070f3754',1,'VizualizerWPF.None()'],['../namespace_vizualizer_w_p_f.html#a37105a0b372bc8b780566902cac62bdca6adf97f83acf6453d4a6a4b1070f3754',1,'VizualizerWPF.None()']]],
+  ['numbervalidationtextbox_160',['NumberValidationTextBox',['../class_vizualizer_w_p_f_1_1_main_window.html#ac8e08361424dd9508ecaa529eed169fd',1,'VizualizerWPF::MainWindow']]]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>drawing_of_cliques: functions.hpp Source File</title>
+<title>drawings_of_cliques: C:/Users/filip/Desktop/Bachelor thesis/generating-simple-drawings-of-graphs/drawing_of_cliques/functions.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">drawing_of_cliques
+   <div id="projectname">drawings_of_cliques
    </div>
   </td>
  </tr>
@@ -85,7 +85,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="title">functions.hpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<a href="functions_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
@@ -104,32 +104,32 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#ifndef M_PI</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#define M_PI 3.14159265358979323846</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="functions_8hpp.html#ae71449b1cc6e6250b91f539153a7a0d3">   20</a></span>&#160;<span class="preprocessor">#define M_PI 3.14159265358979323846</span></div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifndef SIZE_OF_ARRAY</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define SIZE_OF_ARRAY 10</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">   24</a></span>&#160;<span class="preprocessor">#define SIZE_OF_ARRAY 10</span></div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif </span></div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define x first</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#define y second</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a6c4b361d72eb3767ba424ac9a6ecf52b">   28</a></span>&#160;<span class="preprocessor">#define x first</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a0ed6a908288e0cd87f79c1b5ab56d07c">   29</a></span>&#160;<span class="preprocessor">#define y second</span></div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">using</span> array_4D = vector&lt;vector&lt;vector&lt;vector&lt;bool&gt; &gt; &gt; &gt;;</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">   31</a></span>&#160;<span class="keyword">using</span> <a class="code" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a> = vector&lt;vector&lt;vector&lt;vector&lt;bool&gt; &gt; &gt; &gt;;</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> fact[SIZE_OF_ARRAY + 5];</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">   33</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a>[<a class="code" href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">SIZE_OF_ARRAY</a> + 5];</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> precount_factorials(){</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    fact[0] = 1;</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 1; i &lt; SIZE_OF_ARRAY + 5;i++)</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        fact[i] = i * fact[i-1];</div>
+<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a1ef2d43c8fdd010efd62e1a7b4cb91a3">   35</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="functions_8hpp.html#a1ef2d43c8fdd010efd62e1a7b4cb91a3">precount_factorials</a>(){</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a>[0] = 1;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 1; i &lt; <a class="code" href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">SIZE_OF_ARRAY</a> + 5;i++)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;        <a class="code" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a>[i] = i * <a class="code" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a>[i-1];</div>
 <div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">//cout &lt;&lt; fact[SIZE_OF_ARRAY -1] &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;}</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structcanonic__wraper.html">   46</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structcanonic__wraper.html">canonic_wraper</a>{</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    unordered_map&lt;string, bool&gt; canonic_fingerprints;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    mutex shared_mutex;</div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="structcanonic__wraper.html#acbffb4150cc546e0959c648eb9bcabeb">   47</a></span>&#160;    unordered_map&lt;string, bool&gt; <a class="code" href="structcanonic__wraper.html#acbffb4150cc546e0959c648eb9bcabeb">canonic_fingerprints</a>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="structcanonic__wraper.html#af0da170926ad538d8e508424c325234e">   48</a></span>&#160;    mutex <a class="code" href="structcanonic__wraper.html#af0da170926ad538d8e508424c325234e">shared_mutex</a>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;};</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">struct </span><a class="code" href="struct_vertex.html">Vertex</a>;</div>
@@ -139,24 +139,24 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structgraph.html">   58</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structgraph.html">graph</a> {</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="comment">/*normal part*/</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">int</span> number_of_vertices = 0; <span class="comment">//just real vertices</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structgraph.html#a6830f19734b78eb24f47e5744cc84a33">   61</a></span>&#160;    <span class="keywordtype">int</span> number_of_vertices = 0; <span class="comment">//just real vertices</span></div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">int</span> realized = 0;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="structgraph.html#ab75c73ff8b6549531fbbb8eea6b067ed">   63</a></span>&#160;    <span class="keywordtype">int</span> realized = 0;</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structgraph.html#a14bfe1cad3fafac7649782421c5b39c4">   64</a></span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">int</span> index;</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">   66</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">index</a>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    list&lt;Edge&gt; edges;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structgraph.html#ab4258b65d64692f86109938453dedd26">   68</a></span>&#160;    list&lt;Edge&gt; <a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    shared_ptr&lt;Face&gt; outer_face;</div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">   70</a></span>&#160;    shared_ptr&lt;Face&gt; <a class="code" href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">outer_face</a>;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    ofstream output_file;</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structgraph.html#a0bba295498fe51872196779428caa7a1">   72</a></span>&#160;    ofstream <a class="code" href="structgraph.html#a0bba295498fe51872196779428caa7a1">output_file</a>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> close_files() {</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">   74</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">close_files</a>() {</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        output_file.close();</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="structgraph.html">graph</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> i, shared_ptr&lt;canonic_wraper&gt; shared_canonics) {</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structgraph.html#af90f8432916e7bec392a6f677ab96bde">   78</a></span>&#160;    <a class="code" href="structgraph.html#af90f8432916e7bec392a6f677ab96bde">graph</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> i, shared_ptr&lt;canonic_wraper&gt; shared_canonics) {</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        index = i;</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        canonic_fingerprints_wraper = shared_canonics;</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
@@ -191,7 +191,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;        cout &lt;&lt; <span class="stringliteral">&quot;opened &quot;</span> &lt;&lt; output_path &lt;&lt; endl;</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        </div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160; </div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        precount_factorials();</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        <a class="code" href="functions_8hpp.html#a1ef2d43c8fdd010efd62e1a7b4cb91a3">precount_factorials</a>();</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;    }</div>
 <div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
 <div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordtype">void</span> add_edge(shared_ptr&lt;Vertex&gt; a, shared_ptr&lt;Vertex&gt; b, shared_ptr&lt;Face&gt; face, <span class="keywordtype">int</span> a_index, <span class="keywordtype">int</span> b_index, <span class="keywordtype">bool</span> outer_face_bool = <span class="keyword">false</span>);</div>
@@ -206,11 +206,11 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    </div>
 <div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">  129</a></span>&#160;    vector&lt;Edge*&gt; <a class="code" href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">segments</a>; </div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160; </div>
-<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">  134</a></span>&#160;    array_4D <a class="code" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a>; </div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">  134</a></span>&#160;    <a class="code" href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a> <a class="code" href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">blocked</a>; </div>
 <div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
 <div class="line"><a name="l00140"></a><span class="lineno"><a class="line" href="structgraph.html#a158492da510bca1fea20d9c694419f7b">  140</a></span>&#160;    vector&lt;vector&lt;int&gt; &gt; <a class="code" href="structgraph.html#a158492da510bca1fea20d9c694419f7b">starts</a>;</div>
 <div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    shared_ptr&lt;canonic_wraper&gt; canonic_fingerprints_wraper;</div>
+<div class="line"><a name="l00142"></a><span class="lineno"><a class="line" href="structgraph.html#a5f440fab089a7251c445593e2d78b457">  142</a></span>&#160;    shared_ptr&lt;canonic_wraper&gt; <a class="code" href="structgraph.html#a5f440fab089a7251c445593e2d78b457">canonic_fingerprints_wraper</a>;</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160; </div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <span class="keywordtype">void</span> create_special_vertex(<span class="keywordtype">int</span> index);</div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    <span class="keywordtype">void</span> recolor_fingerprint(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rotation);</div>
@@ -232,22 +232,22 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;};</div>
 <div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160; </div>
 <div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="struct_vertex.html">  166</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_vertex.html">Vertex</a> {</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* to_;</div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="line" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">  167</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">to_</a>;</div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">int</span> index_;</div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="struct_vertex.html#a440133980998b323a2642f8759d7b3f4">  169</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="struct_vertex.html#a440133980998b323a2642f8759d7b3f4">index_</a>;</div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <a class="code" href="struct_vertex.html">Vertex</a>() {}</div>
+<div class="line"><a name="l00171"></a><span class="lineno"><a class="line" href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">  171</a></span>&#160;    <a class="code" href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">Vertex</a>() {}</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="comment">//it is really good to be the opposite one because when you create new vertex </span></div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;    <span class="comment">//from the edge side then it is good to go from the intersection opposite side</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    <a class="code" href="struct_vertex.html">Vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* to) : to_(to) {}</div>
+<div class="line"><a name="l00175"></a><span class="lineno"><a class="line" href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">  175</a></span>&#160;    <a class="code" href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">Vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* to) : to_(to) {}</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;};</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160; </div>
 <div class="line"><a name="l00181"></a><span class="lineno"><a class="line" href="struct_face.html">  181</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_face.html">Face</a> {</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* edge_;</div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">  182</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">edge_</a>;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160; </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;    <a class="code" href="struct_face.html">Face</a>() {</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; SIZE_OF_ARRAY + 5;i++)</div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">  184</a></span>&#160;    <a class="code" href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">Face</a>() {</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code" href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">SIZE_OF_ARRAY</a> + 5;i++)</div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;            counter_of_same_last_edges[i] = 0;  </div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        }</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
@@ -255,41 +255,41 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160; </div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
 <div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="comment">//int counter_of_last_edges = 0;</span></div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">int</span> counter_of_same_last_edges[SIZE_OF_ARRAY + 5];</div>
+<div class="line"><a name="l00193"></a><span class="lineno"><a class="line" href="struct_face.html#a9a1b00fd1b4ef31c856c506800a636ba">  193</a></span>&#160;    <span class="keywordtype">int</span> counter_of_same_last_edges[<a class="code" href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">SIZE_OF_ARRAY</a> + 5];</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;};</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160; </div>
 <div class="line"><a name="l00199"></a><span class="lineno"><a class="line" href="struct_edge.html">  199</a></span>&#160;<span class="keyword">struct </span><a class="code" href="struct_edge.html">Edge</a> {</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
+<div class="line"><a name="l00200"></a><span class="lineno"><a class="line" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">  200</a></span>&#160;    <span class="keywordtype">int</span> index_ = 0;</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160; </div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* next_;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* prev_;</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* opposite_;</div>
+<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">  202</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
+<div class="line"><a name="l00203"></a><span class="lineno"><a class="line" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">  203</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a>;</div>
+<div class="line"><a name="l00204"></a><span class="lineno"><a class="line" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">  204</a></span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* <a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160; </div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;    shared_ptr&lt;Vertex&gt; from_;</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;    shared_ptr&lt;Vertex&gt; to_;</div>
+<div class="line"><a name="l00206"></a><span class="lineno"><a class="line" href="struct_edge.html#a6aeff559f09ffeb59db15c163ca87037">  206</a></span>&#160;    shared_ptr&lt;Vertex&gt; <a class="code" href="struct_edge.html#a6aeff559f09ffeb59db15c163ca87037">from_</a>;</div>
+<div class="line"><a name="l00207"></a><span class="lineno"><a class="line" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">  207</a></span>&#160;    shared_ptr&lt;Vertex&gt; <a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>;</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160; </div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;    shared_ptr&lt;Face&gt; face_;</div>
+<div class="line"><a name="l00209"></a><span class="lineno"><a class="line" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">  209</a></span>&#160;    shared_ptr&lt;Face&gt; <a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>;</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160; </div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>() {}</div>
+<div class="line"><a name="l00211"></a><span class="lineno"><a class="line" href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">  211</a></span>&#160;    <a class="code" href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">Edge</a>() {}</div>
 <div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160; </div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>(<a class="code" href="struct_edge.html">Edge</a>* next, <a class="code" href="struct_edge.html">Edge</a>* prev, <a class="code" href="struct_edge.html">Edge</a>* opposite, shared_ptr&lt;Vertex&gt; from, shared_ptr&lt;Vertex&gt; to, shared_ptr&lt;Face&gt; face, <span class="keywordtype">int</span> index) :</div>
+<div class="line"><a name="l00213"></a><span class="lineno"><a class="line" href="struct_edge.html#afe76eb33eac239871194363abacdec70">  213</a></span>&#160;    <a class="code" href="struct_edge.html#afe76eb33eac239871194363abacdec70">Edge</a>(<a class="code" href="struct_edge.html">Edge</a>* next, <a class="code" href="struct_edge.html">Edge</a>* prev, <a class="code" href="struct_edge.html">Edge</a>* opposite, shared_ptr&lt;Vertex&gt; from, shared_ptr&lt;Vertex&gt; to, shared_ptr&lt;Face&gt; face, <span class="keywordtype">int</span> index) :</div>
 <div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;        next_(next), prev_(prev), opposite_(opposite), from_(from), to_(to), face_(face), index_(index) {}</div>
 <div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160; </div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;    <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">return</span> (from_ == a.from_ &amp;&amp; to_ == a.to_);</div>
+<div class="line"><a name="l00216"></a><span class="lineno"><a class="line" href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">  216</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        <span class="keywordflow">return</span> (from_ == a.<a class="code" href="struct_edge.html#a6aeff559f09ffeb59db15c163ca87037">from_</a> &amp;&amp; to_ == a.<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>);</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    }</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
+<div class="line"><a name="l00220"></a><span class="lineno"><a class="line" href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">  220</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">operator!=</a>(<span class="keyword">const</span> <a class="code" href="struct_edge.html">Edge</a>&amp; a) {</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;        <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == a);</div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    }</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160; </div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;};</div>
 <div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> print_graph(<a class="code" href="structgraph.html">graph</a>* g) {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;number of edges: &quot;</span> &lt;&lt; g-&gt;edges.size() &lt;&lt; endl;</div>
+<div class="line"><a name="l00226"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">  226</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">print_graph</a>(<a class="code" href="structgraph.html">graph</a>* g) {</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    cout &lt;&lt; <span class="stringliteral">&quot;number of edges: &quot;</span> &lt;&lt; g-&gt;<a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>.size() &lt;&lt; endl;</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : g-&gt;edges) {</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it : g-&gt;<a class="code" href="structgraph.html#ab4258b65d64692f86109938453dedd26">edges</a>) {</div>
 <div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;        cout &lt;&lt; it.from_ &lt;&lt; <span class="stringliteral">&quot;:from to:&quot;</span> &lt;&lt; it.to_ &lt;&lt; <span class="stringliteral">&quot; face:&quot;</span> &lt;&lt; it.face_ &lt;&lt; <span class="stringliteral">&quot; prev:&quot;</span> &lt;&lt; it.prev_-&gt;index_ &lt;&lt; <span class="stringliteral">&quot; next:&quot;</span> &lt;&lt; it.next_-&gt;index_</div>
 <div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;            &lt;&lt; <span class="stringliteral">&quot; opp:&quot;</span> &lt;&lt; ((it.opposite_ == <span class="keyword">nullptr</span>) ? -1 : it.opposite_-&gt;index_) &lt;&lt; <span class="stringliteral">&quot; index:&quot;</span> &lt;&lt; it.index_ &lt;&lt;  <span class="stringliteral">&quot; s: &quot;</span> &lt;&lt; i &lt;&lt; endl;</div>
 <div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        i++;</div>
@@ -297,9 +297,9 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;}</div>
 <div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160; </div>
 <div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> graph::print_counters(<a class="code" href="struct_face.html">Face</a>* f) {</div>
+<div class="line"><a name="l00238"></a><span class="lineno"><a class="line" href="structgraph.html#a7246c49c9aa2d8c77c9d26aada03d6b1">  238</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a7246c49c9aa2d8c77c9d26aada03d6b1">graph::print_counters</a>(<a class="code" href="struct_face.html">Face</a>* f) {</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; number_of_vertices - 1;i++)</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        cout &lt;&lt; f-&gt;counter_of_same_last_edges[i] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;        cout &lt;&lt; f-&gt;<a class="code" href="struct_face.html#a9a1b00fd1b4ef31c856c506800a636ba">counter_of_same_last_edges</a>[i] &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    cout &lt;&lt; endl;</div>
 <div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;}</div>
 <div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160; </div>
@@ -307,10 +307,10 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160; </div>
 <div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    <a class="code" href="struct_edge.html">Edge</a>* toa = <span class="keyword">nullptr</span>, * tob = <span class="keyword">nullptr</span>, * froma = <span class="keyword">nullptr</span>, * fromb = <span class="keyword">nullptr</span>;</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160; </div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    toa = a-&gt;to_;</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    froma = toa-&gt;next_;</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    toa = a-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    froma = toa-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    tob = b-&gt;to_;</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;    tob = b-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>;</div>
 <div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    fromb = tob-&gt;next_;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;    <span class="keyword">auto</span> new_face = !outer_face_bool ? make_shared&lt;Face&gt;() : outer_face; <span class="comment">//new face or old face when creating star</span></div>
@@ -329,22 +329,22 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160; </div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <span class="comment">//print_graph(this);</span></div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160; </div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    ab_edge_ptr-&gt;opposite_ = ba_edge_ptr; <span class="comment">//setting opposite edge that has been already made and face edge</span></div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a> = ba_edge_ptr; <span class="comment">//setting opposite edge that has been already made and face edge</span></div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    new_face-&gt;edge_ = ba_edge_ptr;</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160; </div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    <span class="comment">/*if it throws an exception it is allright because we are tryint to connect unconnectable vertices*/</span></div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    froma-&gt;prev_ = ba_edge_ptr; <span class="comment">//changing neighborhood edges</span></div>
-<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    toa-&gt;next_ = ab_edge_ptr;</div>
-<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    fromb-&gt;prev_ = ab_edge_ptr;</div>
-<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    tob-&gt;next_ = ba_edge_ptr;</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    froma-&gt;<a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a> = ba_edge_ptr; <span class="comment">//changing neighborhood edges</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    toa-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = ab_edge_ptr;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;    fromb-&gt;<a class="code" href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">prev_</a> = ab_edge_ptr;</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;    tob-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = ba_edge_ptr;</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160; </div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="comment">//print_graph(this);</span></div>
 <div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
 <div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    <span class="keywordflow">if</span> (!outer_face_bool) { <span class="comment">//because if it is outer face it is not needed so it can be quicker</span></div>
 <div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;        <span class="keyword">auto</span> start_edge = ba_edge_ptr; <span class="comment">//setting the face property to all edges around this face</span></div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keyword">auto</span> cur_edge = start_edge-&gt;next_;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;        <span class="keyword">auto</span> cur_edge = start_edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
 <div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;        <span class="keywordflow">while</span> (start_edge != cur_edge) {</div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;            cur_edge-&gt;face_ = new_face;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;            cur_edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a> = new_face;</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;            <span class="keywordflow">if</span> ((cur_edge-&gt;index_ / 100 == number_of_vertices - 1) != (cur_edge-&gt;index_ % 100 == number_of_vertices - 1)) {</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                new_face-&gt;counter_of_same_last_edges[min(cur_edge-&gt;index_ / 100, cur_edge-&gt;index_ % 100)]++;</div>
 <div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;            }</div>
@@ -358,9 +358,9 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;    }</div>
 <div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    </div>
 <div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">if</span> (((ab_edge_ptr-&gt;index_ / 100) == (number_of_vertices -1)) != ((ab_edge_ptr-&gt;index_ % 100) == (number_of_vertices - 1))) {</div>
-<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        new_face-&gt;counter_of_same_last_edges[min(ab_edge_ptr-&gt;index_ / 100, ab_edge_ptr-&gt;index_ % 100)]++;</div>
-<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        face-&gt;counter_of_same_last_edges[min(ab_edge_ptr-&gt;index_ / 100, ab_edge_ptr-&gt;index_ % 100)]++;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    <span class="keywordflow">if</span> (((ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100) == (number_of_vertices -1)) != ((ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100) == (number_of_vertices - 1))) {</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160;        new_face-&gt;counter_of_same_last_edges[min(ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100, ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100)]++;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;        face-&gt;counter_of_same_last_edges[min(ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100, ab_edge_ptr-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100)]++;</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;    }</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160; </div>
 <div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;    </div>
@@ -372,34 +372,34 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70">  323</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70">graph::add_vertex</a>(<a class="code" href="struct_edge.html">Edge</a>* edge) {</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
 <div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160; </div>
-<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;opposite_;</div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keyword">auto</span> a = edge-&gt;from_;</div>
-<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keyword">auto</span> b = edge-&gt;to_;</div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;    <span class="keyword">auto</span> a = edge-&gt;<a class="code" href="struct_edge.html#a6aeff559f09ffeb59db15c163ca87037">from_</a>;</div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;    <span class="keyword">auto</span> b = edge-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>;</div>
 <div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160; </div>
 <div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keyword">auto</span> new_vertex = make_shared&lt;Vertex&gt;(edge); <span class="comment">//edge is going to this vertex //&quot;edge&quot; it is important because after adding vertex we add teh edge to the same direction (not face, face can be same anyway)</span></div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;    new_vertex-&gt;index_ = -1;</div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(edge-&gt;next_, edge, opposite, new_vertex, b, edge-&gt;face_, edge-&gt;index_)); <span class="comment">//new vertex to b, part of normal edge</span></div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>, edge, opposite, new_vertex, b, edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a>)); <span class="comment">//new vertex to b, part of normal edge</span></div>
 <div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160;    <span class="keyword">auto</span> tob = &amp;edges.back();</div>
 <div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;    segments.push_back(tob);</div>
 <div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160; </div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(opposite-&gt;next_, opposite, edge, new_vertex, a, opposite-&gt;face_, opposite-&gt;index_)); <span class="comment">//create from new_vertex to a, part of opposite</span></div>
+<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;    edges.push_back(<a class="code" href="struct_edge.html">Edge</a>(opposite-&gt;next_, opposite, edge, new_vertex, a, opposite-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>, opposite-&gt;index_)); <span class="comment">//create from new_vertex to a, part of opposite</span></div>
 <div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;    <span class="keyword">auto</span> toa = &amp;edges.back();</div>
 <div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    segments.push_back(toa);</div>
 <div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160; </div>
-<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    edge-&gt;to_ = new_vertex; <span class="comment">//changing properties of edge</span></div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    edge-&gt;next_ = tob;</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    edge-&gt;opposite_ = toa;</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a> = new_vertex; <span class="comment">//changing properties of edge</span></div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a> = tob;</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a> = toa;</div>
 <div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160; </div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    opposite-&gt;to_ = new_vertex; <span class="comment">//changing properties of opposite</span></div>
+<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;    opposite-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a> = new_vertex; <span class="comment">//changing properties of opposite</span></div>
 <div class="line"><a name="l00348"></a><span class="lineno">  348</span>&#160;    opposite-&gt;next_ = toa;</div>
 <div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;    opposite-&gt;opposite_ = tob;</div>
 <div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160; </div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">if</span> ((edge-&gt;index_ / 100 == number_of_vertices - 1) != (edge-&gt;index_ % 100 == number_of_vertices - 1)) {</div>
-<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        edge-&gt;face_-&gt;counter_of_same_last_edges[min(edge-&gt;index_ / 100, edge-&gt;index_ % 100)]++;</div>
-<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        opposite-&gt;face_-&gt;counter_of_same_last_edges[min(edge-&gt;index_ / 100, edge-&gt;index_ % 100)]++;</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordflow">if</span> ((edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100 == number_of_vertices - 1) != (edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100 == number_of_vertices - 1)) {</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160;        edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>-&gt;counter_of_same_last_edges[min(edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100)]++;</div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;        opposite-&gt;face_-&gt;counter_of_same_last_edges[min(edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> / 100, edge-&gt;<a class="code" href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">index_</a> % 100)]++;</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    }</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160; </div>
 <div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160; </div>
@@ -461,13 +461,13 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00420"></a><span class="lineno"><a class="line" href="structgraph.html#a375b5a329c1fbb634be55e002abc0097">  420</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="structgraph.html#a375b5a329c1fbb634be55e002abc0097">graph::delete_vertex</a>(<a class="code" href="struct_vertex.html">Vertex</a>* vertex) {</div>
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160; </div>
 <div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;    <span class="comment">// getting the right variables</span></div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keyword">auto</span> edge = vertex-&gt;to_;</div>
+<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;    <span class="keyword">auto</span> edge = vertex-&gt;<a class="code" href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">to_</a>;</div>
 <div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160; </div>
-<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keyword">auto</span> toa = edge-&gt;opposite_;</div>
-<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keyword">auto</span> tob = edge-&gt;next_;</div>
-<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keyword">auto</span> edge_opposite = tob-&gt;opposite_;</div>
+<div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;    <span class="keyword">auto</span> toa = edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;    <span class="keyword">auto</span> tob = edge-&gt;<a class="code" href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">next_</a>;</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;    <span class="keyword">auto</span> edge_opposite = tob-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160; </div>
-<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keyword">auto</span> a = toa-&gt;to_;</div>
+<div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;    <span class="keyword">auto</span> a = toa-&gt;<a class="code" href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">to_</a>;</div>
 <div class="line"><a name="l00430"></a><span class="lineno">  430</span>&#160;    <span class="keyword">auto</span> b = tob-&gt;to_;</div>
 <div class="line"><a name="l00431"></a><span class="lineno">  431</span>&#160; </div>
 <div class="line"><a name="l00432"></a><span class="lineno">  432</span>&#160;    <span class="comment">// reconnecting edges and therefore removing the vertex</span></div>
@@ -643,10 +643,10 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00625"></a><span class="lineno">  625</span>&#160; </div>
 <div class="line"><a name="l00626"></a><span class="lineno">  626</span>&#160; </div>
 <div class="line"><a name="l00633"></a><span class="lineno"><a class="line" href="structgraph.html#a9738417403e12bb5d6f877ec478820ec">  633</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="structgraph.html#a9738417403e12bb5d6f877ec478820ec">graph::is_some_of_faces_incorrect</a>(<a class="code" href="struct_edge.html">Edge</a>* edge){</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;opposite_;</div>
+<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;    <span class="keyword">auto</span> opposite = edge-&gt;<a class="code" href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">opposite_</a>;</div>
 <div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160; </div>
 <div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160; </div>
-<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    <span class="keywordflow">if</span>(is_face_incorrect(edge-&gt;face_) || is_face_incorrect(opposite-&gt;face_)){</div>
+<div class="line"><a name="l00637"></a><span class="lineno">  637</span>&#160;    <span class="keywordflow">if</span>(is_face_incorrect(edge-&gt;<a class="code" href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">face_</a>) || is_face_incorrect(opposite-&gt;face_)){</div>
 <div class="line"><a name="l00638"></a><span class="lineno">  638</span>&#160;        <span class="comment">//cout &lt;&lt; &quot;face incorrect&quot; &lt;&lt; endl;</span></div>
 <div class="line"><a name="l00639"></a><span class="lineno">  639</span>&#160;        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00640"></a><span class="lineno">  640</span>&#160;    }</div>
@@ -670,18 +670,18 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;}</div>
 <div class="line"><a name="l00664"></a><span class="lineno">  664</span>&#160; </div>
 <div class="line"><a name="l00665"></a><span class="lineno">  665</span>&#160; </div>
-<div class="line"><a name="l00666"></a><span class="lineno">  666</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> factorial(<span class="keywordtype">int</span> n) {</div>
-<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <span class="keywordflow">return</span> fact[n];</div>
+<div class="line"><a name="l00666"></a><span class="lineno"><a class="line" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">  666</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a>(<span class="keywordtype">int</span> n) {</div>
+<div class="line"><a name="l00667"></a><span class="lineno">  667</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a>[n];</div>
 <div class="line"><a name="l00668"></a><span class="lineno">  668</span>&#160;}</div>
 <div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160; </div>
 <div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160; </div>
 <div class="line"><a name="l00674"></a><span class="lineno"><a class="line" href="structfingerprints.html">  674</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structfingerprints.html">fingerprints</a> {</div>
-<div class="line"><a name="l00675"></a><span class="lineno">  675</span>&#160;    vector&lt;int&gt; states;</div>
-<div class="line"><a name="l00676"></a><span class="lineno">  676</span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">long</span> treshold;</div>
-<div class="line"><a name="l00677"></a><span class="lineno">  677</span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00678"></a><span class="lineno">  678</span>&#160;    vector&lt;string&gt; fingerprint;</div>
+<div class="line"><a name="l00675"></a><span class="lineno"><a class="line" href="structfingerprints.html#a70bf6b554e965b32e36e59ffa75498a3">  675</a></span>&#160;    vector&lt;int&gt; <a class="code" href="structfingerprints.html#a70bf6b554e965b32e36e59ffa75498a3">states</a>;</div>
+<div class="line"><a name="l00676"></a><span class="lineno"><a class="line" href="structfingerprints.html#a1e0de9f87ed5e1999eee4b2005af3846">  676</a></span>&#160;    <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code" href="structfingerprints.html#a1e0de9f87ed5e1999eee4b2005af3846">treshold</a>;</div>
+<div class="line"><a name="l00677"></a><span class="lineno"><a class="line" href="structfingerprints.html#a5db069136ef761bf638546eb576f5b0a">  677</a></span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00678"></a><span class="lineno"><a class="line" href="structfingerprints.html#a30719c9677801ea0dfb56990170c0c2b">  678</a></span>&#160;    vector&lt;string&gt; <a class="code" href="structfingerprints.html#a30719c9677801ea0dfb56990170c0c2b">fingerprint</a>;</div>
 <div class="line"><a name="l00679"></a><span class="lineno">  679</span>&#160; </div>
-<div class="line"><a name="l00680"></a><span class="lineno">  680</span>&#160;    ifstream input_file;</div>
+<div class="line"><a name="l00680"></a><span class="lineno"><a class="line" href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9">  680</a></span>&#160;    ifstream <a class="code" href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9">input_file</a>;</div>
 <div class="line"><a name="l00682"></a><span class="lineno">  682</span>&#160;    <span class="comment">// Set up the treshold (number of permutation of given string), then generate first rotation systems and reset the states to zeroes</span></div>
 <div class="line"><a name="l00684"></a><span class="lineno"><a class="line" href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6">  684</a></span>&#160;<span class="comment"></span>    <a class="code" href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6">fingerprints</a>(<span class="keywordtype">int</span> n, <span class="keywordtype">int</span> index) {</div>
 <div class="line"><a name="l00685"></a><span class="lineno">  685</span>&#160;        treshold = n; <span class="comment">//its length is n-1 and -1 because 0 is on fixed position</span></div>
@@ -724,7 +724,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00724"></a><span class="lineno">  724</span>&#160; </div>
 <div class="line"><a name="l00725"></a><span class="lineno">  725</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">long</span> <span class="keywordtype">long</span> i = states.size() - 1; i &gt;= 0;i--) {</div>
 <div class="line"><a name="l00726"></a><span class="lineno">  726</span>&#160;            <span class="keywordflow">if</span> (i == states.size() - 1) {</div>
-<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;                <span class="keywordflow">if</span> (states[i] == factorial(treshold - 2) - 1) { <span class="comment">// -2 because first position is fixed for &quot;0&quot;</span></div>
+<div class="line"><a name="l00727"></a><span class="lineno">  727</span>&#160;                <span class="keywordflow">if</span> (states[i] == <a class="code" href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a>(treshold - 2) - 1) { <span class="comment">// -2 because first position is fixed for &quot;0&quot;</span></div>
 <div class="line"><a name="l00728"></a><span class="lineno">  728</span>&#160;                    states[i] = 0;</div>
 <div class="line"><a name="l00729"></a><span class="lineno">  729</span>&#160;                    next_permutation(fingerprint[i].begin() + 1, fingerprint[i].end());</div>
 <div class="line"><a name="l00730"></a><span class="lineno">  730</span>&#160;                }</div>
@@ -840,17 +840,17 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00849"></a><span class="lineno">  849</span>&#160; </div>
 <div class="line"><a name="l00862"></a><span class="lineno"><a class="line" href="structsmart__permutations.html">  862</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structsmart__permutations.html">smart_permutations</a> {</div>
 <div class="line"><a name="l00863"></a><span class="lineno">  863</span>&#160; </div>
-<div class="line"><a name="l00864"></a><span class="lineno">  864</span>&#160;    <span class="keywordtype">string</span> fingerprint;</div>
-<div class="line"><a name="l00865"></a><span class="lineno">  865</span>&#160;    <span class="keywordtype">int</span> number_of_vertices;</div>
-<div class="line"><a name="l00866"></a><span class="lineno">  866</span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00867"></a><span class="lineno">  867</span>&#160;    <span class="keywordtype">string</span> first_rotation;</div>
-<div class="line"><a name="l00868"></a><span class="lineno">  868</span>&#160;    <span class="keywordtype">string</span> result;</div>
-<div class="line"><a name="l00869"></a><span class="lineno">  869</span>&#160;    <span class="keywordtype">bool</span> invers = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00864"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#a397c02e3c15fce4f869d2815d8929d15">  864</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structsmart__permutations.html#a397c02e3c15fce4f869d2815d8929d15">fingerprint</a>;</div>
+<div class="line"><a name="l00865"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#a63e7901705e28c8a69dc3bc3b43412a9">  865</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structsmart__permutations.html#a63e7901705e28c8a69dc3bc3b43412a9">number_of_vertices</a>;</div>
+<div class="line"><a name="l00866"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#ad6f62dae350b6c28976e8f0726561b53">  866</a></span>&#160;    <span class="keywordtype">bool</span> done = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00867"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#aa1202c8cdc86c9a080cebc25e593d9d8">  867</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structsmart__permutations.html#aa1202c8cdc86c9a080cebc25e593d9d8">first_rotation</a>;</div>
+<div class="line"><a name="l00868"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#ad2a0b9db53b98764dfc44fd720318fd1">  868</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structsmart__permutations.html#ad2a0b9db53b98764dfc44fd720318fd1">result</a>;</div>
+<div class="line"><a name="l00869"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#ac0ab45eb225f8ebddb9dee6ec1d84bc8">  869</a></span>&#160;    <span class="keywordtype">bool</span> invers = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00870"></a><span class="lineno">  870</span>&#160; </div>
-<div class="line"><a name="l00871"></a><span class="lineno">  871</span>&#160;    <span class="keywordtype">int</span> counter = 0;</div>
-<div class="line"><a name="l00872"></a><span class="lineno">  872</span>&#160;    <span class="keywordtype">int</span> counter_rotation = 0;</div>
+<div class="line"><a name="l00871"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#a2c62005d5fdaceaa3e0d3789b9ce4190">  871</a></span>&#160;    <span class="keywordtype">int</span> counter = 0;</div>
+<div class="line"><a name="l00872"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#a0b3475e0882720edfa944adce737b21a">  872</a></span>&#160;    <span class="keywordtype">int</span> counter_rotation = 0;</div>
 <div class="line"><a name="l00873"></a><span class="lineno">  873</span>&#160; </div>
-<div class="line"><a name="l00874"></a><span class="lineno">  874</span>&#160;    <span class="keywordtype">string</span> create_permutation(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rotation1, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; roration2) {</div>
+<div class="line"><a name="l00874"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#a08a9e553291b6d3febab71c512f6c58f">  874</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structsmart__permutations.html#a08a9e553291b6d3febab71c512f6c58f">create_permutation</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rotation1, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; roration2) {</div>
 <div class="line"><a name="l00875"></a><span class="lineno">  875</span>&#160; </div>
 <div class="line"><a name="l00876"></a><span class="lineno">  876</span>&#160;        <span class="keywordtype">string</span> permutation = <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line"><a name="l00877"></a><span class="lineno">  877</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; number_of_vertices;i++)</div>
@@ -869,7 +869,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00890"></a><span class="lineno">  890</span>&#160;        <span class="keywordflow">return</span> permutation;</div>
 <div class="line"><a name="l00891"></a><span class="lineno">  891</span>&#160;    }</div>
 <div class="line"><a name="l00892"></a><span class="lineno">  892</span>&#160; </div>
-<div class="line"><a name="l00893"></a><span class="lineno">  893</span>&#160;    <a class="code" href="structsmart__permutations.html">smart_permutations</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fingerprint, <span class="keywordtype">int</span> number_of_vertices) {</div>
+<div class="line"><a name="l00893"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#adc5ac63088e7774147732f6ea7a3e3a0">  893</a></span>&#160;    <a class="code" href="structsmart__permutations.html#adc5ac63088e7774147732f6ea7a3e3a0">smart_permutations</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; fingerprint, <span class="keywordtype">int</span> number_of_vertices) {</div>
 <div class="line"><a name="l00894"></a><span class="lineno">  894</span>&#160;        this-&gt;fingerprint = fingerprint;</div>
 <div class="line"><a name="l00895"></a><span class="lineno">  895</span>&#160;        this-&gt;number_of_vertices = number_of_vertices;</div>
 <div class="line"><a name="l00896"></a><span class="lineno">  896</span>&#160; </div>
@@ -878,7 +878,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00899"></a><span class="lineno">  899</span>&#160; </div>
 <div class="line"><a name="l00900"></a><span class="lineno">  900</span>&#160;    }</div>
 <div class="line"><a name="l00901"></a><span class="lineno">  901</span>&#160; </div>
-<div class="line"><a name="l00902"></a><span class="lineno">  902</span>&#160;    <span class="keywordtype">string</span> next() {</div>
+<div class="line"><a name="l00902"></a><span class="lineno"><a class="line" href="structsmart__permutations.html#af8de2837c48fffd2c67197294bfe1d65">  902</a></span>&#160;    <span class="keywordtype">string</span> <a class="code" href="structsmart__permutations.html#af8de2837c48fffd2c67197294bfe1d65">next</a>() {</div>
 <div class="line"><a name="l00903"></a><span class="lineno">  903</span>&#160; </div>
 <div class="line"><a name="l00904"></a><span class="lineno">  904</span>&#160;        result = create_permutation(fingerprint.substr((number_of_vertices - 1) * counter, number_of_vertices - 1), first_rotation);</div>
 <div class="line"><a name="l00905"></a><span class="lineno">  905</span>&#160;        <span class="comment">//cout &lt;&lt; result &lt;&lt; &quot;:result &quot; &lt;&lt; endl;</span></div>
@@ -968,7 +968,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l00994"></a><span class="lineno">  994</span>&#160;}</div>
 <div class="line"><a name="l00995"></a><span class="lineno">  995</span>&#160; </div>
 <div class="line"><a name="l00996"></a><span class="lineno">  996</span>&#160; </div>
-<div class="line"><a name="l00997"></a><span class="lineno">  997</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">string</span> find_lexical_min_rotation(<span class="keywordtype">string</span> str)</div>
+<div class="line"><a name="l00997"></a><span class="lineno"><a class="line" href="functions_8hpp.html#ad4c84ab48588bffc7a7d818053a5178f">  997</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">string</span> <a class="code" href="functions_8hpp.html#ad4c84ab48588bffc7a7d818053a5178f">find_lexical_min_rotation</a>(<span class="keywordtype">string</span> str)</div>
 <div class="line"><a name="l00998"></a><span class="lineno">  998</span>&#160;{</div>
 <div class="line"><a name="l00999"></a><span class="lineno">  999</span>&#160;    <span class="comment">// To store lexicographic minimum string</span></div>
 <div class="line"><a name="l01000"></a><span class="lineno"> 1000</span>&#160;    <span class="keywordtype">string</span> min = str;</div>
@@ -986,7 +986,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01012"></a><span class="lineno"> 1012</span>&#160;    <span class="keywordflow">return</span> min;</div>
 <div class="line"><a name="l01013"></a><span class="lineno"> 1013</span>&#160;}</div>
 <div class="line"><a name="l01014"></a><span class="lineno"> 1014</span>&#160; </div>
-<div class="line"><a name="l01020"></a><span class="lineno"> 1020</span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> is_correct_K4(vector&lt;int&gt; orders[4]) {</div>
+<div class="line"><a name="l01020"></a><span class="lineno"><a class="line" href="functions_8hpp.html#a2c827de14b94cee78506d4d86009d7cb"> 1020</a></span>&#160;<span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="functions_8hpp.html#a2c827de14b94cee78506d4d86009d7cb">is_correct_K4</a>(vector&lt;int&gt; orders[4]) {</div>
 <div class="line"><a name="l01021"></a><span class="lineno"> 1021</span>&#160;    <span class="keywordtype">int</span> number_of_positive_rotation = 0;</div>
 <div class="line"><a name="l01022"></a><span class="lineno"> 1022</span>&#160; </div>
 <div class="line"><a name="l01023"></a><span class="lineno"> 1023</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4;i++) {</div>
@@ -994,7 +994,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01025"></a><span class="lineno"> 1025</span>&#160;        <span class="keywordtype">string</span> rotation;</div>
 <div class="line"><a name="l01026"></a><span class="lineno"> 1026</span>&#160;        for_each(orders[i].begin(), orders[i].end(), [&amp;](<span class="keywordtype">int</span> part) {rotation += to_string(part);});</div>
 <div class="line"><a name="l01027"></a><span class="lineno"> 1027</span>&#160; </div>
-<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;        <span class="keyword">auto</span> minimal_rotation = find_lexical_min_rotation(rotation);</div>
+<div class="line"><a name="l01028"></a><span class="lineno"> 1028</span>&#160;        <span class="keyword">auto</span> minimal_rotation = <a class="code" href="functions_8hpp.html#ad4c84ab48588bffc7a7d818053a5178f">find_lexical_min_rotation</a>(rotation);</div>
 <div class="line"><a name="l01029"></a><span class="lineno"> 1029</span>&#160;        <span class="keywordflow">if</span> (minimal_rotation[1] &lt; minimal_rotation[2])</div>
 <div class="line"><a name="l01030"></a><span class="lineno"> 1030</span>&#160;            number_of_positive_rotation++;</div>
 <div class="line"><a name="l01031"></a><span class="lineno"> 1031</span>&#160;    }</div>
@@ -1028,7 +1028,7 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01064"></a><span class="lineno"> 1064</span>&#160;                        }</div>
 <div class="line"><a name="l01065"></a><span class="lineno"> 1065</span>&#160;                    }</div>
 <div class="line"><a name="l01066"></a><span class="lineno"> 1066</span>&#160; </div>
-<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;                    <span class="keywordflow">if</span> (!is_correct_K4(order)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l01067"></a><span class="lineno"> 1067</span>&#160;                    <span class="keywordflow">if</span> (!<a class="code" href="functions_8hpp.html#a2c827de14b94cee78506d4d86009d7cb">is_correct_K4</a>(order)) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l01068"></a><span class="lineno"> 1068</span>&#160;                }</div>
 <div class="line"><a name="l01069"></a><span class="lineno"> 1069</span>&#160;            }</div>
 <div class="line"><a name="l01070"></a><span class="lineno"> 1070</span>&#160;        }</div>
@@ -1036,24 +1036,63 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="line"><a name="l01072"></a><span class="lineno"> 1072</span>&#160; </div>
 <div class="line"><a name="l01073"></a><span class="lineno"> 1073</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l01074"></a><span class="lineno"> 1074</span>&#160;}</div>
+<div class="ttc" id="afunctions_8hpp_html_a1251d18f47ed8e4217197669689d8d1d"><div class="ttname"><a href="functions_8hpp.html#a1251d18f47ed8e4217197669689d8d1d">print_graph</a></div><div class="ttdeci">void print_graph(graph *g)</div><div class="ttdef"><b>Definition:</b> functions.hpp:226</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a1ef2d43c8fdd010efd62e1a7b4cb91a3"><div class="ttname"><a href="functions_8hpp.html#a1ef2d43c8fdd010efd62e1a7b4cb91a3">precount_factorials</a></div><div class="ttdeci">void precount_factorials()</div><div class="ttdef"><b>Definition:</b> functions.hpp:35</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a2c827de14b94cee78506d4d86009d7cb"><div class="ttname"><a href="functions_8hpp.html#a2c827de14b94cee78506d4d86009d7cb">is_correct_K4</a></div><div class="ttdeci">bool is_correct_K4(vector&lt; int &gt; orders[4])</div><div class="ttdoc">Check if given rotations of K4 form a realizable K4.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1020</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a4dad3b126037adf7922a02094ba50660"><div class="ttname"><a href="functions_8hpp.html#a4dad3b126037adf7922a02094ba50660">fact</a></div><div class="ttdeci">long long fact[SIZE_OF_ARRAY+5]</div><div class="ttdef"><b>Definition:</b> functions.hpp:33</div></div>
+<div class="ttc" id="afunctions_8hpp_html_a9d4a4ba92257606b910d5d05fa56da83"><div class="ttname"><a href="functions_8hpp.html#a9d4a4ba92257606b910d5d05fa56da83">SIZE_OF_ARRAY</a></div><div class="ttdeci">#define SIZE_OF_ARRAY</div><div class="ttdef"><b>Definition:</b> functions.hpp:24</div></div>
+<div class="ttc" id="afunctions_8hpp_html_aa19910c8c4ce3524c20a32b6bc39ab8e"><div class="ttname"><a href="functions_8hpp.html#aa19910c8c4ce3524c20a32b6bc39ab8e">factorial</a></div><div class="ttdeci">long long factorial(int n)</div><div class="ttdef"><b>Definition:</b> functions.hpp:666</div></div>
+<div class="ttc" id="afunctions_8hpp_html_ad4c84ab48588bffc7a7d818053a5178f"><div class="ttname"><a href="functions_8hpp.html#ad4c84ab48588bffc7a7d818053a5178f">find_lexical_min_rotation</a></div><div class="ttdeci">string find_lexical_min_rotation(string str)</div><div class="ttdef"><b>Definition:</b> functions.hpp:997</div></div>
+<div class="ttc" id="afunctions_8hpp_html_aebd6f9527d2a4f9f441f657d28429951"><div class="ttname"><a href="functions_8hpp.html#aebd6f9527d2a4f9f441f657d28429951">array_4D</a></div><div class="ttdeci">vector&lt; vector&lt; vector&lt; vector&lt; bool &gt; &gt; &gt; &gt; array_4D</div><div class="ttdef"><b>Definition:</b> functions.hpp:31</div></div>
 <div class="ttc" id="astruct_edge_html"><div class="ttname"><a href="struct_edge.html">Edge</a></div><div class="ttdoc">Structure to store the edge containing information about next_, prev_, opposite_ edges and vertices a...</div><div class="ttdef"><b>Definition:</b> functions.hpp:199</div></div>
+<div class="ttc" id="astruct_edge_html_a079ee1e11ec72ceb0902f668119c8e60"><div class="ttname"><a href="struct_edge.html#a079ee1e11ec72ceb0902f668119c8e60">Edge::prev_</a></div><div class="ttdeci">Edge * prev_</div><div class="ttdef"><b>Definition:</b> functions.hpp:203</div></div>
+<div class="ttc" id="astruct_edge_html_a3106b11d60125009dbf7a738ce540fdf"><div class="ttname"><a href="struct_edge.html#a3106b11d60125009dbf7a738ce540fdf">Edge::Edge</a></div><div class="ttdeci">Edge()</div><div class="ttdef"><b>Definition:</b> functions.hpp:211</div></div>
+<div class="ttc" id="astruct_edge_html_a34660cd60175f80accdd483cb57fcc05"><div class="ttname"><a href="struct_edge.html#a34660cd60175f80accdd483cb57fcc05">Edge::operator!=</a></div><div class="ttdeci">bool operator!=(const Edge &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:220</div></div>
+<div class="ttc" id="astruct_edge_html_a5b1ce46568048aa6199c38c7ea9ab87c"><div class="ttname"><a href="struct_edge.html#a5b1ce46568048aa6199c38c7ea9ab87c">Edge::operator==</a></div><div class="ttdeci">bool operator==(const Edge &amp;a)</div><div class="ttdef"><b>Definition:</b> functions.hpp:216</div></div>
+<div class="ttc" id="astruct_edge_html_a6aeff559f09ffeb59db15c163ca87037"><div class="ttname"><a href="struct_edge.html#a6aeff559f09ffeb59db15c163ca87037">Edge::from_</a></div><div class="ttdeci">shared_ptr&lt; Vertex &gt; from_</div><div class="ttdef"><b>Definition:</b> functions.hpp:206</div></div>
+<div class="ttc" id="astruct_edge_html_aba065b72e140a46c1f9086b94ed77225"><div class="ttname"><a href="struct_edge.html#aba065b72e140a46c1f9086b94ed77225">Edge::opposite_</a></div><div class="ttdeci">Edge * opposite_</div><div class="ttdef"><b>Definition:</b> functions.hpp:204</div></div>
+<div class="ttc" id="astruct_edge_html_ac4472c417fb58d08501fb8edb42c1b70"><div class="ttname"><a href="struct_edge.html#ac4472c417fb58d08501fb8edb42c1b70">Edge::to_</a></div><div class="ttdeci">shared_ptr&lt; Vertex &gt; to_</div><div class="ttdef"><b>Definition:</b> functions.hpp:207</div></div>
+<div class="ttc" id="astruct_edge_html_ad12fac6ed0e178cba03558a0c4ba84c2"><div class="ttname"><a href="struct_edge.html#ad12fac6ed0e178cba03558a0c4ba84c2">Edge::face_</a></div><div class="ttdeci">shared_ptr&lt; Face &gt; face_</div><div class="ttdef"><b>Definition:</b> functions.hpp:209</div></div>
+<div class="ttc" id="astruct_edge_html_adaeb46182fd867ba9b3786d6b2321387"><div class="ttname"><a href="struct_edge.html#adaeb46182fd867ba9b3786d6b2321387">Edge::index_</a></div><div class="ttdeci">int index_</div><div class="ttdef"><b>Definition:</b> functions.hpp:200</div></div>
+<div class="ttc" id="astruct_edge_html_aed165482a12c6d4c7895c6fe764ea27d"><div class="ttname"><a href="struct_edge.html#aed165482a12c6d4c7895c6fe764ea27d">Edge::next_</a></div><div class="ttdeci">Edge * next_</div><div class="ttdef"><b>Definition:</b> functions.hpp:202</div></div>
+<div class="ttc" id="astruct_edge_html_afe76eb33eac239871194363abacdec70"><div class="ttname"><a href="struct_edge.html#afe76eb33eac239871194363abacdec70">Edge::Edge</a></div><div class="ttdeci">Edge(Edge *next, Edge *prev, Edge *opposite, shared_ptr&lt; Vertex &gt; from, shared_ptr&lt; Vertex &gt; to, shared_ptr&lt; Face &gt; face, int index)</div><div class="ttdef"><b>Definition:</b> functions.hpp:213</div></div>
 <div class="ttc" id="astruct_face_html"><div class="ttname"><a href="struct_face.html">Face</a></div><div class="ttdoc">Structure to store a face containing about one edge incident to it</div><div class="ttdef"><b>Definition:</b> functions.hpp:181</div></div>
+<div class="ttc" id="astruct_face_html_a027107da14c4970f8c2ec9c3802eceaf"><div class="ttname"><a href="struct_face.html#a027107da14c4970f8c2ec9c3802eceaf">Face::edge_</a></div><div class="ttdeci">Edge * edge_</div><div class="ttdef"><b>Definition:</b> functions.hpp:182</div></div>
+<div class="ttc" id="astruct_face_html_a9a1b00fd1b4ef31c856c506800a636ba"><div class="ttname"><a href="struct_face.html#a9a1b00fd1b4ef31c856c506800a636ba">Face::counter_of_same_last_edges</a></div><div class="ttdeci">int counter_of_same_last_edges[SIZE_OF_ARRAY+5]</div><div class="ttdef"><b>Definition:</b> functions.hpp:193</div></div>
+<div class="ttc" id="astruct_face_html_afdb634bc2d5287ba0d62e46b57e9dc2e"><div class="ttname"><a href="struct_face.html#afdb634bc2d5287ba0d62e46b57e9dc2e">Face::Face</a></div><div class="ttdeci">Face()</div><div class="ttdef"><b>Definition:</b> functions.hpp:184</div></div>
 <div class="ttc" id="astruct_vertex_html"><div class="ttname"><a href="struct_vertex.html">Vertex</a></div><div class="ttdoc">Class to store vertex, containing information about edge to_ going into it</div><div class="ttdef"><b>Definition:</b> functions.hpp:166</div></div>
+<div class="ttc" id="astruct_vertex_html_a440133980998b323a2642f8759d7b3f4"><div class="ttname"><a href="struct_vertex.html#a440133980998b323a2642f8759d7b3f4">Vertex::index_</a></div><div class="ttdeci">int index_</div><div class="ttdef"><b>Definition:</b> functions.hpp:169</div></div>
+<div class="ttc" id="astruct_vertex_html_a473275eccf2bfef6c1c5f73147c9b0e0"><div class="ttname"><a href="struct_vertex.html#a473275eccf2bfef6c1c5f73147c9b0e0">Vertex::to_</a></div><div class="ttdeci">Edge * to_</div><div class="ttdef"><b>Definition:</b> functions.hpp:167</div></div>
+<div class="ttc" id="astruct_vertex_html_a7e1775ef7ec96f19ba52e7e6aadb9b2b"><div class="ttname"><a href="struct_vertex.html#a7e1775ef7ec96f19ba52e7e6aadb9b2b">Vertex::Vertex</a></div><div class="ttdeci">Vertex(Edge *to)</div><div class="ttdef"><b>Definition:</b> functions.hpp:175</div></div>
+<div class="ttc" id="astruct_vertex_html_a97488994a2482d70da74e1b91d40e169"><div class="ttname"><a href="struct_vertex.html#a97488994a2482d70da74e1b91d40e169">Vertex::Vertex</a></div><div class="ttdeci">Vertex()</div><div class="ttdef"><b>Definition:</b> functions.hpp:171</div></div>
 <div class="ttc" id="astructcanonic__wraper_html"><div class="ttname"><a href="structcanonic__wraper.html">canonic_wraper</a></div><div class="ttdoc">Wraper for comunicating through threads</div><div class="ttdef"><b>Definition:</b> functions.hpp:46</div></div>
+<div class="ttc" id="astructcanonic__wraper_html_acbffb4150cc546e0959c648eb9bcabeb"><div class="ttname"><a href="structcanonic__wraper.html#acbffb4150cc546e0959c648eb9bcabeb">canonic_wraper::canonic_fingerprints</a></div><div class="ttdeci">unordered_map&lt; string, bool &gt; canonic_fingerprints</div><div class="ttdef"><b>Definition:</b> functions.hpp:47</div></div>
+<div class="ttc" id="astructcanonic__wraper_html_af0da170926ad538d8e508424c325234e"><div class="ttname"><a href="structcanonic__wraper.html#af0da170926ad538d8e508424c325234e">canonic_wraper::shared_mutex</a></div><div class="ttdeci">mutex shared_mutex</div><div class="ttdef"><b>Definition:</b> functions.hpp:48</div></div>
 <div class="ttc" id="astructfingerprints_html"><div class="ttname"><a href="structfingerprints.html">fingerprints</a></div><div class="ttdoc">Structure for generating all fingerprints iteratively.</div><div class="ttdef"><b>Definition:</b> functions.hpp:674</div></div>
+<div class="ttc" id="astructfingerprints_html_a1e0de9f87ed5e1999eee4b2005af3846"><div class="ttname"><a href="structfingerprints.html#a1e0de9f87ed5e1999eee4b2005af3846">fingerprints::treshold</a></div><div class="ttdeci">long long treshold</div><div class="ttdef"><b>Definition:</b> functions.hpp:676</div></div>
+<div class="ttc" id="astructfingerprints_html_a2bebdb761f7bd322a21a96e481fcb1c9"><div class="ttname"><a href="structfingerprints.html#a2bebdb761f7bd322a21a96e481fcb1c9">fingerprints::input_file</a></div><div class="ttdeci">ifstream input_file</div><div class="ttdef"><b>Definition:</b> functions.hpp:680</div></div>
+<div class="ttc" id="astructfingerprints_html_a30719c9677801ea0dfb56990170c0c2b"><div class="ttname"><a href="structfingerprints.html#a30719c9677801ea0dfb56990170c0c2b">fingerprints::fingerprint</a></div><div class="ttdeci">vector&lt; string &gt; fingerprint</div><div class="ttdef"><b>Definition:</b> functions.hpp:678</div></div>
+<div class="ttc" id="astructfingerprints_html_a70bf6b554e965b32e36e59ffa75498a3"><div class="ttname"><a href="structfingerprints.html#a70bf6b554e965b32e36e59ffa75498a3">fingerprints::states</a></div><div class="ttdeci">vector&lt; int &gt; states</div><div class="ttdef"><b>Definition:</b> functions.hpp:675</div></div>
 <div class="ttc" id="astructfingerprints_html_a73fde32e28205c084c70597f0585a4f6"><div class="ttname"><a href="structfingerprints.html#a73fde32e28205c084c70597f0585a4f6">fingerprints::fingerprints</a></div><div class="ttdeci">fingerprints(int n, int index)</div><div class="ttdef"><b>Definition:</b> functions.hpp:684</div></div>
 <div class="ttc" id="astructfingerprints_html_a9f9614a695abbc15c0ed4ca5b9676a95"><div class="ttname"><a href="structfingerprints.html#a9f9614a695abbc15c0ed4ca5b9676a95">fingerprints::get_next</a></div><div class="ttdeci">string get_next()</div><div class="ttdef"><b>Definition:</b> functions.hpp:721</div></div>
 <div class="ttc" id="astructgraph_html"><div class="ttname"><a href="structgraph.html">graph</a></div><div class="ttdoc">Main class to store all the information about graph, edges, vertices, ...</div><div class="ttdef"><b>Definition:</b> functions.hpp:58</div></div>
+<div class="ttc" id="astructgraph_html_a0bba295498fe51872196779428caa7a1"><div class="ttname"><a href="structgraph.html#a0bba295498fe51872196779428caa7a1">graph::output_file</a></div><div class="ttdeci">ofstream output_file</div><div class="ttdef"><b>Definition:</b> functions.hpp:72</div></div>
 <div class="ttc" id="astructgraph_html_a0c09ed3319fc7c591cbec236a92c3595"><div class="ttname"><a href="structgraph.html#a0c09ed3319fc7c591cbec236a92c3595">graph::find_the_way_to_intersect</a></div><div class="ttdeci">void find_the_way_to_intersect(int s_index, int t_index, int a, int b)</div><div class="ttdoc">Main algorithm described in psedocode in thesis. It recursively tries all the possible ways how to pu...</div><div class="ttdef"><b>Definition:</b> functions.hpp:538</div></div>
 <div class="ttc" id="astructgraph_html_a0d6d9c0e607d89746953e6b403fee7c2"><div class="ttname"><a href="structgraph.html#a0d6d9c0e607d89746953e6b403fee7c2">graph::is_correct_fingerprint</a></div><div class="ttdeci">bool is_correct_fingerprint(const string &amp;fingerprint)</div><div class="ttdoc">Function to check whether the fingerprint consists only of realizable K4's.</div><div class="ttdef"><b>Definition:</b> functions.hpp:1044</div></div>
 <div class="ttc" id="astructgraph_html_a0f7367e875e9bd500cbbf791166cdd14"><div class="ttname"><a href="structgraph.html#a0f7367e875e9bd500cbbf791166cdd14">graph::find_canonic_fingerprint</a></div><div class="ttdeci">string find_canonic_fingerprint(const string &amp;fingerprint)</div><div class="ttdoc">Function to find canonic fingerprint through all needed rellabelings of itself (and inversion)</div><div class="ttdef"><b>Definition:</b> functions.hpp:945</div></div>
 <div class="ttc" id="astructgraph_html_a158492da510bca1fea20d9c694419f7b"><div class="ttname"><a href="structgraph.html#a158492da510bca1fea20d9c694419f7b">graph::starts</a></div><div class="ttdeci">vector&lt; vector&lt; int &gt; &gt; starts</div><div class="ttdoc">Array which for given pair of vertice i, j return the index in vector segments so the &quot;dummy&quot; edge (&quot;...</div><div class="ttdef"><b>Definition:</b> functions.hpp:140</div></div>
+<div class="ttc" id="astructgraph_html_a1b1f599b2551c199bb14f0ceaff164c7"><div class="ttname"><a href="structgraph.html#a1b1f599b2551c199bb14f0ceaff164c7">graph::index</a></div><div class="ttdeci">int index</div><div class="ttdef"><b>Definition:</b> functions.hpp:66</div></div>
 <div class="ttc" id="astructgraph_html_a375b5a329c1fbb634be55e002abc0097"><div class="ttname"><a href="structgraph.html#a375b5a329c1fbb634be55e002abc0097">graph::delete_vertex</a></div><div class="ttdeci">void delete_vertex(Vertex *a)</div><div class="ttdoc">Deleting given intersection vertex.</div><div class="ttdef"><b>Definition:</b> functions.hpp:420</div></div>
+<div class="ttc" id="astructgraph_html_a446ab388def546c0d5ced0ccfec29817"><div class="ttname"><a href="structgraph.html#a446ab388def546c0d5ced0ccfec29817">graph::close_files</a></div><div class="ttdeci">void close_files()</div><div class="ttdef"><b>Definition:</b> functions.hpp:74</div></div>
 <div class="ttc" id="astructgraph_html_a47f29674c66ed736500f39b9afd4f183"><div class="ttname"><a href="structgraph.html#a47f29674c66ed736500f39b9afd4f183">graph::create_base_star</a></div><div class="ttdeci">void create_base_star()</div><div class="ttdoc">Function to create all edges incident to vertex 0.</div><div class="ttdef"><b>Definition:</b> functions.hpp:513</div></div>
+<div class="ttc" id="astructgraph_html_a5f440fab089a7251c445593e2d78b457"><div class="ttname"><a href="structgraph.html#a5f440fab089a7251c445593e2d78b457">graph::canonic_fingerprints_wraper</a></div><div class="ttdeci">shared_ptr&lt; canonic_wraper &gt; canonic_fingerprints_wraper</div><div class="ttdef"><b>Definition:</b> functions.hpp:142</div></div>
 <div class="ttc" id="astructgraph_html_a7086c1c3651ec56f1bded29350f16c26"><div class="ttname"><a href="structgraph.html#a7086c1c3651ec56f1bded29350f16c26">graph::recolor_fingerprint</a></div><div class="ttdeci">void recolor_fingerprint(const string &amp;rotation)</div><div class="ttdoc">Setting values of array starts to values of given fingerprint.</div><div class="ttdef"><b>Definition:</b> functions.hpp:501</div></div>
+<div class="ttc" id="astructgraph_html_a7246c49c9aa2d8c77c9d26aada03d6b1"><div class="ttname"><a href="structgraph.html#a7246c49c9aa2d8c77c9d26aada03d6b1">graph::print_counters</a></div><div class="ttdeci">void print_counters(Face *f)</div><div class="ttdef"><b>Definition:</b> functions.hpp:238</div></div>
+<div class="ttc" id="astructgraph_html_a796dbf5abc441eff747a1296a47304b7"><div class="ttname"><a href="structgraph.html#a796dbf5abc441eff747a1296a47304b7">graph::outer_face</a></div><div class="ttdeci">shared_ptr&lt; Face &gt; outer_face</div><div class="ttdef"><b>Definition:</b> functions.hpp:70</div></div>
 <div class="ttc" id="astructgraph_html_a9738417403e12bb5d6f877ec478820ec"><div class="ttname"><a href="structgraph.html#a9738417403e12bb5d6f877ec478820ec">graph::is_some_of_faces_incorrect</a></div><div class="ttdeci">bool is_some_of_faces_incorrect(Edge *edge)</div><div class="ttdoc">Function to check if current operation of adding edge did not cause violation of one theorems providi...</div><div class="ttdef"><b>Definition:</b> functions.hpp:633</div></div>
 <div class="ttc" id="astructgraph_html_aa803ca4bc3dd14c3feea7cfec289b83c"><div class="ttname"><a href="structgraph.html#aa803ca4bc3dd14c3feea7cfec289b83c">graph::create_all_special_vertices</a></div><div class="ttdeci">void create_all_special_vertices()</div><div class="ttdoc">Function to create all &quot;dummy&quot; vertices</div><div class="ttdef"><b>Definition:</b> functions.hpp:522</div></div>
 <div class="ttc" id="astructgraph_html_aa9301f221d75a5f0600b5c98917b9018"><div class="ttname"><a href="structgraph.html#aa9301f221d75a5f0600b5c98917b9018">graph::blocked</a></div><div class="ttdeci">array_4D blocked</div><div class="ttdoc">4D array to check which edges already intersect</div><div class="ttdef"><b>Definition:</b> functions.hpp:134</div></div>
+<div class="ttc" id="astructgraph_html_ab4258b65d64692f86109938453dedd26"><div class="ttname"><a href="structgraph.html#ab4258b65d64692f86109938453dedd26">graph::edges</a></div><div class="ttdeci">list&lt; Edge &gt; edges</div><div class="ttdef"><b>Definition:</b> functions.hpp:68</div></div>
 <div class="ttc" id="astructgraph_html_abfb0a8f661faf0b4b5ee4c3ce2c76a50"><div class="ttname"><a href="structgraph.html#abfb0a8f661faf0b4b5ee4c3ce2c76a50">graph::segments</a></div><div class="ttdeci">vector&lt; Edge * &gt; segments</div><div class="ttdoc">Vector to store (pointers on) edges.</div><div class="ttdef"><b>Definition:</b> functions.hpp:129</div></div>
 <div class="ttc" id="astructgraph_html_acbbf7467f9b4990a96063633a88c92cb"><div class="ttname"><a href="structgraph.html#acbbf7467f9b4990a96063633a88c92cb">graph::create_all_possible_drawings</a></div><div class="ttdeci">void create_all_possible_drawings()</div><div class="ttdoc">Function to try all possible drawings, First getting all the fingerprints then checking if all K4's a...</div><div class="ttdef"><b>Definition:</b> functions.hpp:789</div></div>
 <div class="ttc" id="astructgraph_html_accd45d8120c094695b1721d5db30f9be"><div class="ttname"><a href="structgraph.html#accd45d8120c094695b1721d5db30f9be">graph::create_special_vertex</a></div><div class="ttdeci">void create_special_vertex(int index)</div><div class="ttdoc">Creating the &quot;dummy&quot; vertex (circle) representing real vertex.</div><div class="ttdef"><b>Definition:</b> functions.hpp:465</div></div>
@@ -1061,13 +1100,21 @@ $(document).ready(function(){initNavTree('functions_8hpp_source.html',''); initR
 <div class="ttc" id="astructgraph_html_af190325b46dc381380796a6a94241d98"><div class="ttname"><a href="structgraph.html#af190325b46dc381380796a6a94241d98">graph::delete_edge_back</a></div><div class="ttdeci">void delete_edge_back(bool outer_face_bool=false)</div><div class="ttdoc">Deleting the last added edge.</div><div class="ttdef"><b>Definition:</b> functions.hpp:363</div></div>
 <div class="ttc" id="astructgraph_html_af3dd3506255c3399e140f058e2c8cb70"><div class="ttname"><a href="structgraph.html#af3dd3506255c3399e140f058e2c8cb70">graph::add_vertex</a></div><div class="ttdeci">void add_vertex(Edge *edge)</div><div class="ttdoc">Creating new vertec on the edge as a new intersection.</div><div class="ttdef"><b>Definition:</b> functions.hpp:323</div></div>
 <div class="ttc" id="astructgraph_html_af5f7d9e6435ebd2686cd3ad398cb818d"><div class="ttname"><a href="structgraph.html#af5f7d9e6435ebd2686cd3ad398cb818d">graph::is_face_incorrect</a></div><div class="ttdeci">bool is_face_incorrect(shared_ptr&lt; Face &gt; face)</div><div class="ttdoc">Function to check whether the face do not violate the (heuristic) theorems conditions.</div><div class="ttdef"><b>Definition:</b> functions.hpp:650</div></div>
+<div class="ttc" id="astructgraph_html_af90f8432916e7bec392a6f677ab96bde"><div class="ttname"><a href="structgraph.html#af90f8432916e7bec392a6f677ab96bde">graph::graph</a></div><div class="ttdeci">graph(int n, int i, shared_ptr&lt; canonic_wraper &gt; shared_canonics)</div><div class="ttdef"><b>Definition:</b> functions.hpp:78</div></div>
 <div class="ttc" id="astructsmart__permutations_html"><div class="ttname"><a href="structsmart__permutations.html">smart_permutations</a></div><div class="ttdoc">Structure to go through only needed fingerprints. First try all rellabilings of rotation producing &quot;1...</div><div class="ttdef"><b>Definition:</b> functions.hpp:862</div></div>
+<div class="ttc" id="astructsmart__permutations_html_a08a9e553291b6d3febab71c512f6c58f"><div class="ttname"><a href="structsmart__permutations.html#a08a9e553291b6d3febab71c512f6c58f">smart_permutations::create_permutation</a></div><div class="ttdeci">string create_permutation(const string &amp;rotation1, const string &amp;roration2)</div><div class="ttdef"><b>Definition:</b> functions.hpp:874</div></div>
+<div class="ttc" id="astructsmart__permutations_html_a397c02e3c15fce4f869d2815d8929d15"><div class="ttname"><a href="structsmart__permutations.html#a397c02e3c15fce4f869d2815d8929d15">smart_permutations::fingerprint</a></div><div class="ttdeci">string fingerprint</div><div class="ttdef"><b>Definition:</b> functions.hpp:864</div></div>
+<div class="ttc" id="astructsmart__permutations_html_a63e7901705e28c8a69dc3bc3b43412a9"><div class="ttname"><a href="structsmart__permutations.html#a63e7901705e28c8a69dc3bc3b43412a9">smart_permutations::number_of_vertices</a></div><div class="ttdeci">int number_of_vertices</div><div class="ttdef"><b>Definition:</b> functions.hpp:865</div></div>
+<div class="ttc" id="astructsmart__permutations_html_aa1202c8cdc86c9a080cebc25e593d9d8"><div class="ttname"><a href="structsmart__permutations.html#aa1202c8cdc86c9a080cebc25e593d9d8">smart_permutations::first_rotation</a></div><div class="ttdeci">string first_rotation</div><div class="ttdef"><b>Definition:</b> functions.hpp:867</div></div>
+<div class="ttc" id="astructsmart__permutations_html_ad2a0b9db53b98764dfc44fd720318fd1"><div class="ttname"><a href="structsmart__permutations.html#ad2a0b9db53b98764dfc44fd720318fd1">smart_permutations::result</a></div><div class="ttdeci">string result</div><div class="ttdef"><b>Definition:</b> functions.hpp:868</div></div>
+<div class="ttc" id="astructsmart__permutations_html_adc5ac63088e7774147732f6ea7a3e3a0"><div class="ttname"><a href="structsmart__permutations.html#adc5ac63088e7774147732f6ea7a3e3a0">smart_permutations::smart_permutations</a></div><div class="ttdeci">smart_permutations(const string &amp;fingerprint, int number_of_vertices)</div><div class="ttdef"><b>Definition:</b> functions.hpp:893</div></div>
+<div class="ttc" id="astructsmart__permutations_html_af8de2837c48fffd2c67197294bfe1d65"><div class="ttname"><a href="structsmart__permutations.html#af8de2837c48fffd2c67197294bfe1d65">smart_permutations::next</a></div><div class="ttdeci">string next()</div><div class="ttdef"><b>Definition:</b> functions.hpp:902</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><b>functions.hpp</b></li>
+    <li class="navelem"><a class="el" href="dir_23cfb059643c1d9814cd0b8383e065ab.html">drawing_of_cliques</a></li><li class="navelem"><a class="el" href="functions_8hpp.html">functions.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vertexstate_89',['VertexState',['../namespace_vizualizer_w_p_f.html#aa95aa3e643b222355230511356c6e640',1,'VizualizerWPF']]]
+  ['difference_274',['Difference',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a94d703490728516a606502d540311c7c',1,'VizualizerWPF::GraphCoordinates']]]
 ];

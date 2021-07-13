@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VisualizerWPF: VizualizerWPF.GraphGenerator Class Reference</title>
+<title>VizualizerWPF: VizualizerWPF.GraphGenerator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">VisualizerWPF
+   <div id="projectname">VizualizerWPF
    </div>
   </td>
  </tr>
@@ -83,9 +83,10 @@ $(document).ready(function(){initNavTree('class_vizualizer_w_p_f_1_1_graph_gener
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-attribs">Data Fields</a> &#124;
 <a href="#properties">Properties</a> &#124;
-<a href="class_vizualizer_w_p_f_1_1_graph_generator-members.html">List of all members</a>  </div>
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">VizualizerWPF.GraphGenerator Class Reference</div>  </div>
 </div><!--header-->
@@ -96,14 +97,13 @@ $(document).ready(function(){initNavTree('class_vizualizer_w_p_f_1_1_graph_gener
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac4f2e6234c5c976c69ddbe51d9b074bd"><td class="memItemLeft" align="right" valign="top"><a id="ac4f2e6234c5c976c69ddbe51d9b074bd"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>GraphGenerator</b> (int n)</td></tr>
+<tr class="memitem:ac4f2e6234c5c976c69ddbe51d9b074bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#ac4f2e6234c5c976c69ddbe51d9b074bd">GraphGenerator</a> (int n)</td></tr>
 <tr class="separator:ac4f2e6234c5c976c69ddbe51d9b074bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a896b36960cabc3a5eba6f4646d3daff7"><td class="memItemLeft" align="right" valign="top"><a id="a896b36960cabc3a5eba6f4646d3daff7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CloseFile</b> ()</td></tr>
+<tr class="memitem:a2b33c6e134af76496cf7733818209be8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a2b33c6e134af76496cf7733818209be8">GraphGenerator</a> ()</td></tr>
+<tr class="separator:a2b33c6e134af76496cf7733818209be8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a896b36960cabc3a5eba6f4646d3daff7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a896b36960cabc3a5eba6f4646d3daff7">CloseFile</a> ()</td></tr>
 <tr class="separator:a896b36960cabc3a5eba6f4646d3daff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa57ce30dcb52da8fcff9d34172dbf56a"><td class="memItemLeft" align="right" valign="top"><a id="aa57ce30dcb52da8fcff9d34172dbf56a"></a>
-<a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetTopicalDrawing</b> ()</td></tr>
+<tr class="memitem:aa57ce30dcb52da8fcff9d34172dbf56a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#aa57ce30dcb52da8fcff9d34172dbf56a">GetTopicalDrawing</a> ()</td></tr>
 <tr class="separator:aa57ce30dcb52da8fcff9d34172dbf56a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af06ed391cb0ba159f9ad846523cb029c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#af06ed391cb0ba159f9ad846523cb029c">GenerateNextDrawing</a> ()</td></tr>
 <tr class="memdesc:af06ed391cb0ba159f9ad846523cb029c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get next drawing  <a href="class_vizualizer_w_p_f_1_1_graph_generator.html#af06ed391cb0ba159f9ad846523cb029c">More...</a><br /></td></tr>
@@ -113,20 +113,87 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>CloseFile</b> ()</td>
 <tr class="separator:ae2212a01929fabc4bce59a13fe7c1823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:affee1c3d2075feeadd364cd223fdaf61"><td class="memItemLeft" align="right" valign="top"><a id="affee1c3d2075feeadd364cd223fdaf61"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>counter</b> = 0</td></tr>
+Data Fields</h2></td></tr>
+<tr class="memitem:affee1c3d2075feeadd364cd223fdaf61"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#affee1c3d2075feeadd364cd223fdaf61">counter</a></td></tr>
 <tr class="separator:affee1c3d2075feeadd364cd223fdaf61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a6cd0e9553a5ddbd5110e89d3f3ebd916"><td class="memItemLeft" align="right" valign="top"><a id="a6cd0e9553a5ddbd5110e89d3f3ebd916"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>SizeOfGraph</b><code> [get, set]</code></td></tr>
+<tr class="memitem:a6cd0e9553a5ddbd5110e89d3f3ebd916"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a6cd0e9553a5ddbd5110e89d3f3ebd916">SizeOfGraph</a> ../../../data/savedGraphs.txt&quot;<code> [get, set]</code></td></tr>
 <tr class="separator:a6cd0e9553a5ddbd5110e89d3f3ebd916"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:a33105097e043f711fd5c5deae8ac5ec3"><td class="memItemLeft" align="right" valign="top">List&lt; double[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a33105097e043f711fd5c5deae8ac5ec3">SortFromStartToEnd</a> (List&lt; string[]&gt; line)</td></tr>
+<tr class="memdesc:a33105097e043f711fd5c5deae8ac5ec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to sort order of points to create continous edge  <a href="class_vizualizer_w_p_f_1_1_graph_generator.html#a33105097e043f711fd5c5deae8ac5ec3">More...</a><br /></td></tr>
+<tr class="separator:a33105097e043f711fd5c5deae8ac5ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fb1e15199ba4f091140b6c4cf0815e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a5fb1e15199ba4f091140b6c4cf0815e8">ReadUntillNextRS</a> (bool skip=false)</td></tr>
+<tr class="memdesc:a5fb1e15199ba4f091140b6c4cf0815e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read whole points and lines of cliques and generate graph out of it  <a href="class_vizualizer_w_p_f_1_1_graph_generator.html#a5fb1e15199ba4f091140b6c4cf0815e8">More...</a><br /></td></tr>
+<tr class="separator:a5fb1e15199ba4f091140b6c4cf0815e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a77053f9718ad4394ec0a08d3879c93f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#a77053f9718ad4394ec0a08d3879c93f8">graphCoordinates</a> = new <a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>()</td></tr>
+<tr class="separator:a77053f9718ad4394ec0a08d3879c93f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0d9bbe72f92f0cd2e9eb5760797be93"><td class="memItemLeft" align="right" valign="top">readonly StreamReader&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_generator.html#ab0d9bbe72f92f0cd2e9eb5760797be93">streamReader</a></td></tr>
+<tr class="separator:ab0d9bbe72f92f0cd2e9eb5760797be93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class to read drawing from file, create and store graphs </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac4f2e6234c5c976c69ddbe51d9b074bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4f2e6234c5c976c69ddbe51d9b074bd">&#9670;&nbsp;</a></span>GraphGenerator() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">VizualizerWPF.GraphGenerator.GraphGenerator </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>n</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b33c6e134af76496cf7733818209be8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b33c6e134af76496cf7733818209be8">&#9670;&nbsp;</a></span>GraphGenerator() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">VizualizerWPF.GraphGenerator.GraphGenerator </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a896b36960cabc3a5eba6f4646d3daff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a896b36960cabc3a5eba6f4646d3daff7">&#9670;&nbsp;</a></span>CloseFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VizualizerWPF.GraphGenerator.CloseFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="af06ed391cb0ba159f9ad846523cb029c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af06ed391cb0ba159f9ad846523cb029c">&#9670;&nbsp;</a></span>GenerateNextDrawing()</h2>
 
@@ -167,8 +234,171 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>SizeOfGraph</b><code> 
 
 </div>
 </div>
+<a id="aa57ce30dcb52da8fcff9d34172dbf56a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa57ce30dcb52da8fcff9d34172dbf56a">&#9670;&nbsp;</a></span>GetTopicalDrawing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a> VizualizerWPF.GraphGenerator.GetTopicalDrawing </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5fb1e15199ba4f091140b6c4cf0815e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb1e15199ba4f091140b6c4cf0815e8">&#9670;&nbsp;</a></span>ReadUntillNextRS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a> VizualizerWPF.GraphGenerator.ReadUntillNextRS </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>skip</em> = <code>false</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read whole points and lines of cliques and generate graph out of it </p>
+<dl class="section return"><dt>Returns</dt><dd>New graph</dd></dl>
+
+</div>
+</div>
+<a id="a33105097e043f711fd5c5deae8ac5ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33105097e043f711fd5c5deae8ac5ec3">&#9670;&nbsp;</a></span>SortFromStartToEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">List&lt;double[]&gt; VizualizerWPF.GraphGenerator.SortFromStartToEnd </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; string[]&gt;&#160;</td>
+          <td class="paramname"><em>line</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Function to sort order of points to create continous edge </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">line</td><td>One line</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Parsed points to line</dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Field Documentation</h2>
+<a id="affee1c3d2075feeadd364cd223fdaf61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affee1c3d2075feeadd364cd223fdaf61">&#9670;&nbsp;</a></span>counter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VizualizerWPF.GraphGenerator.counter</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77053f9718ad4394ec0a08d3879c93f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77053f9718ad4394ec0a08d3879c93f8">&#9670;&nbsp;</a></span>graphCoordinates</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a> VizualizerWPF.GraphGenerator.graphCoordinates = new <a class="el" href="class_vizualizer_w_p_f_1_1_graph_coordinates.html">GraphCoordinates</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab0d9bbe72f92f0cd2e9eb5760797be93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0d9bbe72f92f0cd2e9eb5760797be93">&#9670;&nbsp;</a></span>streamReader</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">readonly StreamReader VizualizerWPF.GraphGenerator.streamReader</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Property Documentation</h2>
+<a id="a6cd0e9553a5ddbd5110e89d3f3ebd916"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6cd0e9553a5ddbd5110e89d3f3ebd916">&#9670;&nbsp;</a></span>SizeOfGraph</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int VizualizerWPF.GraphGenerator.SizeOfGraph ../../../data/savedGraphs.txt&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>GraphGenerator.cs</li>
+<li><a class="el" href="_graph_generator_8cs.html">GraphGenerator.cs</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

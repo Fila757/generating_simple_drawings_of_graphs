@@ -1,14 +1,7 @@
 var searchData=
 [
-  ['centerinsideellipse_2',['CenterInsideEllipse',['../class_vizualizer_w_p_f_1_1_collision_detection.html#adbf5b7da9e13227426c0d0e3b1840a99',1,'VizualizerWPF::CollisionDetection']]],
-  ['centerofellipseonline_3',['CenterOfEllipseOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a881e18046f4f41fcc24c50f631247f21',1,'VizualizerWPF::CollisionDetection']]],
-  ['centerofvertexonline_4',['CenterOfVertexOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a22582724871dd486fcf9a10a12f1e27b',1,'VizualizerWPF::CollisionDetection']]],
-  ['centeronline_5',['CenterOnLine',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ad87cdac41d83e32cfcf3a2102a95516c',1,'VizualizerWPF::CollisionDetection']]],
-  ['chech2amkconjecture_6',['Chech2AMKConjecture',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a13a67ca0ae4d72647153927f6841ea19',1,'VizualizerWPF::GraphCoordinates']]],
-  ['chech3amkconjecture_7',['Chech3AMKConjecture',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#aa6dbd5c5d59850196cd969ece5dd8201',1,'VizualizerWPF::GraphCoordinates']]],
-  ['checkiftwolinesintersectnotattheend_8',['CheckIfTwoLinesIntersectNotAtTheEnd',['../class_vizualizer_w_p_f_1_1_collision_detection.html#af92f7da9bc194e9ca38752fca0517d21',1,'VizualizerWPF::CollisionDetection']]],
-  ['chooseoppositeone_9',['ChooseOppositeOne',['../class_vizualizer_w_p_f_1_1_collision_detection.html#ab0f8af3c6028c1532f021f0c52eec5d9',1,'VizualizerWPF::CollisionDetection']]],
-  ['choosethelineby_10',['ChooseTheLineBy',['../class_vizualizer_w_p_f_1_1_collision_detection.html#a7ccd665dd9a5c1ecc19ab6191b7ab8ab',1,'VizualizerWPF::CollisionDetection']]],
-  ['collisiondetection_11',['CollisionDetection',['../class_vizualizer_w_p_f_1_1_collision_detection.html',1,'VizualizerWPF']]],
-  ['compare_12',['Compare',['../struct_vizualizer_w_p_f_1_1_vertex.html#a71d328befdb424ee0395f0754b94f001',1,'VizualizerWPF::Vertex']]]
+  ['b_16',['b',['../class_vizualizer_w_p_f_1_1_line_with_coeffients.html#a6abbd33bed221e908b6835ab54f49831',1,'VizualizerWPF::LineWithCoeffients']]],
+  ['border_17',['border',['../class_vizualizer_w_p_f_1_1_half_line_with_coeffients.html#af8d77c2c25a5a7d827efbd609db86eb6',1,'VizualizerWPF::HalfLineWithCoeffients']]],
+  ['buttonclosemenu_5fclick_18',['ButtonCloseMenu_Click',['../class_vizualizer_w_p_f_1_1_main_window.html#a94953a65c82fe9a8312ec3212275b4d6',1,'VizualizerWPF::MainWindow']]],
+  ['buttonopenmenu_5fclick_19',['ButtonOpenMenu_Click',['../class_vizualizer_w_p_f_1_1_main_window.html#aa4fe6ae04dfccdcdb0077240ba41b4eb',1,'VizualizerWPF::MainWindow']]]
 ];

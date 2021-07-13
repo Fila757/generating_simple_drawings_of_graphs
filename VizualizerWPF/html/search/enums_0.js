@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['statecalculation_99',['StateCalculation',['../namespace_vizualizer_w_p_f.html#aa238e230543a89508d90205b26487a87',1,'VizualizerWPF']]],
-  ['statechanging_100',['StateChanging',['../namespace_vizualizer_w_p_f.html#a37105a0b372bc8b780566902cac62bdc',1,'VizualizerWPF']]]
+  ['difference_461',['Difference',['../class_vizualizer_w_p_f_1_1_graph_coordinates.html#a94d703490728516a606502d540311c7c',1,'VizualizerWPF::GraphCoordinates']]]
 ];
