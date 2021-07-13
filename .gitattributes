@@ -1,4 +1,4 @@
-drawing_of_cliques/html/* linguist-documentation=true
-coordinates_generator/html/* linguist-documentation=true
-VizualizerWPF/html/* linguist-documentation=true
-ConjectureChecker/html/* linguist-documentation=true
+drawing_of_cliques/html/* linguist-vendored=true
+coordinates_generator/html/* linguist-vendored=true
+VizualizerWPF/html/* linguist-vendored=true
+ConjectureChecker/html/* linguist-vendored=true
