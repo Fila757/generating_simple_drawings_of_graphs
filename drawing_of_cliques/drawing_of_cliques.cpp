@@ -16,20 +16,20 @@ int main()
 
     cout << "number of thrds " << std::thread::hardware_concurrency() << endl;
 
-    int number_of_threads = 10; //std::thread::hardware_concurrency();
+    int number_of_threads = 10;//std::thread::hardware_concurrency();
 
     vector<graph> graphs;
     shared_ptr<canonic_wraper> shared_wraper = make_shared<canonic_wraper>();
+
+    system(("python3 select_fingerprints.py data/graph" + to_string(n-1) + ".txt").data());
  
     system(("split -d --additional-suffix=.txt -l" +to_string( 102 / (number_of_threads - 1) + 1) +  " data/graph" + to_string(n-1) + ".txt data/graph" + to_string(n-1) + "_").data());
-
 
     for(int i = 0; i < number_of_threads - 1;i++){
         graphs.push_back(graph(n, i, shared_wraper));
     }
 
-    
-        vector<thread> threads;
+    vector<thread> threads;
 
     for(int i = 0; i < number_of_threads - 1;i++){
         threads.push_back(thread(&graph::create_all_possible_drawings, &graphs[i]));
@@ -41,6 +41,8 @@ int main()
 
     system(("cat data/graph" + to_string(n) + "_* > data/graph" + to_string(n) + ".txt").data());
     system("rm data/*_*");
+
+    system(("python3 sort_lines.py data/graph" + to_string(n) + ".txt").data());
 
 
 }
