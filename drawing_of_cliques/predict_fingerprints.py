@@ -35,9 +35,10 @@ def main(args):
     inputs = tf.keras.layers.Input(shape=[None], dtype=tf.int32)
 
     conv1d = tf.keras.layers.Conv1D(64, 3, strides=2, padding='same', use_bias=False)(inputs)
-    batch_norm = tf.keras.layers.Batch
+    batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
+    activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
     
-    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(conv1d)
+    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(activation)
 
     predictions = tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(1, activation=tf.nn.relu))(lstm)
 
