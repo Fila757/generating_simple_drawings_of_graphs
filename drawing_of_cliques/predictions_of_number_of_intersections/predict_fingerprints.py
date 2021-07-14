@@ -13,8 +13,8 @@ from fingerprint_dataset import Dataset
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--batch_size", default=16, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=15, type=int, help="Number of epochs.")
+parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
+parser.add_argument("--epochs", default=10, type=int, help="Number of epochs.")
 parser.add_argument("--seed", default=42, type=int, help="Random seed.")
 parser.add_argument("--threads", default=1, type=int, help="Maximum number of threads to use.")
 
@@ -35,13 +35,18 @@ def main(args):
     inputs = tf.keras.layers.Input(shape=[size*(size-1), 1], dtype=tf.float32)
 
     print(tf.shape(inputs), 'inputs')
-    conv1d = tf.keras.layers.Conv1D(filters=64, kernel_size=3, strides=2, padding='same', use_bias=False, input_shape=[size*(size-1), size])(inputs)
+    conv1d = tf.keras.layers.Conv1D(filters=4, kernel_size=5, strides=2, padding='same', use_bias=False, input_shape=[size*(size-1), size])(inputs)
+    batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
+    activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
+
+    conv1d = tf.keras.layers.Conv1D(filters=16, kernel_size=3, strides=2, padding='same', use_bias=False, input_shape=[size*(size-1), size])(activation)
     batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
     activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
     
-    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(activation)
+    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, return_sequences=True), merge_mode='sum')(activation)
 
-    predictions = tf.keras.layers.TimeDistributed(tf.keras.layers.Dense(1, activation=tf.nn.relu))(lstm)
+    flatten = tf.keras.layers.Flatten()(lstm)
+    predictions = tf.keras.layers.Dense(1, activation=tf.nn.relu)(flatten)
 
     ### Training
 
@@ -49,16 +54,18 @@ def main(args):
     model.compile(
       optimizer=tf.keras.optimizers.Adam(),
       loss = tf.keras.losses.MeanSquaredError(),
-      metrics=[tf.keras.metrics.MeanSquaredError()],
+      metrics=[tf.keras.metrics.Accuracy()],
     )
     model.fit(train, epochs=args.epochs,validation_data=dev)
 
+
+    ### Prediction
+
     predictions = model.predict(test)
-
-    #print(tf.keras.metrics.mean_squared_error(test, predictions))
-
-
-
+    with open('pred_intersections.txt', 'w') as file:
+      for batch in predictions:
+        for b in batch:
+          file.write(str(round(b)) + '\n')
 
 
 
