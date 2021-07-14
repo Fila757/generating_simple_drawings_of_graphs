@@ -13,6 +13,7 @@
 /drawing_of_cliques/Release
 /drawing_of_cliques/.vs
 /drawing_of_cliques/main
+/drawing_of_cliques/__pycache__
 
 /Tests/x64
 /Tests/Release
@@ -38,3 +39,4 @@
 /ConjectureChecker/Debug
 
 /ConjectureCheckerCplusplus
+

@@ -14,7 +14,7 @@ from fingerprint_dataset import Dataset
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--batch_size", default=16, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=5, type=int, help="Number of epochs.")
+parser.add_argument("--epochs", default=15, type=int, help="Number of epochs.")
 parser.add_argument("--seed", default=42, type=int, help="Random seed.")
 parser.add_argument("--threads", default=1, type=int, help="Maximum number of threads to use.")
 
@@ -25,16 +25,17 @@ def main(args):
     tf.config.threading.set_inter_op_parallelism_threads(args.threads)
     tf.config.threading.set_intra_op_parallelism_threads(args.threads)
 
-
+    size = 7
     ### Getting dataset
-    dataset = Dataset(args, 7)
+    dataset = Dataset(args, size)
     train, dev, test = dataset.get_dataset('train'), dataset.get_dataset('dev'), dataset.get_dataset('test')
 
     ### Creating model
     
-    inputs = tf.keras.layers.Input(shape=[None], dtype=tf.int32)
+    inputs = tf.keras.layers.Input(shape=[size*(size-1), 1], dtype=tf.float32)
 
-    conv1d = tf.keras.layers.Conv1D(64, 3, strides=2, padding='same', use_bias=False)(inputs)
+    print(tf.shape(inputs), 'inputs')
+    conv1d = tf.keras.layers.Conv1D(filters=64, kernel_size=3, strides=2, padding='same', use_bias=False, input_shape=[size*(size-1), size])(inputs)
     batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
     activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
     
@@ -44,7 +45,7 @@ def main(args):
 
     ### Training
 
-    model = tf.keras.Model(inputs, new_outputs)
+    model = tf.keras.Model(inputs, predictions)
     model.compile(
       optimizer=tf.keras.optimizers.Adam(),
       loss = tf.keras.losses.MeanSquaredError(),
