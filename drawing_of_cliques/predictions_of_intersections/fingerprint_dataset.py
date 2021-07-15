@@ -7,7 +7,7 @@ def shuffle_respectively(a, b):
     c = list(zip(a, b))
     random.shuffle(c)
     a, b = zip(*c)
-    return a, b
+    return list(a), list(b)
 
 class Dataset:
 
@@ -33,7 +33,7 @@ class Dataset:
                 self._fingerprints.append([[int(c)] for c in splitted_line[0]])
                 self._intersections.append(int(splitted_line[1]))
             
-        #self._fingerprints, self._intersections = shuffle_respectively(self._fingerprints, self._intersections)
+        self._fingerprints, self._intersections = shuffle_respectively(self._fingerprints, self._intersections)
 
     def set_datasets(self):
         datalen = len(self._fingerprints)

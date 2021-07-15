@@ -59,7 +59,7 @@ def main(args):
         learning_rate=tf.keras.optimizers.schedules.CosineDecay(
           initial_learning_rate=0.002,
           decay_steps=args.epochs * (dataset.datalen // args.batch_size),
-          alpha=0.000001)
+          alpha=0.00001)
           ),
       loss = tf.keras.losses.MeanSquaredError(),
       metrics=[RoundedAccuracy()],
