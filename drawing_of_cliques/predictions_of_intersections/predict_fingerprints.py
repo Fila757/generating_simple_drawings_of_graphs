@@ -15,9 +15,9 @@ from metrics import RoundedAccuracy
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=10, type=int, help="Number of epochs.")
+parser.add_argument("--epochs", default=50, type=int, help="Number of epochs.")
 parser.add_argument("--seed", default=42, type=int, help="Random seed.")
-parser.add_argument("--threads", default=1, type=int, help="Maximum number of threads to use.")
+parser.add_argument("--threads", default=4, type=int, help="Maximum number of threads to use.")
 
 def main(args):
     # Fix random seeds and threads
@@ -35,7 +35,7 @@ def main(args):
     
     inputs = tf.keras.layers.Input(shape=[size*(size-1), 1], dtype=tf.float32)
 
-    print(tf.shape(inputs), 'inputs')
+    #print(tf.shape(inputs), 'inputs')
     conv1d = tf.keras.layers.Conv1D(filters=4, kernel_size=5, strides=2, padding='same', use_bias=False, input_shape=[size*(size-1), size])(inputs)
     batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
     activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
@@ -44,7 +44,7 @@ def main(args):
     batch_norm = tf.keras.layers.BatchNormalization()(conv1d)
     activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
     
-    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(32, return_sequences=True), merge_mode='sum')(activation)
+    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(activation)
 
     flatten = tf.keras.layers.Flatten()(lstm)
     predictions = tf.keras.layers.Dense(1, activation=tf.nn.relu)(flatten)
@@ -68,7 +68,7 @@ def main(args):
     print(f'test_acc: {racc.result().numpy()}')
 
     ### Writing to file
-    
+
     with open('pred_intersections.txt', 'w') as file:
       for batch in predictions:
         for b in batch:

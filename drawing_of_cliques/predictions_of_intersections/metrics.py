@@ -10,7 +10,7 @@ class RoundedAccuracy(tf.keras.metrics.Metric):
 
   def update_state(self, y_true, y_pred, sample_weight=None):
       y_pred_rounded = tf.math.round(y_pred)
-      print(y_pred_rounded)
+      #print(y_pred_rounded)
       self._acc(y_true, y_pred_rounded, sample_weight=sample_weight)
 
   def reset_state(self):

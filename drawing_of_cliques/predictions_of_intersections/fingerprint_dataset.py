@@ -11,8 +11,8 @@ def shuffle_respectively(a, b):
 
 class Dataset:
 
-    _train_constant = 0.8
-    _dev_constant = 0.9
+    _train_constant = 0.8 # end of train
+    _dev_constant = 0.9 # end of dev
 
     def __init__(self, args, size):
         self._size = size
