@@ -11,13 +11,13 @@ with open(sys.argv[1], 'r') as file:
 
 
 line = lines[0]
-n = 1/2*(math.sqrt(4*len(line.split()[0]) + 1) + 1)
-
+n = int(1/2*(math.sqrt(4*len(line.split()[0]) + 1) + 1))
+print(n)
 
 with open(f'graph{n}_minimal.txt', 'w') as file:
     for line in lines:
         splitted_line = line.split()
-        intersections = splitted_line[1]
+        intersections = int(splitted_line[1])
 
         if intersections <= z(n):
             if intersections < z(n):
