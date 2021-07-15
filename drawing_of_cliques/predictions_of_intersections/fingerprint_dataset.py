@@ -11,8 +11,8 @@ def shuffle_respectively(a, b):
 
 class Dataset:
 
-    train_constant = 0.8
-    dev_constant = 0.9
+    _train_constant = 0.8
+    _dev_constant = 0.9
 
     def __init__(self, args, size):
         self._size = size
@@ -36,9 +36,9 @@ class Dataset:
 
     def set_datasets(self):
         datalen = len(self._fingerprints)
-        self._dataset['train'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[:int(train_constant*datalen)], self._intersections[:int(train_constant*datalen)])).batch(self._args.batch_size)
-        self._dataset['dev'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(train_constant*datalen):int(dev_constant*datalen)], self._intersections[int(train_constant*datalen):int(dev_constant*datalen)])).batch(self._args.batch_size)
-        self._dataset['test'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(dev_constant*datalen):], self._intersections[int(dev_constant*datalen):])).batch(self._args.batch_size)
+        self._dataset['train'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[:int(self._train_constant*datalen)], self._intersections[:int(self._train_constant*datalen)])).batch(self._args.batch_size)
+        self._dataset['dev'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(self._train_constant*datalen):int(self._dev_constant*datalen)], self._intersections[int(self._train_constant*datalen):int(self._dev_constant*datalen)])).batch(self._args.batch_size)
+        self._dataset['test'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(self._dev_constant*datalen):], self._intersections[int(self._dev_constant*datalen):])).batch(self._args.batch_size)
         
         self.print_test()
         #print(tf.shape(self._dataset['train']))
@@ -57,8 +57,10 @@ class Dataset:
     def get_intersections(self, name):
         datalen = len(self._fingerprints)
         if name == 'train':
-            return self._intersections[:int(train_constant*datalen)]
+            return self._intersections[:int(self._train_constant*datalen)]
         elif name == 'dev':
-            return self._intersections[int(train_constant*datalen):int(dev_constant*datalen)]
+            return self._intersections[int(self._train_constant*datalen):int(self._dev_constant*datalen)]
         else:
-            return self._intersections[int(dev_constant*datalen):]
+            return self._intersections[int(self._dev_constant*datalen):]
+
+

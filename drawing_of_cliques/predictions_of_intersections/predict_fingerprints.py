@@ -10,6 +10,7 @@ os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2") # Report only TF errors by de
 import numpy as np
 import tensorflow as tf
 from fingerprint_dataset import Dataset
+from metrics import RoundedAccuracy
 
 
 parser = argparse.ArgumentParser()
@@ -54,7 +55,7 @@ def main(args):
     model.compile(
       optimizer=tf.keras.optimizers.Adam(),
       loss = tf.keras.losses.MeanSquaredError(),
-      metrics=[tf.keras.metrics.Accuracy()],
+      metrics=[RoundedAccuracy()],
     )
     model.fit(train, epochs=args.epochs,validation_data=dev)
 
@@ -62,6 +63,12 @@ def main(args):
     ### Prediction
 
     predictions = model.predict(test)
+    racc = RoundedAccuracy()
+    racc.update_state(dataset.get_intersections('test'), predictions)
+    print(f'test_acc: {racc.result().numpy()}')
+
+    ### Writing to file
+    
     with open('pred_intersections.txt', 'w') as file:
       for batch in predictions:
         for b in batch:
