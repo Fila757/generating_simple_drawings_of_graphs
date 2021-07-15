@@ -32,10 +32,12 @@ class Dataset:
                 splitted_line = line.split()
                 self._fingerprints.append([[int(c)] for c in splitted_line[0]])
                 self._intersections.append(int(splitted_line[1]))
-
+            
+        #self._fingerprints, self._intersections = shuffle_respectively(self._fingerprints, self._intersections)
 
     def set_datasets(self):
         datalen = len(self._fingerprints)
+        self._datalen = datalen
         self._dataset['train'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[:int(self._train_constant*datalen)], self._intersections[:int(self._train_constant*datalen)])).batch(self._args.batch_size)
         self._dataset['dev'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(self._train_constant*datalen):int(self._dev_constant*datalen)], self._intersections[int(self._train_constant*datalen):int(self._dev_constant*datalen)])).batch(self._args.batch_size)
         self._dataset['test'] = tf.data.Dataset.from_tensor_slices((self._fingerprints[int(self._dev_constant*datalen):], self._intersections[int(self._dev_constant*datalen):])).batch(self._args.batch_size)
@@ -63,4 +65,6 @@ class Dataset:
         else:
             return self._intersections[int(self._dev_constant*datalen):]
 
-
+    @property
+    def datalen(self):
+        return self._datalen * self._train_constant

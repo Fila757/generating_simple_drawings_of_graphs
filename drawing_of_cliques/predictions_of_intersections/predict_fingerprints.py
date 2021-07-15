@@ -15,9 +15,10 @@ from metrics import RoundedAccuracy
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=50, type=int, help="Number of epochs.")
+parser.add_argument("--epochs", default=100, type=int, help="Number of epochs.")
 parser.add_argument("--seed", default=42, type=int, help="Random seed.")
 parser.add_argument("--threads", default=4, type=int, help="Maximum number of threads to use.")
+parser.add_argument("--size", default=7,type=int, help="Size of a graph.")
 
 def main(args):
     # Fix random seeds and threads
@@ -26,7 +27,7 @@ def main(args):
     tf.config.threading.set_inter_op_parallelism_threads(args.threads)
     tf.config.threading.set_intra_op_parallelism_threads(args.threads)
 
-    size = 7
+    size = args.size
     ### Getting dataset
     dataset = Dataset(args, size)
     train, dev, test = dataset.get_dataset('train'), dataset.get_dataset('dev'), dataset.get_dataset('test')
@@ -45,6 +46,7 @@ def main(args):
     activation = tf.keras.layers.Activation(tf.nn.relu)(batch_norm)
     
     lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(activation)
+    lstm = tf.keras.layers.Bidirectional(tf.keras.layers.LSTM(64, return_sequences=True), merge_mode='sum')(lstm)
 
     flatten = tf.keras.layers.Flatten()(lstm)
     predictions = tf.keras.layers.Dense(1, activation=tf.nn.relu)(flatten)
@@ -53,7 +55,12 @@ def main(args):
 
     model = tf.keras.Model(inputs, predictions)
     model.compile(
-      optimizer=tf.keras.optimizers.Adam(),
+      optimizer=tf.keras.optimizers.Adam(
+        learning_rate=tf.keras.optimizers.schedules.CosineDecay(
+          initial_learning_rate=0.002,
+          decay_steps=args.epochs * (dataset.datalen // args.batch_size),
+          alpha=0.000001)
+          ),
       loss = tf.keras.losses.MeanSquaredError(),
       metrics=[RoundedAccuracy()],
     )
