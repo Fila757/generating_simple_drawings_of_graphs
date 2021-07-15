@@ -15,7 +15,7 @@ from metrics import RoundedAccuracy
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--batch_size", default=32, type=int, help="Batch size.")
-parser.add_argument("--epochs", default=100, type=int, help="Number of epochs.")
+parser.add_argument("--epochs", default=200, type=int, help="Number of epochs.")
 parser.add_argument("--seed", default=42, type=int, help="Random seed.")
 parser.add_argument("--threads", default=4, type=int, help="Maximum number of threads to use.")
 parser.add_argument("--size", default=7,type=int, help="Size of a graph.")
